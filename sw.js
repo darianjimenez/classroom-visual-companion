@@ -1,5 +1,5 @@
 // Offline support: the app is one file, so cache it up front and keep Google Fonts after first load.
-var VERSION = "cvc-v1";
+var VERSION = "cvc-v2";
 var CORE = ["./", "./classroom-visual-companion.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png"];
 
 self.addEventListener("install", function(e){

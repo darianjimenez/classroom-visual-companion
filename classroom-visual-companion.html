@@ -193,6 +193,29 @@
   .t-btn.play:hover{ filter: brightness(1.05); }
   .ticker{ font-size: 0.88rem; color: var(--chalk-muted); line-height: 1.5; min-height: 1.4em; flex: 1; min-width: 0; }
   .ticker .hit{ color: var(--yellow); font-weight: 600; }
+  .ticker span{ cursor: pointer; }
+  .ticker span:hover{ text-decoration: underline dotted; text-underline-offset: 3px; }
+  .board.show-unsure .ticker .unsure{ text-decoration: underline dotted #E9A23B; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .dict-chip svg{ width: 20px; height: 20px; vertical-align: middle; margin-right: 2px; }
+  .unsure-box{ margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 10px; }
+  .unsure-box h3{ margin: 0 0 4px; font-size: 0.9rem; }
+  .unsure-chip{ all: unset; cursor: pointer; background: var(--panel-2); border: 1px dashed #E9A23B; border-radius: 999px; padding: 3px 10px; font-size: 0.82rem; }
+  .unsure-chip:hover{ background: var(--panel); }
+  .wd-back{ position: fixed; inset: 0; background: rgba(20,16,10,0.55); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+  .wd-back[hidden]{ display: none; }
+  .wd{ background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; padding: 18px; width: min(560px, 100%); max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
+  .wd h3{ margin: 0 0 4px; font-size: 1.1rem; }
+  .wd .now{ margin: 0 0 12px; color: var(--muted); font-size: 0.88rem; display: flex; align-items: center; gap: 6px; }
+  .wd .now svg{ width: 28px; height: 28px; }
+  .wd .row2{ display: flex; gap: 6px; margin: 8px 0; }
+  .wd .row2 input{ flex: 1; min-width: 0; }
+  .wd-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)); gap: 6px; max-height: 220px; overflow-y: auto; margin-top: 8px; padding: 2px; }
+  .wd-grid button{ all: unset; cursor: pointer; background: var(--panel-2); border-radius: 9px; padding: 4px; text-align: center; font-size: 0.6rem; color: var(--muted); line-height: 1.1; }
+  .wd-grid button:hover, .wd-grid button:focus-visible{ outline: 2px solid #E9A23B; }
+  .wd-grid button[hidden]{ display: none; }
+  .wd-grid svg{ width: 38px; height: 38px; display: block; margin: 0 auto 2px; }
+  .wd [hidden]{ display: none !important; }
+  .wd .foot{ display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
   .board.no-ticker .ticker{ visibility: hidden; }
 
   /* ---------- console ---------- */
@@ -391,6 +414,11 @@
             <label class="check"><input type="checkbox" id="pauseEach"> <span>Pause after each sentence<small>Teacher-paced: press <b>→</b> or Play to continue.</small></span></label>
           </div>
           <p class="hint" id="progressLabel"></p>
+          <div class="unsure-box" id="unsureBox" hidden>
+            <h3>Words I'm not sure about</h3>
+            <p class="hint" style="margin:0 0 6px;">These can mean different things, so no picture is shown for them. Tap one to choose a picture.</p>
+            <div class="dict-list" id="unsureList"></div>
+          </div>
         </div>
 
         <div class="block" id="aiBlock" hidden>
@@ -438,7 +466,8 @@
         <div class="block stack">
           <h2 style="margin:0;">On the board</h2>
           <label class="check"><input type="checkbox" id="labelsToggle" checked> <span>Word labels on drawings<small>Turn off to let students name things themselves.</small></span></label>
-          <label class="check"><input type="checkbox" id="tickerToggle" checked> <span>Spoken words under the board</span></label>
+          <label class="check"><input type="checkbox" id="tickerToggle" checked> <span>Spoken words under the board<small>Tap any word under the board to give it a picture, or turn its picture off.</small></span></label>
+          <label class="check"><input type="checkbox" id="unsureToggle"> <span>Underline words I'm not sure about<small>Teacher view: marks words that show no picture because they could mean different things.</small></span></label>
           <label class="check"><input type="checkbox" id="recapToggle" checked> <span>Show the whole storyboard when the lesson ends</span></label>
         </div>
         <div class="block">
@@ -1403,11 +1432,31 @@ window.SceneEngine = (function(){
     if (w.length > 2 && /s$/.test(w)) out.push(w.slice(0, -1));
     return out;
   }
+  // Words that only loosely match a picture ("home" -> house, "day" -> calendar). Better to show nothing than a wrong or off-topic picture;
+  // a teacher can still give one a picture of their own.
+  var LOOSE = {};
+  ("home homes shelter place places setting settings day days week weeks month months year years season seasons date " +
+   "word words opinion talk talks piece pieces air class rest record").split(" ").forEach(function(w){ LOOSE[w] = 1; });
+  function looseWord(w){ var fs = forms(w); for (var i = 0; i < fs.length; i++) if (LOOSE[fs[i]]) return true; return false; }
+  function extraConcept(w, extra){
+    if (!extra) return undefined;
+    var fs = forms(w);
+    for (var i = 0; i < fs.length; i++){
+      var v = extra[fs[i]];
+      if (v == null || v === "") continue;
+      if (v === "-") return null;
+      if (v.charAt(0) === "@" && I[v.slice(1)]) return { icon: v.slice(1), key: "i:" + v.slice(1) };
+      return { emoji: v, key: "e:" + fs[i] };
+    }
+    return undefined;
+  }
   function conceptFor(w, extra){
     if (!w || RELATION[w]) return null;
+    var ex = extraConcept(w, extra);
+    if (ex !== undefined) return ex;
+    if (looseWord(w)) return null;
     var fs = forms(w), i;
     for (i = 0; i < fs.length; i++) if (WORD_TO_ICON[fs[i]]) return { icon: WORD_TO_ICON[fs[i]], key: "i:" + WORD_TO_ICON[fs[i]] };
-    if (extra) for (i = 0; i < fs.length; i++) if (extra[fs[i]]) return { emoji: extra[fs[i]], key: "e:" + fs[i] };
     for (i = 0; i < fs.length; i++) if (EMOJI_LIB[fs[i]]) return { emoji: EMOJI_LIB[fs[i]], key: "m:" + EMOJI_LIB[fs[i]] };
     return null;
   }
@@ -1595,7 +1644,6 @@ window.SceneEngine = (function(){
       if (typeof k !== "string") return null;
       var key = k.trim().toLowerCase(), item = null;
       if (I[key]) item = { icon: key, key: "i:" + key };
-      else if (extra && extra[key]) item = { emoji: extra[key], key: "e:" + key };
       else { var c = conceptFor(normalize(key), extra); if (c) item = { icon: c.icon, emoji: c.emoji, key: c.key }; }
       if (!item || used[item.key]) return null;
       used[item.key] = true;
@@ -2000,7 +2048,7 @@ window.SceneEngine = (function(){
   return {
     iconSVG: iconSVG, sceneIcons: sceneIcons, vocabFor: function(k){ return VOCAB[k] || []; },
     analyze: analyze, sceneFromAI: sceneFromAI, renderScene: renderScene, firstAt: firstAt,
-    highlightAts: highlightAts, sceneKeys: sceneKeys, buildPlanPrompt: buildPlanPrompt, iconGallery: iconGallery,
+    highlightAts: highlightAts, sceneKeys: sceneKeys, buildPlanPrompt: buildPlanPrompt, iconGallery: iconGallery, isUnsure: function(w, extra){ w = normalize(w); return !!w && !RELATION[w] && looseWord(w) && extraConcept(w, extra) === undefined; }, lookup: function(w, extra){ return conceptFor(normalize(w), extra); },
     normalize: normalize, iconCount: Object.keys(I).length, wordCount: Object.keys(WORD_TO_ICON).length + Object.keys(EMOJI_LIB).length, ICONS: I
   };
 })();
@@ -2217,6 +2265,23 @@ window.LESSONS = [
 })();
 
 </script>
+<div class="wd-back" id="wdBack" hidden>
+  <div class="wd" role="dialog" aria-modal="true" aria-labelledby="wdTitle">
+    <h3 id="wdTitle">Picture for this word</h3>
+    <p class="now" id="wdNow"></p>
+    <div class="row2">
+      <input type="text" id="wdEmoji" maxlength="4" placeholder="Type or paste an emoji" aria-label="Emoji for this word">
+      <button type="button" class="btn btn-green" id="wdUseEmoji">Use emoji</button>
+    </div>
+    <input type="search" id="wdSearch" placeholder="Or search the drawings, like “rocket”" aria-label="Search drawings" style="width:100%;">
+    <div class="wd-grid" id="wdGrid"></div>
+    <div class="foot">
+      <button type="button" class="btn btn-dark" id="wdNone">No picture for this word</button>
+      <button type="button" class="link" id="wdReset">Back to automatic</button>
+      <button type="button" class="link" id="wdCancel">Cancel</button>
+    </div>
+  </div>
+</div>
 <script>
 (function(){
   "use strict";
@@ -2259,7 +2324,7 @@ window.LESSONS = [
    "hero", "heroNo", "heroArt", "heroCaption", "recap", "recapGrid", "filmstrip", "prevBtn", "playBtn", "playIcon", "nextBtn", "ticker",
    "subjectChips", "lessonSearch", "lessonList", "scriptInput", "wordCount", "sourceLine", "sourceText", "speedSlider", "speedLabel",
    "pauseEach", "progressLabel", "aiBlock", "planBtn", "useAiToggle", "aiStatus", "saveTitle", "saveBtn",
-   "voiceBtn", "voiceStatus", "voiceInterim", "voiceLog", "followToggle", "drawMode", "calmToggle", "paceStat", "labelsToggle", "tickerToggle", "recapToggle",
+   "voiceBtn", "voiceStatus", "voiceInterim", "voiceLog", "followToggle", "drawMode", "calmToggle", "paceStat", "labelsToggle", "tickerToggle", "unsureToggle", "unsureBox", "unsureList", "wdBack", "wdTitle", "wdNow", "wdEmoji", "wdUseEmoji", "wdSearch", "wdGrid", "wdNone", "wdReset", "wdCancel", "recapToggle",
    "gallery", "gallerySearch", "galleryCount", "dictList", "dictForm", "dictWord", "dictEmoji", "resetDict", "topStats", "toast"
   ].forEach(function(id){ el[id] = $(id); });
 
@@ -2411,7 +2476,7 @@ window.LESSONS = [
   function selectLesson(L){
     state.lesson = L;
     el.scriptInput.value = L.text;
-    resetPlayback();
+    resetPlayback(); renderUnsure();
     renderLessons();
     setBoardHeading();
     updateSource();
@@ -2443,7 +2508,10 @@ window.LESSONS = [
     keys.forEach(function(k){
       var chip = document.createElement("span");
       chip.className = "dict-chip";
-      var t = document.createElement("span"); t.textContent = state.extra[k] + " " + k;
+      var t = document.createElement("span"), v = state.extra[k];
+      if (v === "-") t.textContent = "🚫 " + k;
+      else if (v.charAt(0) === "@" && E.ICONS[v.slice(1)]){ t.innerHTML = E.iconSVG(v.slice(1)); t.appendChild(document.createTextNode(" " + k)); }
+      else t.textContent = v + " " + k;
       var x = document.createElement("button"); x.type = "button"; x.textContent = "×"; x.setAttribute("aria-label", "Remove " + k);
       x.addEventListener("click", function(){ delete state.extra[k]; save(KEYS.extra, state.extra); state.cache = {}; iconCache = {}; renderDict(); });
       chip.appendChild(t); chip.appendChild(x);
@@ -2620,11 +2688,89 @@ window.LESSONS = [
     el.ticker.innerHTML = "";
     state.ticker.forEach(function(w, i){
       var s = document.createElement("span");
-      if (w.hit) s.className = "hit";
+      var cls = (w.hit ? "hit" : "") + (E.isUnsure(w.t, state.extra) ? " unsure" : "");
+      if (cls) s.className = cls.trim();
+      s.title = "Tap to choose a picture for this word";
+      s.addEventListener("click", function(){ openWordDlg(w.t); });
       s.textContent = w.t + (i < state.ticker.length - 1 ? " " : "");
       el.ticker.appendChild(s);
     });
   }
+
+
+  // ---------- choose a picture for a word ----------
+  var wdWord = "", wdBuilt = false;
+  function renderUnsure(){
+    var seen = {}, words = [];
+    el.scriptInput.value.split(/\s+/).forEach(function(t){
+      var w = E.normalize(t);
+      if (w && !seen[w] && E.isUnsure(w, state.extra)){ seen[w] = true; words.push(w); }
+    });
+    el.unsureBox.hidden = !words.length;
+    el.unsureList.innerHTML = "";
+    words.slice(0, 40).forEach(function(w){
+      var b = document.createElement("button"); b.type = "button"; b.className = "unsure-chip"; b.textContent = w;
+      b.addEventListener("click", function(){ openWordDlg(w); });
+      el.unsureList.appendChild(b);
+    });
+  }
+  function refreshFrames(){
+    state.cache = {}; iconCache = {};
+    if (!state.loaded || !state.frames.length) return;
+    finishActive();
+    state.frames.forEach(function(rec){ var sc = sceneFor(rec.si); if (sc && sc.show) rec.scene = sc; });
+    el.filmstrip.innerHTML = "";
+    state.frames.forEach(addThumb);
+    var cur = state.frames.filter(function(r){ return r.n === state.viewing; })[0] || state.frames[state.frames.length - 1];
+    renderHero(cur, false);
+    if (!el.recap.hidden) showRecap();
+  }
+  function setWordPicture(w, val){
+    if (val == null) delete state.extra[w]; else state.extra[w] = val;
+    save(KEYS.extra, state.extra);
+    renderDict(); refreshFrames(); renderUnsure();
+    closeWordDlg();
+    toast(val == null ? "“" + w + "” is back to automatic" : val === "-" ? "No picture for “" + w + "”" : "Saved a picture for “" + w + "”");
+  }
+  function buildWdGrid(){
+    if (wdBuilt) return; wdBuilt = true;
+    E.iconGallery().forEach(function(g){
+      var b = document.createElement("button"); b.type = "button"; b.dataset.key = g.key; b.dataset.words = (g.key + " " + g.words.join(" ")).toLowerCase(); b.title = g.name;
+      b.innerHTML = g.svg + "<span></span>"; b.lastChild.textContent = g.name;
+      b.addEventListener("click", function(){ setWordPicture(wdWord, "@" + g.key); });
+      el.wdGrid.appendChild(b);
+    });
+  }
+  function openWordDlg(raw){
+    var w = E.normalize(raw);
+    if (!w || w.length < 2) return;
+    wdWord = w; buildWdGrid();
+    el.wdTitle.textContent = "Picture for “" + w + "”";
+    var v = state.extra[w], c = E.lookup(w, state.extra), now = "";
+    if (v === "-") now = "No picture (you turned it off)";
+    else if (c && c.icon) now = E.iconSVG(c.icon) + " Shows a drawing";
+    else if (c && c.emoji) now = '<span style="font-size:1.4rem;">' + c.emoji + "</span> Shows an emoji";
+    else if (E.isUnsure(w, state.extra)) now = "Not sure what this means here, so nothing shows";
+    else now = "No picture yet";
+    el.wdNow.innerHTML = now;
+    el.wdEmoji.value = ""; el.wdSearch.value = "";
+    Array.prototype.forEach.call(el.wdGrid.children, function(b){ b.hidden = false; });
+    el.wdReset.hidden = v == null;
+    el.wdBack.hidden = false;
+    el.wdEmoji.focus();
+  }
+  function closeWordDlg(){ el.wdBack.hidden = true; }
+  el.wdUseEmoji.addEventListener("click", function(){ var e = el.wdEmoji.value.trim(); if (e) setWordPicture(wdWord, e); else el.wdEmoji.focus(); });
+  el.wdEmoji.addEventListener("keydown", function(e){ if (e.key === "Enter"){ e.preventDefault(); el.wdUseEmoji.click(); } });
+  el.wdNone.addEventListener("click", function(){ setWordPicture(wdWord, "-"); });
+  el.wdReset.addEventListener("click", function(){ setWordPicture(wdWord, null); });
+  el.wdCancel.addEventListener("click", closeWordDlg);
+  el.wdBack.addEventListener("click", function(e){ if (e.target === el.wdBack) closeWordDlg(); });
+  el.wdSearch.addEventListener("input", function(){
+    var q = el.wdSearch.value.trim().toLowerCase();
+    Array.prototype.forEach.call(el.wdGrid.children, function(b){ b.hidden = q && b.dataset.words.indexOf(q) < 0; });
+  });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !el.wdBack.hidden){ e.stopPropagation(); closeWordDlg(); } }, true);
 
   // ---------- playback ----------
   function loadScript(){
@@ -2637,7 +2783,7 @@ window.LESSONS = [
     });
     state.idx = 0; state.cache = {}; state.loaded = true;
     clearBoard(); state.ticker = []; el.ticker.innerHTML = "";
-    renderDots(); updateDots(); updateProgress(); setBoardHeading();
+    renderDots(); updateDots(); updateProgress(); setBoardHeading(); renderUnsure();
   }
   function needsReload(){ return !state.loaded || state.scriptText !== el.scriptInput.value.trim(); }
   function advanceScene(si, k, last){
@@ -2733,7 +2879,7 @@ window.LESSONS = [
   el.prevBtn.addEventListener("click", prevScene);
   el.scriptInput.addEventListener("input", function(){
     if (state.playing) pause();
-    setBoardHeading(); updateSource();
+    setBoardHeading(); updateSource(); renderUnsure();
     if (state.aiPlan && state.aiPlan.script !== el.scriptInput.value.trim()) setAi("The script changed since Claude's plan. Plan again to use it.");
   });
   el.speedSlider.addEventListener("input", function(){
@@ -2744,6 +2890,7 @@ window.LESSONS = [
   el.drawMode.addEventListener("change", function(){ state.drawMode = el.drawMode.value; });
   el.calmToggle.addEventListener("change", function(){ state.calm = el.calmToggle.checked; el.board.classList.toggle("calm", state.calm); });
   el.labelsToggle.addEventListener("change", function(){ el.board.classList.toggle("no-labels", !el.labelsToggle.checked); });
+  el.unsureToggle.addEventListener("change", function(){ el.board.classList.toggle("show-unsure", el.unsureToggle.checked); });
   el.tickerToggle.addEventListener("change", function(){ el.board.classList.toggle("no-ticker", !el.tickerToggle.checked); });
   el.recapToggle.addEventListener("change", function(){ state.autoRecap = el.recapToggle.checked; });
 
