@@ -324,7 +324,7 @@
   @media (min-width: 961px){ .hero-card{ max-width: min(660px, max(360px, calc((100vh - 490px) * 1.6))); } }
   .thumb{ width: 116px; }
   .top-actions{ display: flex; gap: 8px; }
-  .top-actions .btn{ display: inline-flex; align-items: center; gap: 7px; }
+  .top-actions .btn{ display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
   .top-actions svg{ width: 18px; height: 18px; }
   @media (max-width: 560px){
     .topbar{ flex-wrap: nowrap; align-items: flex-start; }
@@ -402,6 +402,80 @@
   .help-steps b{ display: block; margin-bottom: 2px; }
   .help-steps span{ color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
   .help .foot{ justify-content: flex-end; }
+
+  /* ---------- just talk ---------- */
+  .btn-talk{ background: var(--coral); color: #2E0E06; }
+  .btn-talk:hover{ filter: brightness(1.05); }
+  .start-talk{ display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 6px; }
+  .start-talk .or{ display: flex; align-items: center; gap: 10px; width: 220px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .start-talk .or::before, .start-talk .or::after{ content: ""; flex: 1; border-top: 1px dashed rgba(243,239,226,0.3); }
+  .talk-go{
+    display: inline-flex; align-items: center; gap: 9px; background: transparent; color: var(--chalk); border: 2px solid var(--coral); border-radius: 999px;
+    padding: 11px 22px; font-family: var(--ui); font-size: 1rem; font-weight: 800; cursor: pointer;
+  }
+  .talk-go:hover{ background: rgba(217,103,75,0.18); }
+  .talk-go svg{ width: 20px; height: 20px; color: #F0957D; }
+  .board.talking{ box-shadow: 0 0 0 6px var(--coral), 0 18px 40px -20px rgba(0,0,0,0.55); }
+  .board.talking #playBtn, .board.talking .pace{ display: none; }
+  .talk-screen{ text-align: center; color: var(--chalk-muted); }
+  .talk-screen .big{ font-family: var(--hand); color: var(--chalk); line-height: 1.1; }
+  .talk-orb{ cursor: pointer; padding: 0; width: 96px; height: 96px; border-radius: 50%; background: rgba(243,239,226,0.08); border: 2px solid rgba(243,239,226,0.3);
+    display: flex; align-items: center; justify-content: center; color: var(--chalk); }
+  .talk-orb:hover{ background: rgba(243,239,226,0.16); }
+  .talk-orb svg{ width: 44px; height: 44px; }
+  .board.mic-on .talk-orb{ background: var(--coral); border-color: var(--coral); color: #2E0E06; animation: micPulse 1.8s ease-in-out infinite; }
+  .talk-try{ display: flex; flex-direction: column; align-items: center; gap: 7px; margin-top: 10px; }
+  .try-label{ font-size: 0.82rem; }
+  .try-chip{ all: unset; cursor: pointer; font-family: var(--hand); font-size: 1.2rem; color: var(--chalk); border: 1.5px dashed rgba(243,239,226,0.35);
+    border-radius: 10px; padding: 4px 12px; line-height: 1.2; }
+  .try-chip:hover{ background: rgba(243,239,226,0.1); border-style: solid; }
+  .try-chip:focus-visible{ outline: 2px solid var(--yellow); }
+  .talk-bar{ display: flex; flex-direction: column; gap: 8px; padding: 10px 2px 2px; border-top: 1px dashed rgba(243,239,226,0.2); }
+  .live-line{ display: flex; align-items: center; gap: 9px; color: var(--chalk); font-size: 0.95rem; min-height: 1.4em; }
+  .live-line.miss{ color: #F2C48E; }
+  .live-dot{ width: 10px; height: 10px; border-radius: 50%; background: var(--chalk-muted); flex: none; }
+  .board.mic-on .live-dot{ background: var(--coral); animation: micPulse 1.8s ease-in-out infinite; }
+  .talk-type{ display: flex; gap: 8px; flex-wrap: wrap; }
+  .talk-type input{ flex: 1; min-width: 180px; background: rgba(243,239,226,0.08); color: var(--chalk); border-color: rgba(243,239,226,0.3); }
+  .talk-type input::placeholder{ color: var(--chalk-muted); }
+  .talk-done{ border: 0; border-radius: 999px; background: var(--yellow); color: var(--yellow-ink); font-family: var(--ui); font-weight: 800; font-size: 0.86rem; padding: 8px 16px; cursor: pointer; }
+  .board:fullscreen .talk-orb{ width: 130px; height: 130px; }
+  @media (prefers-reduced-motion: reduce){ .board.mic-on .talk-orb, .board.mic-on .live-dot{ animation: none; } }
+  @media (max-width: 560px){ .top-actions .btn-talk .label{ display: inline; } }
+
+  /* ---------- guide ---------- */
+  .guide{ width: min(780px, 100%); padding: 0; }
+  .guide-head{ display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 4px; }
+  .guide-head h3{ margin: 0; font-size: 1.3rem; }
+  .guide-x{ all: unset; cursor: pointer; font-size: 1.6rem; line-height: 1; color: var(--muted); padding: 2px 8px; border-radius: 8px; }
+  .guide-x:hover{ background: var(--panel-2); color: var(--ink); }
+  .guide-nav{ position: sticky; top: 0; z-index: 1; display: flex; gap: 6px; overflow-x: auto; padding: 8px 20px 10px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  .guide-nav a{ flex: none; font-size: 0.8rem; font-weight: 600; color: var(--ink); text-decoration: none; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; }
+  .guide-nav a:hover{ border-color: var(--muted); }
+  .guide-sec{ padding: 14px 20px 4px; scroll-margin-top: 52px; font-size: 0.92rem; line-height: 1.55; }
+  .guide-sec p{ margin: 0 0 10px; }
+  .guide-sec h4{ margin: 4px 0 10px; font-size: 1.05rem; }
+  .guide-lead{ font-size: 1.08rem; font-weight: 600; }
+  .guide-who{ background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 12px 0; }
+  .guide-who ul{ margin: 6px 0 0; padding-left: 20px; }
+  .guide-flow{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0 6px; }
+  .guide-flow > div{ background: var(--card); color: #2B2620; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 2px; font-size: 0.82rem; line-height: 1.35; }
+  .guide-flow b{ font-size: 0.9rem; }
+  .guide-flow span:not(.n){ color: #6F654F; }
+  .guide-flow .n, .help-steps .n{ width: 24px; height: 24px; border-radius: 50%; background: var(--yellow); color: var(--yellow-ink); font-weight: 800; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+  .guide-ways{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .way{ background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .way span{ color: var(--muted); font-size: 0.86rem; line-height: 1.45; flex: 1; }
+  .way-talk{ grid-column: 1 / -1; border: 2px solid var(--coral); }
+  .way-talk b{ font-size: 1.02rem; }
+  .guide-list{ margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+  .guide .shortcuts{ margin-bottom: 10px; }
+  .guide .foot{ justify-content: flex-end; padding: 6px 20px 18px; margin-top: 4px; }
+  @media (max-width: 640px){
+    .guide-flow{ grid-template-columns: 1fr 1fr; }
+    .guide-ways{ grid-template-columns: 1fr; }
+    .wd-back{ padding: 8px; }
+  }
 </style>
 </head>
 <body>
@@ -422,9 +496,13 @@
       </div>
     </div>
     <div class="top-actions">
-      <button class="btn btn-ghost" id="helpBtn" type="button" aria-label="How it works">
+      <button class="btn btn-talk" id="talkHeaderBtn" type="button" aria-label="Just talk: speak and pictures appear">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+        <span class="label">Just talk</span>
+      </button>
+      <button class="btn btn-ghost" id="helpBtn" type="button" aria-label="Guide">
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.4 9.3a2.7 2.7 0 1 1 3.8 2.5c-.8.4-1.2 1-1.2 1.9v.4"/><circle cx="12" cy="17.4" r="0.6" fill="currentColor"/></svg>
-        <span class="label">How it works</span>
+        <span class="label">Guide</span>
       </button>
     </div>
   </header>
@@ -460,11 +538,28 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M15.6 5H18v14h-2.4zM4 5v14l10.5-7z"/></svg>One sentence at a time
               </button>
               <button class="chalk-btn" id="voiceStartBtn" type="button" title="Read the script aloud and the pictures keep up with you">
-                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Follow my voice
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Read it aloud
               </button>
             </div>
           </div>
+          <div class="start-talk" id="startTalk">
+            <span class="or">or</span>
+            <button class="talk-go" id="talkStartBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Just start talking</button>
+            <span class="start-meta">No script needed. Each idea you say becomes a picture.</span>
+          </div>
           <span class="small" id="emptySmall"><span class="kbd">Space</span> start or pause · <span class="kbd">→</span> next sentence · <span class="kbd">F</span> full screen</span>
+        </div>
+        <div class="talk-screen start-card" id="talkScreen" hidden>
+          <button type="button" class="talk-orb" id="talkOrb" aria-label="Microphone on or off"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
+          <span class="big" id="talkBig">Start talking</span>
+          <span class="start-meta">Talk the way you would to your class. Pause for a moment between ideas: each idea becomes a picture.</span>
+          <div class="talk-try">
+            <span class="try-label">No microphone handy? Tap an example to see what happens:</span>
+            <button type="button" class="try-chip" data-say="The sun heats the ocean and the water turns into vapor.">The sun heats the ocean and the water turns into vapor.</button>
+            <button type="button" class="try-chip" data-say="A caterpillar eats leaves and turns into a butterfly.">A caterpillar eats leaves and turns into a butterfly.</button>
+            <button type="button" class="try-chip" data-say="The heart pumps blood to the lungs.">The heart pumps blood to the lungs.</button>
+            <button type="button" class="try-chip" data-say="Volcanoes erupt when hot magma rises.">Volcanoes erupt when hot magma rises.</button>
+          </div>
         </div>
         <div class="hero" id="hero" hidden>
           <div class="hero-card"><span class="frame-no" id="heroNo"></span><div id="heroArt"></div></div>
@@ -472,11 +567,12 @@
         </div>
         <div class="recap" id="recap" hidden>
           <div class="recap-head">
-            <h3>The storyboard</h3>
+            <h3 id="recapTitle">The storyboard</h3>
             <div class="recap-actions">
               <button class="chalk-btn" id="recapRestart" type="button">
-                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>Start over
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg><span id="recapRestartLabel">Start over</span>
               </button>
+              <button class="chalk-btn" id="recapSave" type="button" hidden>Save as a lesson</button>
               <button class="chalk-btn" id="recapClose" type="button">Close</button>
             </div>
           </div>
@@ -485,6 +581,15 @@
       </div>
 
       <div class="filmstrip" id="filmstrip" hidden aria-label="Scenes so far"></div>
+
+      <div class="talk-bar" id="talkBar" hidden>
+        <div class="live-line" id="liveLine" aria-live="polite"><span class="live-dot" aria-hidden="true"></span><span id="liveText"></span></div>
+        <form class="talk-type" id="talkForm" autocomplete="off">
+          <input type="text" id="talkInput" placeholder="Or type a sentence and press Enter" aria-label="Type a sentence to show as a picture">
+          <button class="chalk-btn" type="submit">Show</button>
+          <button class="talk-done" type="button" id="talkDoneBtn">Finish &amp; see slideshow</button>
+        </form>
+      </div>
 
       <div class="board-bottom">
         <div class="transport">
@@ -496,7 +601,7 @@
             <svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
           </button>
           <button class="t-btn" id="nextBtn" type="button" title="Next sentence (→)" aria-label="Next sentence"><svg viewBox="0 0 24 24"><path d="M15.6 5H18v14h-2.4zM4 5v14l10.5-7z"/></svg></button>
-          <button class="t-btn mic" id="micBtn" type="button" title="Follow my voice (M)" aria-label="Follow my voice" aria-pressed="false">
+          <button class="t-btn mic" id="micBtn" type="button" title="Microphone (M)" aria-label="Microphone" aria-pressed="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="fill:none"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
           </button>
         </div>
@@ -573,7 +678,8 @@
         <div class="block">
           <h2>Live voice <span class="beta">beta</span></h2>
           <button class="btn" id="voiceBtn" type="button">Start listening</button>
-          <label class="check" style="margin-top:10px;"><input type="checkbox" id="followToggle" checked> <span>Follow the lesson script<small>Read the script aloud and the pictures keep pace with you. Turn off to talk freely.</small></span></label>
+          <p class="hint">Use <b>Read it aloud</b> to have the pictures follow your script, or <b>Just talk</b> to speak freely with no script.</p>
+          <label class="check" style="margin-top:10px;"><input type="checkbox" id="followToggle" checked> <span>Follow the lesson script<small>When a script is loaded, the microphone follows along as you read it. Turn off to always use Just talk.</small></span></label>
           <p class="hint" id="voiceStatus">Works best in Google Chrome, which sends the audio to Google's speech service to turn it into text.</p>
           <p class="hint" id="voiceInterim" style="font-style:italic; min-height:1.2em;"></p>
           <details><summary class="hint">Voice diagnostics</summary><pre id="voiceLog"></pre></details>
@@ -605,9 +711,10 @@
             <kbd>→</kbd><span>Next sentence (or next scene when looking back)</span>
             <kbd>←</kbd><span>Look back at the previous scene</span>
             <kbd>M</kbd><span>Turn the microphone on or off</span>
+            <kbd>T</kbd><span>Just talk (no script)</span>
             <kbd>R</kbd><span>See every scene so far</span>
             <kbd>F</kbd><span>Full screen for projecting</span>
-            <kbd>?</kbd><span>How it works</span>
+            <kbd>?</kbd><span>Open the guide</span>
             <kbd>Esc</kbd><span>Close the storyboard or a window</span>
           </div>
         </div>
@@ -2495,15 +2602,112 @@ window.LESSONS = [
   </div>
 </div>
 <div class="wd-back" id="helpBack" hidden>
-  <div class="wd help" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
-    <h3 id="helpTitle">How it works</h3>
-    <p class="now" style="margin:0;">Pictures appear on the board as each sentence of your lesson is spoken, so students can see what they hear.</p>
-    <ol class="help-steps">
-      <li><span class="n">1</span><div><b>Pick a lesson, or write your own</b><span>Choose one from Lessons, or tap “Write my own” and paste what you'll say.</span></div></li>
-      <li><span class="n">2</span><div><b>Press Start</b><span>Each sentence gets a picture. Prefer to go at your own speed? Use “One sentence at a time” or the → key. Or turn on the microphone and just read aloud.</span></div></li>
-      <li><span class="n">3</span><div><b>Show it to the class</b><span>Press F or the full-screen button to project the board. At the end, every scene is shown together for review.</span></div></li>
-      <li><span class="n">4</span><div><b>Fix a picture in one tap</b><span>Tap any word under the board to choose a different picture, or none.</span></div></li>
-    </ol>
+  <div class="wd guide" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="guide-head">
+      <h3 id="helpTitle">Guide</h3>
+      <button type="button" class="guide-x" id="helpX" aria-label="Close the guide">×</button>
+    </div>
+    <nav class="guide-nav" aria-label="Guide sections">
+      <a href="#g-what">What it is</a><a href="#g-ways">Ways to use it</a><a href="#g-pics">Pictures</a>
+      <a href="#g-class">In class</a><a href="#g-privacy">Privacy &amp; devices</a><a href="#g-keys">Shortcuts</a>
+    </nav>
+
+    <section id="g-what" class="guide-sec">
+      <p class="guide-lead">Classroom Visual Companion turns what a teacher says into simple pictures, one idea at a time, so students can <b>see</b> what they hear.</p>
+      <p>Spoken lessons move fast, and words vanish as soon as they're said. For students who process speech more slowly, a single missed word can lose the whole idea. This app puts a clear, calm picture of each idea on the board while you talk, and keeps the earlier ones in a strip so students can look back.</p>
+      <div class="guide-who">
+        <b>Who it helps</b>
+        <ul>
+          <li>Students with auditory processing difficulties</li>
+          <li>English learners</li>
+          <li>Students with attention difficulties, or who are deaf or hard of hearing</li>
+          <li>Any student who learns better with visuals</li>
+        </ul>
+        <p class="hint" style="margin:6px 0 0;">It can support IEP or 504 accommodations that call for visual aids. It adds to your teaching; it doesn't replace captions, interpreters or other services a student is entitled to.</p>
+      </div>
+      <div class="guide-flow" aria-label="How it works">
+        <div><span class="n">1</span><b>You speak</b><span>or play a script</span></div>
+        <div><span class="n">2</span><b>It finds the ideas</b><span>the things, places and actions in each sentence</span></div>
+        <div><span class="n">3</span><b>A picture appears</b><span>with labels and arrows that show how things connect</span></div>
+        <div><span class="n">4</span><b>Review together</b><span>every scene is laid out at the end</span></div>
+      </div>
+    </section>
+
+    <section id="g-ways" class="guide-sec">
+      <h4>Four ways to use it</h4>
+      <div class="guide-ways">
+        <div class="way way-talk">
+          <b>🎤 Just talk</b>
+          <span>No script and no setup. Turn on the microphone and teach as you normally would. Pause for a moment between ideas, and each idea becomes a picture. When you finish, you get a slideshow you can replay or save as a lesson. No microphone? Type sentences, or tap the examples.</span>
+          <button type="button" class="btn btn-talk" data-try="talk">Try it now</button>
+        </div>
+        <div class="way">
+          <b>▶ Play a ready lesson</b>
+          <span>Choose one of 25 lessons in science, history, math, reading and health, then press Start. It reads at the pace you pick (Slow, Normal or Fast), and these lessons have hand-tuned pictures.</span>
+          <button type="button" class="btn btn-ghost" data-try="play">Try it</button>
+        </div>
+        <div class="way">
+          <b>⏭ One sentence at a time</b>
+          <span>You stay in control. Each press of → (or a presentation clicker) shows the next sentence's picture, so you can stop and discuss each one.</span>
+          <button type="button" class="btn btn-ghost" data-try="step">Try it</button>
+        </div>
+        <div class="way">
+          <b>📖 Read it aloud</b>
+          <span>Load or paste a script and read it to the class. The microphone follows where you are, so the pictures keep up with your real pace, even if you slow down or skip a line.</span>
+          <button type="button" class="btn btn-ghost" data-try="read">Try it</button>
+        </div>
+      </div>
+      <p class="hint">Your own scripts: tap <b>Write my own</b> in Lessons, paste what you'll say, and save it. Saved lessons stay on this device.</p>
+    </section>
+
+    <section id="g-pics" class="guide-sec">
+      <h4>How the pictures are chosen</h4>
+      <ul class="guide-list">
+        <li><b>A large picture library.</b> More than 360 hand-drawn pictures for common school topics, plus about 2,400 OpenMoji images, matched to about 2,900 words.</li>
+        <li><b>One idea per scene.</b> Each sentence is read for its key things and how they connect. “The sun heats the ocean” shows a sun, an arrow, and the ocean.</li>
+        <li><b>No guessing.</b> Words that can mean different things, like “bank” or “home”, get no picture rather than a wrong one. Small talk like “good morning everyone” shows nothing. The Script tab lists words that need your help.</li>
+        <li><b>Fix a picture in one tap.</b> Tap any word under the board, then pick a drawing or an emoji, or choose no picture. Your choice is remembered for every lesson.</li>
+        <li><b>Stays on topic.</b> Pictures follow the lesson's context: “whole” and “half” only show a pizza in a fractions lesson, and names like “Rosa Parks” aren't drawn as a park.</li>
+      </ul>
+    </section>
+
+    <section id="g-class" class="guide-sec">
+      <h4>Tips for the classroom</h4>
+      <ul class="guide-list">
+        <li><b>Project it.</b> Press F or the full-screen button. The pictures and captions scale up for the back of the room.</li>
+        <li><b>Short, concrete sentences work best.</b> “Plants need sunlight” gets a clearer picture than “It's important to remember that plants, as we discussed, require…”.</li>
+        <li><b>Pause between ideas</b> when you're talking freely. Each pause tells the app an idea is finished.</li>
+        <li><b>Keep it calm.</b> In Settings, Calm mode removes motion and only draws a scene when a new idea appears. You can also hide the word labels so students name things themselves.</li>
+        <li><b>Review at the end.</b> The whole storyboard appears when a lesson finishes. Tap any card to talk about it again.</li>
+        <li><b>Try it before class.</b> Run your script once and fix any picture you don't like. Your fixes carry over.</li>
+      </ul>
+    </section>
+
+    <section id="g-privacy" class="guide-sec">
+      <h4>Privacy and devices</h4>
+      <ul class="guide-list">
+        <li><b>Nothing to sign up for.</b> Your lessons, settings and word pictures are saved only in this browser on this device. The app doesn't collect, record or store anything you say.</li>
+        <li><b>Speech-to-text is done by your browser.</b> In Google Chrome, the microphone audio is sent to Google's speech service to turn it into text. If that isn't allowed at your school, use the ready lessons, one sentence at a time, or typing in Just talk.</li>
+        <li><b>Live voice needs Google Chrome or Microsoft Edge</b> on a computer, with permission to use the microphone. Everything else works in any modern browser, including on tablets and phones.</li>
+        <li><b>Works offline</b> after your first visit (except live voice). You can also install it: use the install icon in Chrome's address bar, or Share → Add to Home Screen on an iPad.</li>
+      </ul>
+    </section>
+
+    <section id="g-keys" class="guide-sec">
+      <h4>Keyboard shortcuts</h4>
+      <div class="shortcuts">
+        <kbd>Space</kbd><span>Start or pause (in Just talk: microphone on or off)</span>
+        <kbd>→</kbd><span>Next sentence, or the next scene when looking back (a presentation clicker works too)</span>
+        <kbd>←</kbd><span>Look back at the previous scene</span>
+        <kbd>T</kbd><span>Just talk</span>
+        <kbd>M</kbd><span>Microphone on or off</span>
+        <kbd>R</kbd><span>See every scene so far</span>
+        <kbd>F</kbd><span>Full screen for projecting</span>
+        <kbd>?</kbd><span>Open this guide</span>
+      </div>
+      <p class="hint">This is an early version for testing. If something looks wrong or confusing, tell the person who sent you the link.</p>
+    </section>
+
     <div class="foot">
       <button type="button" class="btn btn-primary" id="helpClose">Got it</button>
     </div>
@@ -2542,7 +2746,8 @@ window.LESSONS = [
     calm: false, drawMode: "all", pauseEach: false, autoRecap: true, recapTimer: null,
     popTimes: [], settleTimer: null,
     aiPlan: null, useAi: true, sample: null, planning: null,
-    voiceSeq: 0, ticker: []
+    voiceSeq: 0, ticker: [],
+    talk: false, transcript: [], lastTalk: [], boardIsTalk: false
   };
 
   var $ = function(id){ return document.getElementById(id); };
@@ -2554,7 +2759,9 @@ window.LESSONS = [
    "voiceBtn", "voiceStatus", "voiceInterim", "voiceLog", "followToggle", "drawMode", "calmToggle", "paceStat", "labelsToggle", "tickerToggle", "unsureToggle", "unsureBox", "unsureList", "wdBack", "wdTitle", "wdNow", "wdEmoji", "wdUseEmoji", "wdSearch", "wdGrid", "wdNone", "wdReset", "wdCancel", "recapToggle",
    "gallery", "gallerySearch", "galleryCount", "dictList", "dictForm", "dictWord", "dictEmoji", "resetDict", "toast",
    "boardCount", "startIcons", "emptyMeta", "startActions", "startBtn", "startLabel", "startAlt", "stepStartBtn", "voiceStartBtn",
-   "restartBtn", "micBtn", "pace", "recapRestart", "recapClose", "helpBtn", "helpBack", "helpClose", "newLessonBtn"
+   "restartBtn", "micBtn", "pace", "recapRestart", "recapClose", "helpBtn", "helpBack", "helpClose", "newLessonBtn",
+   "talkHeaderBtn", "startTalk", "talkStartBtn", "talkScreen", "talkBig", "recapSave", "recapTitle", "recapRestartLabel",
+   "talkBar", "liveLine", "liveText", "talkForm", "talkInput", "talkDoneBtn", "helpX", "talkOrb"
   ].forEach(function(id){ el[id] = $(id); });
 
   var EMPTY_SMALL = el.emptySmall.innerHTML;
@@ -2694,6 +2901,7 @@ window.LESSONS = [
     });
   }
   function setBoardHeading(){
+    if (state.talk){ talkHeading(); return; }
     var txt = el.scriptInput.value.trim();
     if (state.lesson && state.lesson.text.trim() === txt){
       el.boardSubject.textContent = state.lesson.subject;
@@ -2708,7 +2916,8 @@ window.LESSONS = [
   }
   // the card on the empty board: what's loaded, and the ways to begin
   function renderStart(){
-    if (listening) return;
+    if (listening || state.talk) return;
+    el.startTalk.hidden = false;
     var txt = el.scriptInput.value.trim();
     var L = state.lesson && state.lesson.text.trim() === txt ? state.lesson : null;
     var n = splitSentences(txt).length;
@@ -2835,9 +3044,10 @@ window.LESSONS = [
     renderHero(rec, true);
     state.active = { id: id, rec: rec, els: Array.prototype.slice.call(el.heroArt.querySelectorAll(".el")) };
   }
+  function showEmpty(){ el.stageEmpty.hidden = state.talk; el.talkScreen.hidden = !state.talk; }
   function renderHero(rec, live){
     clearTimeout(state.settleTimer);
-    el.stageEmpty.hidden = true;
+    el.stageEmpty.hidden = true; el.talkScreen.hidden = true;
     el.hero.hidden = false;
     el.hero.classList.remove("settled", "enter", "history");
     el.heroArt.innerHTML = E.renderScene(rec.scene);
@@ -2888,7 +3098,7 @@ window.LESSONS = [
     state.shownKeys = {}; state.skipped = {}; state.popTimes = [];
     el.hero.hidden = true; el.hero.classList.remove("settled", "enter", "history");
     el.heroArt.innerHTML = ""; el.heroCaption.textContent = "";
-    el.stageEmpty.hidden = false;
+    showEmpty();
     el.filmstrip.innerHTML = ""; el.filmstrip.hidden = true;
     hideRecap();
     updatePace();
@@ -2914,9 +3124,13 @@ window.LESSONS = [
       b.addEventListener("click", function(){ hideRecap(); renderHero(rec, false); });
       el.recapGrid.appendChild(b);
     });
+    var talked = state.boardIsTalk && !state.talk;
+    el.recapTitle.textContent = talked ? "Your slideshow" : "The storyboard";
+    el.recapRestartLabel.textContent = talked ? "Talk again" : "Start over";
+    el.recapSave.hidden = !(talked && state.lastTalk.length);
     el.recap.hidden = false;
     el.hero.hidden = true;
-    el.stageEmpty.hidden = true;
+    el.stageEmpty.hidden = true; el.talkScreen.hidden = true;
     el.filmstrip.hidden = true;
     el.recapBtn.setAttribute("aria-pressed", "true");
   }
@@ -2926,7 +3140,7 @@ window.LESSONS = [
     el.recap.hidden = true;
     el.recapBtn.setAttribute("aria-pressed", "false");
     if (state.frames.length){ el.hero.hidden = false; el.filmstrip.hidden = false; }
-    else el.stageEmpty.hidden = false;
+    else showEmpty();
   }
   el.recapBtn.addEventListener("click", function(){ if (el.recap.hidden) showRecap(); else hideRecap(); });
 
@@ -3026,10 +3240,36 @@ window.LESSONS = [
   }, true);
 
   // ---------- how it works ----------
-  function openHelp(){ el.helpBack.hidden = false; el.helpClose.focus(); }
+  function openHelp(){
+    el.helpBack.hidden = false;
+    el.helpBack.querySelector(".guide").scrollTop = 0;
+    el.helpX.focus({ preventScroll: true });
+  }
   function closeHelp(){ el.helpBack.hidden = true; save(KEYS.help, { seen: true }); }
   el.helpBtn.addEventListener("click", openHelp);
   el.helpClose.addEventListener("click", closeHelp);
+  el.helpX.addEventListener("click", closeHelp);
+  // "Try it" buttons in the guide start that way of using the app
+  el.helpBack.addEventListener("click", function(e){
+    var a = e.target.closest(".guide-nav a");
+    if (a){ e.preventDefault(); var t = document.querySelector(a.getAttribute("href")); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    var b = e.target.closest("[data-try]");
+    if (!b) return;
+    var how = b.dataset.try;
+    closeHelp();
+    if (how === "talk") enterTalk();
+    else {
+      if (state.talk) exitTalk(false);
+      if (!el.scriptInput.value.trim() && LESSONS[0]) selectLesson(LESSONS[0]);
+      if (how === "play"){ resetPlayback(); play(); }
+      else if (how === "step"){ resetPlayback(); nextSentence(); }
+      else if (how === "read"){
+        if (!SR){ toast("Reading aloud needs Google Chrome or Microsoft Edge."); return; }
+        el.followToggle.checked = true; savePrefs(); resetPlayback(); startListening();
+      }
+    }
+    if (window.matchMedia("(max-width: 960px)").matches) el.board.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
   el.helpBack.addEventListener("click", function(e){ if (e.target === el.helpBack) closeHelp(); });
 
   // ---------- playback ----------
@@ -3041,7 +3281,7 @@ window.LESSONS = [
     state.sentences.forEach(function(s, si){
       s.tokens.forEach(function(tok, k){ state.words.push(tok); state.wordMap.push({ s: si, k: k, last: k === s.tokens.length - 1 }); });
     });
-    state.idx = 0; state.cache = {}; state.loaded = true;
+    state.idx = 0; state.cache = {}; state.loaded = true; state.boardIsTalk = false;
     clearBoard(); state.ticker = []; el.ticker.innerHTML = "";
     renderDots(); updateDots(); updateProgress(); setBoardHeading(); renderUnsure();
   }
@@ -3085,6 +3325,7 @@ window.LESSONS = [
     el.playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
   }
   function play(){
+    if (state.talk) exitTalk(false);
     if (needsReload() || state.idx >= state.words.length) loadScript();
     if (!state.words.length){ toast("Pick a lesson or write a script first."); return; }
     hideRecap();
@@ -3108,6 +3349,7 @@ window.LESSONS = [
       var i = indexOfViewing();
       if (i >= 0 && i < state.frames.length - 1){ hideRecap(); renderHero(state.frames[i + 1], false); return; }
     }
+    if (state.talk) return;
     if (needsReload()) loadScript();
     if (!state.words.length){ toast("Pick a lesson or write a script first."); return; }
     if (state.idx >= state.words.length){ toast("That's the end of the lesson. Press R for the recap."); return; }
@@ -3143,11 +3385,27 @@ window.LESSONS = [
     play();
   });
   el.stepStartBtn.addEventListener("click", nextSentence);
-  el.voiceStartBtn.addEventListener("click", function(){ el.followToggle.checked = true; startListening(); });
-  el.restartBtn.addEventListener("click", function(){ resetPlayback(); follow.miss = []; });
-  el.recapRestart.addEventListener("click", function(){ resetPlayback(); });
+  el.voiceStartBtn.addEventListener("click", function(){ el.followToggle.checked = true; savePrefs(); startListening(); });
+  el.talkStartBtn.addEventListener("click", enterTalk);
+  el.talkHeaderBtn.addEventListener("click", function(){
+    enterTalk();
+    if (window.matchMedia("(max-width: 960px)").matches) el.board.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  el.restartBtn.addEventListener("click", function(){
+    if (state.talk){ clearBoard(); state.transcript = []; state.ticker = []; el.ticker.innerHTML = ""; talkHeading(); setLive(listening ? "Listening… start talking." : "Cleared. Talk or type to begin again.", ""); return; }
+    resetPlayback(); follow.miss = [];
+  });
+  el.recapRestart.addEventListener("click", function(){ if (state.boardIsTalk && !state.talk) enterTalk(); else resetPlayback(); });
+  el.recapSave.addEventListener("click", function(){
+    var sents = state.lastTalk.map(function(t){ t = t.trim(); t = t.charAt(0).toUpperCase() + t.slice(1); return /[.!?]$/.test(t) ? t : t + "."; });
+    state.lesson = null;
+    el.scriptInput.value = sents.join(" ");
+    setBoardHeading(); updateSource(); renderUnsure();
+    showTab("script"); el.saveTitle.focus();
+    toast("Your talk is now a script. Add a title and press Save.");
+  });
   el.recapClose.addEventListener("click", hideRecap);
-  el.micBtn.addEventListener("click", function(){ if (listening) stopListening(); else startListening(); });
+  el.micBtn.addEventListener("click", micToggle);
   el.newLessonBtn.addEventListener("click", function(){
     var txt = el.scriptInput.value.trim();
     // a library or saved lesson is safe to clear; unsaved writing is kept
@@ -3198,13 +3456,15 @@ window.LESSONS = [
     if (!el.helpBack.hidden || !el.wdBack.hidden) return;
     // let focused buttons handle Space/Enter themselves
     if ((e.key === " " || e.key === "Enter") && (tag === "BUTTON" || (t && t.getAttribute && t.getAttribute("role") === "button"))) return;
+    if (state.talk && e.key === " "){ e.preventDefault(); micToggle(); return; }
     switch (e.key){
       case " ": e.preventDefault(); if (state.playing) pause(); else play(); break;
-      case "ArrowRight": e.preventDefault(); nextSentence(); break;
-      case "ArrowLeft": e.preventDefault(); prevScene(); break;
+      case "t": case "T": enterTalk(); break;
+      case "ArrowRight": case "PageDown": e.preventDefault(); nextSentence(); break;
+      case "ArrowLeft": case "PageUp": e.preventDefault(); prevScene(); break;
       case "r": case "R": if (el.recap.hidden) showRecap(); else hideRecap(); break;
       case "f": case "F": toggleFullscreen(); break;
-      case "m": case "M": if (!el.micBtn.disabled) el.micBtn.click(); break;
+      case "m": case "M": micToggle(); break;
       case "?": openHelp(); break;
       case "Escape": hideRecap(); break;
     }
@@ -3299,20 +3559,86 @@ window.LESSONS = [
     }
   }
   function voicePhrase(text){
+    text = String(text).trim();
+    if (!text) return;
+    if (state.talk) state.transcript.push(text);
+    var heard = "Heard “" + (text.length > 90 ? text.slice(0, 88) + "…" : text) + "”";
     var words = text.split(/\s+/).filter(Boolean), sc = E.analyze(text, state.extra), hl = E.highlightAts(sc);
     words.forEach(function(w, k){ tick(w, hl[k]); });
-    if (!sc.show) return;
+    if (!sc.show){ if (state.talk) setLive(heard + ". No picture for that one. Try naming something, like “volcano” or “plant”.", "miss"); return; }
     finishActive();
-    if (shouldSkip(sc)) return;
-    el.boardSubject.textContent = "Live"; el.boardSubject.style.background = "var(--coral)"; el.boardTitle.textContent = "Listening…";
+    if (shouldSkip(sc)){ if (state.talk) setLive(heard + ". Same idea as before, so the picture stays.", ""); return; }
+    if (!state.talk){ el.boardSubject.textContent = "Live"; el.boardSubject.style.background = "var(--coral)"; el.boardTitle.textContent = "Listening…"; }
     startFrame("v" + (++state.voiceSeq), sc, -1);
     revealTo(Infinity); finishActive();
+    if (state.talk){ state.boardIsTalk = true; talkHeading(); setLive(heard, ""); }
   }
+
+  // ---------- just talk: no script; each idea spoken (or typed) becomes a picture ----------
+  function setLive(msg, cls){ el.liveText.textContent = msg; el.liveLine.className = "live-line" + (cls ? " " + cls : ""); }
+  function talkHeading(){
+    var n = state.frames.length;
+    el.boardSubject.textContent = "Just talk"; el.boardSubject.style.background = "var(--coral)";
+    el.boardTitle.textContent = n ? n + (n === 1 ? " picture so far" : " pictures so far") : "Live slideshow";
+  }
+  function enterTalk(){
+    if (state.talk){ if (SR && !listening) startListening(); return; }
+    pause(); hideRecap();
+    if (listening) stopListening();
+    state.talk = true; state.loaded = false; state.boardIsTalk = true; state.transcript = [];
+    el.board.classList.add("talking");
+    clearBoard();
+    state.ticker = []; el.ticker.innerHTML = ""; el.dots.innerHTML = ""; el.boardCount.hidden = true;
+    el.talkBar.hidden = false;
+    talkHeading();
+    el.talkBig.textContent = SR ? "Start talking" : "Type to begin";
+    if (SR){ setLive("Starting the microphone…", ""); startListening(); }
+    else { setLive("Live voice doesn't work in this browser (try Google Chrome). You can type sentences below instead.", "miss"); el.talkInput.focus(); }
+  }
+  function exitTalk(showSlides){
+    if (!state.talk) return;
+    if (listening) stopListening();
+    state.talk = false;
+    state.lastTalk = state.transcript.slice();
+    el.board.classList.remove("talking");
+    el.talkBar.hidden = true; el.talkScreen.hidden = true;
+    if (!state.frames.length){ state.boardIsTalk = false; clearBoard(); setBoardHeading(); return; }
+    el.boardSubject.textContent = "Your talk"; el.boardSubject.style.background = "var(--coral)";
+    el.boardTitle.textContent = state.frames.length + (state.frames.length === 1 ? " picture" : " pictures");
+    if (showSlides) showRecap();
+  }
+  function micToggle(){
+    if (listening){ stopListening(); return; }
+    if (state.talk || !el.followToggle.checked || !el.scriptInput.value.trim()) enterTalk();
+    else if (SR) startListening();
+  }
+  el.talkForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    var t = el.talkInput.value.trim();
+    if (!t || !state.talk) return;
+    splitSentences(t).forEach(voicePhrase);
+    el.talkInput.value = "";
+  });
+  el.talkScreen.addEventListener("click", function(e){
+    var b = e.target.closest(".try-chip");
+    if (b) voicePhrase(b.dataset.say);
+  });
+  el.talkOrb.addEventListener("click", function(){
+    if (!SR){ setLive("Live voice doesn't work in this browser (try Google Chrome). Type sentences below instead.", "miss"); el.talkInput.focus(); return; }
+    micToggle();
+  });
+  el.talkDoneBtn.addEventListener("click", function(){
+    if (!state.frames.length){ exitTalk(false); toast("No pictures yet, so there's no slideshow."); return; }
+    exitTalk(true);
+  });
   function makeRecognizer(){
     var r = new SR();
     r.continuous = true; r.interimResults = true; r.lang = "en-US";
     r.onstart = function(){ logVoice("recognizer started"); };
-    r.onaudiostart = function(){ logVoice("audio capture started"); el.voiceStatus.textContent = "Listening. Say a few sentences out loud."; };
+    r.onaudiostart = function(){
+      logVoice("audio capture started"); el.voiceStatus.textContent = "Listening. Say a few sentences out loud.";
+      if (state.talk){ setLive("Listening… start talking.", ""); el.talkBig.textContent = "Listening…"; }
+    };
     r.onspeechstart = function(){ logVoice("speech detected"); };
     r.onresult = function(e){
       var interim = "";
@@ -3329,6 +3655,7 @@ window.LESSONS = [
         if (!fin) interim += t;
       }
       el.voiceInterim.textContent = interim ? "hearing: " + interim : "";
+      if (state.talk && interim) setLive("Hearing: " + interim, "");
     };
     r.onerror = function(e){
       logVoice("error: " + e.error + (e.message ? " (" + e.message + ")" : ""));
@@ -3358,19 +3685,22 @@ window.LESSONS = [
   function startListening(){
     if (!SR) return;
     pause(); listening = true; restarts = [];
+    el.board.classList.add("mic-on");
     el.voiceBtn.textContent = "Stop listening"; el.voiceBtn.setAttribute("data-listening", "true");
     el.micBtn.setAttribute("aria-pressed", "true"); el.micBtn.title = "Stop listening (M)";
-    follow.on = !!(el.followToggle.checked && el.scriptInput.value.trim());
+    follow.on = !state.talk && !!(el.followToggle.checked && el.scriptInput.value.trim());
     follow.miss = [];
     if (follow.on){
       if (needsReload() || state.idx >= state.words.length) loadScript();
       hideRecap();
     }
-    el.startActions.hidden = true;
-    el.emptyBig.textContent = follow.on ? "Start reading" : "Listening…";
-    el.emptyMeta.textContent = follow.on ? "The pictures follow along as you read the script out loud." : "Talk to the class. Pictures appear as you speak.";
-    el.emptySmall.textContent = "Press M or the microphone button to stop.";
-    el.boardSubject.textContent = "● Live"; el.boardSubject.style.background = "var(--coral)";
+    if (!state.talk){
+      el.startActions.hidden = true; el.startTalk.hidden = true;
+      el.emptyBig.textContent = follow.on ? "Start reading" : "Listening…";
+      el.emptyMeta.textContent = follow.on ? "The pictures follow along as you read the script out loud." : "Talk to the class. Pictures appear as you speak.";
+      el.emptySmall.textContent = "Press M or the microphone button to stop.";
+      el.boardSubject.textContent = "● Live"; el.boardSubject.style.background = "var(--coral)";
+    }
     el.voiceStatus.textContent = "Asking for the microphone…";
     logVoice("requesting microphone; secure: " + window.isSecureContext + "; framed: " + (window.top !== window.self));
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ startRecognizer(); return; }
@@ -3386,12 +3716,18 @@ window.LESSONS = [
   }
   function stopListening(msg){
     listening = false; clearTimeout(restartTimer);
+    el.board.classList.remove("mic-on");
     if (recognition){ try{ recognition.abort(); }catch(e){} }
     el.voiceBtn.textContent = "Start listening"; el.voiceBtn.removeAttribute("data-listening");
-    el.micBtn.setAttribute("aria-pressed", "false"); el.micBtn.title = "Follow my voice (M)";
+    el.micBtn.setAttribute("aria-pressed", "false"); el.micBtn.title = "Microphone (M)";
     el.voiceInterim.textContent = ""; el.voiceStatus.textContent = msg || DEFAULT_VOICE;
     if (msg) logVoice("stopped: " + msg);
     follow.on = false;
+    if (state.talk){
+      el.talkBig.textContent = "Tap the microphone to talk";
+      setLive(msg ? msg + " You can type sentences below instead." : "Microphone off. Press the microphone to talk again, or type below.", msg ? "miss" : "");
+      return;
+    }
     setBoardHeading();
     if (msg) toast(/blocked/i.test(msg) ? "The microphone is blocked. See Settings → Live voice." : "Voice stopped. See Settings → Live voice for why.");
   }
