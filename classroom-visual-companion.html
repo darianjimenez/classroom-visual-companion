@@ -219,15 +219,6 @@
   .board.no-ticker .ticker{ visibility: hidden; }
 
   /* ---------- console ---------- */
-  .console{ display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-  .tabs{ display: flex; gap: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 4px; overflow-x: auto; }
-  .tab{
-    flex: 1; white-space: nowrap; border: 0; background: transparent; color: var(--muted); font-weight: 600; font-size: 0.86rem;
-    padding: 8px 10px; border-radius: 9px; cursor: pointer;
-  }
-  .tab[aria-selected="true"]{ background: var(--card); color: #2B2620; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
-  .tab-panel{ display: flex; flex-direction: column; gap: 12px; }
-  .tab-panel[hidden]{ display: none; }
   .block{ background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
   .block h2{ margin: 0 0 10px; font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .muted{ color: var(--muted); }
@@ -378,7 +369,6 @@
   .pace button[aria-pressed="true"]{ background: rgba(243,239,226,0.18); color: var(--chalk); }
   .pace button:focus-visible{ outline: 2px solid var(--yellow); }
   @media (max-width: 640px){
-    .ticker{ order: 3; flex-basis: 100%; }
     .board-bottom{ justify-content: space-between; }
     .t-btn{ width: 40px; height: 40px; }
     .t-btn.play{ width: 48px; height: 48px; }
@@ -479,6 +469,111 @@
     .guide-ways{ grid-template-columns: 1fr; }
     .wd-back{ padding: 8px; }
   }
+
+  /* ---------- calmer layout: mode switch, lesson list beside the board, drawers for the rest ---------- */
+  .app{ max-width: 1380px; padding: 14px 22px 40px; }
+  .topbar{ display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .brand-mark{ width: 38px; height: 38px; }
+  .brand h1{ font-size: 1.12rem; }
+  .brand p{ font-size: 0.82rem; }
+  .modes{ display: flex; gap: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+  .mode{ border: 0; background: transparent; color: var(--muted); font-family: var(--ui); font-weight: 700; font-size: 0.95rem; padding: 9px 18px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; white-space: nowrap; }
+  .mode svg{ width: 18px; height: 18px; }
+  .mode:hover{ color: var(--ink); }
+  .mode[aria-selected="true"]{ background: var(--ink); color: var(--bg); }
+  #talkHeaderBtn[aria-selected="true"]{ background: var(--coral); color: #2E0E06; }
+  .top-actions{ justify-self: end; gap: 2px; }
+  .tool-btn{ border: 0; background: transparent; color: var(--muted); font-family: var(--ui); font-weight: 600; font-size: 0.86rem; display: inline-flex; align-items: center;
+    gap: 6px; padding: 8px 10px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
+  .tool-btn:hover{ background: var(--panel); color: var(--ink); }
+  .tool-btn svg{ width: 20px; height: 20px; }
+  @media (max-width: 760px){
+    .topbar{ grid-template-columns: 1fr auto; row-gap: 10px; }
+    .modes{ grid-column: 1 / -1; grid-row: 2; }
+    .mode{ flex: 1; }
+    .brand p{ display: none; }
+    .top-actions .label{ display: none; }
+  }
+
+  .layout{ grid-template-columns: minmax(0, 1fr) 360px; gap: 22px; }
+  @media (max-width: 960px){ .layout{ grid-template-columns: minmax(0, 1fr); } }
+  body.mode-talk .layout{ grid-template-columns: minmax(0, 1fr); max-width: 1060px; margin: 0 auto; }
+  body.mode-talk .library{ display: none; }
+
+  .library{ background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  @media (min-width: 961px){ .library{ position: sticky; top: 14px; max-height: calc(100vh - 28px); } }
+  .lib-head{ display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .lib-head h2{ margin: 0; font-size: 1.08rem; }
+  .library .chips{ flex-wrap: nowrap; overflow-x: auto; margin: 0; padding-bottom: 2px; scrollbar-width: none; }
+  .library .chips::-webkit-scrollbar{ display: none; }
+  .library .chip{ flex: none; }
+  .library > *:not(.lesson-list){ flex: none; }
+  .library .lesson-list{ max-height: none; flex: 1; margin-top: 0; min-height: 0; }
+  @media (max-width: 960px){ .library .lesson-list{ max-height: 520px; } }
+  .lesson-card{ border-color: transparent; }
+  .lesson-card:hover{ border-color: var(--line); }
+
+  .board-heading{ align-items: center; }
+  .edit-btn{ background: transparent; border: 0; color: var(--chalk-muted); width: 30px; height: 30px; border-radius: 8px; display: inline-flex; align-items: center;
+    justify-content: center; cursor: pointer; flex: none; padding: 0; }
+  .edit-btn:hover{ background: rgba(243,239,226,0.12); color: var(--chalk); }
+  .edit-btn svg{ width: 17px; height: 17px; }
+  .board.talking .edit-btn{ display: none; }
+  .start-alt .chalk-btn{ border-color: rgba(243,239,226,0.2); color: var(--chalk-muted); }
+  .start-alt .chalk-btn:hover{ color: var(--chalk); }
+  .start-talk{ margin-top: 2px; }
+  .talk-link{ all: unset; cursor: pointer; color: #F0A28E; font-size: 0.9rem; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; padding: 4px 6px; border-radius: 6px; }
+  .talk-link:hover{ color: #FFC0B0; }
+  .talk-link:focus-visible{ outline: 2px solid var(--yellow); }
+
+  .ticker{ border-top: 1px dashed rgba(243,239,226,0.2); padding: 8px 4px 2px; margin-top: 6px; min-height: 2.3em; }
+  .board-bottom{ display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; border-top: 0; margin-top: 0; padding-top: 8px; }
+  .bb-left{ justify-self: start; display: flex; gap: 8px; }
+  .bb-right{ justify-self: end; }
+  @media (max-width: 640px){
+    .board-bottom{ grid-template-columns: auto 1fr; }
+    .transport{ justify-self: center; }
+    .bb-right{ grid-column: 1 / -1; justify-self: center; }
+  }
+
+  .scrim{ position: fixed; inset: 0; background: rgba(20,16,10,0.4); z-index: 40; }
+  .drawer{ position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: var(--panel); border-left: 1px solid var(--line); z-index: 45;
+    display: flex; flex-direction: column; box-shadow: -24px 0 50px -24px rgba(0,0,0,0.45); animation: drawerIn 200ms ease; }
+  .drawer-wide{ width: min(640px, 100vw); }
+  @keyframes drawerIn{ from{ transform: translateX(28px); opacity: 0; } to{ transform: none; opacity: 1; } }
+  @media (prefers-reduced-motion: reduce){ .drawer{ animation: none; } }
+  .drawer-head{ display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px; border-bottom: 1px solid var(--line); }
+  .drawer-head h2{ margin: 0; font-size: 1.15rem; }
+  .drawer-x{ all: unset; cursor: pointer; font-size: 1.7rem; line-height: 1; color: var(--muted); padding: 0 8px 2px; border-radius: 8px; }
+  .drawer-x:hover{ background: var(--panel-2); color: var(--ink); }
+  .drawer-x:focus-visible{ outline: 2.5px solid var(--blue); }
+  .drawer-body{ overflow-y: auto; padding: 16px 20px 28px; display: flex; flex-direction: column; gap: 14px; }
+  .drawer .block{ background: var(--panel-2); }
+  .drawer textarea{ min-height: 220px; }
+
+  /* switches instead of checkboxes */
+  .check{ flex-direction: row-reverse; justify-content: space-between; align-items: center; gap: 14px; }
+  .check input[type="checkbox"]{ -webkit-appearance: none; appearance: none; width: 40px; height: 23px; border-radius: 999px; background: var(--line); position: relative;
+    flex: none; margin: 0; cursor: pointer; transition: background 150ms ease; }
+  .check input[type="checkbox"]::after{ content: ""; position: absolute; top: 3px; left: 3px; width: 17px; height: 17px; border-radius: 50%; background: #FFFFFF;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3); transition: transform 150ms ease; }
+  .check input[type="checkbox"]:checked{ background: var(--green); }
+  .check input[type="checkbox"]:checked::after{ transform: translateX(17px); }
+  .row .check{ flex-direction: row; }
+
+  .seg{ display: flex; gap: 4px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 4px; }
+  .seg button{ flex: 1; border: 0; background: transparent; color: var(--muted); font-family: var(--ui); font-weight: 700; font-size: 0.88rem; padding: 8px; border-radius: 9px; cursor: pointer; }
+  .seg button[aria-selected="true"]{ background: var(--card); color: #2B2620; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+  .dgrid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-top: 10px; }
+  .dcard{ all: unset; box-sizing: border-box; cursor: pointer; background: var(--card); border-radius: 12px; padding: 6px; box-shadow: 0 6px 14px -10px rgba(0,0,0,0.5); transition: transform 140ms ease; }
+  .dcard:hover{ transform: translateY(-2px); }
+  .dcard:focus-visible{ outline: 2.5px solid var(--blue); outline-offset: 2px; }
+  .dcard[hidden]{ display: none; }
+  .dcard svg{ display: block; width: 100%; height: auto; border-radius: 8px; }
+  .dcard b{ display: block; color: #2B2620; font-size: 0.85rem; margin: 6px 3px 0; }
+  .dcard span{ display: block; color: #6F654F; font-size: 0.74rem; margin: 1px 3px 3px; }
+  .pane .gallery{ max-height: none; }
 </style>
 </head>
 <body>
@@ -495,15 +590,29 @@
       </svg>
       <div>
         <h1>Classroom Visual Companion</h1>
-        <p>Turns what you say into a live picture storyboard for your class.</p>
+        <p>Pictures for what you say, as you say it.</p>
       </div>
     </div>
-    <div class="top-actions">
-      <button class="btn btn-talk" id="talkHeaderBtn" type="button" aria-label="Just talk: speak and pictures appear">
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
-        <span class="label">Just talk</span>
+    <nav class="modes" role="tablist" aria-label="Mode">
+      <button class="mode" id="modeLessons" type="button" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>
+        Lessons
       </button>
-      <button class="btn btn-ghost" id="helpBtn" type="button" aria-label="Guide">
+      <button class="mode" id="talkHeaderBtn" type="button" role="tab" aria-selected="false" title="Speak and pictures appear (T)">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+        Just talk
+      </button>
+    </nav>
+    <div class="top-actions">
+      <button class="tool-btn" id="picturesBtn" type="button" aria-label="Pictures and diagrams" title="Pictures and diagrams">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+        <span class="label">Pictures</span>
+      </button>
+      <button class="tool-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg>
+        <span class="label">Settings</span>
+      </button>
+      <button class="tool-btn" id="helpBtn" type="button" aria-label="Guide" title="Guide (?)">
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.4 9.3a2.7 2.7 0 1 1 3.8 2.5c-.8.4-1.2 1-1.2 1.9v.4"/><circle cx="12" cy="17.4" r="0.6" fill="currentColor"/></svg>
         <span class="label">Guide</span>
       </button>
@@ -516,6 +625,9 @@
         <div class="board-heading">
           <span class="subject-tag" id="boardSubject">Lesson</span>
           <span class="board-title" id="boardTitle">Pick a lesson</span>
+          <button class="edit-btn" id="editScriptBtn" type="button" title="Edit the script" aria-label="Edit the script">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>
+          </button>
         </div>
         <div class="board-tools">
           <span class="board-count" id="boardCount" hidden></span>
@@ -546,21 +658,19 @@
             </div>
           </div>
           <div class="start-talk" id="startTalk">
-            <span class="or">or</span>
-            <button class="talk-go" id="talkStartBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Just start talking</button>
-            <span class="start-meta">No script needed. Each idea you say becomes a picture.</span>
+            <button class="talk-link" id="talkStartBtn" type="button">or just start talking, no script needed</button>
           </div>
-          <span class="small" id="emptySmall"><span class="kbd">Space</span> start or pause · <span class="kbd">→</span> next sentence · <span class="kbd">F</span> full screen</span>
+          <span class="small" id="emptySmall"></span>
         </div>
         <div class="talk-screen start-card" id="talkScreen" hidden>
           <button type="button" class="talk-orb" id="talkOrb" aria-label="Microphone on or off"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
           <span class="big" id="talkBig">Start talking</span>
-          <span class="start-meta">Talk the way you would to your class. Pause for a moment between ideas: each idea becomes a picture.</span>
+          <span class="start-meta">Talk the way you would to your class. Each idea becomes a picture, and naming a topic like “the water cycle” shows its diagram.</span>
           <div class="talk-try">
-            <span class="try-label">No microphone handy? Tap an example to see what happens:</span>
+            <span class="try-label">No microphone handy? Tap an example:</span>
             <button type="button" class="try-chip" data-say="The sun heats the ocean and the water turns into vapor.">The sun heats the ocean and the water turns into vapor.</button>
             <button type="button" class="try-chip" data-say="A caterpillar eats leaves and turns into a butterfly.">A caterpillar eats leaves and turns into a butterfly.</button>
-            <button type="button" class="try-chip" data-say="The heart pumps blood to the lungs.">The heart pumps blood to the lungs.</button>
+            <button type="button" class="try-chip" data-say="Today we will learn the parts of a plant.">Today we will learn the parts of a plant.</button>
             <button type="button" class="try-chip" data-say="Volcanoes erupt when hot magma rises.">Volcanoes erupt when hot magma rises.</button>
           </div>
         </div>
@@ -594,7 +704,14 @@
         </form>
       </div>
 
+      <div class="ticker" id="ticker" aria-hidden="true"></div>
+
       <div class="board-bottom">
+        <div class="bb-left">
+          <button class="t-btn mic" id="micBtn" type="button" title="Microphone (M)" aria-label="Microphone" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="fill:none"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+          </button>
+        </div>
         <div class="transport">
           <button class="t-btn" id="restartBtn" type="button" title="Start over" aria-label="Start over">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="fill:none"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>
@@ -604,148 +721,151 @@
             <svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
           </button>
           <button class="t-btn" id="nextBtn" type="button" title="Next sentence (→)" aria-label="Next sentence"><svg viewBox="0 0 24 24"><path d="M15.6 5H18v14h-2.4zM4 5v14l10.5-7z"/></svg></button>
-          <button class="t-btn mic" id="micBtn" type="button" title="Microphone (M)" aria-label="Microphone" aria-pressed="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="fill:none"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
-          </button>
         </div>
-        <div class="ticker" id="ticker" aria-hidden="true"></div>
-        <div class="pace" id="pace" role="group" aria-label="Reading pace">
-          <button type="button" data-wpm="100" aria-pressed="false">Slow</button>
-          <button type="button" data-wpm="130" aria-pressed="true">Normal</button>
-          <button type="button" data-wpm="170" aria-pressed="false">Fast</button>
+        <div class="bb-right">
+          <div class="pace" id="pace" role="group" aria-label="Reading pace">
+            <button type="button" data-wpm="100" aria-pressed="false">Slow</button>
+            <button type="button" data-wpm="130" aria-pressed="true">Normal</button>
+            <button type="button" data-wpm="170" aria-pressed="false">Fast</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <aside class="console">
-      <nav class="tabs" role="tablist" aria-label="Controls">
-        <button class="tab" role="tab" data-tab="lessons" aria-selected="true">Lessons</button>
-        <button class="tab" role="tab" data-tab="script" aria-selected="false">Script</button>
-        <button class="tab" role="tab" data-tab="settings" aria-selected="false">Settings</button>
-        <button class="tab" role="tab" data-tab="pictures" aria-selected="false">Pictures</button>
-      </nav>
-
-      <section class="tab-panel" data-panel="lessons">
-        <div class="block">
-          <div class="lesson-tools">
-            <input type="search" id="lessonSearch" placeholder="Search, like “volcano” or “fractions”" aria-label="Search lessons">
-            <button class="btn btn-primary" id="newLessonBtn" type="button">+ Write my own</button>
-          </div>
-          <div class="chips" id="subjectChips"></div>
-          <div class="lesson-list" id="lessonList"></div>
-        </div>
-      </section>
-
-      <section class="tab-panel" data-panel="script" hidden>
-        <div class="block">
-          <h2>What you'll say <span class="beta" id="wordCount"></span></h2>
-          <textarea id="scriptInput" aria-label="Lesson script" placeholder="Paste or type what you'll say to the class. Short, plain sentences work best, like “Water evaporates into the air.”"></textarea>
-          <div class="source-line" id="sourceLine"><span class="sw"></span><span id="sourceText"></span></div>
-          <p class="hint" id="progressLabel"></p>
-          <div class="unsure-box" id="unsureBox" hidden>
-            <h3>Words that need your help</h3>
-            <p class="hint" style="margin:0 0 6px;">These can mean different things, so they show no picture yet. Tap one to choose.</p>
-            <div class="dict-list" id="unsureList"></div>
-          </div>
-        </div>
-
-        <div class="block" id="aiBlock" hidden>
-          <h2>Plan scenes with Claude</h2>
-          <p class="hint" style="margin-top:0;">The built-in reader goes word by word. Claude reads the whole lesson once and picks pictures by meaning. It uses your Claude account and asks permission the first time.</p>
-          <div class="row" style="margin-top:10px;">
-            <button class="btn btn-dark" id="planBtn" type="button">✨ Plan scenes with Claude</button>
-            <label class="check"><input type="checkbox" id="useAiToggle" checked> Use Claude's plan</label>
-          </div>
-          <p class="hint" id="aiStatus" hidden></p>
-        </div>
-
-        <div class="block">
-          <h2>Save it for next time</h2>
-          <div class="row">
-            <input type="text" id="saveTitle" placeholder="Lesson title" maxlength="60" style="flex:1; min-width:160px;" aria-label="Lesson title">
-            <button class="btn btn-green" id="saveBtn" type="button">Save</button>
-          </div>
-          <p class="hint">Saved on this device under Lessons → My lessons.</p>
-        </div>
-      </section>
-
-      <section class="tab-panel" data-panel="settings" hidden>
-        <div class="block stack">
-          <h2 style="margin:0;">Playback</h2>
-          <div class="range-row">Pace
-            <input type="range" id="speedSlider" min="60" max="220" step="10" value="130" aria-label="Words per minute">
-            <span id="speedLabel">130 wpm</span>
-          </div>
-          <label class="check"><input type="checkbox" id="pauseEach"> <span>Pause after each sentence<small>Press Play or → to go on, so you can talk about each picture.</small></span></label>
-        </div>
-        <div class="block">
-          <h2>Live voice <span class="beta">beta</span></h2>
-          <button class="btn" id="voiceBtn" type="button">Start listening</button>
-          <p class="hint">Use <b>Read it aloud</b> to have the pictures follow your script, or <b>Just talk</b> to speak freely with no script.</p>
-          <label class="check" style="margin-top:10px;"><input type="checkbox" id="followToggle" checked> <span>Follow the lesson script<small>When a script is loaded, the microphone follows along as you read it. Turn off to always use Just talk.</small></span></label>
-          <p class="hint" id="voiceStatus">Works best in Google Chrome, which sends the audio to Google's speech service to turn it into text.</p>
-          <p class="hint" id="voiceInterim" style="font-style:italic; min-height:1.2em;"></p>
-          <details><summary class="hint">Voice diagnostics</summary><pre id="voiceLog"></pre></details>
-        </div>
-        <div class="block stack">
-          <h2 style="margin:0;">Keep it calm</h2>
-          <p class="hint" style="margin:0;">Fewer, steadier pictures help students who are easily distracted. Older scenes fade back after their moment.</p>
-          <label class="field">Draw a scene
-            <select id="drawMode">
-              <option value="all">for every sentence with something to show</option>
-              <option value="new">only when a new idea appears</option>
-            </select>
-          </label>
-          <label class="check"><input type="checkbox" id="calmToggle"> <span>Calm mode<small>No motion, and only new ideas get a scene.</small></span></label>
-          <p class="hint" id="paceStat" style="margin:0;"></p>
-        </div>
-        <div class="block stack">
-          <h2 style="margin:0;">On the board</h2>
-          <label class="check"><input type="checkbox" id="labelsToggle" checked> <span>Word labels on drawings<small>Turn off to let students name things themselves.</small></span></label>
-          <label class="check"><input type="checkbox" id="tickerToggle" checked> <span>Spoken words under the board<small>Tap any of them to change its picture.</small></span></label>
-          <label class="check"><input type="checkbox" id="unsureToggle"> <span>Underline words that need your help<small>Marks words that show no picture because they could mean different things.</small></span></label>
-          <label class="check"><input type="checkbox" id="recapToggle" checked> <span>Show the whole storyboard when the lesson ends</span></label>
-          <p class="hint" style="margin:0;">Settings are remembered on this device.</p>
-        </div>
-        <div class="block">
-          <h2>Keyboard shortcuts</h2>
-          <div class="shortcuts">
-            <kbd>Space</kbd><span>Start or pause</span>
-            <kbd>→</kbd><span>Next sentence (or next scene when looking back)</span>
-            <kbd>←</kbd><span>Look back at the previous scene</span>
-            <kbd>M</kbd><span>Turn the microphone on or off</span>
-            <kbd>T</kbd><span>Just talk (no script)</span>
-            <kbd>R</kbd><span>See every scene so far</span>
-            <kbd>F</kbd><span>Full screen for projecting</span>
-            <kbd>?</kbd><span>Open the guide</span>
-            <kbd>Esc</kbd><span>Close the storyboard or a window</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="tab-panel" data-panel="pictures" hidden>
-        <div class="block">
-          <h2>Built-in drawings <span class="beta" id="galleryCount"></span></h2>
-          <input type="search" id="gallerySearch" placeholder="Search drawings, like “rocket” or “vote”" aria-label="Search drawings">
-          <div class="gallery" id="gallery"></div>
-          <p class="hint">Picture credits: hand-drawn icons by this project; emoji artwork by <a href="credits.html" target="_blank" rel="noopener">OpenMoji</a> (CC BY-SA 4.0).</p>
-        </div>
-        <div class="block">
-          <h2>Your word pictures</h2>
-          <p class="hint" style="margin-top:0;">Words you've given a picture, or turned off. Tip: tap any word under the board while a lesson plays.</p>
-          <div class="dict-list" id="dictList"></div>
-          <form class="dict-form" id="dictForm">
-            <input type="text" id="dictWord" placeholder="word" maxlength="24" required aria-label="Word">
-            <input type="text" id="dictEmoji" placeholder="🐸" maxlength="4" required aria-label="Emoji">
-            <button class="btn btn-green" type="submit">Add</button>
-          </form>
-          <button type="button" class="link" id="resetDict">Reset word pictures</button>
-        </div>
-      </section>
+    <aside class="library" aria-label="Lessons">
+      <div class="lib-head">
+        <h2>Lessons</h2>
+        <button class="btn btn-primary" id="newLessonBtn" type="button">+ New lesson</button>
+      </div>
+      <input type="search" id="lessonSearch" placeholder="Search, like “volcano” or “fractions”" aria-label="Search lessons">
+      <div class="chips" id="subjectChips"></div>
+      <div class="lesson-list" id="lessonList"></div>
     </aside>
   </main>
-
 </div>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<aside class="drawer" data-drawer="script" role="dialog" aria-labelledby="dScriptTitle" hidden>
+  <div class="drawer-head"><h2 id="dScriptTitle">Script</h2><button type="button" class="drawer-x" aria-label="Close">×</button></div>
+  <div class="drawer-body">
+    <div class="block">
+      <h2>What you'll say <span class="beta" id="wordCount"></span></h2>
+      <textarea id="scriptInput" aria-label="Lesson script" placeholder="Paste or type what you'll say to the class. Short, plain sentences work best, like “Water evaporates into the air.” Name a topic, like “the water cycle”, to show its diagram."></textarea>
+      <div class="source-line" id="sourceLine"><span class="sw"></span><span id="sourceText"></span></div>
+      <p class="hint" id="progressLabel"></p>
+      <div class="unsure-box" id="unsureBox" hidden>
+        <h3>Words that need your help</h3>
+        <p class="hint" style="margin:0 0 6px;">These can mean different things, so they show no picture yet. Tap one to choose.</p>
+        <div class="dict-list" id="unsureList"></div>
+      </div>
+    </div>
+    <div class="block" id="aiBlock" hidden>
+      <h2>Plan scenes with Claude</h2>
+      <p class="hint" style="margin-top:0;">Claude reads the whole lesson once and picks pictures by meaning. It uses your Claude account and asks permission the first time.</p>
+      <div class="row" style="margin-top:10px;">
+        <button class="btn btn-dark" id="planBtn" type="button">✨ Plan scenes with Claude</button>
+        <label class="check"><input type="checkbox" id="useAiToggle" checked> <span>Use Claude's plan</span></label>
+      </div>
+      <p class="hint" id="aiStatus" hidden></p>
+    </div>
+    <div class="block">
+      <h2>Save it for next time</h2>
+      <div class="row">
+        <input type="text" id="saveTitle" placeholder="Lesson title" maxlength="60" style="flex:1; min-width:160px;" aria-label="Lesson title">
+        <button class="btn btn-green" id="saveBtn" type="button">Save</button>
+      </div>
+      <p class="hint">Saved on this device under Lessons → My lessons.</p>
+    </div>
+  </div>
+</aside>
+
+<aside class="drawer" data-drawer="settings" role="dialog" aria-labelledby="dSettingsTitle" hidden>
+  <div class="drawer-head"><h2 id="dSettingsTitle">Settings</h2><button type="button" class="drawer-x" aria-label="Close">×</button></div>
+  <div class="drawer-body">
+    <p class="hint" style="margin:0;">Remembered on this device.</p>
+    <div class="block stack">
+      <h2 style="margin:0;">Playback</h2>
+      <div class="range-row">Pace
+        <input type="range" id="speedSlider" min="60" max="220" step="10" value="130" aria-label="Words per minute">
+        <span id="speedLabel">130 wpm</span>
+      </div>
+      <label class="check"><input type="checkbox" id="pauseEach"> <span>Pause after each sentence<small>Press Play or → to go on, so you can talk about each picture.</small></span></label>
+    </div>
+    <div class="block stack">
+      <h2 style="margin:0;">Keep it calm</h2>
+      <label class="check"><input type="checkbox" id="calmToggle"> <span>Calm mode<small>No motion, and only new ideas get a scene.</small></span></label>
+      <label class="field">Draw a scene
+        <select id="drawMode">
+          <option value="all">for every sentence with something to show</option>
+          <option value="new">only when a new idea appears</option>
+        </select>
+      </label>
+      <p class="hint" id="paceStat" style="margin:0;"></p>
+    </div>
+    <div class="block stack">
+      <h2 style="margin:0;">On the board</h2>
+      <label class="check"><input type="checkbox" id="labelsToggle" checked> <span>Word labels on pictures<small>Turn off to let students name things themselves.</small></span></label>
+      <label class="check"><input type="checkbox" id="tickerToggle" checked> <span>Spoken words under the board<small>Tap any of them to change its picture.</small></span></label>
+      <label class="check"><input type="checkbox" id="unsureToggle"> <span>Underline words that need your help<small>Words with no picture because they could mean different things.</small></span></label>
+      <label class="check"><input type="checkbox" id="recapToggle" checked> <span>Show every scene when the lesson ends</span></label>
+    </div>
+    <div class="block stack">
+      <h2 style="margin:0;">Live voice <span class="beta">beta</span></h2>
+      <label class="check"><input type="checkbox" id="followToggle" checked> <span>Follow the lesson script<small>With a script loaded, the microphone follows along as you read it. Turn off to always use Just talk.</small></span></label>
+      <div class="row"><button class="btn" id="voiceBtn" type="button">Start listening</button></div>
+      <p class="hint" id="voiceStatus" style="margin:0;">Works best in Google Chrome, which sends the audio to Google's speech service to turn it into text.</p>
+      <p class="hint" id="voiceInterim" style="font-style:italic; min-height:1.2em; margin:0;"></p>
+      <details><summary class="hint">Voice diagnostics</summary><pre id="voiceLog"></pre></details>
+    </div>
+    <div class="block">
+      <h2>Keyboard shortcuts</h2>
+      <div class="shortcuts">
+        <kbd>Space</kbd><span>Start or pause</span>
+        <kbd>→</kbd><span>Next sentence (a clicker works too)</span>
+        <kbd>←</kbd><span>Previous scene</span>
+        <kbd>M</kbd><span>Microphone on or off</span>
+        <kbd>T</kbd><span>Just talk</span>
+        <kbd>R</kbd><span>See every scene so far</span>
+        <kbd>F</kbd><span>Full screen</span>
+        <kbd>?</kbd><span>Guide</span>
+        <kbd>Esc</kbd><span>Close a panel or window</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<aside class="drawer drawer-wide" data-drawer="pictures" role="dialog" aria-labelledby="dPicturesTitle" hidden>
+  <div class="drawer-head"><h2 id="dPicturesTitle">Pictures</h2><button type="button" class="drawer-x" aria-label="Close">×</button></div>
+  <div class="drawer-body">
+    <div class="seg" id="picTabs" role="tablist" aria-label="Picture types">
+      <button type="button" role="tab" data-pane="diagrams" aria-selected="true">Diagrams</button>
+      <button type="button" role="tab" data-pane="drawings" aria-selected="false">Drawings</button>
+      <button type="button" role="tab" data-pane="words" aria-selected="false">My words</button>
+    </div>
+    <section class="pane" data-pane="diagrams">
+      <p class="hint" style="margin:0 0 8px;">Name a topic while you teach and its diagram appears, with the part you mention highlighted. Tap one to show it now.</p>
+      <input type="search" id="diagramSearch" placeholder="Search diagrams, like “cell” or “fractions”" aria-label="Search diagrams">
+      <div class="dgrid" id="diagramGrid"></div>
+    </section>
+    <section class="pane" data-pane="drawings" hidden>
+      <p class="hint" style="margin:0 0 8px;"><span id="galleryCount"></span></p>
+      <input type="search" id="gallerySearch" placeholder="Search drawings, like “rocket” or “vote”" aria-label="Search drawings">
+      <div class="gallery" id="gallery"></div>
+      <p class="hint">Hand-drawn pictures by this project; emoji artwork by <a href="credits.html" target="_blank" rel="noopener">OpenMoji</a> (CC BY-SA 4.0).</p>
+    </section>
+    <section class="pane" data-pane="words" hidden>
+      <p class="hint" style="margin:0 0 8px;">Words you've given a picture, or turned off. Tip: tap any word under the board while a lesson plays.</p>
+      <div class="dict-list" id="dictList"></div>
+      <form class="dict-form" id="dictForm">
+        <input type="text" id="dictWord" placeholder="word" maxlength="24" required aria-label="Word">
+        <input type="text" id="dictEmoji" placeholder="🐸" maxlength="4" required aria-label="Emoji">
+        <button class="btn btn-green" type="submit">Add</button>
+      </form>
+      <button type="button" class="link" id="resetDict">Reset word pictures</button>
+    </section>
+  </div>
+</aside>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script id="scene-engine">
@@ -1508,6 +1628,45 @@ window.SceneEngine = (function(){
   I.password = rct(8, 30, 84, 40, "#FFFFFF", 8) + [26, 40, 54, 68].map(function(x){ return circ(x, 50, 5, INK, 0); }).join("") + ln(78, 40, 78, 60, "#6FA8D6", 3);
   I.piggybank = pth("M18 66 C10 40 28 28 52 28 C78 28 92 44 86 66 C84 74 80 78 76 80 V90 H64 V84 H40 V90 H28 V80 C22 76 20 72 18 66 Z", "#F2A9BE") + pth("M30 36 L34 20 L46 30 Z", "#F2A9BE") + ell(14, 56, 7, 9, "#E88AA6", 3) + circ(34, 52, 3, INK, 0) + rct(46, 24, 20, 5, INK, 2, 0) + circ(56, 14, 7, "#F6C343", 2.5) + pth("M88 52 C94 50 94 60 88 58", "none", { w: 3 });
 
+  // ---------- drawings, pack 5 (gaps found by testing a K-12 vocabulary list) ----------
+  I.feelings = circ(34, 50, 24, "#F6C343") + circ(26, 44, 2.6, INK, 0) + circ(42, 44, 2.6, INK, 0) + pth("M24 56 Q34 66 44 56", "none", { w: 3 }) +
+    circ(68, 50, 24, "#8EC5E4") + circ(60, 44, 2.6, INK, 0) + circ(76, 44, 2.6, INK, 0) + pth("M58 62 Q68 54 78 62", "none", { w: 3 });
+  I.soil = pth("M50 40 V24 M50 32 C44 22 36 24 34 30 M50 30 C56 20 64 22 66 28", "none", { stroke: "#4F9D78", w: 3.5 }) +
+    pth("M6 86 C12 56 34 40 50 40 C66 40 88 56 94 86 Z", "#8A5A3C") + [[30, 72], [54, 60], [70, 76], [42, 80], [62, 52]].map(function(p){ return circ(p[0], p[1], 3, "#C9A27A", 1.5); }).join("") +
+    pth("M30 60 C36 54 42 64 48 58", "none", { stroke: "#F29BB5", w: 4 });
+  I.liver = pth("M10 46 C10 28 40 22 72 26 C90 28 94 40 88 50 C80 64 54 74 32 72 C18 70 10 60 10 46 Z", "#A84B3F") + pth("M50 30 C48 44 46 56 40 70", "none", { stroke: "#7E3329", w: 2.5 }) +
+    ell(28, 42, 8, 5, "#C46A5C", 0);
+  I.friction = rct(28, 36, 42, 32, "#E8B46A", 4) + rct(2, 72, 96, 14, "#C9A27A", 0, 0) +
+    pline([[2, 72], [10, 66], [18, 72], [26, 66], [34, 72], [42, 66], [50, 72], [58, 66], [66, 72], [74, 66], [82, 72], [90, 66], [98, 72]], INK, 3) +
+    ln(74, 52, 86, 52, INK, 4) + poly([[96, 52], [86, 45], [86, 59]], INK, 0) + pth("M20 46 Q15 40 20 34 M12 52 Q7 46 12 40", "none", { stroke: "#E06D3A", w: 3 });
+  I.wedge = rct(12, 50, 76, 38, "#C98F5B", 6) + pth("M50 88 V64", "none", { w: 2.5 }) + ell(26, 69, 6, 12, "#E3B887", 1.5) + poly([[34, 10], [66, 10], [50, 66]], "#C9CED4");
+  I.tally = [24, 40, 56, 72].map(function(x){ return ln(x, 22, x, 78, INK, 5.5); }).join("") + ln(12, 70, 84, 30, "#D9674B", 5.5);
+  I.shapes = circ(30, 34, 19, "#F29BB5") + rct(54, 16, 34, 34, "#7FB8DE", 3) + poly([[50, 52], [76, 90], [24, 90]], "#9CCB7A");
+  I.lines = ln(10, 32, 90, 32, INK, 5) + ln(10, 58, 90, 58, INK, 5) + ln(56, 10, 56, 90, "#D9674B", 5) + pth("M56 70 H68 V58", "none", { w: 2.5 }) +
+    ln(24, 26, 28, 38, "#4A84B8", 2.5) + ln(24, 52, 28, 64, "#4A84B8", 2.5);
+  I.pi = circ(50, 50, 40, "#FFF1C9") + txt("π", 50, 70, 58, INK);
+  I.punctuation = rct(6, 24, 88, 52, "#FFFFFF", 10) + txt(". , ? !", 50, 63, 32, INK);
+  I.chalkboard = rct(4, 12, 92, 66, "#8A5A3C", 6) + rct(11, 19, 78, 52, "#2F5D50", 3, 0) + txt("ABC", 50, 46, 18, "#F3EFE2") +
+    pth("M22 58 H64", "none", { stroke: "#F3EFE2", w: 2.5 }) + ln(30, 78, 24, 92, INK, 3) + ln(70, 78, 76, 92, INK, 3);
+  I.migration = [[70, 44], [56, 34], [42, 24], [56, 58], [42, 68]].map(function(p){
+    return pth("M" + (p[0] - 8) + " " + (p[1] + 2) + " Q" + (p[0] - 4) + " " + (p[1] - 6) + " " + p[0] + " " + p[1] + " Q" + (p[0] + 4) + " " + (p[1] - 6) + " " + (p[0] + 8) + " " + (p[1] + 2), "none", { w: 3 });
+  }).join("") + ln(14, 84, 80, 84, "#4A84B8", 3, { dash: "6 5" }) + poly([[92, 84], [80, 78], [80, 90]], "#4A84B8", 0);
+  I.hibernate = pth("M6 90 C6 26 94 26 94 90 Z", "#9AA3AD") + pth("M20 90 C20 46 80 46 80 90 Z", "#4A4540", { w: 2 }) +
+    ell(52, 78, 22, 12, "#8A5A3C", 2.5) + circ(34, 72, 9, "#8A5A3C", 2.5) + circ(29, 64, 3.5, "#8A5A3C", 2) + pth("M30 74 h5", "none", { w: 2 }) +
+    txt("z", 64, 58, 14, "#F3EFE2") + txt("z", 74, 48, 11, "#F3EFE2");
+  I.atmosphere = pth("M4 80 A46 46 0 0 1 96 80", "none", { stroke: "#BFE3F5", w: 7 }) + pth("M14 80 A36 36 0 0 1 86 80", "none", { stroke: "#8EC5E4", w: 6 }) +
+    circ(50, 80, 26, "#6FA8D6") + pth("M36 70 C44 62 54 70 48 80 C42 88 32 82 36 70 Z", "#7BB662", { w: 2 }) + blob([[74, 30, 7], [82, 28, 6]], "#FFFFFF");
+  I.dissolve = pth("M22 18 L30 90 H70 L78 18 Z", "#D6ECFA") + ln(26, 40, 74, 40, "#8EC5E4", 2) + rct(38, 66, 13, 13, "#FFFFFF", 2, 2) +
+    circ(60, 74, 2.5, "#FFFFFF", 1.5) + circ(56, 60, 2, "#FFFFFF", 1.5) + circ(46, 52, 1.8, "#FFFFFF", 1.2) + pth("M34 50 C42 44 56 56 66 48", "none", { stroke: "#4A90C8", w: 2.5 });
+  I.variable = rct(18, 18, 64, 64, "#FFF1C9", 12) + txt("x", 50, 66, 50, "#4A84B8");
+  I.intestines = pth("M22 20 H74 C88 20 88 40 74 40 H28 C14 40 14 60 28 60 H72 C86 60 86 80 72 80 H30", "none", { stroke: INK, w: 13 }) +
+    pth("M22 20 H74 C88 20 88 40 74 40 H28 C14 40 14 60 28 60 H72 C86 60 86 80 72 80 H30", "none", { stroke: "#E89A7A", w: 8 });
+  I.habitat = circ(50, 50, 44, "#DDF0FA") + pth("M8 66 C30 58 70 58 92 66 A44 44 0 0 1 8 66 Z", "#B9DBA0", { w: 2 }) +
+    ell(66, 76, 14, 5, "#8CC4E8", 1.5) + rct(26, 40, 6, 26, "#8A5A3C", 1, 2) + blob([[29, 34, 12], [20, 40, 8], [38, 40, 8]], "#5FAE57") +
+    pth("M50 64 C50 58 58 56 60 60 C64 56 68 60 66 64 Z", "#8A5A3C", { w: 1.8 }) + circ(72, 30, 7, "#F6C343", 2);
+  I.greenhouse = pth("M8 90 V46 L50 14 L92 46 V90 Z", "#DFF2EA") + ln(50, 14, 50, 90, "#7FB8A4", 2) + ln(8, 62, 92, 62, "#7FB8A4", 2) + ln(29, 30, 29, 90, "#7FB8A4", 2) + ln(71, 30, 71, 90, "#7FB8A4", 2) +
+    pth("M8 90 V46 L50 14 L92 46 V90 Z", "none") + [22, 40, 60, 78].map(function(x){ return pth("M" + x + " 88 V76 M" + x + " 80 C" + (x - 6) + " 74 " + (x - 8) + " 70 " + (x - 6) + " 68 M" + x + " 78 C" + (x + 6) + " 72 " + (x + 8) + " 68 " + (x + 6) + " 66", "none", { stroke: "#4F9D78", w: 2.5 }); }).join("");
+
   // ---------- vocabulary ----------
   var VOCAB = {
     sun: ["sun", "sunlight", "sunshine"],
@@ -1672,9 +1831,46 @@ window.SceneEngine = (function(){
     WORD_TO_ICON = {};
     Object.keys(VOCAB).forEach(function(k){ VOCAB[k].forEach(function(w){ WORD_TO_ICON[w] = k; }); });
   })();
+  // K-12 gaps: new drawings, and more words for existing ones (only words no other picture already claims)
+  var VOCAB_PACK5 = {
+    feelings: "feeling feelings emotion emotions mood moods", soil: "soil dirt topsoil humus", liver: "liver", friction: "friction",
+    wedge: "wedge wedges", tally: "tally tallies", shapes: "shape shapes", lines: "parallel perpendicular intersecting", pi: "pi",
+    punctuation: "punctuation comma commas exclamation", chalkboard: "chalkboard blackboard whiteboard", migration: "migrate migrates migrated migrating migration",
+    hibernate: "hibernate hibernates hibernation hibernating", atmosphere: "atmosphere", dissolve: "dissolve dissolves dissolved dissolving",
+    variable: "variable variables", intestines: "intestine intestines gut", greenhouse: "greenhouse greenhouses", habitat: "habitat habitats environment environments",
+    bear: "mammal mammals omnivore omnivores", bread: "yeast", bulb: "predict predicts prediction predictions",
+    bee: "pollinate pollinates pollinating pollination pollinator pollinators nectar", sprout: "germinate germinates germination seedling seedlings",
+    flower: "petal petals", leaf: "chlorophyll", lungs: "respiration respiratory", cell: "membrane cytoplasm mitochondria chloroplast chloroplasts organelle organelles",
+    shield: "antibody antibodies immunity immune", dna: "inherit inherited inheritance trait traits heredity genetics evolution", dinosaur: "extinct extinction",
+    fish: "gills fins", bird: "beak beaks", horse: "hooves hoof", globe: "biome biomes", grass: "grassland grasslands prairie prairies",
+    heart: "veins vein arteries artery vessels circulatory", bone: "joint joints backbone vertebrate vertebrates", brain: "nerves nerve nervous spinal",
+    dumbbell: "exercise exercises workout fitness", solar: "solar", cloud: "condensation sky skies", drop: "groundwater", thermometer: "warming", weather: "climate climates",
+    rock: "weathering", river: "delta deltas", testtube: "acid acids", speedometer: "velocity acceleration accelerate motion", sound: "frequency", lens: "refraction refract",
+    flame: "thermal", numbers: "count counting integer integers digit digits", divide: "quotient remainder dividend divisor",
+    coins: "penny pennies nickel nickels dime dimes cent cents", ruler: "mile miles kilometer kilometers", scale: "gram grams kilogram kilograms ounce ounces compare comparing contrast equality",
+    bottle: "liter liters gallon gallons", chart: "pictograph pictographs median average", circle: "radius diameter circumference",
+    quill: "poetry poet poets stanza stanzas rhyme rhymes rhyming", book: "fiction nonfiction fable fables tale tales myth myths legend legends biography biographies autobiography librarian librarians",
+    notebook: "paragraph paragraphs summary summaries draft drafts", eraser: "edit editing revise revising", palette: "illustrator illustrators illustration illustrations",
+    speech: "narrator persuade persuasive", newspaper: "magazine magazines", compass: "south east west", columns: "mayor governor civilization civilizations",
+    crown: "empire empires", castle: "medieval feudal", scroll: "rights", clipboard: "rules", map: "exploration", amphora: "archaeologist archaeologists archaeology",
+    statue: "landmark landmarks", bus: "transportation", phone: "communication communicate app apps", piggybank: "budget budgets", playground: "recess",
+    guitar: "instrument instruments", note: "sing singing", mask: "costume costumes", computer: "coding algorithm algorithms programming", group: "teamwork"
+  };
+  (function(){
+    var claimed = {};
+    Object.keys(WORD_TO_ICON).forEach(function(w){ claimed[w] = true; });
+    Object.keys(VOCAB_PACK5).forEach(function(k){
+      if (!I[k]) return;
+      var ws = VOCAB_PACK5[k].split(" ").filter(function(w){ return !claimed[w]; });
+      ws.forEach(function(w){ claimed[w] = true; });
+      VOCAB[k] = (VOCAB[k] || []).concat(ws);
+    });
+    WORD_TO_ICON = {};
+    Object.keys(VOCAB).forEach(function(k){ VOCAB[k].forEach(function(w){ WORD_TO_ICON[w] = k; }); });
+  })();
 
   // ---------- built-in emoji library (fallback tier under the drawings) ----------
-  var EMOJI_LIB_SRC = "🐶 dog puppy canine|🐱 cat kitten feline|🐴 horse pony stallion|🐄 cow cattle|🐖 pig hog|🐑 sheep lamb|🐐 goat|🐓 chicken hen rooster|🦆 duck|🦢 swan|🦉 owl|🦅 hawk falcon|🦜 parrot|🐧 penguin|🦩 flamingo|🕊️ pigeon|🦃 turkey|🐘 elephant|🦒 giraffe|🦓 zebra|🦁 lion|🐯 tiger|🐻 bear|🐼 panda|🐨 koala|🐒 monkey ape primate chimpanzee|🦍 gorilla|🦘 kangaroo|🐪 camel|🦌 deer|🐺 wolves|🦝 raccoon|🦔 hedgehog|🐿️ squirrel chipmunk|🐭 mouse rat rodent|🐹 hamster|🐁 mice|🐢 turtle tortoise|🐍 snake serpent|🦎 lizard gecko|🐊 crocodile alligator|🐙 octopus|🦑 squid|🦀 crab|🦞 lobster|🦐 shrimp|🐚 seashell|🐬 porpoise|🦈 shark|🐠 goldfish|🐡 pufferfish|🦭 walrus|🦦 otter|🐌 snail|🐜 ant|🪲 beetle|🦗 cricket grasshopper|🕷️ spider arachnid|🕸️ cobweb|🦟 mosquito|🐞 ladybug|🦂 scorpion|🪱 nematode|🦠 microorganism pathogen|🪺 nest|🐾 pawprint footprint|🦴 marrow|🦷 enamel|🐣 chick hatchling|🐥 duckling|🦄 unicorn|🐉 dragon|🧜 mermaid|🧚 fairy|🧙 wizard magician sorcerer|🧛 vampire|👻 ghost|🧟 zombie|🤖 android|👽 alien|🎃 pumpkin|🦖 trex|🦕 brontosaurus|🍎 apples|🍐 pear|🍊 tangerine citrus|🍋 lemon lime|🍌 banana|🍉 watermelon|🍇 grape grapes|🍓 strawberry berry berries|🫐 blueberry|🍒 cherry|🍑 peach|🥭 mango|🍍 pineapple|🥥 coconut|🥝 kiwi|🍅 tomato|🍆 eggplant|🥑 avocado|🥦 broccoli|🥬 lettuce cabbage spinach|🥒 cucumber|🌶️ pepper chili|🌽 maize|🥔 potato|🍠 yam|🧅 onion|🧄 garlic|🍞 bread loaf|🥐 croissant|🥖 baguette|🥞 pancake|🧇 waffle|🧀 cheese|🥚 eggs|🍳 breakfast|🥓 bacon|🍔 hamburger burger|🍟 fries|🌭 hotdog|🥪 sandwich|🌮 taco|🍝 pasta spaghetti noodle|🍜 soup ramen|🍚 rice|🍣 sushi|🥗 salad|🍰 cake|🧁 cupcake|🍪 cookie biscuit|🍩 donut|🍫 chocolate|🍬 candy|🍦 icecream dessert|🥛 milk dairy|🧃 juice|☕ coffee|🍵 tea|🥤 beverage soda|🍷 wine|🍺 beer|🧂 salt|🍯 syrup|🍽️ dinner lunch plate|🥄 spoon|🍴 fork knife|🥢 chopsticks|🥫 canned|🥜 peanut nuts|🌰 chestnut acorn|🍄 toadstool|🌳 oak pine maple|🌲 evergreen conifer fir|🌴 palm|🌵 succulent|🌾 rice paddy|🌿 herb|☘️ clover shamrock|🍁 autumn fall|🍂 foliage|🌱 germination|🌻 sunflower|🌹 rose|🌷 tulip|🌸 cherryblossom|🌺 hibiscus|🪴 houseplant|🪵 log timber lumber|🪨 pebble|🏔️ peak summit alps himalayas everest|⛰️ hill hills mountains|🏞️ valley canyon park|🏜️ sahara|🏖️ shore seaside|🌊 ocean sea waves tsunami|💧 water droplet|🌫️ fog mist|☁️ clouds|🌧️ rainfall rainy precipitation|🌨️ sleet hail|⛈️ thunderstorm|🌪️ cyclone|🌀 whirlpool vortex typhoon|🌈 arc|❄️ snowy blizzard winter|☃️ snowman|🔥 wildfire campfire bonfire|🌞 sunshine sunny daylight summer|🌅 sunrise dawn|🌇 sunset dusk|🌙 night crescent|🌑 eclipse|🌍 continent africa europe|🌎 america americas|🌏 asia australia|🌌 universe cosmos milkyway|☄️ meteoroid|🌋 crater|🏝️ archipelago|🧊 iceberg glacier|⛲ fountain|🌐 internet network|🛰️ orbiter|🛸 ufo|👨‍🚀 spaceman cosmonaut|⚡ voltage|💨 gust|👶 baby infant toddler|👦 boy|👧 girl|👨 father dad|👩 mother mom mum|👴 grandfather grandpa|👵 grandmother grandma|🧑 adult human|👨‍👩‍👧 parents|👨‍🏫 professor|👩‍⚕️ doctor nurse physician|👮 police officer policeman|👷 builder engineer construction|🧑‍🍳 chef cook baker|🧑‍🚒 firefighter fireman|🧑‍🌾 gardener|🧑‍🎨 painter|🧑‍🔬 researcher biologist chemist physicist|🧑‍✈️ pilot|🧑‍💻 programmer developer|🧑‍⚖️ judge lawyer|🕵️ spy|🦸 superhero|🦹 villain|🤴 emperor|👸 empress|🥷 ninja|🏴‍☠️ pirate|⚔️ sword knights|🏹 archer arrow bow|🪖 helmet|🎖️ medal veteran|👑 monarchy|🧑‍🤝‍🧑 friends friend|🙋 hands|😀 happy happiness|😢 sad sadness cry|😠 angry|😨 scared afraid|😊 kind|🙏 prayer pray|⛪ church|🕌 mosque|🕍 synagogue|🛕 shrine|🕉️ religion|✝️ christianity|☪️ islam|✡️ judaism|☸️ buddhism|🙌 celebrate celebration|🎉 party festival|🎂 birthday|🎄 christmas|🎆 fireworks|🏳️ surrender|🚩 banner|🧠 intelligence|🫀 organ|🫁 respiratory|🩸 blood|🦵 leg|🦶 foot feet|💪 biceps|👃 nose smell|👄 mouth lips|👅 tongue taste|👀 eyes|🧬 genes heredity|💉 injection syringe|🩺 stethoscope checkup|🩹 bandage wound|🏥 hospital clinic|🚑 ambulance|🧪 testtube|🔬 cells|🧫 petri culture|🧴 lotion|🛁 bath|🚿 shower|🪥 toothbrush|🥦 vegetables|🏊 swimming swim|🚴 cycling bicycle bike|🧘 yoga meditation|⚖️ justice|🍽️ diet nutrition|📚 books textbook|📖 page chapter|📝 essay homework assignment|✏️ pen|🖊️ marker|🖍️ crayon|📏 straightedge|📐 geometry angle|🧮 abacus calculator calculate|➕ addition|➖ subtraction subtract|✖️ multiplication multiply|➗ division|🟰 equation|📊 bargraph histogram|🥧 piechart|🎒 backpack|🏫 school classroom|🎓 graduation university college degree|📓 notebook journal diary|📋 clipboard list|🗂️ folder file|📎 paperclip|✂️ scissors|🖇️ stapler|🔖 bookmark|🔤 alphabet letters|🔡 lowercase|🔠 uppercase capital|🅰️ vowel|📜 manuscript|📰 headline|🔔 bell|🎤 microphone|📻 radio|📺 television tv|🎬 film movie cinema|📷 camera photograph photo|🖼️ painting picture|🎨 colors|🖌️ brush|🗿 statue sculpture|🏛️ museum|🎭 theater drama|🎪 circus|🎵 tune|🎶 songs|🎼 symphony|🎹 piano|🎸 guitar|🎺 trumpet|🎻 violin|🥁 drum drums|🪘 percussion|🎷 saxophone|🎧 headphones|💿 disc|📀 dvd|🌐 global|🔤 grammar|🔠 noun|🔡 verb|❗ exclamation|🧩 jigsaw|♟️ chess|🎲 dice|🎮 videogame|🕹️ joystick|🧸 toy teddy|🪁 kite|⚽ soccer football|🏀 basketball|🏈 rugby|⚾ baseball|🎾 tennis|🏐 volleyball|🏓 pingpong|🏸 badminton|🏒 hockey|🏏 cricketbat|⛳ golf|🥊 boxing|🥋 karate martial|⛸️ skating|🎿 ski skiing|🏂 snowboard|🏋️ weightlifting|🤸 gymnastics|🧗 climbing|🚣 rowing|🏄 surfing|🤿 diving|⛺ camping tent|🎣 fishing|🏅 olympics|🏠 homes|🏡 cottage|🏢 office skyscraper|🏬 store shop market mall|🏪 grocery|🏰 fort|🏯 pagoda|🗼 tower|🗽 liberty statueofliberty|🗻 fuji|🕋 kaaba|⛩️ torii|🧱 brick bricks|🪟 window|🚪 door|🛋️ sofa couch|🪑 chair|🛏️ mattress|🚽 toilet|🚰 faucet|🔓 unlock|🛠️ tools|🔨 hammer|🪓 axe|⛏️ pickaxe mining|🪚 saw|🔧 wrench|🔩 screw|⚙️ cog|🧰 toolbox|🪜 ladder|🔦 flashlight torch|🕯️ candle|🪔 lamp|🛢️ oil petroleum barrel|⛽ gasoline fuel|🧯 extinguisher|⚓ anchor|🧭 navigator|⏳ hourglass|⌛ sandglass|⏰ alarm|⌚ watch|🕰️ clockwork|📅 schedule|🗓️ agenda|🧺 basket laundry|🧹 broom|🧽 sponge|🎁 gift|📦 package parcel|📬 mailbox|📮 postbox|☎️ landline|📱 mobile|💻 laptops|🖥️ desktop monitor|⌨️ typing|🖱️ click|🖨️ printer|💾 floppy storage|📡 antenna signal|📶 wifi|🔎 zoom|🔭 stargazing|🧲 attract|🪞 mirror reflection|👓 glasses|🕶️ sunglasses|👕 shirt clothes clothing|👖 pants jeans|👗 dress|🧥 coat jacket|🧣 scarf|🧤 gloves|🧢 hat|👟 shoe shoes sneaker|👢 boots|🎽 uniform|💎 diamond gem jewel|👜 bag purse|🧳 luggage suitcase|☂️ umbrella|🌂 raincoat|🚗 cars|🚕 taxi cab|🚌 bus|🚎 trolley|🏎️ racecar|🚓 policecar|🚒 firetruck|🚚 lorry|🚜 tractor|🛻 pickup|🏍️ motorcycle|🛵 scooter|🚲 bicycles|🛴 skateboard|🚂 steam|🚆 railways|🚇 subway metro|🚊 tram|🚄 bullet|✈️ airplanes jet airport|🛩️ glider|🚁 helicopter|⛵ sailboat|🛶 canoe kayak|🚤 speedboat|⛴️ ferry|🛳️ cruise liner|🚢 steamship|🛣️ highway road|🛤️ railroad|🚦 traffic|🚧 construction|🚏 busstop|🗺️ atlas|📍 location pin place|🧭 orientation|🌉 viaduct|⛔ forbidden|🚸 crossing|🅿️ parking|🚉 station|🎡 ferriswheel|🎢 rollercoaster|🏟️ stadium|🏕️ campsite|🏘️ neighborhood suburb|🌆 skyline|🇺🇸 usa america american|🇬🇧 britain british england english|🇫🇷 france french|🇩🇪 germany german|🇮🇹 italy italian|🇪🇸 spain spanish|🇨🇳 china chinese|🇯🇵 japan japanese|🇮🇳 india indian|🇧🇷 brazil brazilian|🇲🇽 mexico mexican|🇨🇦 canada canadian|🇦🇺 australian|🇷🇺 russia russian|🇪🇬 egyptian|🇬🇷 greece greek|🇰🇷 korea|🇿🇦 southafrica|🏺 vase pottery ancient artifact urn amphora|🗿 moai|🗡️ dagger spear|🏹 hunter|⚱️ ashes|🪙 currency|💰 treasure rich riches|💵 dollar cash bill|💳 credit card|🧾 receipt invoice|🏧 atm|💹 stocks market|🏭 factories|🏗️ architecture|⚖️ fairness|📜 charter law|🗳️ elect|📣 campaign|🎙️ interview podcast|🕯️ memorial|🧱 fortification|🛤️ colony|🪶 feather|⚒️ labor labour|🌾 farming|🐎 cavalry|🛶 voyage|🧳 immigrant immigration migrate migration|🏴 rebels|📯 horn|🥁 beat|🏛️ greek senate forum|🏛️ capitol|🔶 rhombus|⬛ squares|♾️ infinity|〰️ zigzag|➡️ arrow|⚛️ nucleus proton neutron electron|🧪 compound|⚗️ distillation|🧫 bacterial|🌡️ celsius fahrenheit|🔥 combustion|❄️ freezing|🪨 sediment|🏔️ erosion|🪨 igneous sedimentary metamorphic|⛏️ ore quarry|🛢️ crude|💨 smoke pollution smog|♻️ recycle recycling reuse|🗑️ trash garbage waste litter|🌍 environment ecosystem|🌱 conservation|💨 turbine|🏭 emissions|🧯 safety|☢️ radiation nuclear radioactive|☣️ biohazard toxic poison|🧲 poles|🔌 socket|🧵 thread string yarn|🪡 needle sewing|🧶 wool knit|🪢 knot|🍽️ meal|🫖 teapot|🍼 bottle|🧈 butter|🥩 meat steak beef|🍗 poultry drumstick|🐟 salmon tuna cod trout|🥕 carrots|🫘 bean beans|🥣 cereal bowl|🍿 popcorn|🧆 falafel|🍕 pizzas|🌯 burrito|🥟 dumpling|🍙 riceball|🍡 skewer|🕐 oclock|🌓 phases|🔢 fractions|📐 perimeter area|📏 width height|🔼 maximum|🔽 minimum|❌ incorrect|🔗 connection|🧳 trip travel|🎈 balloon|🎊 confetti|🪅 pinata|🧨 firework|💥 explosion explode boom|💣 bomb|🔫 weapon|🪂 parachute|⚰️ coffin death|🪦 grave|🌫️ cloudy|🏞️ landscape scenery|🌅 horizon|🐕 beagle poodle labrador bulldog|🐈 tabby|🐎 mare foal|🦬 bison buffalo|🐃 ox oxen|🐂 bull|🦙 llama alpaca|🐏 ram|🦏 rhino rhinoceros|🦛 hippo hippopotamus|🐆 leopard cheetah jaguar panther|🐅 lynx|🦊 foxes|🦨 skunk|🦡 badger|🦫 beaver|🐀 rats|🦥 sloth|🦧 orangutan|🐕‍🦺 pets pet|🐇 hare rabbits|🦐 prawn|🦪 oyster clam mussel|🪼 jellyfish|🐋 humpback orca|🐳 beluga|🦞 crayfish|🪸 coral reef|🐟 minnow bass carp|🐠 clownfish|🦈 sharks|🐢 turtles|🐍 cobra python viper|🦎 iguana chameleon|🐸 frogs|🐲 dragons|🦤 dodo|🦚 peacock|🦜 macaw|🦅 eagles|🦆 ducks|🐦 sparrow robin songbird finch|🐤 chicks|🦢 swans|🪿 goose geese|🐓 chickens|🪽 wing wings|🦋 butterflies|🐛 larvae|🐝 bees|🐜 ants|🪳 cockroach|🦟 mosquitoes|🪰 flies|🐌 snails|🦗 crickets|🪲 beetles|🐞 ladybird|🕷️ tarantula|🦂 scorpions|🪱 earthworms|🐾 paw|🐿️ squirrels|🦔 hedgehogs|🦇 bats|🐻‍❄️ polarbear|🐨 koalas|🐼 pandas|🦘 kangaroos|🐘 elephants|🦒 giraffes|🦓 zebras|🦁 lions|🐯 tigers|🐒 monkeys|🦍 gorillas|🌳 trees|🌲 pinetree redwood sequoia|🌴 palmtree|🎋 bamboo|🎍 reeds|🌾 barley oats rye|🌽 cornfield|🌿 ferns fern moss|🌼 daisy dandelion|🌻 sunflowers|🪷 lotus waterlily|🌺 orchid|🥀 wilted|💐 bouquet|🌱 sapling|🪹 burrow|🪨 gravel|🪵 branch twig trunk bark|🍂 deciduous|🍁 mapleleaf|🍄 mushrooms|🫒 olive|🍋 lemons|🍎 orchard|🍏 greenapple|🍇 vineyard|🥭 mangoes|🫛 pea peas|🍠 sweetpotato|🥜 peanuts|🌰 chestnuts|🍯 honeycomb|🥐 pastry|🥨 pretzel|🥯 bagel|🍘 cracker|🍥 fishcake|🥠 fortunecookie|🍧 shavedice|🍨 gelato|🍮 pudding custard|🍭 lollipop|🍿 popcorns|🧋 bubbletea|🍹 smoothie|🍾 champagne|🥃 whiskey|🍸 cocktail|🍶 sake|🧊 icecube|🥡 takeout|🍱 bento|🍛 curry|🍢 kebab|🥙 pita|🥞 pancakes|🥔 potatoes|🍅 tomatoes|🍌 bananas|🍇 grapevine|🍉 melon|🍈 cantaloupe|🍒 cherries|🍓 strawberries|🥑 avocados|🏔️ plateau mesa butte|🏜️ dune dunes savanna steppe tundra|🌲 taiga|🌴 rainforest jungle tropics|🏞️ meadows wetland swamp marsh pond lake lagoon|🌊 gulf bay strait|🏝️ atoll peninsula cape|🧊 icecap polar arctic antarctic antarctica|🌋 caldera|🪨 granite basalt limestone marble sandstone quartz|💎 crystal crystals|🪙 pennies|🌍 equator latitude longitude|🧭 meridian|🗺️ cartography mapmaking|🌐 gridlines|🌍 europeans|🏜️ oasis|🌥️ cloudcover|☔ raindrops|❄️ snowfall snowflakes|🌎 southamerica northamerica|🇲🇽 aztec|🌴 caribbean|🌋 hawaii|🗻 volcanic|🪐 neptune uranus|☄️ asteroids meteors|🌑 newmoon|🌕 fullmoon|🌒 waxing|🌘 waning|🌗 lunar|🌟 stars|🔭 observatory|🛰️ satellites|🚀 spacecraft shuttle|🧑‍🚀 astronauts|🌌 nebula blackhole|🧑‍🏫 tutor instructor|👩‍🏫 educator|🧑‍🍳 chefs|🧑‍🔧 mechanic|🧑‍🏭 factoryworker|👨‍🌾 farmers|🧑‍💼 businessman manager boss|🧑‍⚕️ surgeon|🧑‍🚀 spaceexplorer|🕵️‍♀️ detectives|🤵 groom|👰 bride|🎅 santa|🧝 elf|🧞 genie|🧌 troll|🦸‍♀️ heroine|🥷 samurai|🧑‍🦯 blindperson|🧑‍🦽 wheelchair|🧑‍🦼 disabled|👪 families|👥 crowds|☝️ pointing|🦾 prosthetic|🧑‍🤝‍🧑 neighbors|🤰 pregnancy|🍼 newborn|💒 wedding|⚰️ funeral|🕊️ doves|🧠 neuron neurons|🧠 cerebellum cortex|🦴 skull spine ribs rib femur|🫀 heartbeat|🫁 diaphragm|🩸 plasma platelets|🩻 xray|🧬 helix|🦠 germs|💊 pills tablet|💉 vaccination|🤮 vomit|🧴 sunscreen|🧼 handwashing|🪥 brushing|🦷 cavity|👁️ retina|👂 eardrum|👃 nostril|🖐️ fingers|🦶 toes|🦵 knee|🦿 limb|💪 muscles|🏃‍♀️ jogging|💃 dancing|🕺 dancer|🤸‍♀️ cartwheel|🧘‍♀️ stretching|🥛|🍞 carbohydrate|🥑 fats|📃 worksheet|📕 hardcover|📗 greenbook|📘 bluebook|📙 orangebook|📓 notebooks|📔 sketchbook|📖 dictionary encyclopedia|✍️ handwriting signature|🖋️ fountainpen ink|🖌️ paintbrush|🖍️ crayons|🎨 watercolor|🎭 actor actress|🎬 director clapperboard|🎤 singer|🎙️ broadcaster|🎧 listening|📻 broadcast|🎼 composer|🎵 lyrics|🎹 pianist|🪕 banjo|🪗 accordion|🪈 flute|🥁 drummer|🎻 cello|🪘 bongo|🔔 chime|🛎️ doorbell|📯 bugle|🎺 horns|🎷 sax|🪇 maracas|🎤 karaoke|🎡 carnival|🎠 carousel|🎢 coaster|🎳 bowling|🎱 billiards|🏑 fieldhockey|🥍 lacrosse|🏹 archery|🛹 skateboarding|🛼 rollerskate|⛷️ skier|🏂 snowboarder|🤺 fencing|🤼 wrestling|🤾 handball|🏌️ golfer|🏊‍♀️ swimmer|🚴‍♀️ cyclist|🧗‍♀️ climber|🪃 boomerang|🧩 puzzles|🪀 yoyo|🎴 cards|🃏 joker|🀄 mahjong|♠️ spades|🧱 masonry|🪨 stonework|🏚️ ruins ruin|🛖 hut|🏠 cabin|🏙️ downtown|🏢 skyscrapers|🏤 postoffice|🏫 schoolhouse|🏛️ parthenon colosseum acropolis|🗼 eiffel|🕌 minaret|🏯 pagodas|🎪 bigtop|🌉 suspension|🛗 elevator|🪞 mirrors|🛏️ bedroom|🍳 kitchen|🛋️ livingroom|🚽 bathroom restroom|🧸 toys|🪆 nesting|🛁 tub|🧺 hamper|🧴 shampoo|🪒 razor|🧷 safetypin|🧹 mop|🪣 bucket|🧻 tissue|🪠 plunger|🧲 magnets|⚖️ scales|🔭 spyglass|⛓️ shackles|🧰 toolkit|🔧 spanner|🪛 screwdriver|⚙️ cogs|🧯 firefighting|🪚 carpenter carpentry|🪓 hatchet lumberjack|🪵 firewood|🚗 automobile sedan|🚙 suv|🚐 van minivan|🚛 semitruck|🚜 farmtractor|🛞 tire tyre|🚨 siren|🚥 stoplight|🛑 stopsign|🛴 kickscooter|🛺 rickshaw|🚡 cablecar|🚠 gondola|🚟 monorail|🚝 maglev|🚃 railcar|🚋 streetcar|🚞 mountainrailway|🚈 lightrail|✈️ airliner|🛫 takeoff|🛬 landing|🛩️ biplane|🪂 skydiving|🚁 chopper|🛶 dugout|🛥️ yacht|⛵ sailing|🚢 steamer|🛟 lifebuoy|⚓ harbor harbour|🧭 northstar|🏗️ cranes|🚧 roadwork|🏺 sarcophagus mummy hieroglyphics hieroglyph|🗿 easterisland|⚔️ gladiator legion legions|🏛️ roman romans rome|🏛️ athens sparta|🏴‍☠️ buccaneer|⛵ mayflower|🏕️ tipi tepee wigwam|🛶 longboat|🪓 viking vikings|⚒️ blacksmith smith|⚖️ courtroom|🗳️ ballots|🏛️ legislature|🏛️ whitehouse|🔔 bellringing|💣 grenade|💥 cannon|🔫 musket rifle|✈️ bomber|🚢 battleship|🪦 tombstone|🎖️ medals|🏛️ monument|🗿 monuments|🏺 relic relics|🛒 groceries|🏪 convenience|🏬 department|🏭 smokestack|⛏️ miner|🔨 craftsman|🧵 textile textiles|🧶 cotton|⚗️ alchemy retort|🧪 reagent|🧫 agar|🔬 magnification|🧬 mutation|🧬 nucleotide|🦠 amoeba paramecium|🦠 plankton|🔌 wires|🔋 batteries|🌩️ thunderbolt|📡 radar|🛰️ gps|🖥️ pc|📠 fax|☎️ rotary|🎞️ filmstrip|📽️ projector|📹 camcorder|🌡️ barometer|⏲️ timer stopwatch|🧮 abacuses|📏 rulers|📐 protractor|🧭 compasses|⚖️ weights|🪝 pendulum|⚙️ flywheel|🛞 axle|🌡️ thermostat|🔥 furnace|🧯 sprinkler|🚰 plumbing pipe pipes|💦 splash|💧 dripping|🌊 flood floods|🪨 clay|🪣 sandbox|🧱 concrete|🏗️ girder|🔩 rivet|🕳️ tunnel|🚇 subway|🚧 barricade|🔢 algebra|📐 trigonometry|📏 centimeters|🧮 arithmetic|📈 graphs|🥧 pie|🔺 triangles|⬛ squareshape|🔷 polygon|⭕ circles|🛑 octagon|⬡ hexagon|⬢ hexagons|🔶 trapezoid|🧊 cubes|🥫 cylinder|🍦 cone|⚽ sphere|🥚 oval|💎 diamonds|🎰 jackpot|🪙 coinflip|📆 datebook|🕑 clockface|⌨️ keyboard|🖱️ trackpad|👲 skullcap|🧕 headscarf|👰 veil|🫏 burro donkey mule|🦣 mammoth|🐦‍🔥 phoenix|🦕 brachiosaurus diplodocus sauropod|🦭 seal|🐡 blowfish|🐝 bumblebee honeybee|🌹 rose|🪻 hyacinth lavender lilac|🫓 flatbread naan|🫔 tamale|🫕 fondue|🍩 doughnut|🍰 shortcake|🥤 straw|🏨 hotel|🌁 foggy|🚎 trolleybus|🛼 skate|🛣️ motorway|🛟 buoy|🛫 departure|🛬 arrival|🚡 tramway|🛸 saucer|🧨 firecracker|🎉 popper|🎎 dolls|🎀 ribbon|🥎 softball|🏓 pong|🛷 sled sleigh|🎯 bullseye target|🎨 palette|👔 necktie|👕 t-shirt|👘 kimono|🥻 sari|💄 lipstick|🔇 speaker|📣 megaphone|🎚️ slider|🎧️ headphone|🪊 trombone|🪉 harp|🖲️ trackball|💡 bulb|📒 ledger|📜 scroll|💴 banknote|📝 memo|💼 briefcase|🗂️ dividers|🗒️ notepad|📈 increasing|📉 decreasing|📌 pushpin|🗑️ wastebasket|🔒️ locked|🔓️ unlocked|🦯 cane|🪏 shovel|🩼 crutch|🛁 bathtub|🫧 bubbles|🇦🇩 andorra|🇦🇫 afghanistan|🇦🇮 anguilla|🇦🇱 albania|🇦🇲 armenia|🇦🇴 angola|🇦🇷 argentina|🇦🇹 austria|🇦🇼 aruba|🇦🇿 azerbaijan|🇧🇧 barbados|🇧🇩 bangladesh|🇧🇪 belgium|🇧🇬 bulgaria|🇧🇭 bahrain|🇧🇮 burundi|🇧🇯 benin|🇧🇲 bermuda|🇧🇳 brunei|🇧🇴 bolivia|🇧🇸 bahamas|🇧🇹 bhutan|🇧🇼 botswana|🇧🇾 belarus|🇧🇿 belize|🇨🇭 switzerland|🇨🇱 chile|🇨🇲 cameroon|🇨🇴 colombia|🇨🇺 cuba|🇨🇾 cyprus|🇨🇿 czechia|🇩🇯 djibouti|🇩🇰 denmark|🇩🇲 dominica|🇩🇿 algeria|🇪🇨 ecuador|🇪🇪 estonia|🇪🇷 eritrea|🇪🇹 ethiopia|🇫🇮 finland|🇫🇯 fiji|🇫🇲 micronesia|🇬🇦 gabon|🇬🇩 grenada|🇬🇬 guernsey|🇬🇭 ghana|🇬🇮 gibraltar|🇬🇱 greenland|🇬🇲 gambia|🇬🇵 guadeloupe|🇬🇹 guatemala|🇬🇺 guam|🇬🇾 guyana|🇭🇳 honduras|🇭🇷 croatia|🇭🇹 haiti|🇭🇺 hungary|🇮🇩 indonesia|🇮🇪 ireland|🇮🇱 israel|🇮🇶 iraq|🇮🇷 iran|🇮🇸 iceland|🇯🇲 jamaica|🇰🇪 kenya|🇰🇬 kyrgyzstan|🇰🇭 cambodia|🇰🇮 kiribati|🇰🇲 comoros|🇰🇼 kuwait|🇰🇿 kazakhstan|🇱🇦 laos|🇱🇧 lebanon|🇱🇮 liechtenstein|🇱🇷 liberia|🇱🇸 lesotho|🇱🇹 lithuania|🇱🇺 luxembourg|🇱🇻 latvia|🇱🇾 libya|🇲🇦 morocco|🇲🇨 monaco|🇲🇩 moldova|🇲🇪 montenegro|🇲🇬 madagascar|🇲🇱 mali|🇲🇳 mongolia|🇲🇶 martinique|🇲🇷 mauritania|🇲🇸 montserrat|🇲🇹 malta|🇲🇺 mauritius|🇲🇻 maldives|🇲🇼 malawi|🇲🇾 malaysia|🇲🇿 mozambique|🇳🇦 namibia|🇳🇬 nigeria|🇳🇮 nicaragua|🇳🇱 netherlands|🇳🇴 norway|🇳🇵 nepal|🇳🇷 nauru|🇳🇺 niue|🇴🇲 oman|🇵🇦 panama|🇵🇪 peru|🇵🇭 philippines|🇵🇰 pakistan|🇵🇱 poland|🇵🇹 portugal|🇵🇼 palau|🇵🇾 paraguay|🇶🇦 qatar|🇷🇴 romania|🇷🇸 serbia|🇷🇼 rwanda|🇸🇨 seychelles|🇸🇩 sudan|🇸🇪 sweden|🇸🇬 singapore|🇸🇮 slovenia|🇸🇰 slovakia|🇸🇳 senegal|🇸🇴 somalia|🇸🇷 suriname|🇸🇾 syria|🇸🇿 eswatini|🇹🇬 togo|🇹🇭 thailand|🇹🇯 tajikistan|🇹🇰 tokelau|🇹🇲 turkmenistan|🇹🇳 tunisia|🇹🇴 tonga|🇹🇻 tuvalu|🇹🇼 taiwan|🇹🇿 tanzania|🇺🇦 ukraine|🇺🇬 uganda|🇺🇾 uruguay|🇺🇿 uzbekistan|🇻🇪 venezuela|🇻🇳 vietnam|🇻🇺 vanuatu|🇼🇸 samoa|🇽🇰 kosovo|🇾🇪 yemen|🇾🇹 mayotte|🇿🇲 zambia|🇿🇼 zimbabwe|🌰 almond|🍆 aubergine|🐫 bactrian|🎱 billiard|🧫 biology|👚 blouse|🧋 boba|🥉 bronze|🧮 calculation|🫑 capsicum|🧆 chickpea meatball|🪮 comb|🐚 conch|🐦‍⬛ crow raven|🪥 dental|👖 denim trousers|🐪 dromedary|🫛 edamame|🐌 escargot|🎡 ferris|🌭 frankfurter|🫚 ginger|🥙 gyro|🐣 hatching|🦘 joey|🥋 judo|🥬 kale|🦟 malaria|💰️ moneybag|🕌 masjid|🗿 moyai|📿 necklace|🥣 oatmeal|🥘 paella|🥒 pickle|🧺 picnic|🪶 plumage|🫜 radish turnip|🎒 rucksack satchel|📷️ selfie|🦐 shellfish|🏸 shuttlecock|🤿 snorkeling|🧵 spool|🧦 stocking|🍵 teacup|🗼 tokyo|🎩 tophat|🦖 tyrannosaurus|🌪️ whirlwind|🛖 yurt|🦢 cygnet|☕️ cafe caffeine";
+  var EMOJI_LIB_SRC = "🐶 dog puppy canine|🐱 cat kitten feline|🐴 horse pony stallion|🐄 cow cattle|🐖 pig hog|🐑 sheep lamb|🐐 goat|🐓 chicken hen rooster|🦆 duck|🦢 swan|🦉 owl|🦅 hawk falcon|🦜 parrot|🐧 penguin|🦩 flamingo|🕊️ pigeon|🦃 turkey|🐘 elephant|🦒 giraffe|🦓 zebra|🦁 lion|🐯 tiger|🐻 bear|🐼 panda|🐨 koala|🐒 monkey ape primate chimpanzee|🦍 gorilla|🦘 kangaroo|🐪 camel|🦌 deer|🐺 wolves|🦝 raccoon|🦔 hedgehog|🐿️ squirrel chipmunk|🐭 mouse rat rodent|🐹 hamster|🐁 mice|🐢 turtle tortoise|🐍 snake serpent|🦎 lizard gecko|🐊 crocodile alligator|🐙 octopus|🦑 squid|🦀 crab|🦞 lobster|🦐 shrimp|🐚 seashell|🐬 porpoise|🦈 shark|🐠 goldfish|🐡 pufferfish|🦭 walrus|🦦 otter|🐌 snail|🐜 ant|🪲 beetle|🦗 cricket grasshopper|🕷️ spider arachnid|🕸️ cobweb|🦟 mosquito|🐞 ladybug|🦂 scorpion|🪱 nematode|🦠 microorganism pathogen|🪺 nest|🐾 pawprint footprint|🦴 marrow|🦷 enamel|🐣 chick hatchling|🐥 duckling|🦄 unicorn|🐉 dragon|🧜 mermaid|🧚 fairy|🧙 wizard magician sorcerer|🧛 vampire|👻 ghost|🧟 zombie|🤖 android|👽 alien|🎃 pumpkin|🦖 trex|🦕 brontosaurus|🍎 apples|🍐 pear|🍊 tangerine citrus|🍋 lemon lime|🍌 banana|🍉 watermelon|🍇 grape grapes|🍓 strawberry berry berries|🫐 blueberry|🍒 cherry|🍑 peach|🥭 mango|🍍 pineapple|🥥 coconut|🥝 kiwi|🍅 tomato|🍆 eggplant|🥑 avocado|🥦 broccoli|🥬 lettuce cabbage spinach|🥒 cucumber|🌶️ pepper chili|🌽 maize|🥔 potato|🍠 yam|🧅 onion|🧄 garlic|🍞 bread loaf|🥐 croissant|🥖 baguette|🥞 pancake|🧇 waffle|🧀 cheese|🥚 eggs|🍳 breakfast|🥓 bacon|🍔 hamburger burger|🍟 fries|🌭 hotdog|🥪 sandwich|🌮 taco|🍝 pasta spaghetti noodle|🍜 soup ramen|🍚 rice|🍣 sushi|🥗 salad|🍰 cake|🧁 cupcake|🍪 cookie biscuit|🍩 donut|🍫 chocolate|🍬 candy|🍦 icecream dessert|🥛 milk dairy|🧃 juice|☕ coffee|🍵 tea|🥤 beverage soda|🍷 wine|🍺 beer|🧂 salt|🍯 syrup|🍽️ dinner lunch plate|🥄 spoon|🍴 fork knife|🥢 chopsticks|🥫 canned|🥜 peanut nuts|🌰 chestnut acorn|🍄 toadstool|🌳 oak pine maple|🌲 evergreen conifer fir|🌴 palm|🌵 succulent|🌾 rice paddy|🌿 herb|☘️ clover shamrock|🍁 autumn fall|🍂 foliage|🌱 germination|🌻 sunflower|🌹 rose|🌷 tulip|🌸 cherryblossom|🌺 hibiscus|🪴 houseplant|🪵 log timber lumber|🪨 pebble|🏔️ peak summit alps himalayas everest|⛰️ hill hills mountains|🏞️ valley canyon park|🏜️ sahara|🏖️ shore seaside|🌊 ocean sea waves tsunami|💧 water droplet|🌫️ fog mist|☁️ clouds|🌧️ rainfall rainy precipitation|🌨️ sleet hail|⛈️ thunderstorm|🌪️ cyclone|🌀 whirlpool vortex typhoon|🌈 arc|❄️ snowy blizzard winter|☃️ snowman|🔥 wildfire campfire bonfire|🌞 sunshine sunny daylight summer|🌅 sunrise dawn|🌇 sunset dusk|🌙 night crescent|🌑 eclipse|🌍 continent africa europe|🌎 america americas|🌏 asia australia|🌌 universe cosmos milkyway|☄️ meteoroid|🌋 crater|🏝️ archipelago|🧊 iceberg glacier|⛲ fountain|🌐 internet network|🛰️ orbiter|🛸 ufo|👨‍🚀 spaceman cosmonaut|⚡ voltage|💨 gust|👶 baby infant toddler|👦 boy|👧 girl|👨 father dad|👩 mother mom mum|👴 grandfather grandpa|👵 grandmother grandma|🧑 adult human|👨‍👩‍👧 parents|👨‍🏫 professor|👩‍⚕️ doctor nurse physician|👮 police officer policeman|👷 builder engineer construction|🧑‍🍳 chef cook baker|🧑‍🚒 firefighter fireman|🧑‍🌾 gardener|🧑‍🎨 painter|🧑‍🔬 researcher biologist chemist physicist|🧑‍✈️ pilot|🧑‍💻 programmer developer|🧑‍⚖️ judge lawyer|🕵️ spy|🦸 superhero|🦹 villain|🤴 emperor|👸 empress|🥷 ninja|🏴‍☠️ pirate|⚔️ sword knights|🏹 archer arrow bow|🪖 helmet|🎖️ medal veteran|👑 monarchy|🧑‍🤝‍🧑 friends friend|🙋 hands|😀 happy happiness|😢 sad sadness cry|😠 angry|😨 scared afraid|😊 kind|🙏 prayer pray|⛪ church|🕌 mosque|🕍 synagogue|🛕 shrine|🕉️ religion|✝️ christianity|☪️ islam|✡️ judaism|☸️ buddhism|🙌 celebrate celebration|🎉 party festival|🎂 birthday|🎄 christmas|🎆 fireworks|🏳️ surrender|🚩 banner|🧠 intelligence|🫀 organ|🫁 respiratory|🩸 blood|🦵 leg|🦶 foot feet|💪 biceps|👃 nose smell|👄 mouth lips|👅 tongue taste|👀 eyes|🧬 genes heredity|💉 injection syringe|🩺 stethoscope checkup|🩹 bandage wound|🏥 hospital clinic|🚑 ambulance|🧪 testtube|🔬 cells|🧫 petri culture|🧴 lotion|🛁 bath|🚿 shower|🪥 toothbrush|🥦 vegetables|🏊 swimming swim|🚴 cycling bicycle bike|🧘 yoga meditation|⚖️ justice|🍽️ diet nutrition|📚 books textbook|📖 page chapter|📝 essay homework assignment|✏️ pen|🖊️ marker|🖍️ crayon|📏 straightedge|📐 geometry angle|🧮 abacus calculator calculate|➕ addition|➖ subtraction subtract|✖️ multiplication multiply|➗ division|🟰 equation|📊 bargraph histogram|🥧 piechart|🎒 backpack|🏫 school classroom|🎓 graduation university college degree|📓 notebook journal diary|📋 clipboard list|🗂️ folder file|📎 paperclip|✂️ scissors|🖇️ stapler|🔖 bookmark|🔤 alphabet letters|🔡 lowercase|🔠 uppercase capital|🅰️ vowel|📜 manuscript|📰 headline|🔔 bell|🎤 microphone|📻 radio|📺 television tv|🎬 film movie cinema|📷 camera photograph photo|🖼️ painting picture|🎨 colors|🖌️ brush|🗿 statue sculpture|🏛️ museum|🎭 theater drama|🎪 circus|🎵 tune|🎶 songs|🎼 symphony|🎹 piano|🎸 guitar|🎺 trumpet|🎻 violin|🥁 drum drums|🪘 percussion|🎷 saxophone|🎧 headphones|💿 disc|📀 dvd|🌐 global|🔤 grammar|🔠 noun|🔡 verb|❗ exclamation|🧩 jigsaw|♟️ chess|🎲 dice|🎮 videogame|🕹️ joystick|🧸 toy teddy|🪁 kite|⚽ soccer football|🏀 basketball|🏈 rugby|⚾ baseball|🎾 tennis|🏐 volleyball|🏓 pingpong|🏸 badminton|🏒 hockey|🏏 cricketbat|⛳ golf|🥊 boxing|🥋 karate martial|⛸️ skating|🎿 ski skiing|🏂 snowboard|🏋️ weightlifting|🤸 gymnastics|🧗 climbing|🚣 rowing|🏄 surfing|🤿 diving|⛺ camping tent|🎣 fishing|🏅 olympics|🏠 homes|🏡 cottage|🏢 office skyscraper|🏬 store shop market mall|🏪 grocery|🏰 fort|🏯 pagoda|🗼 tower|🗽 liberty statueofliberty|🗻 fuji|🕋 kaaba|⛩️ torii|🧱 brick bricks|🪟 window|🚪 door|🛋️ sofa couch|🪑 chair|🛏️ mattress|🚽 toilet|🚰 faucet|🔓 unlock|🛠️ tools|🔨 hammer|🪓 axe|⛏️ pickaxe mining|🪚 saw|🔧 wrench|🔩 screw|⚙️ cog|🧰 toolbox|🪜 ladder|🔦 flashlight torch|🕯️ candle|🪔 lamp|🛢️ oil petroleum barrel|⛽ gasoline fuel|🧯 extinguisher|⚓ anchor|🧭 navigator|⏳ hourglass|⌛ sandglass|⏰ alarm|⌚ watch|🕰️ clockwork|📅 schedule|🗓️ agenda|🧺 basket laundry|🧹 broom|🧽 sponge|🎁 gift|📦 package parcel|📬 mailbox|📮 postbox|☎️ landline|📱 mobile|💻 laptops|🖥️ desktop monitor|⌨️ typing|🖱️ click|🖨️ printer|💾 floppy storage|📡 antenna signal|📶 wifi|🔎 zoom|🔭 stargazing|🧲 attract|🪞 mirror reflection|👓 glasses|🕶️ sunglasses|👕 shirt clothes clothing|👖 pants jeans|👗 dress|🧥 coat jacket|🧣 scarf|🧤 gloves|🧢 hat|👟 shoe shoes sneaker|👢 boots|🎽 uniform|💎 diamond gem jewel|👜 bag purse|🧳 luggage suitcase|☂️ umbrella|🌂 raincoat|🚗 cars|🚕 taxi cab|🚌 bus|🚎 trolley|🏎️ racecar|🚓 policecar|🚒 firetruck|🚚 lorry|🚜 tractor|🛻 pickup|🏍️ motorcycle|🛵 scooter|🚲 bicycles|🛴 skateboard|🚂 steam|🚆 railways|🚇 subway metro|🚊 tram|🚄 bullet|✈️ airplanes jet airport|🛩️ glider|🚁 helicopter|⛵ sailboat|🛶 canoe kayak|🚤 speedboat|⛴️ ferry|🛳️ cruise liner|🚢 steamship|🛣️ highway road|🛤️ railroad|🚦 traffic|🚧 construction|🚏 busstop|🗺️ atlas|📍 location pin place|🧭 orientation|🌉 viaduct|⛔ forbidden|🚸 crossing|🅿️ parking|🚉 station|🎡 ferriswheel|🎢 rollercoaster|🏟️ stadium|🏕️ campsite|🏘️ neighborhood suburb|🌆 skyline|🇺🇸 usa america american|🇬🇧 britain british england english|🇫🇷 france french|🇩🇪 germany german|🇮🇹 italy italian|🇪🇸 spain spanish|🇨🇳 china chinese|🇯🇵 japan japanese|🇮🇳 india indian|🇧🇷 brazil brazilian|🇲🇽 mexico mexican|🇨🇦 canada canadian|🇦🇺 australian|🇷🇺 russia russian|🇪🇬 egyptian|🇬🇷 greece greek|🇰🇷 korea|🇿🇦 southafrica|🏺 vase pottery ancient artifact urn amphora|🗿 moai|🗡️ dagger spear|🏹 hunter|⚱️ ashes|🪙 currency|💰 treasure rich riches|💵 dollar cash bill|💳 credit card|🧾 receipt invoice|🏧 atm|💹 stocks market|🏭 factories|🏗️ architecture|⚖️ fairness|📜 charter law|🗳️ elect|📣 campaign|🎙️ interview podcast|🕯️ memorial|🧱 fortification|🛤️ colony|🪶 feather|⚒️ labor labour|🌾 farming|🐎 cavalry|🛶 voyage|🧳 immigrant immigration migrate migration|🏴 rebels|📯 horn|🥁 beat|🏛️ greek senate forum|🏛️ capitol|🔶 rhombus|⬛ squares|♾️ infinity|〰️ zigzag|➡️ arrow|⚛️ nucleus proton neutron electron|🧪 compound|⚗️ distillation|🧫 bacterial|🌡️ celsius fahrenheit|🔥 combustion|❄️ freezing|🪨 sediment|🏔️ erosion|🪨 igneous sedimentary metamorphic|⛏️ ore quarry|🛢️ crude|💨 smoke pollution smog|♻️ recycle recycling reuse|🗑️ trash garbage waste litter|🌍 environment ecosystem|🌱 conservation|💨 turbine|🏭 emissions|🧯 safety|☢️ radiation nuclear radioactive|☣️ biohazard toxic poison|🧲 poles|🔌 socket|🧵 thread string yarn|🪡 needle sewing|🧶 wool knit|🪢 knot|🍽️ meal|🫖 teapot|🍼 bottle|🧈 butter|🥩 meat steak beef|🍗 poultry drumstick|🐟 salmon tuna cod trout|🥕 carrots|🫘 bean beans|🥣 cereal bowl|🍿 popcorn|🧆 falafel|🍕 pizzas|🌯 burrito|🥟 dumpling|🍙 riceball|🍡 skewer|🕐 oclock|🌓 phases|🔢 fractions|📐 perimeter area|📏 width height|🔼 maximum|🔽 minimum|❌ incorrect|🔗 connection|🧳 trip travel|🎈 balloon|🎊 confetti|🪅 pinata|🧨 firework|💥 explosion explode boom|💣 bomb|🔫 weapon|🪂 parachute|⚰️ coffin death|🪦 grave|🌫️ cloudy|🏞️ landscape scenery|🌅 horizon|🐕 beagle poodle labrador bulldog|🐈 tabby|🐎 mare foal|🦬 bison buffalo|🐃 ox oxen|🐂 bull|🦙 llama alpaca|🐏 ram|🦏 rhino rhinoceros|🦛 hippo hippopotamus|🐆 leopard cheetah jaguar panther|🐅 lynx|🦊 foxes|🦨 skunk|🦡 badger|🦫 beaver|🐀 rats|🦥 sloth|🦧 orangutan|🐕‍🦺 pets pet|🐇 hare rabbits|🦐 prawn|🦪 oyster clam mussel|🪼 jellyfish|🐋 humpback orca|🐳 beluga|🦞 crayfish|🪸 coral reef|🐟 minnow bass carp|🐠 clownfish|🦈 sharks|🐢 turtles|🐍 cobra python viper|🦎 iguana chameleon|🐸 frogs|🐲 dragons|🦤 dodo|🦚 peacock|🦜 macaw|🦅 eagles|🦆 ducks|🐦 sparrow robin songbird finch|🐤 chicks|🦢 swans|🪿 goose geese|🐓 chickens|🪽 wing wings|🦋 butterflies|🐛 larvae|🐝 bees|🐜 ants|🪳 cockroach|🦟 mosquitoes|🪰 flies|🐌 snails|🦗 crickets|🪲 beetles|🐞 ladybird|🕷️ tarantula|🦂 scorpions|🪱 earthworms|🐾 paw|🐿️ squirrels|🦔 hedgehogs|🦇 bats|🐻‍❄️ polarbear|🐨 koalas|🐼 pandas|🦘 kangaroos|🐘 elephants|🦒 giraffes|🦓 zebras|🦁 lions|🐯 tigers|🐒 monkeys|🦍 gorillas|🌳 trees|🌲 pinetree redwood sequoia|🌴 palmtree|🎋 bamboo|🎍 reeds|🌾 barley oats rye|🌽 cornfield|🌿 ferns fern moss|🌼 daisy dandelion|🌻 sunflowers|🪷 lotus waterlily|🌺 orchid|🥀 wilted|💐 bouquet|🌱 sapling|🪹 burrow|🪨 gravel|🪵 branch twig trunk bark|🍂 deciduous|🍁 mapleleaf|🍄 mushrooms|🫒 olive|🍋 lemons|🍎 orchard|🍏 greenapple|🍇 vineyard|🥭 mangoes|🫛 pea peas|🍠 sweetpotato|🥜 peanuts|🌰 chestnuts|🍯 honeycomb|🥐 pastry|🥨 pretzel|🥯 bagel|🍘 cracker|🍥 fishcake|🥠 fortunecookie|🍧 shavedice|🍨 gelato|🍮 pudding custard|🍭 lollipop|🍿 popcorns|🧋 bubbletea|🍹 smoothie|🍾 champagne|🥃 whiskey|🍸 cocktail|🍶 sake|🧊 icecube|🥡 takeout|🍱 bento|🍛 curry|🍢 kebab|🥙 pita|🥞 pancakes|🥔 potatoes|🍅 tomatoes|🍌 bananas|🍇 grapevine|🍉 melon|🍈 cantaloupe|🍒 cherries|🍓 strawberries|🥑 avocados|🏔️ plateau mesa butte|🏜️ dune dunes savanna steppe tundra|🌲 taiga|🌴 rainforest jungle tropics|🏞️ meadows wetland swamp marsh pond lake lagoon|🌊 gulf bay strait|🏝️ atoll peninsula cape|🧊 icecap polar arctic antarctic antarctica|🌋 caldera|🪨 granite basalt limestone marble sandstone quartz|💎 crystal crystals|🪙 pennies|🌍 equator latitude longitude|🧭 meridian|🗺️ cartography mapmaking|🌐 gridlines|🌍 europeans|🏜️ oasis|🌥️ cloudcover|☔ raindrops|❄️ snowfall snowflakes|🌎 southamerica northamerica|🇲🇽 aztec|🌴 caribbean|🌋 hawaii|🗻 volcanic|🪐 neptune uranus|☄️ asteroids meteors|🌑 newmoon|🌕 fullmoon|🌒 waxing|🌘 waning|🌗 lunar|🌟 stars|🔭 observatory|🛰️ satellites|🚀 spacecraft shuttle|🧑‍🚀 astronauts|🌌 nebula blackhole|🧑‍🏫 tutor instructor|👩‍🏫 educator|🧑‍🍳 chefs|🧑‍🔧 mechanic|🧑‍🏭 factoryworker|👨‍🌾 farmers|🧑‍💼 businessman manager boss|🧑‍⚕️ surgeon|🧑‍🚀 spaceexplorer|🕵️‍♀️ detectives|🤵 groom|👰 bride|🎅 santa|🧝 elf|🧞 genie|🧌 troll|🦸‍♀️ heroine|🥷 samurai|🧑‍🦯 blindperson|🧑‍🦽 wheelchair|🧑‍🦼 disabled|👪 families|👥 crowds|☝️ pointing|🦾 prosthetic|🧑‍🤝‍🧑 neighbors|🤰 pregnancy|🍼 newborn|💒 wedding|⚰️ funeral|🕊️ doves|🧠 neuron neurons|🧠 cerebellum cortex|🦴 skull spine ribs rib femur|🫀 heartbeat|🫁 diaphragm|🩸 plasma platelets|🩻 xray|🧬 helix|🦠 germs|💊 pills tablet|💉 vaccination|🤮 vomit|🧴 sunscreen|🧼 handwashing|🪥 brushing|🦷 cavity|👁️ retina|👂 eardrum|👃 nostril|🖐️ fingers|🦶 toes|🦵 knee|🦿 limb|💪 muscles|🏃‍♀️ jogging|💃 dancing|🕺 dancer|🤸‍♀️ cartwheel|🧘‍♀️ stretching|🥛|🍞 carbohydrate|🥑 fats|📃 worksheet|📕 hardcover|📗 greenbook|📘 bluebook|📙 orangebook|📓 notebooks|📔 sketchbook|📖 dictionary encyclopedia|✍️ handwriting signature|🖋️ fountainpen ink|🖌️ paintbrush|🖍️ crayons|🎨 watercolor|🎭 actor actress|🎬 director clapperboard|🎤 singer|🎙️ broadcaster|🎧 listening|📻 broadcast|🎼 composer|🎵 lyrics|🎹 pianist|🪕 banjo|🪗 accordion|🪈 flute|🥁 drummer|🎻 cello|🪘 bongo|🔔 chime|🛎️ doorbell|📯 bugle|🎺 horns|🎷 sax|🪇 maracas|🎤 karaoke|🎡 carnival|🎠 carousel|🎢 coaster|🎳 bowling|🎱 billiards|🏑 fieldhockey|🥍 lacrosse|🏹 archery|🛹 skateboarding|🛼 rollerskate|⛷️ skier|🏂 snowboarder|🤺 fencing|🤼 wrestling|🤾 handball|🏌️ golfer|🏊‍♀️ swimmer|🚴‍♀️ cyclist|🧗‍♀️ climber|🪃 boomerang|🧩 puzzles|🪀 yoyo|🎴 cards|🃏 joker|🀄 mahjong|♠️ spades|🧱 masonry|🪨 stonework|🏚️ ruins ruin|🛖 hut|🏠 cabin|🏙️ downtown|🏢 skyscrapers|🏤 postoffice|🏫 schoolhouse|🏛️ parthenon colosseum acropolis|🗼 eiffel|🕌 minaret|🏯 pagodas|🎪 bigtop|🌉 suspension|🛗 elevator|🪞 mirrors|🛏️ bedroom|🍳 kitchen|🛋️ livingroom|🚽 bathroom restroom|🧸 toys|🪆 nesting|🛁 tub|🧺 hamper|🧴 shampoo|🪒 razor|🧷 safetypin|🧹 mop|🪣 bucket|🧻 tissue|🪠 plunger|🧲 magnets|⚖️ scales|🔭 spyglass|⛓️ shackles|🧰 toolkit|🔧 spanner|🪛 screwdriver|⚙️ cogs|🧯 firefighting|🪚 carpenter carpentry|🪓 hatchet lumberjack|🪵 firewood|🚗 automobile sedan|🚙 suv|🚐 van minivan|🚛 semitruck|🚜 farmtractor|🛞 tire tyre|🚨 siren|🚥 stoplight|🛑 stopsign|🛴 kickscooter|🛺 rickshaw|🚡 cablecar|🚠 gondola|🚟 monorail|🚝 maglev|🚃 railcar|🚋 streetcar|🚞 mountainrailway|🚈 lightrail|✈️ airliner|🛫 takeoff|🛬 landing|🛩️ biplane|🪂 skydiving|🚁 chopper|🛶 dugout|🛥️ yacht|⛵ sailing|🚢 steamer|🛟 lifebuoy|⚓ harbor harbour|🧭 northstar|🏗️ cranes|🚧 roadwork|🏺 sarcophagus mummy hieroglyphics hieroglyph|🗿 easterisland|⚔️ gladiator legion legions|🏛️ roman romans rome|🏛️ athens sparta|🏴‍☠️ buccaneer|⛵ mayflower|🏕️ tipi tepee wigwam|🛶 longboat|🪓 viking vikings|⚒️ blacksmith smith|⚖️ courtroom|🗳️ ballots|🏛️ legislature|🏛️ whitehouse|🔔 bellringing|💣 grenade|💥 cannon|🔫 musket rifle|✈️ bomber|🚢 battleship|🪦 tombstone|🎖️ medals|🏛️ monument|🗿 monuments|🏺 relic relics|🛒 groceries|🏪 convenience|🏬 department|🏭 smokestack|⛏️ miner|🔨 craftsman|🧵 textile textiles|🧶 cotton|⚗️ alchemy retort|🧪 reagent|🧫 agar|🔬 magnification|🧬 mutation|🧬 nucleotide|🦠 amoeba paramecium|🦠 plankton|🔌 wires|🔋 batteries|🌩️ thunderbolt|📡 radar|🛰️ gps|🖥️ pc|📠 fax|☎️ rotary|🎞️ filmstrip|📽️ projector|📹 camcorder|🌡️ barometer|⏲️ timer stopwatch|🧮 abacuses|📏 rulers|📐 protractor|🧭 compasses|⚖️ weights|🪝 pendulum|⚙️ flywheel|🛞 axle|🌡️ thermostat|🔥 furnace|🧯 sprinkler|🚰 plumbing pipe pipes|💦 splash|💧 dripping|🌊 flood floods|🪨 clay|🪣 sandbox|🧱 concrete|🏗️ girder|🔩 rivet|🕳️ tunnel|🚇 subway|🚧 barricade|🔢 algebra|📐 trigonometry|📏 centimeters|🧮 arithmetic|📈 graphs|🥧 pie|🔺 triangles|⬛ squareshape|🔷 polygon|⭕ circles|🛑 octagon|⬡ hexagon|⬢ hexagons|🔶 trapezoid|🧊 cubes|🥫 cylinder|🍦 cone|⚽ sphere|🥚 oval|💎 diamonds|🎰 jackpot|🪙 coinflip|📆 datebook|🕑 clockface|⌨️ keyboard|🖱️ trackpad|👲 skullcap|🧕 headscarf|👰 veil|🫏 burro donkey mule|🦣 mammoth|🐦‍🔥 phoenix|🦕 brachiosaurus diplodocus sauropod|🦭 seal|🐡 blowfish|🐝 bumblebee honeybee|🌹 rose|🪻 hyacinth lavender lilac|🫓 flatbread naan|🫔 tamale|🫕 fondue|🍩 doughnut|🍰 shortcake|🥤 straw|🏨 hotel|🌁 foggy|🚎 trolleybus|🛼 skate|🛣️ motorway|🛟 buoy|🛫 departure|🛬 arrival|🚡 tramway|🛸 saucer|🧨 firecracker|🎉 popper|🎎 dolls|🎀 ribbon|🥎 softball|🏓 pong|🛷 sled sleigh|🎯 bullseye target|🎨 palette|👔 necktie|👕 t-shirt|👘 kimono|🥻 sari|💄 lipstick|🔇 speaker|📣 megaphone|🎚️ slider|🎧️ headphone|🪊 trombone|🪉 harp|🖲️ trackball|💡 bulb|📒 ledger|📜 scroll|💴 banknote|📝 memo|💼 briefcase|🗂️ dividers|🗒️ notepad|📈 increasing|📉 decreasing|📌 pushpin|🗑️ wastebasket|🔒️ locked|🔓️ unlocked|🦯 cane|🪏 shovel|🩼 crutch|🛁 bathtub|🫧 bubbles|🇦🇩 andorra|🇦🇫 afghanistan|🇦🇮 anguilla|🇦🇱 albania|🇦🇲 armenia|🇦🇴 angola|🇦🇷 argentina|🇦🇹 austria|🇦🇼 aruba|🇦🇿 azerbaijan|🇧🇧 barbados|🇧🇩 bangladesh|🇧🇪 belgium|🇧🇬 bulgaria|🇧🇭 bahrain|🇧🇮 burundi|🇧🇯 benin|🇧🇲 bermuda|🇧🇳 brunei|🇧🇴 bolivia|🇧🇸 bahamas|🇧🇹 bhutan|🇧🇼 botswana|🇧🇾 belarus|🇧🇿 belize|🇨🇭 switzerland|🇨🇱 chile|🇨🇲 cameroon|🇨🇴 colombia|🇨🇺 cuba|🇨🇾 cyprus|🇨🇿 czechia|🇩🇯 djibouti|🇩🇰 denmark|🇩🇲 dominica|🇩🇿 algeria|🇪🇨 ecuador|🇪🇪 estonia|🇪🇷 eritrea|🇪🇹 ethiopia|🇫🇮 finland|🇫🇯 fiji|🇫🇲 micronesia|🇬🇦 gabon|🇬🇩 grenada|🇬🇬 guernsey|🇬🇭 ghana|🇬🇮 gibraltar|🇬🇱 greenland|🇬🇲 gambia|🇬🇵 guadeloupe|🇬🇹 guatemala|🇬🇺 guam|🇬🇾 guyana|🇭🇳 honduras|🇭🇷 croatia|🇭🇹 haiti|🇭🇺 hungary|🇮🇩 indonesia|🇮🇪 ireland|🇮🇱 israel|🇮🇶 iraq|🇮🇷 iran|🇮🇸 iceland|🇯🇲 jamaica|🇰🇪 kenya|🇰🇬 kyrgyzstan|🇰🇭 cambodia|🇰🇮 kiribati|🇰🇲 comoros|🇰🇼 kuwait|🇰🇿 kazakhstan|🇱🇦 laos|🇱🇧 lebanon|🇱🇮 liechtenstein|🇱🇷 liberia|🇱🇸 lesotho|🇱🇹 lithuania|🇱🇺 luxembourg|🇱🇻 latvia|🇱🇾 libya|🇲🇦 morocco|🇲🇨 monaco|🇲🇩 moldova|🇲🇪 montenegro|🇲🇬 madagascar|🇲🇱 mali|🇲🇳 mongolia|🇲🇶 martinique|🇲🇷 mauritania|🇲🇸 montserrat|🇲🇹 malta|🇲🇺 mauritius|🇲🇻 maldives|🇲🇼 malawi|🇲🇾 malaysia|🇲🇿 mozambique|🇳🇦 namibia|🇳🇬 nigeria|🇳🇮 nicaragua|🇳🇱 netherlands|🇳🇴 norway|🇳🇵 nepal|🇳🇷 nauru|🇳🇺 niue|🇴🇲 oman|🇵🇦 panama|🇵🇪 peru|🇵🇭 philippines|🇵🇰 pakistan|🇵🇱 poland|🇵🇹 portugal|🇵🇼 palau|🇵🇾 paraguay|🇶🇦 qatar|🇷🇴 romania|🇷🇸 serbia|🇷🇼 rwanda|🇸🇨 seychelles|🇸🇩 sudan|🇸🇪 sweden|🇸🇬 singapore|🇸🇮 slovenia|🇸🇰 slovakia|🇸🇳 senegal|🇸🇴 somalia|🇸🇷 suriname|🇸🇾 syria|🇸🇿 eswatini|🇹🇬 togo|🇹🇭 thailand|🇹🇯 tajikistan|🇹🇰 tokelau|🇹🇲 turkmenistan|🇹🇳 tunisia|🇹🇴 tonga|🇹🇻 tuvalu|🇹🇼 taiwan|🇹🇿 tanzania|🇺🇦 ukraine|🇺🇬 uganda|🇺🇾 uruguay|🇺🇿 uzbekistan|🇻🇪 venezuela|🇻🇳 vietnam|🇻🇺 vanuatu|🇼🇸 samoa|🇽🇰 kosovo|🇾🇪 yemen|🇾🇹 mayotte|🇿🇲 zambia|🇿🇼 zimbabwe|🌰 almond|🍆 aubergine|🐫 bactrian|🎱 billiard|🧫 biology|👚 blouse|🧋 boba|🥉 bronze|🧮 calculation|🫑 capsicum|🧆 chickpea meatball|🪮 comb|🐚 conch|🐦‍⬛ crow raven|🪥 dental|👖 denim trousers|🐪 dromedary|🫛 edamame|🐌 escargot|🎡 ferris|🌭 frankfurter|🫚 ginger|🥙 gyro|🐣 hatching|🦘 joey|🥋 judo|🥬 kale|🦟 malaria|💰️ moneybag|🕌 masjid|🗿 moyai|📿 necklace|🥣 oatmeal|🥘 paella|🥒 pickle|🧺 picnic|🪶 plumage|🫜 radish turnip|🎒 rucksack satchel|📷️ selfie|🦐 shellfish|🏸 shuttlecock|🤿 snorkeling|🧵 spool|🧦 stocking|🍵 teacup|🗼 tokyo|🎩 tophat|🦖 tyrannosaurus|🌪️ whirlwind|🛖 yurt|🦢 cygnet|☕️ cafe caffeine|🐾 animal animals wildlife creature creatures|🤧 sneeze sneezing sneezes cough coughing coughs allergy allergies|🤒 fever sick sickness illness|😟 worried worry nervous anxious|😌 calm relaxed peaceful|🧘 mindfulness meditation meditate yoga|💗 kindness caring|🎲 game games dice probability|⚽ sport sports soccer|🏀 basketball|⚾ baseball|🏈 football|🎾 tennis|🏊 swimming swim swimmer|🏃 running runner jogging|💃 dance dancing dancer dancers|📄 paper worksheet worksheets|👦 brother brothers|👧 sister sisters|💼 job jobs career careers|🛒 consumer consumers shopping shopper customer customers|🎉 holiday holidays celebration celebrations|🔤 spelling vocabulary|💥 onomatopoeia|🌻 garden gardens sunflower sunflowers|🪲 exoskeleton beetle beetles|🐣 hatch hatches hatched hatching hatchling hatchlings|⛽ fuel fuels gasoline|🦎 camouflage lizard lizards|🧲 attract attraction|🦴 skeletal|🩸 blood|🌋 eruption";
   var EMOJI_LIB = {};
   EMOJI_LIB_SRC.split("|").forEach(function(row){
     var p = row.split(" "), e = p[0];
@@ -1709,7 +1905,9 @@ window.SceneEngine = (function(){
   [["class", "glue locker stairs pillow blanket towel mittens pajamas nail drill easel stage mask puppet choir orchestra quiz video website password switch dumbbell"],
    ["town", "playground roof fence submarine mailbag siren seatbelt"],
    ["land", "dragonfly bat drought shadow"], ["math", "symmetry pattern decimal speedometer"],
-   ["lab", "compost vitamin echo"], ["space", "orbit rotation"], ["sky", "weather"], ["town", "piggybank"]].forEach(function(row){
+   ["lab", "compost vitamin echo"], ["space", "orbit rotation"], ["sky", "weather"], ["town", "piggybank"],
+   ["class", "punctuation chalkboard variable tally"], ["math", "shapes lines pi"], ["land", "soil migration hibernate greenhouse"], ["bio", "liver intestines feelings"],
+   ["lab", "friction dissolve wedge"], ["sky", "atmosphere"]].forEach(function(row){
     row[1].split(" ").forEach(function(k){ ICON_SETTING[k] = row[0]; });
   });
 
@@ -1896,6 +2094,8 @@ window.SceneEngine = (function(){
   function analyze(text, extra, context){
     var raw = String(text).split(/\s+/).filter(Boolean);
     var norm = raw.map(normalize), n = raw.length, i;
+    var dsc = diagramScene(text);
+    if (dsc) return dsc;
     var cues = context && context.words ? norm.concat(context.words) : norm, names = spokenNames(raw, norm);
     var concepts = [], rels = [];
     for (i = 0; i < n; i++){
@@ -1997,6 +2197,11 @@ window.SceneEngine = (function(){
   function sceneFromAI(o, text, extra){
     if (!o || typeof o !== "object") return null;
     if (o.show === false) return emptyScene();
+    if (typeof o.diagram === "string" && DIAGRAMS[o.diagram]){
+      var ds = diagramScene(text, o.diagram);
+      if (typeof o.caption === "string" && o.caption.trim()) ds.caption = o.caption.trim().slice(0, 80);
+      return ds;
+    }
     var raw = String(text).split(/\s+/).filter(Boolean), norm = raw.map(normalize), n = raw.length;
     var labels = (o.labels && typeof o.labels === "object") ? o.labels : {};
     var used = {};
@@ -2337,16 +2542,744 @@ window.SceneEngine = (function(){
     return out;
   }
 
+  // ---------- prebuilt diagrams ----------
+  // A labelled picture of a whole topic (the water cycle, parts of a plant, a story mountain...). It shows when a sentence
+  // names the topic, builds up part by part as the sentence goes on, and highlights any part the sentence mentions.
+  var DIAGRAMS = {}, DIAGRAM_ORDER = [];
+  function tok(w){ return String(w).toLowerCase().replace(/[^a-z0-9]/g, ""); }
+  function phraseToks(s){ return String(s).trim().split(/\s+/).map(tok).filter(Boolean); }
+  function sameTok(a, b){ return !!a && (a === b || a === b + "s" || b === a + "s" || a === b + "es" || b === a + "es"); }
+  function findPhrase(toks, ph){
+    for (var i = 0; i + ph.length <= toks.length; i++){
+      for (var j = 0; j < ph.length && sameTok(toks[i + j], ph[j]); j++);
+      if (j === ph.length) return i;
+    }
+    return -1;
+  }
+  function dgm(key, title, setting, say, parts, draw){
+    var p = {};
+    Object.keys(parts || {}).forEach(function(k){ p[k] = { box: parts[k][0], say: parts[k][1].split(",").map(phraseToks) }; });
+    DIAGRAMS[key] = { key: key, title: title, setting: setting, say: say.map(phraseToks), sayText: say, parts: p, draw: draw };
+    DIAGRAM_ORDER.push(key);
+  }
+  function dI(k, x, y, s){ return I[k] ? sub(I[k], x, y, s / 100) : ""; }
+  function dL(t, x, y, s, a){ return textLabel(t, x, y, s || 14, a, "lbl"); }      // names a part (hidden with "no labels")
+  function dT(t, x, y, s, a){ return textLabel(t, x, y, s || 14, a); }             // text that is the content itself
+  function dLead(x1, y1, x2, y2){ return ln(x1, y1, x2, y2, "#7A6F58", 1.6) + circ(x1, y1, 2.4, "#7A6F58", 0); }
+  function dA(x1, y1, x2, y2, color, bend, w){
+    color = color || INK; bend = bend || 0; w = w || 3.5;
+    var dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1;
+    var cx = (x1 + x2) / 2 - dy / len * bend, cy = (y1 + y2) / 2 + dx / len * bend;
+    var ang = Math.atan2(y2 - cy, x2 - cx), ex = x2 - Math.cos(ang) * 7, ey = y2 - Math.sin(ang) * 7;
+    return '<path d="M' + f(x1) + ' ' + f(y1) + ' Q' + f(cx) + ' ' + f(cy) + ' ' + f(ex) + ' ' + f(ey) + '" fill="none" stroke="' + color +
+      '" stroke-width="' + w + '" stroke-linecap="round"/>' + arrowHead(x2, y2, ang, color, 10);
+  }
+  function dBox(x, y, w, h, fill, text, size){ return rct(x, y, w, h, fill, 10, 2.5) + (text ? dT(text, x + w / 2, y + h / 2 + 5, size || 14) : ""); }
+  function glow(b){ return '<rect x="' + b[0] + '" y="' + b[1] + '" width="' + b[2] + '" height="' + b[3] + '" rx="14" fill="#FFE27A" opacity="0.8" stroke="#F2C14E" stroke-width="2.5"/>'; }
+  // four stages in a loop, clockwise from the top
+  function loop4(stages){
+    var P = [[160, 40], [262, 100], [160, 158], [58, 100]], out = [];
+    stages.forEach(function(s, i){
+      var p = P[i], q = P[(i + 1) % 4];
+      out.push(s[0] + dL(s[1], p[0] + (i === 1 ? 0 : i === 3 ? 0 : 0), p[1] + (i === 0 ? 36 : 38), 14) +
+        dA(p[0] + (q[0] - p[0]) * 0.3, p[1] + (q[1] - p[1]) * 0.3, p[0] + (q[0] - p[0]) * 0.7, p[1] + (q[1] - p[1]) * 0.7, "#5D8C6B", -14, 3));
+    });
+    return out;
+  }
+  function moonPhase(cx, cy, r, lit){
+    var base = circ(cx, cy, r, "#3A322C", 2);
+    if (lit <= 0.02) return base;
+    if (lit >= 0.98) return circ(cx, cy, r, "#F3E9B8", 2);
+    var rx = Math.abs(1 - 2 * lit) * r;
+    return base + '<path d="M' + cx + ' ' + (cy - r) + ' A' + r + ' ' + r + ' 0 0 1 ' + cx + ' ' + (cy + r) + ' A' + f(rx) + ' ' + r + ' 0 0 ' + (lit < 0.5 ? 0 : 1) + ' ' + cx + ' ' + (cy - r) +
+      ' Z" fill="#F3E9B8" stroke="' + INK + '" stroke-width="1.5"/>';
+  }
+  function rockBlob(cx, cy, fill){ return pth("M" + (cx - 30) + " " + (cy + 14) + " C" + (cx - 34) + " " + (cy - 6) + " " + (cx - 18) + " " + (cy - 22) + " " + cx + " " + (cy - 20) + " C" + (cx + 22) + " " + (cy - 22) + " " + (cx + 34) + " " + (cy - 4) + " " + (cx + 30) + " " + (cy + 14) + " C" + (cx + 18) + " " + (cy + 22) + " " + (cx - 18) + " " + (cy + 22) + " " + (cx - 30) + " " + (cy + 14) + " Z", fill); }
+
+  // ----- science -----
+  dgm("watercycle", "The water cycle", "sky", ["water cycle", "hydrologic cycle"], {
+    evaporation: [[44, 80, 112, 76], "evaporation,evaporate,evaporates,evaporated,evaporating"],
+    condensation: [[64, 4, 200, 78], "condensation,condense,condenses,condensed,cloud,clouds"],
+    precipitation: [[200, 60, 118, 76], "precipitation,rain,rains,raining,snow,sleet,hail"],
+    collection: [[96, 158, 170, 42], "collection,collects,collect,runoff,groundwater"]
+  }, function(){
+    return [
+      pth("M0 160 Q20 154 40 160 T80 160 T120 160 T160 162 V200 H0 Z", "#8CC4E8", { w: 2.5 }) +
+        pth("M150 200 V166 Q182 158 214 160 L268 102 L314 160 Q318 161 320 161 V200 Z", "#B9DBA0", { w: 2.5 }) +
+        poly([[268, 102], [258, 114], [268, 110], [278, 114]], "#FFFFFF", 2) +
+        pth("M262 132 C250 156 218 170 166 178", "none", { stroke: "#8CC4E8", w: 5 }),
+      dI("sun", 36, 36, 58),
+      dA(92, 152, 150, 72, "#E06D3A", -14) + dA(70, 152, 120, 82, "#E06D3A", -10, 2.5) + dL("evaporation", 58, 124, 14),
+      dI("cloud", 196, 42, 74) + dL("condensation", 118, 20, 14),
+      [210, 224, 238].map(function(x){ return ln(x, 66, x - 5, 84, "#3F7FAF", 2.5); }).join("") + dA(250, 70, 270, 96, "#3F7FAF", 6) + dL("precipitation", 262, 128, 14),
+      dA(214, 182, 128, 186, "#3F7FAF", 0, 3) + dL("collection", 168, 198, 13)
+    ];
+  });
+  dgm("plantparts", "Parts of a plant", "plain", ["parts of a plant", "plant parts", "parts of the plant", "parts of plants"], {
+    flower: [[116, 6, 150, 62], "flower,flowers,petal,petals,bloom"],
+    leaf: [[34, 66, 150, 50], "leaf,leaves"],
+    stem: [[138, 92, 120, 32], "stem,stems,stalk"],
+    roots: [[110, 146, 150, 52], "root,roots"]
+  }, function(){
+    var petals = "";
+    for (var k = 0; k < 6; k++){ var pp = polar(150, 38, 13, k * Math.PI / 3); petals += circ(pp[0], pp[1], 10, "#F29BB5", 2.5); }
+    return [
+      rct(0, 136, 320, 64, "#C9A27A", 0, 0) + ln(0, 136, 320, 136, INK, 2.5),
+      pth("M150 136 C150 150 140 162 126 178 M150 140 C152 160 152 172 150 190 M150 138 C158 152 170 160 180 176 M140 156 L130 160 M154 170 L164 172", "none", { stroke: "#8A5A3C", w: 3.5 }) + dLead(172, 170, 210, 176) + dL("roots", 232, 182, 15),
+      pth("M150 136 V50", "none", { stroke: "#4F9D78", w: 6 }) + dLead(153, 108, 206, 108) + dL("stem", 226, 113, 15),
+      pth("M150 104 C130 84 104 86 92 96 C108 110 132 112 150 104 Z", "#7BB662") + pth("M150 84 C170 64 196 66 206 76 C190 90 168 92 150 84 Z", "#7BB662") + dLead(108, 96, 74, 92) + dL("leaf", 56, 96, 15),
+      petals + circ(150, 38, 9, "#F6C343", 2.5) + dLead(166, 30, 212, 26) + dL("flower", 236, 31, 15)
+    ];
+  });
+  dgm("butterflylife", "Life cycle of a butterfly", "land", ["life cycle of a butterfly", "butterfly life cycle", "butterfly's life cycle", "metamorphosis"], {
+    egg: [[118, 6, 84, 84], "egg,eggs"], caterpillar: [[216, 60, 100, 84], "caterpillar,caterpillars,larva,larvae"],
+    chrysalis: [[118, 118, 84, 82], "chrysalis,pupa,cocoon"], butterfly: [[6, 60, 104, 84], "butterfly,butterflies,adult"]
+  }, function(){
+    return loop4([[dI("egg", 160, 38, 44), "egg"], [dI("caterpillar", 262, 98, 56), "caterpillar"], [dI("cocoon", 160, 154, 50), "chrysalis"], [dI("butterfly", 58, 98, 58), "butterfly"]]);
+  });
+  dgm("froglife", "Life cycle of a frog", "sea", ["life cycle of a frog", "frog life cycle", "frog's life cycle"], {
+    eggs: [[118, 6, 84, 84], "egg,eggs,frogspawn"], tadpole: [[216, 60, 100, 84], "tadpole,tadpoles"],
+    froglet: [[118, 118, 84, 82], "froglet,froglets,legs"], frog: [[6, 60, 104, 84], "frog,frogs,adult"]
+  }, function(){
+    var eggs = "";
+    [[150, 30], [162, 26], [172, 34], [156, 42], [168, 46], [146, 46], [178, 46]].forEach(function(p){ eggs += circ(p[0], p[1], 6, "#DDEFF7", 2) + circ(p[0], p[1], 2.2, INK, 0); });
+    var tad = ell(254, 98, 12, 9, "#5B6B4A") + pth("M266 98 C278 90 284 104 296 96", "none", { stroke: "#5B6B4A", w: 4 }) + circ(250, 95, 2, "#FFFFFF", 0);
+    var froglet = ell(160, 152, 14, 10, "#7BB662") + pth("M172 156 C182 158 186 166 196 162", "none", { stroke: "#7BB662", w: 3 }) + pth("M150 160 L144 170 M168 160 L172 170", "none", { stroke: INK, w: 2.5 }) + circ(154, 146, 3, "#FFFFFF", 1.5) + circ(164, 146, 3, "#FFFFFF", 1.5);
+    return loop4([[eggs, "eggs"], [tad, "tadpole"], [froglet, "froglet"], [dI("frog", 58, 98, 56), "frog"]]);
+  });
+  dgm("plantlife", "Life cycle of a plant", "land", ["life cycle of a plant", "plant life cycle", "plant's life cycle", "life cycle of plants"], {
+    seed: [[118, 6, 84, 84], "seed,seeds"], sprout: [[216, 60, 100, 84], "sprout,sprouts,seedling,germinate,germination"],
+    plant: [[118, 118, 84, 82], "plant,grows,adult"], flower: [[6, 60, 104, 84], "flower,flowers,fruit,pollination"]
+  }, function(){
+    var seed = ell(160, 34, 14, 9, "#B07A3C", 2.5, ' transform="rotate(-20 160 34)"') + pth("M152 36 C158 30 166 30 170 32", "none", { stroke: "#7A4F28", w: 1.5 });
+    return loop4([[seed, "seed"], [dI("sprout", 262, 96, 58), "sprout"], [dI("tree", 160, 150, 56), "plant"], [dI("flower", 58, 96, 58), "flower"]]);
+  });
+  dgm("foodchain", "A food chain", "land", ["food chain", "food web", "food chains", "food webs"], {
+    sun: [[4, 30, 64, 92], "sun,energy,sunlight"], producer: [[68, 30, 76, 104], "producer,producers,plant,plants,grass"],
+    herbivore: [[146, 30, 78, 104], "herbivore,herbivores,consumer,consumers,prey,rabbit"],
+    carnivore: [[226, 30, 92, 104], "carnivore,carnivores,predator,predators,fox"],
+    decomposer: [[200, 132, 118, 66], "decomposer,decomposers,fungi,fungus,mushroom,decompose"]
+  }, function(){
+    return [
+      dI("sun", 36, 70, 50) + dL("sun", 36, 112, 14),
+      dA(62, 70, 80, 70, "#E9A23B", 0, 3) + dI("grass", 108, 72, 52) + dL("producer", 108, 116, 13),
+      dA(134, 70, 156, 70, INK, 0, 3) + dI("rabbit", 186, 70, 54) + dL("herbivore", 186, 116, 13),
+      dA(212, 70, 234, 70, INK, 0, 3) + dI("fox", 270, 70, 58) + dL("carnivore", 270, 116, 13),
+      dA(268, 112, 252, 146, "#8A5A3C", 6, 2.5) + dI("mushroom", 236, 168, 40) + dL("decomposer", 280, 192, 13)
+    ];
+  });
+  dgm("solarsystem", "The solar system", "space", ["solar system", "eight planets", "the planets", "planets in order", "order of the planets"], {
+    mercury: [[58, 50, 26, 70], "mercury"], venus: [[80, 50, 28, 70], "venus"], earth: [[104, 50, 30, 70], "earth"], mars: [[128, 50, 28, 70], "mars"],
+    jupiter: [[154, 40, 48, 90], "jupiter"], saturn: [[200, 44, 50, 84], "saturn"], uranus: [[246, 50, 30, 70], "uranus"], neptune: [[278, 50, 34, 70], "neptune"]
+  }, function(){
+    var y = 92, P = [["mercury", 70, 4, "#B9B2A8"], ["venus", 93, 6, "#E8C27A"], ["earth", 118, 6.5, "#6FA8D6"], ["mars", 141, 5, "#D9674B"],
+      ["jupiter", 177, 16, "#D9A877"], ["saturn", 224, 12, "#E8C98A"], ["uranus", 261, 9, "#9AD6DF"], ["neptune", 294, 9, "#5F8FD6"]];
+    var out = [circ(-6, y, 54, "#F6C343", 2.5) + dL("sun", 22, 160, 14)];
+    var row = "", labels = "";
+    P.forEach(function(p, i){
+      row += (p[0] === "saturn" ? ell(p[1], y, 22, 5, "none", 2.5) : "") + circ(p[1], y, p[2], p[3], 2) + (p[0] === "jupiter" ? ln(p[1] - 14, y + 4, p[1] + 14, y + 4, "#B9855A", 2) : "");
+      labels += dL(p[0], p[1], i % 2 ? y + 40 : y - 30, 12);
+    });
+    out.push(row, labels);
+    return out;
+  });
+  dgm("earthlayers", "Layers of the Earth", "plain", ["layers of the earth", "earth's layers", "earths layers", "layers of earth", "inside the earth", "earth layers"], {
+    crust: [[176, 26, 140, 34], "crust"], mantle: [[176, 62, 140, 34], "mantle"], outercore: [[176, 98, 140, 34], "outer core"], innercore: [[176, 134, 140, 34], "inner core,core"]
+  }, function(){
+    return [
+      circ(96, 100, 84, "#8A5A3C", 2.5),
+      circ(96, 100, 76, "#E58A4E", 2),
+      circ(96, 100, 48, "#F2B441", 2),
+      circ(96, 100, 24, "#FFE9A6", 2),
+      dLead(150, 38, 196, 44) + dL("crust", 230, 49, 15) + dLead(156, 70, 196, 80) + dL("mantle", 232, 85, 15) +
+        dLead(128, 112, 196, 116) + dL("outer core", 248, 121, 15) + dLead(104, 104, 196, 152) + dL("inner core", 248, 157, 15)
+    ];
+  });
+  dgm("matterstates", "States of matter", "lab", ["states of matter", "three states of matter", "solids liquids and gases", "solid liquid and gas", "solid liquid gas", "phases of matter"], {
+    solid: [[6, 26, 100, 128], "solid,solids,ice"], liquid: [[110, 26, 100, 128], "liquid,liquids,water"], gas: [[214, 26, 100, 128], "gas,gases,vapor,steam,air"],
+    melting: [[80, 2, 70, 30], "melt,melts,melting,melted"], evaporation: [[176, 2, 76, 30], "evaporate,evaporates,evaporation,boil,boils,boiling"],
+    freezing: [[78, 156, 74, 40], "freeze,freezes,freezing,froze,frozen"], condensation: [[170, 156, 92, 40], "condense,condenses,condensation"]
+  }, function(){
+    var solid = "", liquid = "", gas = "";
+    for (var r = 0; r < 4; r++) for (var c = 0; c < 4; c++) solid += circ(34 + c * 14, 72 + r * 14, 6, "#6FA8D6", 1.5);
+    [[132, 118], [146, 112], [160, 120], [174, 114], [188, 120], [138, 104], [154, 100], [170, 104], [184, 100], [146, 126], [178, 126]].forEach(function(p){ liquid += circ(p[0], p[1], 6, "#6FA8D6", 1.5); });
+    [[236, 60], [270, 52], [292, 80], [250, 96], [282, 116], [240, 128]].forEach(function(p){ gas += circ(p[0], p[1], 6, "#6FA8D6", 1.5) + ln(p[0] - 14, p[1] + 2, p[0] - 9, p[1] + 1, "#9AA3AD", 1.5); });
+    return [
+      rct(16, 52, 76, 86, "#FFFFFF", 6, 2.5) + solid + dL("solid", 54, 152, 15),
+      rct(120, 52, 76, 86, "#FFFFFF", 6, 2.5) + rct(122, 94, 72, 42, "#D6ECFA", 4, 0) + liquid + dL("liquid", 158, 152, 15),
+      rct(224, 40, 76, 98, "#FFFFFF", 6, 2.5) + gas + dL("gas", 262, 152, 15),
+      dA(70, 40, 138, 40, "#E06D3A", -10, 3) + dL("melting", 104, 22, 13) + dA(176, 40, 236, 32, "#E06D3A", -10, 3) + dL("evaporation", 206, 18, 13),
+      dA(138, 166, 70, 166, "#4A90C8", -10, 3) + dL("freezing", 104, 194, 13) + dA(244, 166, 176, 166, "#4A90C8", -10, 3) + dL("condensation", 210, 194, 13)
+    ];
+  });
+  dgm("photosynthesis", "Photosynthesis", "land", ["photosynthesis"], {
+    sunlight: [[4, 4, 120, 70], "sunlight,light,sun,energy"], co2: [[4, 86, 110, 66], "carbon dioxide,co2"],
+    water: [[40, 150, 126, 50], "water,roots"], oxygen: [[220, 54, 98, 72], "oxygen,o2"], sugar: [[214, 128, 104, 70], "sugar,sugars,glucose,food"]
+  }, function(){
+    return [
+      dI("sprout", 160, 108, 120),
+      dI("sun", 34, 32, 50) + dA(62, 46, 128, 82, "#E9A23B", -8) + dL("sunlight", 92, 44, 13),
+      dI("co2", 36, 116, 44) + dA(60, 116, 124, 104, INK, 4) + dL("carbon dioxide", 60, 148, 12),
+      dI("drop", 92, 176, 30) + dA(108, 176, 150, 162, "#3F7FAF", 4) + dL("water", 66, 194, 13),
+      dA(196, 96, 248, 90, INK, -4) + dI("oxygen", 276, 88, 46) + dL("oxygen", 276, 122, 13),
+      dA(184, 128, 244, 156, INK, 6) + dI("sugar", 274, 160, 40) + dL("sugar", 274, 192, 13)
+    ];
+  });
+  dgm("animalcell", "An animal cell", "bio", ["animal cell", "animal cells", "parts of a cell", "parts of the cell", "cell parts", "inside a cell"], {
+    membrane: [[194, 14, 124, 34], "membrane,cell membrane"], nucleus: [[194, 52, 124, 34], "nucleus"],
+    cytoplasm: [[194, 90, 124, 34], "cytoplasm"], mitochondria: [[194, 128, 124, 38], "mitochondria,mitochondrion,energy"]
+  }, function(){
+    return [
+      pth("M28 100 C24 52 70 22 112 26 C158 30 186 58 180 104 C176 150 140 178 98 174 C52 170 32 146 28 100 Z", "#FCE1E4", { w: 3 }),
+      [[60, 80], [76, 140], [140, 150], [150, 64], [118, 44], [58, 120]].map(function(p){ return circ(p[0], p[1], 2.4, "#B5838D", 0); }).join(""),
+      circ(104, 98, 26, "#B79CD9", 2.5) + circ(110, 94, 8, "#7E5DB0", 0),
+      ell(146, 122, 15, 8, "#F2A65A", 2, ' transform="rotate(-25 146 122)"') + pth("M136 126 Q141 116 146 124 T156 118", "none", { stroke: INK, w: 1.5 }) +
+        ell(64, 66, 13, 7, "#F2A65A", 2, ' transform="rotate(30 64 66)"') + pth("M56 62 Q61 72 66 64 T74 70", "none", { stroke: INK, w: 1.5 }),
+      dLead(168, 54, 204, 32) + dL("membrane", 254, 37, 14) + dLead(128, 90, 204, 70) + dL("nucleus", 248, 75, 14) +
+        dLead(150, 98, 204, 108) + dL("cytoplasm", 254, 113, 14) + dLead(158, 128, 204, 146) + dL("mitochondria", 258, 151, 14)
+    ];
+  });
+  dgm("plantcell", "A plant cell", "bio", ["plant cell", "plant cells"], {
+    wall: [[194, 10, 124, 34], "cell wall,wall"], chloroplast: [[194, 48, 124, 34], "chloroplast,chloroplasts,chlorophyll"],
+    vacuole: [[194, 86, 124, 34], "vacuole"], nucleus: [[194, 124, 124, 34], "nucleus"], membrane: [[194, 160, 124, 36], "membrane,cell membrane"]
+  }, function(){
+    var chl = "";
+    [[50, 44], [150, 46], [44, 156], [154, 156], [40, 100]].forEach(function(p){ chl += ell(p[0], p[1], 11, 6, "#6DBB5D", 2) + ln(p[0] - 6, p[1], p[0] + 6, p[1], "#3F7F35", 1.5); });
+    return [
+      rct(20, 20, 160, 160, "#9CCB7A", 18, 3),
+      rct(30, 30, 140, 140, "#EAF6DC", 12, 2),
+      rct(70, 60, 82, 84, "#CFE8F6", 22, 2),
+      circ(52, 126, 16, "#B79CD9", 2.5) + circ(55, 123, 5, "#7E5DB0", 0),
+      chl + dLead(176, 30, 204, 27) + dL("cell wall", 254, 32, 14) + dLead(154, 50, 204, 65) + dL("chloroplast", 256, 70, 14) +
+        dLead(140, 100, 204, 103) + dL("vacuole", 250, 108, 14) + dLead(66, 130, 204, 141) + dL("nucleus", 248, 146, 14) + dLead(166, 166, 204, 178) + dL("membrane", 254, 183, 14)
+    ];
+  });
+  dgm("bodyorgans", "Organs of the body", "bio", ["human body", "body systems", "organs of the body", "organ systems", "digestive system", "circulatory system", "respiratory system", "nervous system", "major organs"], {
+    brain: [[6, 6, 150, 46], "brain,nervous,nerves,think"], lungs: [[6, 64, 146, 42], "lung,lungs,respiratory,breathe,breathing,oxygen"],
+    heart: [[170, 64, 146, 42], "heart,circulatory,blood,pumps"], stomach: [[170, 110, 146, 42], "stomach,digestive,digest,digestion,food"],
+    intestines: [[6, 120, 150, 48], "intestine,intestines,digestive,gut"]
+  }, function(){
+    return [
+      circ(160, 30, 22, "#F2C9A0", 2.5) + pth("M128 196 V86 C128 66 140 56 160 56 C180 56 192 66 192 86 V196", "#F2C9A0", { w: 2.5 }),
+      pth("M146 22 C146 12 174 12 174 22 C178 30 172 38 160 38 C148 38 142 30 146 22 Z", "#F2A7B8", { w: 2 }) + dLead(146, 24, 96, 28) + dL("brain", 72, 33, 15),
+      ell(148, 88, 9, 16, "#F4A1A1", 2) + ell(172, 88, 9, 16, "#F4A1A1", 2) + dLead(140, 88, 96, 86) + dL("lungs", 72, 91, 15),
+      dI("heart", 160, 96, 22) + dLead(166, 98, 214, 86) + dL("heart", 240, 91, 15),
+      ell(168, 122, 12, 9, "#E8B04B", 2) + dLead(178, 124, 214, 130) + dL("stomach", 248, 135, 15),
+      pth("M144 140 C150 132 172 132 176 140 C180 150 164 150 160 144 C156 152 142 156 144 166 C146 176 172 176 176 166", "none", { stroke: "#D9876B", w: 5 }) + dLead(142, 152, 96, 148) + dL("intestines", 62, 153, 15)
+    ];
+  });
+  dgm("fivesenses", "The five senses", "plain", ["five senses", "5 senses", "the senses", "our senses"], {
+    sight: [[2, 40, 64, 110], "sight,see,eye,eyes,seeing"], hearing: [[66, 40, 64, 110], "hearing,hear,ear,ears"],
+    smell: [[130, 40, 62, 110], "smell,nose,smelling"], taste: [[192, 40, 64, 110], "taste,tongue,tasting,mouth"], touch: [[256, 40, 62, 110], "touch,skin,feel,hand,hands"]
+  }, function(){
+    var K = [["eye", "sight"], ["ear", "hearing"], ["nose", "smell"], ["mouth", "taste"], ["hand", "touch"]];
+    return K.map(function(k, i){ var x = 34 + i * 63; return dI(k[0], x, 90, 52) + dL(k[1], x, 136, 15); });
+  });
+  dgm("moonphases", "Phases of the moon", "space", ["phases of the moon", "moon phases", "moon's phases", "lunar phases", "phases of moon"], {
+    newmoon: [[6, 40, 60, 110], "new moon,new"], crescent: [[68, 40, 60, 110], "crescent"], quarter: [[130, 40, 60, 110], "quarter,half moon,first quarter"],
+    gibbous: [[192, 40, 60, 110], "gibbous"], full: [[254, 40, 62, 110], "full moon,full"]
+  }, function(){
+    var L = [[0, "new"], [0.22, "crescent"], [0.5, "quarter"], [0.78, "gibbous"], [1, "full"]];
+    return L.map(function(p, i){ var x = 36 + i * 62; return moonPhase(x, 92, 24, p[0]) + dL(p[1], x, 140, 14); });
+  });
+  dgm("daynight", "Day and night", "space", ["day and night", "earth rotates", "earth spins", "rotation of the earth", "earth's rotation", "earth rotating"], {
+    day: [[150, 40, 80, 120], "day,daytime,sunlight"], night: [[230, 40, 88, 120], "night,nighttime,dark"]
+  }, function(){
+    return [
+      circ(30, 100, 40, "#F6C343", 2.5) + dL("sun", 30, 160, 14),
+      [70, 86, 100, 114, 130].map(function(y){ return ln(78, y, 160, y, "#F6C343", 2.5, { dash: "6 6" }); }).join(""),
+      circ(230, 100, 56, "#6FA8D6", 2.5) + pth("M230 44 A56 56 0 0 1 230 156 Z", "#2E3D5C", { w: 2.5 }) + pth("M200 76 C214 66 226 80 216 92 C208 100 196 92 200 76 Z", "#7BB662", { w: 2 }),
+      dL("day", 196, 104, 16) + dL("night", 262, 104, 16),
+      dA(196, 34, 266, 36, "#F3EFE2", -12, 3) + dL("spins", 230, 20, 13)
+    ];
+  });
+  dgm("seasons", "The four seasons", "plain", ["four seasons", "the seasons", "seasons of the year", "seasons change", "season changes"], {
+    spring: [[2, 24, 78, 150], "spring"], summer: [[82, 24, 78, 150], "summer"], fall: [[162, 24, 78, 150], "fall,autumn"], winter: [[242, 24, 76, 150], "winter"]
+  }, function(){
+    function tree(x, crown, extra){ return rct(x - 4, 96, 8, 40, "#8A5A3C", 2, 2) + (crown ? blob([[x, 78, 22], [x - 14, 90, 14], [x + 14, 90, 14]], crown) : pth("M" + x + " 100 L" + (x - 14) + " 74 M" + x + " 96 L" + (x + 14) + " 70 M" + x + " 88 L" + (x + 4) + " 66", "none", { stroke: "#8A5A3C", w: 3 })) + (extra || ""); }
+    var blossoms = [[34, 74], [46, 84], [28, 90], [42, 68], [52, 76]].map(function(p){ return circ(p[0], p[1], 3, "#F29BB5", 1); }).join("");
+    var falling = [[190, 140], [214, 128], [222, 146]].map(function(p){ return ell(p[0], p[1], 4, 2.5, "#E58A4E", 1); }).join("");
+    var snow = [[262, 60], [284, 50], [300, 70], [270, 86], [292, 96]].map(function(p){ return circ(p[0], p[1], 2.5, "#FFFFFF", 1.2); }).join("");
+    return [
+      rct(0, 136, 320, 64, "#D9EBC8", 0, 0) + ln(80, 20, 80, 180, "#D3C8A8", 1.5) + ln(160, 20, 160, 180, "#D3C8A8", 1.5) + ln(240, 20, 240, 180, "#D3C8A8", 1.5),
+      tree(40, "#BFE3A6", blossoms) + dL("spring", 40, 166, 15),
+      tree(120, "#5FAE57", circ(146, 40, 9, "#F6C343", 2)) + dL("summer", 120, 166, 15),
+      tree(200, "#E58A4E", falling) + dL("fall", 200, 166, 15),
+      rct(240, 136, 80, 64, "#FFFFFF", 0, 0) + tree(280, null, snow) + dL("winter", 280, 166, 15)
+    ];
+  });
+  dgm("rockcycle", "The rock cycle", "plain", ["rock cycle", "types of rocks", "three types of rock", "three kinds of rocks"], {
+    igneous: [[110, 2, 100, 82], "igneous"], sedimentary: [[2, 110, 116, 88], "sedimentary,sediment,sediments,layers"],
+    metamorphic: [[202, 110, 116, 88], "metamorphic,heat and pressure,pressure"], magma: [[116, 104, 88, 60], "magma,lava,melt,melting,melts"]
+  }, function(){
+    var sedi = rockBlob(58, 146, "#E3C48F") + ln(32, 140, 86, 140, "#B08A55", 2) + ln(30, 150, 88, 150, "#B08A55", 2) + ln(34, 158, 82, 158, "#B08A55", 2);
+    var meta = rockBlob(262, 146, "#A8A3B8") + pth("M236 142 Q248 134 260 142 T286 140 M234 152 Q246 144 258 152 T288 150", "none", { stroke: "#6D6782", w: 2 });
+    var ign = rockBlob(160, 40, "#6B665F") + [[150, 36], [166, 44], [172, 32], [156, 50], [144, 46]].map(function(p){ return circ(p[0], p[1], 2, "#E8E1D4", 0); }).join("");
+    return [
+      ign + dL("igneous", 196, 30, 14, "start"),
+      sedi + dL("sedimentary", 58, 192, 14),
+      meta + dL("metamorphic", 262, 192, 14),
+      blob([[160, 126, 16], [148, 132, 10], [172, 132, 10]], "#E0603A") + dL("magma", 160, 156, 13),
+      dA(126, 50, 70, 116, INK, -10, 3) + dL("weathering", 70, 80, 12) + dA(98, 172, 222, 172, INK, 6, 3) + dL("heat & pressure", 160, 196, 12) +
+        dA(236, 126, 182, 126, "#E0603A", -6, 3) + dA(160, 108, 160, 66, "#E0603A", 0, 3) + dL("melting", 214, 112, 12) + dL("cooling", 172, 90, 12, "start")
+    ];
+  });
+  dgm("circuit", "An electric circuit", "lab", ["electric circuit", "simple circuit", "complete circuit", "closed circuit", "series circuit", "parts of a circuit", "electrical circuit"], {
+    battery: [[16, 60, 100, 80], "battery,batteries,power source,energy"], bulb: [[110, 4, 100, 76], "bulb,light,lamp"],
+    switch: [[200, 132, 116, 66], "switch"], wire: [[204, 40, 112, 60], "wire,wires,current,electricity"]
+  }, function(){
+    return [
+      pth("M60 76 V40 H260 V160 H210 M180 160 H60 V124", "none", { stroke: "#B5651D", w: 4 }),
+      rct(46, 76, 28, 48, "#4A4540", 4, 2.5) + rct(54, 70, 12, 6, "#9AA3AD", 1, 2) + txt("+", 60, 92, 14, "#F6C343") + txt("–", 60, 118, 14, "#FFFFFF") + dL("battery", 100, 104, 14, "start"),
+      dI("bulb", 160, 38, 52) + dL("bulb", 160, 76, 14),
+      circ(180, 160, 4, INK, 0) + circ(210, 160, 4, INK, 0) + ln(180, 160, 208, 152, INK, 3.5) + dL("switch", 248, 180, 14),
+      dA(150, 40, 190, 40, "#E9A23B", 0, 2.5) + dA(260, 90, 260, 120, "#E9A23B", 0, 2.5) + dL("wire", 288, 72, 14)
+    ];
+  });
+  dgm("volcanoparts", "Inside a volcano", "sky", ["parts of a volcano", "inside a volcano", "magma chamber", "volcano diagram", "how volcanoes form", "how a volcano erupts"], {
+    ash: [[180, 4, 136, 58], "ash,ash cloud,smoke,gas"], crater: [[96, 40, 128, 40], "crater"], vent: [[180, 86, 136, 40], "vent,conduit"],
+    lava: [[4, 64, 100, 58], "lava,erupt,erupts,eruption"], magma: [[96, 150, 222, 48], "magma,magma chamber,chamber"]
+  }, function(){
+    return [
+      rct(0, 160, 320, 40, "#C9A27A", 0, 0),
+      pth("M30 160 L136 62 H184 L290 160 Z", "#A0846A", { w: 2.5 }),
+      ell(160, 176, 60, 16, "#E0603A", 2.5) + dL("magma chamber", 262, 190, 13),
+      pth("M152 166 L156 64 H164 L168 166 Z", "#E0603A", { w: 2 }) + dLead(166, 110, 206, 106) + dL("vent", 226, 111, 14),
+      pth("M138 64 C120 90 100 100 84 128", "none", { stroke: "#E0603A", w: 6 }) + dL("lava", 60, 112, 14) + dL("crater", 112, 58, 13, "end"),
+      blob([[160, 34, 16], [182, 26, 14], [204, 34, 12], [140, 28, 12]], "#9AA3AD") + dL("ash cloud", 250, 30, 13)
+    ];
+  });
+  dgm("atomparts", "Parts of an atom", "lab", ["parts of an atom", "structure of an atom", "protons neutrons and electrons", "protons and neutrons", "inside an atom"], {
+    nucleus: [[110, 70, 100, 60], "nucleus"], proton: [[214, 48, 104, 34], "proton,protons,positive"],
+    neutron: [[214, 86, 104, 34], "neutron,neutrons,neutral"], electron: [[214, 124, 104, 34], "electron,electrons,negative,shell,shells"]
+  }, function(){
+    var nuc = "";
+    [[152, 94, "#E05A5A"], [166, 94, "#9AA3AD"], [158, 106, "#E05A5A"], [146, 106, "#9AA3AD"], [170, 106, "#E05A5A"], [158, 84, "#9AA3AD"]].forEach(function(p){ nuc += circ(p[0], p[1], 7, p[2], 1.8); });
+    return [
+      ell(158, 98, 92, 34, "none", 2) + ell(158, 98, 92, 34, "none", 2, ' transform="rotate(60 158 98)"') + ell(158, 98, 92, 34, "none", 2, ' transform="rotate(-60 158 98)"'),
+      nuc + dL("nucleus", 158, 140, 13),
+      circ(250, 98, 7, "#5F9BC7", 1.8) + circ(112, 20, 7, "#5F9BC7", 1.8) + circ(204, 176, 7, "#5F9BC7", 1.8),
+      circ(232, 60, 6, "#E05A5A", 1.5) + dL("proton (+)", 270, 65, 13) + circ(232, 100, 6, "#9AA3AD", 1.5) + dL("neutron", 270, 105, 13) + circ(232, 140, 6, "#5F9BC7", 1.5) + dL("electron (–)", 272, 145, 13)
+    ];
+  });
+  dgm("simplemachines", "Simple machines", "plain", ["simple machines", "six simple machines", "simple machine"], {
+    lever: [[2, 6, 104, 92], "lever,levers,fulcrum"], pulley: [[108, 6, 104, 92], "pulley,pulleys"], wheel: [[214, 6, 104, 92], "wheel and axle,axle"],
+    ramp: [[2, 102, 104, 94], "inclined plane,ramp,ramps,slope"], wedge: [[108, 102, 104, 94], "wedge,wedges"], screw: [[214, 102, 104, 94], "screw,screws"]
+  }, function(){
+    var screw = rct(256, 120, 18, 10, "#9AA3AD", 2, 2) + poly([[258, 130], [272, 130], [265, 178]], "#C9CED4", 2) + [138, 148, 158, 168].map(function(y){ return ln(258 + (y - 130) * 0.14, y, 272 - (y - 130) * 0.14, y - 6, INK, 1.8); }).join("");
+    return [
+      dI("lever", 54, 46, 66) + dL("lever", 54, 92, 14),
+      dI("pulley", 160, 46, 66) + dL("pulley", 160, 92, 14),
+      circ(266, 46, 26, "#E8D9B0", 2.5) + circ(266, 46, 6, "#8A5A3C", 2) + ln(240, 46, 292, 46, INK, 4) + dL("wheel & axle", 266, 92, 14),
+      poly([[16, 172], [94, 172], [94, 128]], "#D9C7A3") + rct(52, 136, 18, 14, "#C8553D", 2, 2) + dL("inclined plane", 56, 192, 13),
+      poly([[136, 128], [184, 128], [160, 176]], "#C9CED4") + dL("wedge", 160, 192, 14),
+      screw + dL("screw", 266, 192, 14)
+    ];
+  });
+  dgm("scimethod", "The scientific method", "class", ["scientific method", "steps of the scientific method", "scientific process"], {
+    question: [[2, 14, 104, 78], "question,questions,ask"], research: [[108, 14, 104, 78], "research,observe,observation"],
+    hypothesis: [[214, 14, 104, 78], "hypothesis,predict,prediction"], experiment: [[214, 106, 104, 80], "experiment,test,testing"],
+    analyze: [[108, 106, 104, 80], "analyze,data,results,analysis"], conclusion: [[2, 106, 104, 80], "conclusion,conclude,share"]
+  }, function(){
+    var B = [["question", 54, 52, "question"], ["book", 160, 52, "research"], ["bulb", 266, 52, "hypothesis"], ["flask", 266, 144, "experiment"], ["chart", 160, 144, "analyze"], ["trophy", 54, 144, "conclusion"]];
+    return B.map(function(b, i){
+      var nx = B[i + 1], arrow = !nx ? "" : i === 2 ? dA(266, 84, 266, 112, INK, 0, 3) : nx[1] > b[1] ? dA(b[1] + 34, b[2], nx[1] - 34, nx[2], INK, 0, 3) : dA(b[1] - 34, b[2], nx[1] + 34, nx[2], INK, 0, 3);
+      return rct(b[1] - 46, b[2] - 34, 92, 68, "#FFFFFF", 10, 2.5) + dI(b[0], b[1], b[2] - 8, 36) + dT(b[3], b[1], b[2] + 26, 14) + arrow;
+    });
+  });
+  dgm("punnett", "A Punnett square", "lab", ["punnett square", "punnett squares", "dominant and recessive"], {
+    dominant: [[96, 50, 150, 140], "dominant"], recessive: [[176, 124, 74, 70], "recessive"]
+  }, function(){
+    var cells = [["BB", 118, 88, "#8A5A3C"], ["Bb", 182, 88, "#B07A3C"], ["Bb", 118, 158, "#B07A3C"], ["bb", 182, 158, "#F2D27A"]];
+    return [
+      rct(86, 54, 128, 140, "#FFFFFF", 6, 2.5) + ln(150, 54, 150, 194, INK, 2.5) + ln(86, 124, 214, 124, INK, 2.5),
+      dT("B", 118, 44, 20) + dT("b", 182, 44, 20) + dT("B", 70, 95, 20) + dT("b", 70, 165, 20) + dL("parent 1", 150, 18, 13) + dL("parent 2", 32, 130, 13),
+      cells.map(function(c){ return circ(c[1] - 14, c[2] - 4, 8, c[3], 1.5) + dT(c[0], c[1] + 9, c[2] + 2, 17); }).join(""),
+      dL("B = dominant", 224, 90, 13, "start") + dL("b = recessive", 224, 160, 13, "start")
+    ];
+  });
+  dgm("wave", "Parts of a wave", "lab", ["wavelength", "amplitude", "sound wave", "sound waves", "light wave", "light waves", "crest and trough", "parts of a wave"], {
+    crest: [[40, 20, 70, 44], "crest,peak"], trough: [[120, 132, 70, 44], "trough"], wavelength: [[30, 2, 160, 24], "wavelength"], amplitude: [[230, 40, 88, 100], "amplitude,height"]
+  }, function(){
+    var pts = [];
+    for (var x = 10; x <= 310; x += 4) pts.push([x, 100 - 50 * Math.sin((x - 10) / 160 * Math.PI * 2)]);
+    return [
+      ln(10, 100, 310, 100, "#9AA3AD", 1.5, { dash: "5 5" }),
+      pline(pts, "#3F7FAF", 4),
+      dL("crest", 50, 44, 14) + dL("trough", 130, 168, 14),
+      ln(50, 14, 210, 14, INK, 2) + ln(50, 8, 50, 20, INK, 2) + ln(210, 8, 210, 20, INK, 2) + dL("wavelength", 130, 30, 13),
+      ln(250, 52, 250, 98, "#D9674B", 2.5) + arrowHead(250, 50, -Math.PI / 2, "#D9674B", 8) + dL("amplitude", 280, 80, 13)
+    ];
+  });
+  dgm("tectonics", "Tectonic plates", "plain", ["tectonic plates", "plate tectonics", "plates collide", "continental drift", "plate boundaries"], {
+    plates: [[2, 110, 316, 70], "plate,plates"], mountains: [[110, 20, 100, 90], "mountain,mountains"], magma: [[60, 160, 200, 40], "mantle,magma"]
+  }, function(){
+    return [
+      rct(0, 160, 320, 40, "#E58A4E", 0, 0) + dL("mantle", 160, 192, 14),
+      rct(4, 120, 150, 40, "#B07A3C", 4, 2.5) + rct(166, 120, 150, 40, "#8A6A4A", 4, 2.5) + dL("plate", 60, 146, 14) + dL("plate", 260, 146, 14),
+      poly([[118, 120], [160, 40], [202, 120]], "#A0846A", 2.5) + poly([[160, 40], [150, 58], [170, 58]], "#FFFFFF", 1.5) + dL("mountains form", 160, 30, 13),
+      dA(40, 104, 104, 104, INK, 0, 4) + dA(280, 104, 216, 104, INK, 0, 4)
+    ];
+  });
+
+  // ----- math -----
+  dgm("numberlinebig", "A number line", "math", ["number line", "number lines"], {}, function(){
+    var t = "";
+    for (var k = 0; k <= 10; k++){ var x = 24 + k * 27.2; t += ln(x, 92, x, 108, INK, 2.5) + txt(String(k), x, 132, 16, INK); }
+    return [ln(12, 100, 308, 100, INK, 3) + arrowHead(314, 100, 0, INK, 10) + arrowHead(6, 100, Math.PI, INK, 10), t,
+      dA(105.6, 86, 187.2, 86, "#D9674B", -26, 2.5) + dT("+3", 146, 50, 15)];
+  });
+  dgm("fractionbars", "Fraction bars", "math", ["fraction bars", "fraction bar", "fraction strips", "fraction wall", "equivalent fractions", "unit fractions", "comparing fractions"], {}, function(){
+    var rows = [[1, "#F6C343"], [2, "#7FB8DE"], [3, "#9CCB7A"], [4, "#F29BB5"]], out = [];
+    rows.forEach(function(r, i){
+      var y = 22 + i * 42, w = 280 / r[0], s = "";
+      for (var k = 0; k < r[0]; k++) s += rct(20 + k * w, y, w, 34, r[1], 3, 2.5) + txt(r[0] === 1 ? "1" : "1/" + r[0], 20 + k * w + w / 2, y + 23, 15, INK);
+      out.push(s);
+    });
+    return out;
+  });
+  dgm("fractionparts", "Parts of a fraction", "math", ["numerator", "denominator", "parts of a fraction", "what is a fraction", "numerator and denominator"], {
+    numerator: [[150, 24, 168, 62], "numerator,top number,shaded"], denominator: [[150, 104, 168, 66], "denominator,bottom number,equal parts"]
+  }, function(){
+    var pie = circ(76, 100, 52, "#FFFFFF", 2.5);
+    for (var k = 0; k < 3; k++){ var a0 = -Math.PI / 2 + k * Math.PI / 2, a1 = a0 + Math.PI / 2, p0 = polar(76, 100, 52, a0), p1 = polar(76, 100, 52, a1);
+      pie += '<path d="M76 100 L' + f(p0[0]) + ' ' + f(p0[1]) + ' A52 52 0 0 1 ' + f(p1[0]) + ' ' + f(p1[1]) + ' Z" fill="#F6C343" stroke="' + INK + '" stroke-width="2.5"/>'; }
+    pie += ln(24, 100, 128, 100, INK, 2.5) + ln(76, 48, 76, 152, INK, 2.5);
+    return [pie, txt("3", 182, 78, 40, INK) + ln(164, 92, 200, 92, INK, 4) + txt("4", 182, 136, 40, INK),
+      dLead(204, 64, 226, 56) + dL("numerator", 268, 52, 15) + dL("parts we have", 268, 70, 12),
+      dLead(204, 122, 226, 128) + dL("denominator", 270, 132, 15) + dL("equal parts in all", 270, 150, 12)];
+  });
+  dgm("placevalue", "Place value", "math", ["place value", "hundreds tens and ones", "tens and ones", "hundreds place", "tens place", "ones place"], {
+    hundreds: [[6, 6, 100, 190], "hundred,hundreds"], tens: [[110, 6, 100, 190], "ten,tens"], ones: [[214, 6, 100, 190], "one,ones"]
+  }, function(){
+    var flat = "", rods = "", cubes = "";
+    for (var r = 0; r < 10; r++){ flat += ln(31, 52 + r * 5.5, 81, 52 + r * 5.5, "#7FB8DE", 1); flat += ln(31 + r * 5.5, 52, 31 + r * 5.5, 107, "#7FB8DE", 1); }
+    for (var k = 0; k < 3; k++){ rods += rct(132 + k * 20, 48, 12, 66, "#9CCB7A", 2, 2); for (var q = 1; q < 10; q++) rods += ln(132 + k * 20, 48 + q * 6.6, 144 + k * 20, 48 + q * 6.6, INK, 0.8); }
+    [[244, 60], [262, 60], [280, 60], [253, 78], [271, 78]].forEach(function(p){ cubes += rct(p[0], p[1], 14, 14, "#F6C343", 2, 2); });
+    return [
+      ln(108, 10, 108, 190, "#C7D6EA", 2) + ln(212, 10, 212, 190, "#C7D6EA", 2) + dT("hundreds", 56, 30, 15) + dT("tens", 160, 30, 15) + dT("ones", 264, 30, 15),
+      rct(31, 52, 55, 55, "#D6ECFA", 2, 2) + flat,
+      rods, cubes,
+      txt("1", 56, 160, 44, INK) + txt("3", 160, 160, 44, INK) + txt("5", 264, 160, 44, INK)
+    ];
+  });
+  dgm("clockface", "Telling time", "class", ["tell time", "telling time", "tell the time", "hour hand", "minute hand", "clock face", "analog clock", "read a clock"], {
+    hour: [[180, 50, 136, 40], "hour,hour hand,hours"], minute: [[180, 104, 136, 40], "minute,minute hand,minutes"]
+  }, function(){
+    var nums = "";
+    for (var k = 1; k <= 12; k++){ var p = polar(100, 100, 66, k * Math.PI / 6 - Math.PI / 2); nums += txt(String(k), p[0], p[1] + 6, 15, INK); }
+    return [circ(100, 100, 84, "#FFFFFF", 3.5), nums,
+      ln(100, 100, 136, 100, "#D9674B", 6) + dLead(126, 104, 196, 128) + dL("hour hand", 248, 133, 15),
+      ln(100, 100, 100, 50, INK, 4) + circ(100, 100, 5, INK, 0) + dLead(102, 62, 196, 62) + dL("minute hand", 254, 67, 15)];
+  });
+  dgm("shapes2d", "2D shapes", "math", ["2d shapes", "flat shapes", "plane shapes", "two dimensional shapes", "2 d shapes", "polygons"], {
+    circle: [[2, 8, 104, 92], "circle,circles"], square: [[108, 8, 104, 92], "square,squares"], triangle: [[214, 8, 104, 92], "triangle,triangles"],
+    rectangle: [[2, 104, 104, 92], "rectangle,rectangles"], pentagon: [[108, 104, 104, 92], "pentagon,pentagons"], hexagon: [[214, 104, 104, 92], "hexagon,hexagons"]
+  }, function(){
+    function ngon(cx, cy, r, n, fill){ var p = []; for (var k = 0; k < n; k++) p.push(polar(cx, cy, r, k * 2 * Math.PI / n - Math.PI / 2)); return poly(p, fill, 2.5); }
+    return [
+      circ(54, 46, 28, "#F29BB5", 2.5) + dL("circle", 54, 92, 14),
+      rct(134, 20, 52, 52, "#7FB8DE", 2, 2.5) + dL("square", 160, 92, 14),
+      ngon(266, 50, 32, 3, "#9CCB7A") + dL("triangle", 266, 92, 14),
+      rct(18, 122, 72, 44, "#F6C343", 2, 2.5) + dL("rectangle", 54, 188, 14),
+      ngon(160, 146, 30, 5, "#B79CD9") + dL("pentagon", 160, 188, 14),
+      ngon(266, 146, 30, 6, "#E58A4E") + dL("hexagon", 266, 188, 14)
+    ];
+  });
+  dgm("shapes3d", "3D shapes", "math", ["3d shapes", "solid shapes", "three dimensional shapes", "solid figures", "3 d shapes", "3d figures"], {
+    cube: [[2, 8, 104, 92], "cube,cubes"], sphere: [[108, 8, 104, 92], "sphere,spheres,ball"], cylinder: [[214, 8, 104, 92], "cylinder,cylinders,can"],
+    cone: [[2, 104, 104, 92], "cone,cones"], pyramid: [[108, 104, 104, 92], "pyramid,pyramids"], prism: [[214, 104, 104, 92], "prism,prisms,rectangular prism,box"]
+  }, function(){
+    return [
+      dI("cube", 54, 46, 66) + dL("cube", 54, 92, 14), dI("sphere", 160, 46, 66) + dL("sphere", 160, 92, 14), dI("cylinder", 266, 46, 66) + dL("cylinder", 266, 92, 14),
+      dI("cone", 54, 142, 66) + dL("cone", 54, 188, 14),
+      poly([[160, 114], [132, 168], [176, 172]], "#F6C343", 2.5) + poly([[160, 114], [176, 172], [192, 160]], "#D9A92E", 2.5) + dL("pyramid", 160, 188, 14),
+      cubeAt(240, 128, 40, "#9CCB7A", "#7BB662", "#5D9A4E") + dL("prism", 266, 188, 14)
+    ];
+  });
+  dgm("coordplane", "The coordinate plane", "math", ["coordinate plane", "coordinate grid", "x axis", "y axis", "ordered pair", "ordered pairs", "plot the point", "plotting points", "x and y axis"], {
+    xaxis: [[40, 150, 276, 46], "x axis,x,horizontal"], yaxis: [[4, 4, 70, 160], "y axis,y,vertical"], point: [[150, 40, 120, 60], "point,ordered pair,coordinates"]
+  }, function(){
+    var g = "";
+    for (var k = 1; k <= 7; k++){ g += ln(56 + k * 34, 20, 56 + k * 34, 156, "#DFE8F3", 1.5); }
+    for (var q = 1; q <= 4; q++){ g += ln(56, 156 - q * 34, 300, 156 - q * 34, "#DFE8F3", 1.5); }
+    var nums = "";
+    for (var n = 1; n <= 7; n++) nums += txt(String(n), 56 + n * 34, 174, 13, INK);
+    for (var m = 1; m <= 4; m++) nums += txt(String(m), 44, 161 - m * 34, 13, INK);
+    return [g, ln(56, 156, 304, 156, INK, 3) + arrowHead(310, 156, 0, INK, 9) + ln(56, 156, 56, 14, INK, 3) + arrowHead(56, 8, -Math.PI / 2, INK, 9) + nums + dL("x", 300, 190, 16) + dL("y", 30, 20, 16),
+      ln(56 + 4 * 34, 156, 56 + 4 * 34, 156 - 3 * 34, "#D9674B", 2, { dash: "4 4" }) + ln(56, 156 - 3 * 34, 56 + 4 * 34, 156 - 3 * 34, "#D9674B", 2, { dash: "4 4" }) + circ(56 + 4 * 34, 156 - 3 * 34, 6, "#D9674B", 2) + dT("(4, 3)", 222, 48, 15)];
+  });
+  dgm("angletypes", "Types of angles", "math", ["types of angles", "kinds of angles", "acute angle", "right angle", "obtuse angle", "straight angle", "acute right and obtuse"], {
+    acute: [[2, 30, 104, 140], "acute"], right: [[108, 30, 104, 140], "right,90 degrees,90"], obtuse: [[214, 30, 104, 140], "obtuse"]
+  }, function(){
+    function ang(x, y, deg, color){ var a = -deg * Math.PI / 180, p = [x + 70 * Math.cos(a), y + 70 * Math.sin(a)], q = polar(x, y, 24, a);
+      var arc = deg === 90 ? pth("M" + (x + 16) + " " + y + " V" + (y - 16) + " H" + x, "none", { stroke: color, w: 2.5 }) : '<path d="M' + (x + 24) + ' ' + y + ' A24 24 0 0 0 ' + f(q[0]) + ' ' + f(q[1]) + '" fill="none" stroke="' + color + '" stroke-width="3"/>';
+      return ln(x, y, x + 76, y, INK, 3.5) + ln(x, y, p[0], p[1], INK, 3.5) + arc; }
+    return [ang(20, 140, 40, "#E06D3A") + dL("acute", 56, 168, 15) + dL("less than 90°", 56, 186, 11),
+      ang(132, 140, 90, "#4F9D78") + dL("right", 168, 168, 15) + dL("exactly 90°", 168, 186, 11),
+      ang(262, 140, 130, "#4A84B8") + dL("obtuse", 268, 168, 15) + dL("more than 90°", 268, 186, 11)];
+  });
+  dgm("arraygrid", "A multiplication array", "math", ["array", "arrays", "multiplication array", "rows and columns"], {
+    rows: [[4, 30, 60, 140], "row,rows"], columns: [[60, 4, 200, 30], "column,columns"]
+  }, function(){
+    var d = [];
+    for (var r = 0; r < 3; r++){ var s = ""; for (var c = 0; c < 4; c++) s += circ(100 + c * 40, 64 + r * 40, 13, "#F29BB5", 2.5); d.push(s); }
+    return d.concat([dL("3 rows", 42, 108, 14) + dL("4 columns", 160, 24, 14), dT("3 × 4 = 12", 160, 190, 20)]);
+  });
+  dgm("bargraph", "A bar graph", "math", ["bar graph", "bar graphs", "bar chart", "bar charts"], {
+    title: [[60, 2, 200, 24], "title"], axis: [[2, 20, 50, 160], "axis,scale"], bars: [[60, 30, 250, 140], "bar,bars,data"]
+  }, function(){
+    var bars = [[84, 70, "#F29BB5"], [138, 40, "#7FB8DE"], [192, 100, "#9CCB7A"], [246, 60, "#F6C343"]];
+    var grid = "";
+    for (var k = 1; k <= 4; k++) grid += ln(56, 160 - k * 30, 300, 160 - k * 30, "#DFE8F3", 1.5) + txt(String(k * 2), 44, 165 - k * 30, 12, INK);
+    return [grid + ln(56, 160, 300, 160, INK, 3) + ln(56, 160, 56, 30, INK, 3) + dL("favorite fruit", 180, 22, 14),
+      bars.map(function(b){ return rct(b[0] - 18, 160 - b[1], 36, b[1], b[2], 2, 2.5); }).join(""),
+      dI("apple", 84, 180, 24) + dI("banana", 138, 180, 24) + dI("grapes", 192, 180, 24) + dI("orange", 246, 180, 24)];
+  });
+  dgm("areaperimeter", "Area and perimeter", "math", ["area and perimeter", "perimeter", "area of a rectangle", "find the area", "square units"], {
+    area: [[40, 30, 180, 120], "area,square units,inside"], perimeter: [[30, 20, 200, 140], "perimeter,around,outside,edge"]
+  }, function(){
+    var g = "";
+    for (var r = 0; r < 3; r++) for (var c = 0; c < 5; c++) g += rct(50 + c * 32, 40 + r * 32, 32, 32, "#D6ECFA", 0, 1.5);
+    return [g, rct(50, 40, 160, 96, "none", 0, 0).replace('fill="none"', 'fill="none" stroke="#D9674B" stroke-width="5"'),
+      dL("5 units", 130, 156, 14) + dL("3 units", 236, 92, 14, "start"),
+      dT("area = 15 square units", 160, 180, 14) + dT("perimeter = 16 units", 160, 198, 14)];
+  });
+  dgm("pythagoras", "The Pythagorean theorem", "math", ["pythagorean theorem", "pythagorean", "hypotenuse", "a squared plus b squared"], {
+    hyp: [[110, 30, 120, 80], "hypotenuse,c"], legs: [[30, 60, 110, 140], "leg,legs,a,b"]
+  }, function(){
+    return [poly([[60, 160], [220, 160], [60, 50]], "#D6ECFA", 3) + pth("M60 146 H74 V160", "none", { w: 2 }),
+      dL("a", 44, 110, 18) + dL("b", 140, 182, 18), dL("c", 150, 96, 18) + dL("hypotenuse", 176, 76, 13, "start"),
+      dT("a² + b² = c²", 236, 30, 18)];
+  });
+  dgm("slopeline", "Slope of a line", "math", ["slope of a line", "slope of the line", "rise over run", "linear equation", "linear equations", "linear function", "y intercept", "slope intercept"], {
+    rise: [[170, 50, 80, 70], "rise"], run: [[110, 110, 110, 40], "run"], intercept: [[30, 120, 70, 50], "intercept,y intercept,b"]
+  }, function(){
+    var g = "";
+    for (var k = 1; k <= 8; k++) g += ln(40 + k * 32, 14, 40 + k * 32, 180, "#DFE8F3", 1.5);
+    for (var q = 1; q <= 5; q++) g += ln(40, 180 - q * 32, 300, 180 - q * 32, "#DFE8F3", 1.5);
+    return [g + ln(40, 180, 304, 180, INK, 2.5) + ln(40, 180, 40, 10, INK, 2.5),
+      ln(40, 148, 296, 20, "#4A84B8", 4) + circ(40, 148, 5, "#D9674B", 2) + dL("y-intercept", 92, 170, 12),
+      ln(136, 100, 200, 100, "#E06D3A", 3, { dash: "5 4" }) + ln(200, 100, 200, 68, "#E06D3A", 3, { dash: "5 4" }) + dL("run", 168, 120, 13) + dL("rise", 226, 88, 13),
+      dT("y = mx + b", 246, 158, 18)];
+  });
+
+  // ----- reading & writing -----
+  dgm("storymountain", "Story mountain", "class", ["story mountain", "plot diagram", "plot structure", "rising action", "falling action", "parts of a plot", "plot mountain", "elements of plot"], {
+    beginning: [[2, 132, 92, 66], "beginning,exposition,introduction,characters,setting"], rising: [[50, 54, 104, 64], "rising action,rising,problem,conflict"],
+    climax: [[112, 2, 96, 58], "climax,turning point"], falling: [[180, 54, 100, 64], "falling action,falling"], resolution: [[226, 132, 92, 66], "resolution,ending,end,solution,conclusion"]
+  }, function(){
+    return [
+      ln(10, 160, 60, 160, INK, 4) + dL("beginning", 48, 184, 14),
+      ln(60, 160, 160, 48, INK, 4) + dL("rising action", 84, 92, 14, "end"),
+      circ(160, 48, 7, "#D9674B", 2.5) + dL("climax", 160, 28, 15),
+      ln(160, 48, 240, 140, INK, 4) + dL("falling action", 232, 92, 14, "start"),
+      ln(240, 140, 310, 140, INK, 4) + dL("resolution", 276, 166, 14)
+    ];
+  });
+  dgm("venn", "A Venn diagram", "class", ["venn diagram", "compare and contrast", "similarities and differences", "alike and different", "same and different"], {
+    left: [[6, 30, 110, 140], "different,differences,contrast"], both: [[124, 30, 72, 140], "both,alike,same,similar,similarities,compare"], right: [[204, 30, 110, 140], "different,differences,contrast"]
+  }, function(){
+    return [
+      '<circle cx="118" cy="100" r="78" fill="#7FB8DE" fill-opacity="0.55" stroke="' + INK + '" stroke-width="2.5"/>',
+      '<circle cx="202" cy="100" r="78" fill="#F29BB5" fill-opacity="0.55" stroke="' + INK + '" stroke-width="2.5"/>',
+      dT("only A", 82, 104, 15) + dT("both", 160, 104, 16) + dT("only B", 238, 104, 15)
+    ];
+  });
+  dgm("mainidea", "Main idea and details", "class", ["main idea", "supporting details", "key details", "main idea and details"], {
+    main: [[30, 16, 260, 60], "main idea,main,topic"], details: [[30, 80, 260, 116], "detail,details,supporting,evidence"]
+  }, function(){
+    return [
+      rct(30, 24, 260, 46, "#F6C343", 8, 2.5) + dT("main idea", 160, 53, 18),
+      rct(46, 70, 20, 64, "#D9C7A3", 0, 2.5) + rct(254, 70, 20, 64, "#D9C7A3", 0, 2.5),
+      dBox(28, 138, 80, 46, "#FFFFFF", "detail") + dBox(120, 138, 80, 46, "#FFFFFF", "detail") + dBox(212, 138, 80, 46, "#FFFFFF", "detail")
+    ];
+  });
+  dgm("paragraph", "Parts of a paragraph", "class", ["topic sentence", "concluding sentence", "closing sentence", "paragraph structure", "hamburger paragraph", "parts of a paragraph", "parts of an essay"], {
+    topic: [[40, 2, 240, 52], "topic sentence,topic,introduction"], details: [[40, 56, 240, 88], "detail,details,supporting,body"], closing: [[40, 146, 240, 52], "concluding,closing,conclusion"]
+  }, function(){
+    return [
+      pth("M60 46 C60 12 260 12 260 46 Z", "#E8B46A", { w: 2.5 }) + dT("topic sentence", 160, 38, 15),
+      pth("M52 52 C80 46 100 60 128 52 C156 46 176 60 204 52 C232 46 252 60 268 52 V74 H52 Z", "#9CCB7A", { w: 2.5 }) + dT("detail", 160, 69, 14),
+      rct(56, 78, 208, 24, "#F28B82", 6, 2.5) + dT("detail", 160, 95, 14),
+      rct(52, 106, 216, 28, "#C98F5B", 10, 2.5) + dT("detail", 160, 125, 14),
+      pth("M56 140 H264 C264 176 56 176 56 140 Z", "#E8B46A", { w: 2.5 }) + dT("closing sentence", 160, 160, 14)
+    ];
+  });
+  dgm("sequencebox", "Sequence of events", "class", ["sequence of events", "first next then last", "first then next last", "order of events", "beginning middle and end"], {
+    first: [[2, 50, 80, 100], "first,beginning"], next: [[82, 50, 78, 100], "next,middle"], then: [[160, 50, 78, 100], "then,after"], last: [[238, 50, 80, 100], "last,finally,end"]
+  }, function(){
+    return ["first", "next", "then", "last"].map(function(w, i){ var x = 8 + i * 79; return dBox(x, 70, 66, 60, ["#F6C343", "#7FB8DE", "#9CCB7A", "#F29BB5"][i], w, 15) + (i < 3 ? dA(x + 68, 100, x + 78, 100, INK, 0, 2.5) : ""); });
+  });
+  dgm("causeeffect", "Cause and effect", "class", ["cause and effect", "causes and effects", "cause effect"], {
+    cause: [[10, 40, 130, 120], "cause,causes,because,why"], effect: [[180, 40, 130, 120], "effect,effects,result,happened"]
+  }, function(){
+    return [dBox(20, 60, 110, 80, "#F6C343", "cause", 18) + dT("why it happened", 75, 160, 12),
+      dA(140, 100, 178, 100, INK, 0, 4),
+      dBox(190, 60, 110, 80, "#7FB8DE", "effect", 18) + dT("what happened", 245, 160, 12)];
+  });
+  dgm("partsofspeech", "Parts of speech", "class", ["parts of speech", "noun", "nouns", "verb", "verbs", "adjective", "adjectives", "adverb", "adverbs"], {
+    adjective: [[40, 66, 74, 92], "adjective,adjectives,describes,describing"], noun: [[116, 66, 64, 92], "noun,nouns,person place or thing"],
+    verb: [[180, 66, 62, 92], "verb,verbs,action"], adverb: [[242, 66, 76, 92], "adverb,adverbs"]
+  }, function(){
+    return [
+      dT("The", 30, 104, 20),
+      dT("happy", 92, 104, 20) + ln(66, 112, 118, 112, "#E9A23B", 4) + dL("adjective", 92, 140, 14),
+      dT("dog", 160, 104, 20) + ln(142, 112, 178, 112, "#4A84B8", 4) + dL("noun", 160, 140, 14),
+      dT("runs", 220, 104, 20) + ln(200, 112, 240, 112, "#D9674B", 4) + dL("verb", 220, 140, 14),
+      dT("fast.", 284, 104, 20) + ln(264, 112, 304, 112, "#4F9D78", 4) + dL("adverb", 284, 140, 14)
+    ];
+  });
+
+  // ----- social studies -----
+  dgm("timelinebig", "A timeline", "history", ["timeline", "time line", "timelines"], {
+    past: [[6, 40, 150, 120], "past,long ago,ago,earliest"], present: [[164, 40, 150, 120], "present,today,now,recent"]
+  }, function(){
+    var M = [[40, "pyramid", "long ago"], [120, "castle", "past"], [200, "ship", ""], [280, "rocket", "today"]];
+    return [ln(16, 120, 296, 120, INK, 4) + arrowHead(306, 120, 0, INK, 12)].concat(M.map(function(m){
+      return ln(m[0], 112, m[0], 128, INK, 3) + dI(m[1], m[0], 80, 46) + (m[2] ? dL(m[2], m[0], 152, 14) : "");
+    }));
+  });
+  dgm("compassrose", "Compass rose", "history", ["compass rose", "cardinal directions", "north south east and west", "north east south and west", "north east south west", "intermediate directions"], {
+    north: [[130, 2, 60, 46], "north,n"], south: [[130, 152, 60, 46], "south,s"], east: [[234, 76, 70, 48], "east,e"], west: [[16, 76, 70, 48], "west,w"]
+  }, function(){
+    return [
+      poly([[160, 30], [172, 88], [160, 100], [148, 88]], "#D9674B") + poly([[160, 170], [148, 112], [160, 100], [172, 112]], "#FFFFFF"),
+      poly([[230, 100], [172, 112], [160, 100], [172, 88]], "#FFFFFF") + poly([[90, 100], [148, 88], [160, 100], [148, 112]], "#FFFFFF"),
+      circ(160, 100, 8, "#F6C343", 2),
+      txt("N", 160, 24, 22, INK) + txt("S", 160, 194, 22, INK) + txt("E", 250, 108, 22, INK) + txt("W", 70, 108, 22, INK),
+      dL("north", 206, 24, 13) + dL("south", 206, 192, 13) + dL("east", 286, 108, 13) + dL("west", 34, 108, 13)
+    ];
+  });
+  dgm("govbranches", "Three branches of government", "history", ["three branches", "branches of government", "checks and balances", "separation of powers", "three branches of government"], {
+    legislative: [[4, 30, 104, 166], "legislative,congress,senate,house of representatives,make laws,makes laws"],
+    executive: [[108, 30, 104, 166], "executive,president,enforce,enforces"],
+    judicial: [[212, 30, 104, 166], "judicial,supreme court,court,courts,judges,interpret"]
+  }, function(){
+    var B = [[56, "legislative", "columns", "makes laws"], [160, "executive", "crown", "carries out laws"], [264, "judicial", "scale", "explains laws"]];
+    return [dT("government", 160, 22, 16)].concat(B.map(function(b){
+      return rct(b[0] - 48, 34, 96, 158, "#FFFDF6", 10, 2.5) + dI(b[2], b[0], 82, 56) + dT(b[1], b[0], 136, 15) + dL(b[3], b[0], 160, 12);
+    }));
+  });
+  dgm("landforms", "Landforms", "sky", ["landforms", "landform", "types of landforms", "bodies of water"], {
+    mountain: [[196, 20, 120, 90], "mountain,mountains"], valley: [[150, 80, 70, 60], "valley,valleys"], hill: [[90, 70, 70, 60], "hill,hills"],
+    river: [[110, 130, 120, 50], "river,rivers"], lake: [[230, 130, 88, 60], "lake,lakes"], island: [[4, 140, 90, 56], "island,islands"], plain: [[4, 90, 90, 50], "plain,plains,flat"]
+  }, function(){
+    return [
+      rct(0, 146, 100, 54, "#8CC4E8", 0, 0) + pth("M0 120 H120 Q150 100 176 120 L212 66 L246 40 L290 96 L320 108 V200 H100 V146 H0 Z", "#B9DBA0", { w: 2.5 }),
+      poly([[246, 40], [236, 54], [246, 50], [256, 54]], "#FFFFFF", 2) + dL("mountain", 270, 30, 13),
+      dL("hill", 148, 98, 13) + dL("valley", 192, 118, 13) + dL("plain", 48, 112, 13),
+      pth("M200 120 C190 150 160 160 120 196", "none", { stroke: "#8CC4E8", w: 7 }) + dL("river", 150, 158, 13),
+      ell(268, 160, 30, 12, "#8CC4E8", 2) + dL("lake", 268, 186, 13),
+      ell(46, 172, 22, 8, "#E8D9A0", 2) + dL("island", 46, 194, 13)
+    ];
+  });
+  dgm("continents", "The seven continents", "sea", ["seven continents", "7 continents", "the continents", "continents and oceans", "world map", "map of the world"], {
+    namerica: [[6, 20, 100, 70], "north america"], samerica: [[50, 94, 70, 90], "south america"], europe: [[132, 14, 56, 42], "europe"],
+    africa: [[130, 58, 66, 90], "africa"], asia: [[188, 10, 128, 84], "asia"], australia: [[236, 106, 80, 52], "australia,oceania"], antarctica: [[40, 168, 240, 32], "antarctica"]
+  }, function(){
+    var land = "#9CCB7A";
+    return [
+      rct(0, 0, 320, 200, "#A7D3EC", 0, 0) + pth("M24 46 C30 26 70 18 98 30 C104 40 94 50 84 58 C74 66 70 80 60 86 C50 80 44 68 34 62 C26 58 22 52 24 46 Z", land, { w: 2 }) + dL("North America", 60, 46, 12),
+      pth("M72 96 C86 92 104 102 104 118 C102 136 92 152 84 170 C78 156 70 140 66 122 C64 110 66 100 72 96 Z", land, { w: 2 }) + dL("South America", 108, 166, 11, "start"),
+      pth("M138 30 C146 20 172 18 180 26 C182 36 172 44 160 46 C148 48 136 40 138 30 Z", land, { w: 2 }) + dL("Europe", 160, 16, 11),
+      pth("M140 62 C156 54 184 58 190 76 C194 92 184 106 176 124 C170 138 160 142 156 128 C150 112 138 98 136 82 C134 72 136 66 140 62 Z", land, { w: 2 }) + dL("Africa", 164, 98, 12),
+      pth("M188 26 C214 12 268 14 300 30 C310 44 298 60 282 64 C268 70 256 82 240 82 C224 80 212 70 200 62 C190 54 182 38 188 26 Z", land, { w: 2 }) + dL("Asia", 250, 48, 13),
+      pth("M246 118 C262 108 292 112 300 126 C302 140 286 150 268 148 C254 146 242 132 246 118 Z", land, { w: 2 }) + dL("Australia", 274, 132, 11),
+      pth("M50 184 C100 174 220 174 270 184 C260 196 70 196 50 184 Z", "#F3F7FA", { w: 2 }) + dL("Antarctica", 160, 186, 11)
+    ];
+  });
+  dgm("feudal", "The feudal system", "history", ["feudal system", "feudalism", "feudal pyramid", "social pyramid", "social classes", "social hierarchy"], {
+    king: [[110, 6, 100, 50], "king,queen,monarch,ruler,pharaoh"], nobles: [[84, 56, 152, 44], "noble,nobles,lord,lords,nobility"],
+    knights: [[58, 100, 204, 44], "knight,knights,soldiers,warriors"], peasants: [[30, 144, 260, 52], "peasant,peasants,serf,serfs,farmers,workers"]
+  }, function(){
+    return [
+      poly([[160, 12], [196, 56], [124, 56]], "#F6C343", 2.5) + dT("king", 160, 48, 14),
+      poly([[124, 56], [196, 56], [228, 100], [92, 100]], "#E8B46A", 2.5) + dT("nobles", 160, 84, 15),
+      poly([[92, 100], [228, 100], [258, 144], [62, 144]], "#C9A27A", 2.5) + dT("knights", 160, 128, 15),
+      poly([[62, 144], [258, 144], [288, 190], [32, 190]], "#A0846A", 2.5) + dT("peasants", 160, 174, 16)
+    ];
+  });
+  dgm("billtolaw", "How a bill becomes a law", "history", ["bill becomes a law", "how a bill becomes a law", "how laws are made", "a bill becomes law"], {
+    bill: [[2, 40, 76, 100], "bill,idea"], house: [[80, 40, 80, 100], "house,house of representatives,congress"],
+    senate: [[160, 40, 80, 100], "senate,senators"], president: [[240, 40, 78, 100], "president,sign,signs,veto,law"]
+  }, function(){
+    var S = [["scroll", "a bill"], ["columns", "House"], ["columns", "Senate"], ["quill", "President"]];
+    return S.map(function(s, i){ var x = 40 + i * 80; return dI(s[0], x, 86, 50) + dT(s[1], x, 134, 14) + (i < 3 ? dA(x + 26, 86, x + 54, 86, INK, 0, 3) : ""); }).concat([dT("signed → it becomes a law", 160, 176, 16)]);
+  });
+  dgm("supplydemand", "Supply and demand", "math", ["supply and demand", "law of supply", "law of demand", "equilibrium price", "supply curve", "demand curve"], {
+    supply: [[150, 14, 160, 60], "supply"], demand: [[150, 120, 160, 60], "demand"], equilibrium: [[130, 70, 70, 50], "equilibrium,price"]
+  }, function(){
+    return [ln(50, 172, 300, 172, INK, 3) + ln(50, 172, 50, 14, INK, 3) + dL("quantity", 260, 192, 13) + dL("price", 26, 30, 13),
+      ln(70, 160, 280, 30, "#4A84B8", 4) + dL("supply", 290, 48, 14),
+      ln(70, 30, 280, 160, "#D9674B", 4) + dL("demand", 290, 150, 14),
+      circ(175, 95, 7, "#F6C343", 2.5) + dL("equilibrium", 175, 124, 13)];
+  });
+
+  // ----- health -----
+  dgm("myplate", "Food groups", "plain", ["food groups", "five food groups", "myplate", "my plate", "balanced diet", "healthy plate", "healthy eating", "food pyramid"], {
+    fruits: [[40, 10, 96, 90], "fruit,fruits"], vegetables: [[40, 100, 96, 92], "vegetable,vegetables,veggies"],
+    grains: [[136, 10, 104, 90], "grain,grains,bread,rice,pasta,cereal"], protein: [[136, 100, 104, 92], "protein,meat,beans,fish,eggs"], dairy: [[244, 20, 74, 90], "dairy,milk,cheese,yogurt"]
+  }, function(){
+    function q(a0, color){ var p0 = polar(136, 100, 84, a0), p1 = polar(136, 100, 84, a0 + Math.PI / 2); return '<path d="M136 100 L' + f(p0[0]) + ' ' + f(p0[1]) + ' A84 84 0 0 1 ' + f(p1[0]) + ' ' + f(p1[1]) + ' Z" fill="' + color + '" stroke="' + INK + '" stroke-width="2.5"/>'; }
+    return [circ(136, 100, 92, "#FFFFFF", 2.5),
+      q(Math.PI, "#E86A6A") + dT("fruits", 96, 70, 14), q(-Math.PI / 2, "#E8A04B") + dT("grains", 176, 70, 14),
+      q(Math.PI / 2, "#7BB662") + dT("vegetables", 98, 138, 14), q(0, "#A68BD0") + dT("protein", 176, 138, 14),
+      rct(258, 50, 44, 60, "#7FB8DE", 6, 2.5) + dT("dairy", 280, 132, 14)];
+  });
+
+  function findDiagram(toks){
+    var best = null;
+    DIAGRAM_ORDER.forEach(function(k){
+      DIAGRAMS[k].say.forEach(function(ph){
+        var at = findPhrase(toks, ph);
+        if (at >= 0 && (!best || ph.length > best.len)) best = { key: k, at: at, len: ph.length };
+      });
+    });
+    return best;
+  }
+  // key: use this diagram (Claude's plan); otherwise look for a topic the sentence names
+  function diagramScene(text, key){
+    var raw = String(text).split(/\s+/).filter(Boolean), toks = raw.map(tok), m = key ? null : findDiagram(toks);
+    if (!key && !m) return null;
+    var d = DIAGRAMS[key || m.key];
+    if (!d) return null;
+    var at = m ? m.at : 0, hl = [], hlAts = [], i;
+    if (m) for (i = at; i < at + m.len; i++) hlAts.push(i);
+    Object.keys(d.parts).forEach(function(p){
+      d.parts[p].say.forEach(function(ph){
+        for (var j = 0; j + ph.length <= toks.length; j++){
+          for (var q = 0; q < ph.length && sameTok(toks[j + q], ph[q]); q++);
+          if (q < ph.length || (m && m.len > 1 && j < m.at + m.len && j + ph.length > m.at)) continue;
+          if (hl.indexOf(p) < 0) hl.push(p);
+          for (q = j; q < j + ph.length; q++) hlAts.push(q);
+        }
+      });
+    });
+    if (hl.length > 2) hl = [];   // a sentence naming most of the parts is an overview: nothing to single out
+    var sc = emptyScene();
+    sc.show = true; sc.diagram = d.key; sc.diagramAt = at; sc.highlight = hl; sc.hlAts = hlAts; sc.verbAt = at; sc.setting = d.setting;
+    sc.caption = raw.length <= 14 ? cap(raw.join(" ").replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, "")) : d.title;
+    return sc;
+  }
+  function drawDiagram(sc){
+    var d = DIAGRAMS[sc.diagram], at = sc.diagramAt || 0, out = "";
+    (sc.highlight || []).forEach(function(p){ if (d.parts[p]) out += el(at, glow(d.parts[p].box)); });
+    d.draw().forEach(function(layer, j){ out += el(at + j, layer); });
+    return out;
+  }
+
   var renderCount = 0;
   function renderScene(sc){
     var id = "s" + (++renderCount) + "_";
     var bg = background(sc.setting, id);
     return '<svg class="scene" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + esc(sc.caption || "") + '">' +
-      '<defs>' + bg.defs + '</defs>' + bg.body + layoutScene(sc) + '</svg>';
+      '<defs>' + bg.defs + '</defs>' + bg.body + (sc.diagram && DIAGRAMS[sc.diagram] ? drawDiagram(sc) : layoutScene(sc)) + '</svg>';
   }
 
   // ---------- helpers for the app ----------
   function firstAt(sc){
+    if (sc.diagram) return sc.diagramAt || 0;
     var ats = allItems(sc).map(function(x){ return x.at; });
     if (sc.relation && sc.relation !== "and") ats.push(sc.verbAt);
     return ats.length ? Math.min.apply(null, ats) : 0;
@@ -2354,12 +3287,13 @@ window.SceneEngine = (function(){
   function highlightAts(sc){
     var h = {};
     if (!sc.show) return h;
+    if (sc.diagram){ (sc.hlAts || []).forEach(function(i){ h[i] = true; }); return h; }
     allItems(sc).forEach(function(x){ h[x.at] = true; });
     if (sc.relation && sc.relation !== "and") h[sc.verbAt] = true;
     if (sc.then) h[sc.then.verbAt] = true;
     return h;
   }
-  function sceneKeys(sc){ return allItems(sc).map(function(x){ return x.key; }); }
+  function sceneKeys(sc){ return sc.diagram ? ["d:" + sc.diagram + ":" + (sc.highlight || []).join(",")] : allItems(sc).map(function(x){ return x.key; }); }
 
   var ICON_HINT = {
     drop: "water", wave: "ocean/sea", sprout: "plant/seed", bolt: "energy/electricity", flame: "fire/heat", snowflake: "ice/cold",
@@ -2397,6 +3331,9 @@ window.SceneEngine = (function(){
       "- and: no clear action; just show the subjects together",
       "Settings: sky, land, sea, space, bio, lab, history, town, math, class, plain",
       "",
+      "Diagrams: when a sentence introduces one of these whole topics, reply {\"i\":n,\"show\":true,\"diagram\":\"key\",\"caption\":\"...\"} instead of icons: " +
+        DIAGRAM_ORDER.map(function(k){ return k + " (" + DIAGRAMS[k].title + ")"; }).join(", "),
+      "",
       "Rules:",
       "- Picture the MEANING of the phrase, not just its nouns. Pick icons for what the words refer to (\"citizens\" -> group, \"the ruler\" -> crown, \"steam\" -> vapor) and the relation that shows what happens.",
       "- subjects: 1-2 icon keys doing the action. objects: 0-2 icon keys it acts on. Never repeat a key within a sentence.",
@@ -2426,7 +3363,10 @@ window.SceneEngine = (function(){
     analyze: analyze, sceneFromAI: sceneFromAI, renderScene: renderScene, firstAt: firstAt,
     highlightAts: highlightAts, sceneKeys: sceneKeys, buildPlanPrompt: buildPlanPrompt, iconGallery: iconGallery, isUnsure: function(w, extra){ w = normalize(w); return !!w && !RELATION[w] && looseWord(w) && extraConcept(w, extra) === undefined; }, lookup: function(w, extra){ return conceptFor(normalize(w), extra); },
     setOpenMoji: function(o){ OM = o; }, hasOpenMoji: function(){ return !!OM; },
-    splitSpoken: splitSpoken,
+    splitSpoken: splitSpoken, diagramScene: function(text, key){ return diagramScene(text, key); }, diagramCount: DIAGRAM_ORDER.length,
+    diagramGallery: function(){
+      return DIAGRAM_ORDER.map(function(k){ var d = DIAGRAMS[k], sc = diagramScene(d.title, k); sc.caption = d.title; sc.highlight = []; return { key: k, title: d.title, say: d.sayText, svg: renderScene(sc) }; });
+    },
     normalize: normalize, iconCount: Object.keys(I).length, wordCount: Object.keys(WORD_TO_ICON).length + Object.keys(EMOJI_LIB).length, ICONS: I
   };
 })();
@@ -2716,15 +3656,16 @@ window.LESSONS = [
           <button type="button" class="btn btn-ghost" data-try="read">Try it</button>
         </div>
       </div>
-      <p class="hint">Your own scripts: tap <b>Write my own</b> in Lessons, paste what you'll say, and save it. Saved lessons stay on this device.</p>
+      <p class="hint">Your own scripts: tap <b>+ New lesson</b>, paste what you'll say, and save it. Saved lessons stay on this device. The ✎ button next to the lesson title opens the script.</p>
     </section>
 
     <section id="g-pics" class="guide-sec">
       <h4>How the pictures are chosen</h4>
       <ul class="guide-list">
-        <li><b>A large picture library.</b> More than 360 hand-drawn pictures for common school topics, plus about 2,400 OpenMoji images, matched to about 2,900 words.</li>
+        <li><b>A large picture library.</b> About 380 hand-drawn pictures for school topics, plus about 2,400 OpenMoji images, matched to about 3,250 words.</li>
+        <li><b>Labelled diagrams for whole topics.</b> Say a topic like “the water cycle”, “parts of a plant”, “the three branches of government” or “a story mountain” and a labelled diagram appears. Mention a part (“evaporation”, “the climax”) and it's highlighted. There are 56, from the five senses to the Pythagorean theorem; browse them under Pictures.</li>
         <li><b>One idea per scene.</b> Each sentence is read for its key things and how they connect. “The sun heats the ocean” shows a sun, an arrow, and the ocean.</li>
-        <li><b>No guessing.</b> Words that can mean different things, like “bank” or “home”, get no picture rather than a wrong one. Small talk like “good morning everyone” shows nothing. The Script tab lists words that need your help.</li>
+        <li><b>No guessing.</b> Words that can mean different things, like “bank” or “home”, get no picture rather than a wrong one. Small talk like “good morning everyone” shows nothing. The script editor lists words that need your help.</li>
         <li><b>Fix a picture in one tap.</b> Tap any word under the board, then pick a drawing or an emoji, or choose no picture. Your choice is remembered for every lesson.</li>
         <li><b>Stays on topic.</b> Pictures follow the lesson's context: “whole” and “half” only show a pizza when you're talking about fractions, and names like “Rosa Parks” aren't drawn as a park, even when speech-to-text leaves out the capital letters.</li>
         <li><b>Follows along when you talk.</b> In Just talk, “it” and “they” refer back to what you just mentioned, so “the caterpillar eats leaves, then it makes a chrysalis” shows the caterpillar making the chrysalis.</li>
@@ -2821,7 +3762,8 @@ window.LESSONS = [
    "boardCount", "startIcons", "emptyMeta", "startActions", "startBtn", "startLabel", "startAlt", "stepStartBtn", "voiceStartBtn",
    "restartBtn", "micBtn", "pace", "recapRestart", "recapClose", "helpBtn", "helpBack", "helpClose", "newLessonBtn",
    "talkHeaderBtn", "startTalk", "talkStartBtn", "talkScreen", "talkBig", "recapSave", "recapTitle", "recapRestartLabel",
-   "talkBar", "liveLine", "liveText", "talkForm", "talkInput", "talkDoneBtn", "helpX", "talkOrb"
+   "talkBar", "liveLine", "liveText", "talkForm", "talkInput", "talkDoneBtn", "helpX", "talkOrb",
+   "modeLessons", "picturesBtn", "settingsBtn", "editScriptBtn", "scrim", "picTabs", "diagramGrid", "diagramSearch"
   ].forEach(function(id){ el[id] = $(id); });
 
   var EMPTY_SMALL = el.emptySmall.innerHTML;
@@ -2834,14 +3776,36 @@ window.LESSONS = [
     toastTimer = setTimeout(function(){ el.toast.classList.remove("show"); }, 2200);
   }
 
-  // ---------- tabs ----------
-  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
-  function showTab(name){
-    tabs.forEach(function(t){ t.setAttribute("aria-selected", String(t.dataset.tab === name)); });
-    document.querySelectorAll(".tab-panel").forEach(function(p){ p.hidden = p.dataset.panel !== name; });
-    if (name === "pictures") buildGallery();
+  // ---------- panels: the lesson list stays beside the board; script, settings and pictures slide in when needed ----------
+  var drawers = Array.prototype.slice.call(document.querySelectorAll(".drawer")), lastFocus = null;
+  function openDrawer(name){
+    if (name && document.body.classList.contains("drawer-open") === false) lastFocus = document.activeElement;
+    drawers.forEach(function(d){ d.hidden = d.dataset.drawer !== name; });
+    el.scrim.hidden = !name;
+    document.body.classList.toggle("drawer-open", !!name);
+    if (name === "pictures") buildDiagrams();
+    if (name){ var x = document.querySelector('.drawer[data-drawer="' + name + '"] .drawer-x'); if (x) x.focus({ preventScroll: true }); }
+    else if (lastFocus && lastFocus.focus){ lastFocus.focus({ preventScroll: true }); lastFocus = null; }
   }
-  tabs.forEach(function(t){ t.addEventListener("click", function(){ showTab(t.dataset.tab); }); });
+  function openDrawerName(){ var d = drawers.filter(function(x){ return !x.hidden; })[0]; return d ? d.dataset.drawer : null; }
+  // older code (and the guide) asks for a "tab" by name
+  function showTab(name){
+    if (name === "lessons"){ openDrawer(null); if (state.talk) exitTalk(false); return; }
+    openDrawer(name);
+  }
+  drawers.forEach(function(d){ d.querySelector(".drawer-x").addEventListener("click", function(){ openDrawer(null); }); });
+  el.scrim.addEventListener("click", function(){ openDrawer(null); });
+  el.picturesBtn.addEventListener("click", function(){ openDrawer(openDrawerName() === "pictures" ? null : "pictures"); });
+  el.settingsBtn.addEventListener("click", function(){ openDrawer(openDrawerName() === "settings" ? null : "settings"); });
+  el.editScriptBtn.addEventListener("click", function(){ openDrawer("script"); el.scriptInput.focus({ preventScroll: true }); });
+  el.modeLessons.addEventListener("click", function(){ showTab("lessons"); });
+  el.picTabs.addEventListener("click", function(e){
+    var b = e.target.closest("[data-pane]");
+    if (!b) return;
+    Array.prototype.forEach.call(el.picTabs.children, function(t){ t.setAttribute("aria-selected", String(t === b)); });
+    document.querySelectorAll('.drawer[data-drawer="pictures"] .pane').forEach(function(p){ p.hidden = p.dataset.pane !== b.dataset.pane; });
+    if (b.dataset.pane === "drawings") buildGallery();
+  });
 
   // ---------- text helpers ----------
   function splitSentences(text){
@@ -2857,7 +3821,9 @@ window.LESSONS = [
   function aiActive(){ return !!(state.useAi && state.aiPlan && state.aiPlan.script === state.scriptText); }
   function curatedActive(){ return !!(state.lesson && state.lesson.plan && state.lesson.text.trim() === state.scriptText); }
   function sceneForText(text, planItem){
-    var sc = null;
+    // a sentence that names a whole topic gets its labelled diagram, even in tuned lessons
+    var sc = planItem && planItem.diagram ? null : E.diagramScene(text);
+    if (sc) return sc;
     if (planItem){
       sc = E.sceneFromAI(planItem, text, state.extra);
       if (sc && sc.show && !planItem.caption){ var c = sentenceCaption(text); if (c) sc.caption = c; }
@@ -2922,7 +3888,7 @@ window.LESSONS = [
     if (!list.length){
       var d = document.createElement("div");
       d.className = "empty-list";
-      d.textContent = state.filter === "My lessons" ? "No saved lessons yet. Tap “Write my own” to make one." : "No lessons match that search.";
+      d.textContent = state.filter === "My lessons" ? "No saved lessons yet. Tap “+ New lesson” to make one." : "No lessons match that search.";
       el.lessonList.appendChild(d);
       return;
     }
@@ -2985,7 +3951,7 @@ window.LESSONS = [
     el.startIcons.hidden = !icons.length;
     el.startIcons.innerHTML = icons.map(function(k){ return E.iconSVG(k); }).join("");
     el.emptyBig.textContent = L ? L.title : txt ? "Your script" : "Nothing to show yet";
-    el.emptyMeta.textContent = !txt ? "Type what you'll say in the Script tab, or choose a ready-made lesson."
+    el.emptyMeta.textContent = !txt ? "Choose a lesson from the list, or tap “+ New lesson” to write your own."
       : [L && L.subject !== "My lessons" ? L.subject : "", L && L.grade ? L.grade : "", n + (n === 1 ? " sentence" : " sentences")].filter(Boolean).join(" · ");
     el.startActions.hidden = false;
     el.startLabel.textContent = txt ? "Start lesson" : "Choose a lesson";
@@ -3059,6 +4025,38 @@ window.LESSONS = [
       fig.appendChild(cap);
       el.gallery.appendChild(fig);
     });
+  }
+  var diagramsBuilt = false;
+  function buildDiagrams(){
+    if (diagramsBuilt) return;
+    diagramsBuilt = true;
+    E.diagramGallery().forEach(function(g){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "dcard";
+      b.dataset.words = (g.title + " " + g.say.join(" ")).toLowerCase();
+      b.innerHTML = g.svg + "<b></b><span></span>";
+      b.querySelector("b").textContent = g.title;
+      b.querySelector("span").textContent = "Say “" + g.say[0] + "”";
+      b.setAttribute("aria-label", "Show " + g.title + " on the board");
+      b.addEventListener("click", function(){ showDiagram(g.key, g.title); });
+      el.diagramGrid.appendChild(b);
+    });
+  }
+  el.diagramSearch.addEventListener("input", function(){
+    var q = el.diagramSearch.value.trim().toLowerCase();
+    Array.prototype.forEach.call(el.diagramGrid.children, function(b){ b.hidden = q && b.dataset.words.indexOf(q) < 0; });
+  });
+  // put a diagram on the board right now, as its own scene
+  function showDiagram(key, title){
+    var sc = E.diagramScene(title, key);
+    if (!sc) return;
+    sc.highlight = []; sc.caption = title;
+    pause(); finishActive(); hideRecap();
+    startFrame("d" + (++state.voiceSeq), sc, -1);
+    revealTo(Infinity); finishActive();
+    if (state.talk) talkHeading();
+    openDrawer(null);
+    if (window.matchMedia("(max-width: 960px)").matches) el.board.scrollIntoView({ behavior: "smooth", block: "start" });
   }
   el.gallerySearch.addEventListener("input", function(){
     var q = el.gallerySearch.value.trim().toLowerCase();
@@ -3297,6 +4295,7 @@ window.LESSONS = [
     if (e.key !== "Escape") return;
     if (!el.wdBack.hidden){ e.stopPropagation(); closeWordDlg(); }
     else if (!el.helpBack.hidden){ e.stopPropagation(); closeHelp(); }
+    else if (openDrawerName()){ e.stopPropagation(); openDrawer(null); }
   }, true);
 
   // ---------- how it works ----------
@@ -3513,7 +4512,7 @@ window.LESSONS = [
     var t = e.target, tag = t && t.tagName;
     if (tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT" || (t && t.isContentEditable)) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    if (!el.helpBack.hidden || !el.wdBack.hidden) return;
+    if (!el.helpBack.hidden || !el.wdBack.hidden || openDrawerName()) return;
     // let focused buttons handle Space/Enter themselves
     if ((e.key === " " || e.key === "Enter") && (tag === "BUTTON" || (t && t.getAttribute && t.getAttribute("role") === "button"))) return;
     if (state.talk && e.key === " "){ e.preventDefault(); micToggle(); return; }
@@ -3668,6 +4667,7 @@ window.LESSONS = [
     el.talkBar.hidden = false;
     talkHeading();
     el.talkBig.textContent = SR ? "Start talking" : "Type to begin";
+    syncMode();
     if (SR){ setLive("Starting the microphone…", ""); startListening(); }
     else { setLive("Live voice doesn't work in this browser (try Google Chrome). You can type sentences below instead.", "miss"); el.talkInput.focus(); }
   }
@@ -3678,10 +4678,16 @@ window.LESSONS = [
     state.lastTalk = state.transcript.slice();
     el.board.classList.remove("talking");
     el.talkBar.hidden = true; el.talkScreen.hidden = true;
+    syncMode();
     if (!state.frames.length){ state.boardIsTalk = false; clearBoard(); setBoardHeading(); return; }
     el.boardSubject.textContent = "Your talk"; el.boardSubject.style.background = "var(--coral)";
     el.boardTitle.textContent = state.frames.length + (state.frames.length === 1 ? " picture" : " pictures");
     if (showSlides) showRecap();
+  }
+  function syncMode(){
+    el.modeLessons.setAttribute("aria-selected", String(!state.talk));
+    el.talkHeaderBtn.setAttribute("aria-selected", String(state.talk));
+    document.body.classList.toggle("mode-talk", state.talk);
   }
   function micToggle(){
     if (listening){ stopListening(); return; }
