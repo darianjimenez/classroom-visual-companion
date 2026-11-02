@@ -321,7 +321,10 @@
   [hidden]{ display: none !important; }
   .chip[aria-pressed="true"]{ background: var(--ink); color: var(--bg); border-color: var(--ink); }
   /* keep the controls on screen on laptops: size the picture to the window height */
-  @media (min-width: 961px){ .hero-card{ max-width: min(660px, max(360px, calc((100vh - 490px) * 1.6))); } }
+  @media (min-width: 961px){
+    .hero-card{ max-width: min(660px, max(360px, calc((100vh - 490px) * 1.6))); }
+    .board.talking .hero-card{ max-width: min(660px, max(300px, calc((100vh - 590px) * 1.6))); }
+  }
   .thumb{ width: 116px; }
   .top-actions{ display: flex; gap: 8px; }
   .top-actions .btn{ display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
@@ -1841,21 +1844,68 @@ window.SceneEngine = (function(){
     for (var j = a; j <= z; j++) if (TOPIC_WORD.test(norm[j])) return false;
     return true;
   }
+  // Speech-to-text often loses capitals ("rosa parks"), so also treat a known first name, or a title like "mr",
+  // and the one or two words after it as a name. A middle name or initial carries on ("martin luther king", "susan b anthony").
+  var FIRST_NAMES = {}, NAME_TITLES = { mr: 1, mrs: 1, ms: 1, miss: 1, dr: 1 }, NAME_STOP = {};
+  ("abigail abraham ada addison ahmed aiden aisha albert alejandro alexander alexandre ali amara amelia amir ana andrew anne anthony antonio arjun aubrey ava barack benjamin betsy booker caleb camila carlos cesar charles charlotte chiara chloe christopher clara claudette daniel darnell david deshawn diego dolores dylan edgar eleanor elijah elizabeth ella emily emma emmanuel eric ethan evelyn fatima florence francis frederick frida gabriel gabriela george giulia graham greta hannah hans harper harriet helen henry hiroshi ida imani isaac isabella isaiah jackie jacob jacques jamal james jane jayden jean jesse joan johann john jonathan jose joseph joshua juan julius katherine keisha kenji kofi kwame langston latoya layla leah leonardo liam logan lorenzo louis lucas lucia lucy ludwig luis luke luther madison mahatma malala malcolm margaret maria marie martin mary matteo mei mia michael miguel mohammed mohandas muhammad natalie nathan neil nelson nikola noah nora oliver olivia omar orville owen pablo patrick paul peter phillis pierre priya richard robert ronald rosa ruby ruth ryan sally salvador samuel sandra sarah shanice sofia sojourner sonia sophia stella steve susan theodore thomas thurgood tyrone ulysses valentina vincent walt wangari wei wilbur william winston wolfgang yusuf zoe zora").split(" ").forEach(function(w){ FIRST_NAMES[w] = 1; });
+  ("he she they it we you i his her their our my me him them who whose which what where why how is was were are be been am has have had " +
+   "do does did can could will would should may might must said says went goes got saw came comes lived lives born also not never always just " +
+   "very too so but or because with to for from by as if than about like up down out over under into and the a an in on at of when then " +
+   "this that these those today now there here look see").split(" ").forEach(function(w){ NAME_STOP[w] = 1; });
+  function spokenNames(raw, norm){
+    var n = norm.length, mask = [], i, j, took;
+    for (i = 0; i < n; i++){
+      var first = FIRST_NAMES[norm[i]], title = NAME_TITLES[norm[i]];
+      if (!first && !title) continue;
+      if (first) mask[i] = true;
+      if (/'s$|[,.;:!?]$/i.test(raw[i])) continue;
+      for (j = i + 1, took = 0; j < n && took < 3; j++){
+        var w = norm[j];
+        if (!w || NAME_STOP[w] || RELATION[w]) break;
+        mask[j] = true; took++;
+        if (/'s$|[,.;:!?]$/i.test(raw[j])) break;
+        if (!FIRST_NAMES[w] && w.length > 1){ if (norm[j + 1] === "jr" || norm[j + 1] === "junior") mask[j + 1] = true; break; }
+      }
+      i = j - 1 > i ? j - 1 : i;
+    }
+    return mask;
+  }
+  // Speech arrives without punctuation, so a long stretch of talk is one phrase. Split it where a new idea usually starts.
+  var SPLIT_AT = { so: 1, then: 1, but: 1, because: 1, next: 1, finally: 1, now: 1, also: 1, however: 1, meanwhile: 1, later: 1, after: 1, afterwards: 1, when: 1, while: 1, until: 1 };
+  var CLAUSE_START = { the: 1, it: 1, they: 1, we: 1, you: 1, he: 1, she: 1, this: 1, these: 1, those: 1, that: 1, there: 1 };
+  var PRONOUN = { it: 1, they: 1, he: 1, she: 1 };
+  function splitSpoken(text){
+    var words = String(text).split(/\s+/).filter(Boolean);
+    if (words.length <= 12) return words.length ? [words.join(" ")] : [];
+    var parts = [], cur = [];
+    for (var k = 0; k < words.length; k++){
+      var w = normalize(words[k]), nx = normalize(words[k + 1] || "");
+      var brk = (cur.length >= 3 && /[.!?;]$/.test(words[k - 1])) || (cur.length >= 5 && SPLIT_AT[w]) ||
+        (w === "and" && ((cur.length >= 5 && SPLIT_AT[nx]) || (cur.length >= 6 && CLAUSE_START[nx]) || cur.length >= 14)) || cur.length >= 22;
+      if (brk){ parts.push(cur); cur = []; }
+      cur.push(words[k]);
+    }
+    if (cur.length) parts.push(cur);
+    // fold a short tail back into the phrase before it
+    if (parts.length > 1 && parts[parts.length - 1].length < 4) parts[parts.length - 2] = parts[parts.length - 2].concat(parts.pop());
+    return parts.map(function(p){ return p.join(" "); });
+  }
   function emptyScene(){ return { show: false, relation: null, verb: "", verbAt: 0, subjects: [], objects: [], then: null, setting: "plain", caption: "" }; }
 
   // Rule-based reading of one sentence: find the things, find the action between them.
-  function analyze(text, extra){
+  function analyze(text, extra, context){
     var raw = String(text).split(/\s+/).filter(Boolean);
     var norm = raw.map(normalize), n = raw.length, i;
+    var cues = context && context.words ? norm.concat(context.words) : norm, names = spokenNames(raw, norm);
     var concepts = [], rels = [];
     for (i = 0; i < n; i++){
       var w = norm[i];
       if (w === "into") continue;
       if (RELATION[w]){ rels.push({ i: i, type: RELATION[w] }); continue; }
-      if (isName(raw, norm, i)) continue;
+      if (names[i] || isName(raw, norm, i)) continue;
       var c = conceptFor(w, extra);
-      if (c && (c.emoji === "🐭" || c.icon === "mouse") && hasCue(norm, COMPUTER_CUES)) c = { emoji: "🖱️", key: "m:🖱️" };
-      if (c && MATH_ONLY[c.icon] && !hasMathCue(norm)) c = null;
+      if (c && (c.emoji === "🐭" || c.icon === "mouse") && hasCue(cues, COMPUTER_CUES)) c = { emoji: "🖱️", key: "m:🖱️" };
+      if (c && MATH_ONLY[c.icon] && !hasMathCue(cues)) c = null;
       if (c) concepts.push({ i: i, icon: c.icon, emoji: c.emoji, key: c.key, label: labelOf(raw[i]) });
     }
     for (i = 0; i < n; i++){
@@ -1896,6 +1946,14 @@ window.SceneEngine = (function(){
         } else {
           subs = uniq(subjWin).slice(-2);
           objs = uniq(objWin).slice(0, 2);
+          // live talk: "...and then it makes a chrysalis" - "it" is the last thing talked about
+          if (!subs.length && context && context.subject){
+            for (var p = prevI + 1; p < r.i; p++) if (PRONOUN[norm[p]]){
+              var cs = context.subject;
+              subs = [{ icon: cs.icon, emoji: cs.emoji, key: cs.key, label: cs.label, at: p }];
+              break;
+            }
+          }
           if (REVERSE_NEXT[norm[r.i + 1]]){ var t = subs; subs = objs; objs = t; }
         }
         objs = objs.filter(function(o){ return !subs.some(function(s){ return s.key === o.key; }); });
@@ -2368,6 +2426,7 @@ window.SceneEngine = (function(){
     analyze: analyze, sceneFromAI: sceneFromAI, renderScene: renderScene, firstAt: firstAt,
     highlightAts: highlightAts, sceneKeys: sceneKeys, buildPlanPrompt: buildPlanPrompt, iconGallery: iconGallery, isUnsure: function(w, extra){ w = normalize(w); return !!w && !RELATION[w] && looseWord(w) && extraConcept(w, extra) === undefined; }, lookup: function(w, extra){ return conceptFor(normalize(w), extra); },
     setOpenMoji: function(o){ OM = o; }, hasOpenMoji: function(){ return !!OM; },
+    splitSpoken: splitSpoken,
     normalize: normalize, iconCount: Object.keys(I).length, wordCount: Object.keys(WORD_TO_ICON).length + Object.keys(EMOJI_LIB).length, ICONS: I
   };
 })();
@@ -2667,7 +2726,8 @@ window.LESSONS = [
         <li><b>One idea per scene.</b> Each sentence is read for its key things and how they connect. “The sun heats the ocean” shows a sun, an arrow, and the ocean.</li>
         <li><b>No guessing.</b> Words that can mean different things, like “bank” or “home”, get no picture rather than a wrong one. Small talk like “good morning everyone” shows nothing. The Script tab lists words that need your help.</li>
         <li><b>Fix a picture in one tap.</b> Tap any word under the board, then pick a drawing or an emoji, or choose no picture. Your choice is remembered for every lesson.</li>
-        <li><b>Stays on topic.</b> Pictures follow the lesson's context: “whole” and “half” only show a pizza in a fractions lesson, and names like “Rosa Parks” aren't drawn as a park.</li>
+        <li><b>Stays on topic.</b> Pictures follow the lesson's context: “whole” and “half” only show a pizza when you're talking about fractions, and names like “Rosa Parks” aren't drawn as a park, even when speech-to-text leaves out the capital letters.</li>
+        <li><b>Follows along when you talk.</b> In Just talk, “it” and “they” refer back to what you just mentioned, so “the caterpillar eats leaves, then it makes a chrysalis” shows the caterpillar making the chrysalis.</li>
       </ul>
     </section>
 
@@ -2676,7 +2736,7 @@ window.LESSONS = [
       <ul class="guide-list">
         <li><b>Project it.</b> Press F or the full-screen button. The pictures and captions scale up for the back of the room.</li>
         <li><b>Short, concrete sentences work best.</b> “Plants need sunlight” gets a clearer picture than “It's important to remember that plants, as we discussed, require…”.</li>
-        <li><b>Pause between ideas</b> when you're talking freely. Each pause tells the app an idea is finished.</li>
+        <li><b>Pausing between ideas helps</b> when you're talking freely, but you don't have to stop after every sentence. A long stretch of talk is split into separate ideas at words like “then”, “because” and “when”.</li>
         <li><b>Keep it calm.</b> In Settings, Calm mode removes motion and only draws a scene when a new idea appears. You can also hide the word labels so students name things themselves.</li>
         <li><b>Review at the end.</b> The whole storyboard appears when a lesson finishes. Tap any card to talk about it again.</li>
         <li><b>Try it before class.</b> Run your script once and fix any picture you don't like. Your fixes carry over.</li>
@@ -2747,7 +2807,7 @@ window.LESSONS = [
     popTimes: [], settleTimer: null,
     aiPlan: null, useAi: true, sample: null, planning: null,
     voiceSeq: 0, ticker: [],
-    talk: false, transcript: [], lastTalk: [], boardIsTalk: false
+    talk: false, transcript: [], lastTalk: [], boardIsTalk: false, talkCtx: { words: [], subject: null }
   };
 
   var $ = function(id){ return document.getElementById(id); };
@@ -3392,7 +3452,7 @@ window.LESSONS = [
     if (window.matchMedia("(max-width: 960px)").matches) el.board.scrollIntoView({ behavior: "smooth", block: "start" });
   });
   el.restartBtn.addEventListener("click", function(){
-    if (state.talk){ clearBoard(); state.transcript = []; state.ticker = []; el.ticker.innerHTML = ""; talkHeading(); setLive(listening ? "Listening… start talking." : "Cleared. Talk or type to begin again.", ""); return; }
+    if (state.talk){ clearBoard(); state.transcript = []; state.talkCtx = { words: [], subject: null }; state.ticker = []; el.ticker.innerHTML = ""; talkHeading(); setLive(listening ? "Listening… start talking." : "Cleared. Talk or type to begin again.", ""); return; }
     resetPlayback(); follow.miss = [];
   });
   el.recapRestart.addEventListener("click", function(){ if (state.boardIsTalk && !state.talk) enterTalk(); else resetPlayback(); });
@@ -3558,20 +3618,36 @@ window.LESSONS = [
       }
     }
   }
+  // One phrase from the speech recogniser (everything said before a pause). Long ones are split into ideas,
+  // and recent words plus the last subject go along so "it" and "they" and the lesson's topic carry over.
   function voicePhrase(text){
     text = String(text).trim();
     if (!text) return;
-    if (state.talk) state.transcript.push(text);
+    var made = 0, same = 0;
+    E.splitSpoken(text).forEach(function(part){
+      var r = phraseScene(part);
+      if (r === "shown") made++; else if (r === "same") same++;
+    });
+    if (!state.talk) return;
     var heard = "Heard “" + (text.length > 90 ? text.slice(0, 88) + "…" : text) + "”";
-    var words = text.split(/\s+/).filter(Boolean), sc = E.analyze(text, state.extra), hl = E.highlightAts(sc);
+    if (made) setLive(heard + (made > 1 ? " → " + made + " pictures" : ""), "");
+    else if (same) setLive(heard + ". Same idea as before, so the picture stays.", "");
+    else setLive(heard + ". No picture for that one. Try naming something, like “volcano” or “plant”.", "miss");
+  }
+  function phraseScene(text){
+    if (state.talk) state.transcript.push(text);
+    var words = text.split(/\s+/).filter(Boolean), sc = E.analyze(text, state.extra, state.talkCtx), hl = E.highlightAts(sc);
     words.forEach(function(w, k){ tick(w, hl[k]); });
-    if (!sc.show){ if (state.talk) setLive(heard + ". No picture for that one. Try naming something, like “volcano” or “plant”.", "miss"); return; }
+    state.talkCtx.words = state.talkCtx.words.concat(words.map(E.normalize)).slice(-60);
+    if (!sc.show) return "none";
+    if (sc.subjects && sc.subjects.length) state.talkCtx.subject = sc.subjects[0];
     finishActive();
-    if (shouldSkip(sc)){ if (state.talk) setLive(heard + ". Same idea as before, so the picture stays.", ""); return; }
+    if (shouldSkip(sc)) return "same";
     if (!state.talk){ el.boardSubject.textContent = "Live"; el.boardSubject.style.background = "var(--coral)"; el.boardTitle.textContent = "Listening…"; }
     startFrame("v" + (++state.voiceSeq), sc, -1);
     revealTo(Infinity); finishActive();
-    if (state.talk){ state.boardIsTalk = true; talkHeading(); setLive(heard, ""); }
+    if (state.talk){ state.boardIsTalk = true; talkHeading(); }
+    return "shown";
   }
 
   // ---------- just talk: no script; each idea spoken (or typed) becomes a picture ----------
@@ -3585,7 +3661,7 @@ window.LESSONS = [
     if (state.talk){ if (SR && !listening) startListening(); return; }
     pause(); hideRecap();
     if (listening) stopListening();
-    state.talk = true; state.loaded = false; state.boardIsTalk = true; state.transcript = [];
+    state.talk = true; state.loaded = false; state.boardIsTalk = true; state.transcript = []; state.talkCtx = { words: [], subject: null };
     el.board.classList.add("talking");
     clearBoard();
     state.ticker = []; el.ticker.innerHTML = ""; el.dots.innerHTML = ""; el.boardCount.hidden = true;
