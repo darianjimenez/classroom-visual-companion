@@ -1876,6 +1876,33 @@ window.SceneEngine = (function(){
     var p = row.split(" "), e = p[0];
     for (var i = 1; i < p.length; i++) if (!EMOJI_LIB[p[i]]) EMOJI_LIB[p[i]] = e;
   });
+  // Found by replaying recorded lessons through the app. These words are nearly always meant another way in real teaching
+  // ("kind of", "I saw", "good job", "watch this", "one more time", "the steps"), so they get no picture unless a teacher picks one.
+  var NEVER = {};
+  ("time kind kinds saw job deal deals watch minimum maximum rich department religion religions culture cultures crossing bronze mechanics " +
+   "death card cards steps plate plates").split(" ").forEach(function(w){ NEVER[w] = 1; delete WORD_TO_ICON[w]; delete EMOJI_LIB[w]; });
+  Object.keys(VOCAB).forEach(function(k){ VOCAB[k] = VOCAB[k].filter(function(w){ return !NEVER[w]; }); });
+  // ...and better pictures for words real lessons use a lot ("letter" in phonics is the ABC, not mail)
+  var REMAP = {
+    letter: "m:🔤", letters: "m:🔤", spell: "m:🔤", spells: "m:🔤", colonies: "i:map", colony: "i:map", colonial: "i:map", tablet: "i:phone", tablets: "i:phone",
+    lake: "i:lake", lakes: "i:lake", pond: "i:lake", ponds: "i:lake", shell: "m:🐚", shells: "m:🐚", seashell: "m:🐚", screen: "i:computer", screens: "i:computer",
+    ground: "i:soil", physics: "i:atom", pluto: "i:planet", syllable: "m:👏", syllables: "m:👏", clap: "m:👏", clapping: "m:👏",
+    military: "i:helmet", society: "i:group", societies: "i:group", bond: "m:🔗", bonds: "m:🔗", magic: "m:🪄", distance: "i:ruler", zero: "i:numbers",
+    species: "m:🐾", electrical: "i:bolt", container: "i:bottle", containers: "i:bottle", bubble: "m:🫧", chimp: "i:monkey", chimps: "i:monkey",
+    dream: "m:💭", dreams: "m:💭", male: "m:♂️", males: "m:♂️", female: "m:♀️", females: "m:♀️", research: "i:magnifier", researching: "i:magnifier"
+  };
+  Object.keys(REMAP).forEach(function(w){
+    var v = REMAP[w];
+    delete WORD_TO_ICON[w]; delete EMOJI_LIB[w];
+    if (v.slice(0, 2) === "i:" && I[v.slice(2)]) WORD_TO_ICON[w] = v.slice(2);
+    else if (v.slice(0, 2) === "m:") EMOJI_LIB[w] = v.slice(2);
+  });
+  // Generic words ("people", "a good question", "great idea", "I'd love to") can join a picture of something else, but never make one alone.
+  var WEAK = {};
+  ("people person persons man men woman women guy guys kid kids child children boy boys girl girls student students teacher teachers friend friends " +
+   "everybody everyone human humans adult adults mom dad mother father parents family families professor question questions problem problems " +
+   "idea ideas thinking think mind minds number numbers story stories game games school classroom hand hands love loves page pages paper list " +
+   "picture pictures book books region community").split(" ").forEach(function(w){ WEAK[w] = 1; });
 
   var ICON_SETTING = {};
   [["sky", "sun cloud rain vapor bird"], ["sea", "drop wave fish ship"], ["land", "river mountain tree sprout flower leaf volcano apple gravity"],
@@ -1942,8 +1969,8 @@ window.SceneEngine = (function(){
     var out = [w];
     if (w.length > 4 && /ies$/.test(w)) out.push(w.slice(0, -3) + "y");
     if (w.length > 4 && /ves$/.test(w)) out.push(w.slice(0, -3) + "f");
-    if (w.length > 3 && /es$/.test(w)) out.push(w.slice(0, -2));
     if (w.length > 2 && /s$/.test(w)) out.push(w.slice(0, -1));
+    if (w.length > 3 && /es$/.test(w)) out.push(w.slice(0, -2));
     return out;
   }
   // Words that only loosely match a picture ("home" -> house, "day" -> calendar). Better to show nothing than a wrong or off-topic picture;
@@ -2021,6 +2048,35 @@ window.SceneEngine = (function(){
     var s = joinL(sc.subjects) + " " + sc.verb + " " + joinL(sc.objects);
     if (sc.then) s += " → " + sc.then.verb + " " + joinL(sc.then.objects);
     return cap(s);
+  }
+  // A word whose picture depends on the rest of the lesson: "brush your teeth", "spring" the season or the coil, "3 times 4".
+  function cueSet(s){ var o = {}; s.split(" ").forEach(function(w){ o[w] = 1; }); return o; }
+  var TEETH = cueSet("teeth tooth toothbrush toothpaste floss dentist"),
+      PHYS = cueSet("force forces stretch stretched compress compressed mass bounce coil push pull weight newton energy"),
+      CHEM = cueSet("dissolve dissolves dissolved mixture mixtures liquid liquids salt sugar chemical chemicals acid concentration"),
+      LOUD = cueSet("loud louder quiet quieter sound sounds music speaker hear hearing noise"),
+      SKY = cueSet("planet planets star stars rocket rockets astronaut astronauts orbit moon sun galaxy outer satellite"),
+      MUSIC = cueSet("music song songs sing singing melody piano notes rhythm instrument"),
+      STORY = cueSet("story stories character characters book books setting author chapter climax conflict resolution events reader readers ending"),
+      NUM_WORD = cueSet("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty hundred");
+  function isNum(t){ return t != null && (/^\d/.test(t) || !!NUM_WORD[normalize(t)]); }
+  function contextual(w, i, raw, cues){
+    function em(e){ return { emoji: e, key: "m:" + e }; }
+    function ic(k){ return { icon: k, key: "i:" + k }; }
+    switch (w){
+      case "brush": case "brushing": return hasCue(cues, TEETH) ? em("🪥") : undefined;
+      case "spring": case "springs": return hasCue(cues, PHYS) ? undefined : em("🌸");
+      case "solution": case "solutions": return hasCue(cues, CHEM) ? undefined : null;
+      case "volume": return hasCue(cues, LOUD) ? em("🔊") : ic("beaker");
+      case "space": return hasCue(cues, SKY) ? ic("rocket") : null;
+      case "note": return hasCue(cues, MUSIC) ? undefined : null;
+      case "plot": return hasCue(cues, STORY) ? undefined : null;
+      case "capital": return raw[i + 1] && (/^[a-z]$/i.test(raw[i + 1]) || /^letters?$/i.test(raw[i + 1])) ? em("🔠") : null;
+      case "times": return isNum(raw[i - 1]) && isNum(raw[i + 1]) ? ic("times") : null;
+      case "feet": case "foot": case "inch": case "inches": case "yard": case "yards": return isNum(raw[i - 1]) ? ic("ruler") : undefined;
+      case "pound": case "pounds": return isNum(raw[i - 1]) ? ic("scale") : null;
+    }
+    return undefined;
   }
   // Fraction pictures (pizza, halves...) only make sense in a maths sentence; "the whole cycle" must not show a pizza.
   var MATH_ONLY = { whole: 1, half: 1, slice: 1, pizza: 1 };
@@ -2103,10 +2159,11 @@ window.SceneEngine = (function(){
       if (w === "into") continue;
       if (RELATION[w]){ rels.push({ i: i, type: RELATION[w] }); continue; }
       if (names[i] || isName(raw, norm, i)) continue;
-      var c = conceptFor(w, extra);
+      var c = conceptFor(w, extra), cx = extraConcept(w, extra) === undefined ? contextual(w, i, raw, cues) : undefined;
+      if (cx !== undefined) c = cx;
       if (c && (c.emoji === "🐭" || c.icon === "mouse") && hasCue(cues, COMPUTER_CUES)) c = { emoji: "🖱️", key: "m:🖱️" };
       if (c && MATH_ONLY[c.icon] && !hasMathCue(cues)) c = null;
-      if (c) concepts.push({ i: i, icon: c.icon, emoji: c.emoji, key: c.key, label: labelOf(raw[i]) });
+      if (c) concepts.push({ i: i, icon: c.icon, emoji: c.emoji, key: c.key, label: labelOf(raw[i]), weak: !!WEAK[w] && extraConcept(w, extra) === undefined });
     }
     for (i = 0; i < n; i++){
       if (norm[i] !== "into") continue;
@@ -2118,7 +2175,7 @@ window.SceneEngine = (function(){
     rels.sort(function(a, b){ return a.i - b.i; });
 
     var scene = emptyScene();
-    if (!concepts.length) return scene;
+    if (!concepts.some(function(c){ return !c.weak; })) return scene;
     scene.show = true;
     function verbText(r){ return r.bare ? "turns into" : labelOf(raw[r.i]).toLowerCase() + (r.into ? " into" : ""); }
     var all = uniq(concepts);
@@ -2668,7 +2725,7 @@ window.SceneEngine = (function(){
       dA(268, 112, 252, 146, "#8A5A3C", 6, 2.5) + dI("mushroom", 236, 168, 40) + dL("decomposer", 280, 192, 13)
     ];
   });
-  dgm("solarsystem", "The solar system", "space", ["solar system", "eight planets", "the planets", "planets in order", "order of the planets"], {
+  dgm("solarsystem", "The solar system", "space", ["solar system", "eight planets", "planets in order", "order of the planets", "planets of the solar system"], {
     mercury: [[58, 50, 26, 70], "mercury"], venus: [[80, 50, 28, 70], "venus"], earth: [[104, 50, 30, 70], "earth"], mars: [[128, 50, 28, 70], "mars"],
     jupiter: [[154, 40, 48, 90], "jupiter"], saturn: [[200, 44, 50, 84], "saturn"], uranus: [[246, 50, 30, 70], "uranus"], neptune: [[278, 50, 34, 70], "neptune"]
   }, function(){
@@ -2768,7 +2825,7 @@ window.SceneEngine = (function(){
       pth("M144 140 C150 132 172 132 176 140 C180 150 164 150 160 144 C156 152 142 156 144 166 C146 176 172 176 176 166", "none", { stroke: "#D9876B", w: 5 }) + dLead(142, 152, 96, 148) + dL("intestines", 62, 153, 15)
     ];
   });
-  dgm("fivesenses", "The five senses", "plain", ["five senses", "5 senses", "the senses", "our senses"], {
+  dgm("fivesenses", "The five senses", "plain", ["five senses", "5 senses", "our five senses"], {
     sight: [[2, 40, 64, 110], "sight,see,eye,eyes,seeing"], hearing: [[66, 40, 64, 110], "hearing,hear,ear,ears"],
     smell: [[130, 40, 62, 110], "smell,nose,smelling"], taste: [[192, 40, 64, 110], "taste,tongue,tasting,mouth"], touch: [[256, 40, 62, 110], "touch,skin,feel,hand,hands"]
   }, function(){
@@ -2793,7 +2850,7 @@ window.SceneEngine = (function(){
       dA(196, 34, 266, 36, "#F3EFE2", -12, 3) + dL("spins", 230, 20, 13)
     ];
   });
-  dgm("seasons", "The four seasons", "plain", ["four seasons", "the seasons", "seasons of the year", "seasons change", "season changes"], {
+  dgm("seasons", "The four seasons", "plain", ["four seasons", "seasons of the year", "seasons change", "the seasons change"], {
     spring: [[2, 24, 78, 150], "spring"], summer: [[82, 24, 78, 150], "summer"], fall: [[162, 24, 78, 150], "fall,autumn"], winter: [[242, 24, 76, 150], "winter"]
   }, function(){
     function tree(x, crown, extra){ return rct(x - 4, 96, 8, 40, "#8A5A3C", 2, 2) + (crown ? blob([[x, 78, 22], [x - 14, 90, 14], [x + 14, 90, 14]], crown) : pth("M" + x + " 100 L" + (x - 14) + " 74 M" + x + " 96 L" + (x + 14) + " 70 M" + x + " 88 L" + (x + 4) + " 66", "none", { stroke: "#8A5A3C", w: 3 })) + (extra || ""); }
@@ -3174,7 +3231,7 @@ window.SceneEngine = (function(){
       ell(46, 172, 22, 8, "#E8D9A0", 2) + dL("island", 46, 194, 13)
     ];
   });
-  dgm("continents", "The seven continents", "sea", ["seven continents", "7 continents", "the continents", "continents and oceans", "world map", "map of the world"], {
+  dgm("continents", "The seven continents", "sea", ["seven continents", "7 continents", "all the continents", "continents and oceans", "world map", "map of the world"], {
     namerica: [[6, 20, 100, 70], "north america"], samerica: [[50, 94, 70, 90], "south america"], europe: [[132, 14, 56, 42], "europe"],
     africa: [[130, 58, 66, 90], "africa"], asia: [[188, 10, 128, 84], "asia"], australia: [[236, 106, 80, 52], "australia,oceania"], antarctica: [[40, 168, 240, 32], "antarctica"]
   }, function(){
@@ -3189,7 +3246,7 @@ window.SceneEngine = (function(){
       pth("M50 184 C100 174 220 174 270 184 C260 196 70 196 50 184 Z", "#F3F7FA", { w: 2 }) + dL("Antarctica", 160, 186, 11)
     ];
   });
-  dgm("feudal", "The feudal system", "history", ["feudal system", "feudalism", "feudal pyramid", "social pyramid", "social classes", "social hierarchy"], {
+  dgm("feudal", "The feudal system", "history", ["feudal system", "feudalism", "feudal pyramid", "social pyramid"], {
     king: [[110, 6, 100, 50], "king,queen,monarch,ruler,pharaoh"], nobles: [[84, 56, 152, 44], "noble,nobles,lord,lords,nobility"],
     knights: [[58, 100, 204, 44], "knight,knights,soldiers,warriors"], peasants: [[30, 144, 260, 52], "peasant,peasants,serf,serfs,farmers,workers"]
   }, function(){
@@ -3745,7 +3802,7 @@ window.LESSONS = [
     cache: {}, skipped: {}, shownKeys: {},
     frames: [], frameCount: 0, active: null, viewing: null,
     calm: false, drawMode: "all", pauseEach: false, autoRecap: true, recapTimer: null,
-    popTimes: [], settleTimer: null,
+    popTimes: [], settleTimer: null, recent: [],
     aiPlan: null, useAi: true, sample: null, planning: null,
     voiceSeq: 0, ticker: [],
     talk: false, transcript: [], lastTalk: [], boardIsTalk: false, talkCtx: { words: [], subject: null }
@@ -4089,7 +4146,13 @@ window.LESSONS = [
 
   // ---------- board: scenes ----------
   function newOnly(){ return state.calm || state.drawMode === "new"; }
-  function shouldSkip(sc){ return newOnly() && E.sceneKeys(sc).every(function(k){ return state.shownKeys[k]; }); }
+  // Teachers repeat themselves: the same picture twice in a row, or a diagram that was up a moment ago, adds nothing.
+  function sceneSig(sc){ return E.sceneKeys(sc).join("|"); }
+  function isRepeat(sc){
+    var sig = sceneSig(sc), r = state.recent;
+    return sc.diagram ? r.slice(-8).indexOf(sig) >= 0 : r.length > 0 && r[r.length - 1] === sig;
+  }
+  function shouldSkip(sc){ return isRepeat(sc) || (newOnly() && E.sceneKeys(sc).every(function(k){ return state.shownKeys[k]; })); }
 
   function startFrame(id, sc, si){
     hideRecap();
@@ -4097,6 +4160,8 @@ window.LESSONS = [
     var rec = { n: state.frameCount, scene: sc, si: si };
     state.frames.push(rec);
     E.sceneKeys(sc).forEach(function(k){ state.shownKeys[k] = true; });
+    state.recent.push(sceneSig(sc));
+    if (state.recent.length > 20) state.recent.shift();
     state.popTimes.push(Date.now());
     updatePace();
     renderHero(rec, true);
@@ -4153,7 +4218,7 @@ window.LESSONS = [
   function clearBoard(){
     clearTimeout(state.settleTimer); clearTimeout(state.recapTimer);
     state.active = null; state.frames = []; state.frameCount = 0; state.viewing = null;
-    state.shownKeys = {}; state.skipped = {}; state.popTimes = [];
+    state.shownKeys = {}; state.skipped = {}; state.popTimes = []; state.recent = [];
     el.hero.hidden = true; el.hero.classList.remove("settled", "enter", "history");
     el.heroArt.innerHTML = ""; el.heroCaption.textContent = "";
     showEmpty();
