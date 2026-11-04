@@ -797,8 +797,8 @@
       <label class="check"><input type="checkbox" id="calmToggle"> <span>Calm mode<small>No motion, and only new ideas get a scene.</small></span></label>
       <label class="field">Draw a scene
         <select id="drawMode">
+          <option value="new" selected>only when a new idea appears (recommended)</option>
           <option value="all">for every sentence with something to show</option>
-          <option value="new">only when a new idea appears</option>
         </select>
       </label>
       <p class="hint" id="paceStat" style="margin:0;"></p>
@@ -1661,6 +1661,10 @@ window.SceneEngine = (function(){
   I.variable = rct(18, 18, 64, 64, "#FFF1C9", 12) + txt("x", 50, 66, 50, "#4A84B8");
   I.intestines = pth("M22 20 H74 C88 20 88 40 74 40 H28 C14 40 14 60 28 60 H72 C86 60 86 80 72 80 H30", "none", { stroke: INK, w: 13 }) +
     pth("M22 20 H74 C88 20 88 40 74 40 H28 C14 40 14 60 28 60 H72 C86 60 86 80 72 80 H30", "none", { stroke: "#E89A7A", w: 8 });
+  I.choice = rct(46, 30, 8, 62, "#8A5A3C", 2) + poly([[14, 20], [52, 20], [52, 42], [14, 42], [4, 31]], "#7FB8DE") +
+    poly([[48, 50], [86, 50], [96, 61], [86, 72], [48, 72]], "#F6C343") + pth("M28 92 H72", "none", { w: 3 });
+  I.sorting = rct(6, 62, 40, 30, "#F29BB5", 5) + rct(54, 62, 40, 30, "#7FB8DE", 5) + circ(26, 40, 9, "#F29BB5") + rct(65, 30, 18, 18, "#7FB8DE", 3) +
+    pth("M26 51 V58 M74 50 V58", "none", { w: 2.5 }) + circ(50, 14, 6, "#F29BB5", 2) + rct(42, 6, 0, 0, "none", 0, 0) + pth("M44 18 L30 30 M56 18 L68 26", "none", { w: 2.5, dash: "3 3" });
   I.habitat = circ(50, 50, 44, "#DDF0FA") + pth("M8 66 C30 58 70 58 92 66 A44 44 0 0 1 8 66 Z", "#B9DBA0", { w: 2 }) +
     ell(66, 76, 14, 5, "#8CC4E8", 1.5) + rct(26, 40, 6, 26, "#8A5A3C", 1, 2) + blob([[29, 34, 12], [20, 40, 8], [38, 40, 8]], "#5FAE57") +
     pth("M50 64 C50 58 58 56 60 60 C64 56 68 60 66 64 Z", "#8A5A3C", { w: 1.8 }) + circ(72, 30, 7, "#F6C343", 2);
@@ -1838,6 +1842,7 @@ window.SceneEngine = (function(){
     punctuation: "punctuation comma commas exclamation", chalkboard: "chalkboard blackboard whiteboard", migration: "migrate migrates migrated migrating migration",
     hibernate: "hibernate hibernates hibernation hibernating", atmosphere: "atmosphere", dissolve: "dissolve dissolves dissolved dissolving",
     variable: "variable variables", intestines: "intestine intestines gut", greenhouse: "greenhouse greenhouses", habitat: "habitat habitats environment environments",
+    choice: "choice choices decision decisions", sorting: "sorting classify classifies classifying classification category categories categorize",
     bear: "mammal mammals omnivore omnivores", bread: "yeast", bulb: "predict predicts prediction predictions",
     bee: "pollinate pollinates pollinating pollination pollinator pollinators nectar", sprout: "germinate germinates germination seedling seedlings",
     flower: "petal petals", leaf: "chlorophyll", lungs: "respiration respiratory", cell: "membrane cytoplasm mitochondria chloroplast chloroplasts organelle organelles",
@@ -1889,7 +1894,21 @@ window.SceneEngine = (function(){
     ground: "i:soil", physics: "i:atom", pluto: "i:planet", syllable: "m:👏", syllables: "m:👏", clap: "m:👏", clapping: "m:👏",
     military: "i:helmet", society: "i:group", societies: "i:group", bond: "m:🔗", bonds: "m:🔗", magic: "m:🪄", distance: "i:ruler", zero: "i:numbers",
     species: "m:🐾", electrical: "i:bolt", container: "i:bottle", containers: "i:bottle", bubble: "m:🫧", chimp: "i:monkey", chimps: "i:monkey",
-    dream: "m:💭", dreams: "m:💭", male: "m:♂️", males: "m:♂️", female: "m:♀️", females: "m:♀️", research: "i:magnifier", researching: "i:magnifier"
+    dream: "m:💭", dreams: "m:💭", male: "m:♂️", males: "m:♂️", female: "m:♀️", females: "m:♀️", research: "i:magnifier", researching: "i:magnifier",
+    weigh: "i:scale", weighs: "i:scale", weighing: "i:scale", displacement: "i:beaker",
+    discussion: "i:speech", discussions: "i:speech", discuss: "i:speech", claim: "i:speech", claims: "i:speech", language: "i:speech", languages: "i:speech",
+    nitrogen: "i:atom", hydrogen: "i:atom", helium: "i:atom", valence: "i:atom", octet: "i:atom", octets: "i:atom",
+    gamete: "i:dna", gametes: "i:dna", meiosis: "i:dna", haploid: "i:dna", diploid: "i:dna", genotype: "i:dna", genotypes: "i:dna", phenotype: "i:dna",
+    phenotypes: "i:dna", allele: "i:dna", alleles: "i:dna", genome: "i:dna", genomes: "i:dna", codon: "i:dna", codons: "i:dna", offspring: "m:👶",
+    bonobo: "i:monkey", bonobos: "i:monkey", compete: "i:trophy", competition: "i:trophy", competing: "i:trophy",
+    dendrite: "m:🧠", dendrites: "m:🧠", neurotransmitter: "m:🧠", neurotransmitters: "m:🧠", psychology: "i:brain", mental: "i:brain",
+    aristocracy: "i:crown", gentry: "i:crown", nobility: "i:crown", elite: "i:crown", elites: "i:crown", succession: "i:crown", inflation: "m:📈",
+    taxation: "i:coins", silver: "i:coins", coinage: "i:coins", economics: "i:coins", payoff: "i:coins", payoffs: "i:coins", frontier: "i:map", edict: "i:scroll",
+    contract: "i:scroll", contracts: "i:scroll", bureaucracy: "i:columns", administration: "i:columns", invasion: "i:swords", invasions: "i:swords",
+    invade: "i:swords", invaded: "i:swords", invaders: "i:swords", troops: "i:helmet", barbarian: "i:helmet", barbarians: "i:helmet",
+    rhine: "i:river", danube: "i:river", nile: "i:river", amazon: "i:river", mississippi: "i:river", thames: "i:river", yangtze: "i:river", ganges: "i:river",
+    wilderness: "i:forest", verse: "i:quill", verses: "i:quill", firms: "i:factory", strategy: "m:♟️", strategies: "m:♟️", strategic: "m:♟️",
+    rings: "m:🪐", voyager: "i:satellite", units: "i:ruler", formula: "i:equals", formulas: "i:equals", position: "m:📍", upset: "i:sad", mowing: "i:grass"
   };
   Object.keys(REMAP).forEach(function(w){
     var v = REMAP[w];
@@ -1902,7 +1921,7 @@ window.SceneEngine = (function(){
   ("people person persons man men woman women guy guys kid kids child children boy boys girl girls student students teacher teachers friend friends " +
    "everybody everyone human humans adult adults mom dad mother father parents family families professor question questions problem problems " +
    "idea ideas thinking think mind minds number numbers story stories game games school classroom hand hands love loves page pages paper list " +
-   "picture pictures book books region community").split(" ").forEach(function(w){ WEAK[w] = 1; });
+   "picture pictures book books region community choose chose choosing image images").split(" ").forEach(function(w){ WEAK[w] = 1; });
 
   var ICON_SETTING = {};
   [["sky", "sun cloud rain vapor bird"], ["sea", "drop wave fish ship"], ["land", "river mountain tree sprout flower leaf volcano apple gravity"],
@@ -2057,10 +2076,18 @@ window.SceneEngine = (function(){
       LOUD = cueSet("loud louder quiet quieter sound sounds music speaker hear hearing noise"),
       SKY = cueSet("planet planets star stars rocket rockets astronaut astronauts orbit moon sun galaxy outer satellite"),
       MUSIC = cueSet("music song songs sing singing melody piano notes rhythm instrument"),
+      // speech recognizers sometimes write the wrong homophone; where it sits in the sentence usually gives it away
+      MODAL = cueSet("to will can could would should must might may gonna wanna not never always just also cant wont dont didnt ill youll well theyll lets"),
+      WHO = cueSet("i you he she it we they who everybody nobody somebody someone everyone"),
+      PREP = cueSet("of in to for with around from on at about into"), BE = cueSet("is are was were be been am"),
+      BONDS = cueSet("lone unshared shared electron electrons bond bonds atom atoms carbon nitrogen oxygen hydrogen"),
+      HOMO_NEXT = cueSet("a an the you your it its we they i he she that this what how if or to not careful patient positive kind nice happy quiet ready able sure"),
+      BRAIN = cueSet("brain brains neuron neurons mental psychology cortex nerve nerves"),
       STORY = cueSet("story stories character characters book books setting author chapter climax conflict resolution events reader readers ending"),
       NUM_WORD = cueSet("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty hundred");
   function isNum(t){ return t != null && (/^\d/.test(t) || !!NUM_WORD[normalize(t)]); }
   function contextual(w, i, raw, cues){
+    var pv = normalize(raw[i - 1] || ""), nx = normalize(raw[i + 1] || "");
     function em(e){ return { emoji: e, key: "m:" + e }; }
     function ic(k){ return { icon: k, key: "i:" + k }; }
     switch (w){
@@ -2075,6 +2102,18 @@ window.SceneEngine = (function(){
       case "times": return isNum(raw[i - 1]) && isNum(raw[i + 1]) ? ic("times") : null;
       case "feet": case "foot": case "inch": case "inches": case "yard": case "yards": return isNum(raw[i - 1]) ? ic("ruler") : undefined;
       case "pound": case "pounds": return isNum(raw[i - 1]) ? ic("scale") : null;
+      case "bee": case "bees": return MODAL[pv] || HOMO_NEXT[nx] ? null : undefined;                  // "to bee positive"
+      case "sea": return MODAL[pv] || WHO[pv] || HOMO_NEXT[nx] ? null : undefined;                    // "i'll sea you"
+      case "wood": return WHO[pv] || WHO[nx] || nx === "like" || nx === "be" ? null : undefined;         // "wood you like", "we wood say"
+      case "hour": return PREP[pv] ? null : undefined;                                                   // "outside of hour window"
+      case "mail": return BE[pv] ? null : undefined;                                                     // "if you were mail"
+      case "knight": return pv === "good" ? null : undefined;                                            // "good knight"
+      case "pear": case "pears": return nx === "of" || hasCue(cues, BONDS) ? null : undefined;           // "a pear of shoes", "a lone pear"
+      case "weather": return HOMO_NEXT[nx] || nx === "your" || nx === "or" ? null : undefined;          // "weather you like it"
+      case "peace": return nx === "of" ? null : undefined;                                               // "a peace of paper"
+      case "nose": return WHO[pv] || HOMO_NEXT[nx] ? null : undefined;                                  // "jill nose that"
+      case "charge": case "charges": case "charged": return normalize(raw[i - 1] || "") === "in" ? null : ic("bolt");
+      case "hemisphere": case "hemispheres": return hasCue(cues, BRAIN) ? ic("brain") : ic("globe");
     }
     return undefined;
   }
@@ -3285,6 +3324,98 @@ window.SceneEngine = (function(){
       rct(258, 50, 44, 60, "#7FB8DE", 6, 2.5) + dT("dairy", 280, 132, 14)];
   });
 
+  // ----- concepts that lectures name but no single picture can show (found by replaying recorded lessons) -----
+  dgm("functionmachine", "A function machine", "math", ["function machine", "input and output", "inputs and outputs", "input output", "function table", "in and out table", "input output table"], {
+    input: [[4, 60, 86, 100], "input,inputs"], rule: [[100, 34, 120, 146], "rule,machine"], output: [[230, 60, 86, 100], "output,outputs"]
+  }, function(){
+    return [
+      rct(10, 76, 72, 48, "#FFFFFF", 10, 2.5) + txt("3", 46, 109, 26, INK) + dL("input", 46, 146, 14),
+      dA(86, 100, 114, 100, INK, 0, 3.5),
+      rct(132, 44, 60, 16, "#5F9BC7", 4, 2.5) + rct(116, 58, 92, 86, "#7FB8DE", 12, 3) + txt("× 2", 162, 110, 26, INK) + circ(132, 136, 5, "#F6C343", 2) + circ(192, 136, 5, "#F6C343", 2) + dL("rule", 162, 168, 14),
+      dA(212, 100, 240, 100, INK, 0, 3.5),
+      rct(244, 76, 72, 48, "#FFFFFF", 10, 2.5) + txt("6", 280, 109, 26, INK) + dL("output", 280, 146, 14)
+    ];
+  });
+  dgm("derivative", "The derivative", "math", ["derivative", "derivatives", "rate of change", "tangent line", "instantaneous rate", "slope of the tangent", "calculus"], {
+    tangent: [[150, 40, 166, 100], "tangent,tangent line,slope"], point: [[176, 92, 50, 46], "point,instant,moment"]
+  }, function(){
+    var pts = [];
+    for (var x = 30; x <= 300; x += 5){ var u = (x - 30) / 270; pts.push([x, 175 - u * u * 150]); }
+    var x0 = 200, t = (x0 - 30) / 270, y0 = 175 - t * t * 150, m = -2 * t * 150 / 270;
+    return [
+      ln(30, 180, 306, 180, INK, 2.5) + ln(30, 180, 30, 14, INK, 2.5),
+      pline(pts, "#4A84B8", 4) + dL("curve", 92, 166, 13),
+      ln(x0 - 84, y0 - m * 84, x0 + 84, y0 + m * 84, "#D9674B", 3.5) + dL("tangent line", 196, 66, 13, "end"),
+      ln(x0, y0, x0 + 34, y0, "#D9674B", 2, { dash: "4 4" }) + ln(x0 + 34, y0, x0 + 34, y0 + m * 34, "#D9674B", 2, { dash: "4 4" }) + circ(x0, y0, 6, "#F6C343", 2.5),
+      dT("its slope = the derivative", 160, 26, 15)
+    ];
+  });
+  dgm("payoffmatrix", "A payoff matrix", "math", ["payoff matrix", "prisoner's dilemma", "prisoners dilemma", "prisoner dilemma", "game theory", "dominant strategy", "dominated strategy", "nash equilibrium"], {
+    payoffs: [[92, 60, 224, 134], "payoff,payoffs,outcome,outcomes,points"], player1: [[2, 60, 88, 134], "player 1,player one,row"], player2: [[92, 2, 224, 56], "player 2,player two,column"]
+  }, function(){
+    var C = [[147, 94, "#D6ECFA", "3 , 3"], [258, 94, "#FDE2E2", "0 , 5"], [147, 159, "#FDE2E2", "5 , 0"], [258, 159, "#EFE7D6", "1 , 1"]];
+    return [
+      C.map(function(c){ return rct(c[0] - 55, c[1] - 32, 110, 65, c[2], 0, 0); }).join(""),
+      rct(92, 62, 222, 130, "none", 4, 2.5) + ln(203, 62, 203, 192, INK, 2.5) + ln(92, 126, 314, 126, INK, 2.5) +
+        dT("cooperate", 147, 52, 13) + dT("defect", 258, 52, 13) + dL("player 2", 203, 22, 14) + dT("cooperate", 46, 98, 12) + dT("defect", 46, 163, 12) + dL("player 1", 46, 66, 14),
+      C.map(function(c){ return txt(c[3], c[0], c[1] + 8, 20, INK); }).join("")
+    ];
+  });
+  dgm("cer", "Claim, evidence, reasoning", "class", ["claim evidence and reasoning", "claim evidence reasoning", "claim and evidence", "evidence and reasoning", "c e r"], {
+    claim: [[4, 34, 98, 136], "claim,claims"], evidence: [[111, 34, 98, 136], "evidence,data,proof,observation,observations"], reasoning: [[218, 34, 98, 136], "reasoning,reason,explain,explanation"]
+  }, function(){
+    var B = [["claim", "speech", "what you think", "#F6C343"], ["evidence", "magnifier", "what you found", "#7FB8DE"], ["reasoning", "brain", "why it proves it", "#9CCB7A"]];
+    return B.map(function(b, i){
+      var x = 53 + i * 107;
+      return rct(x - 44, 40, 88, 122, b[3], 12, 2.5) + dI(b[1], x, 80, 44) + dT(b[0], x, 126, 15) + dL(b[2], x, 148, 11) + (i < 2 ? dA(x + 46, 100, x + 61, 100, INK, 0, 3) : "");
+    });
+  });
+  dgm("growthcurve", "Linear and exponential growth", "math", ["exponential growth", "population growth", "grows exponentially", "growing exponentially", "linear growth", "exponential function", "doubling time", "exponential decay"], {
+    exponential: [[170, 10, 146, 110], "exponential,exponentially,doubling,doubles"], linear: [[180, 96, 136, 70], "linear,steady,constant"]
+  }, function(){
+    var e = [];
+    for (var x = 0; x <= 250; x += 5) e.push([40 + x, 176 - 150 * (Math.pow(2, x / 50) - 1) / 31]);
+    return [
+      ln(40, 178, 304, 178, INK, 2.5) + ln(40, 178, 40, 14, INK, 2.5) + dL("time", 280, 196, 13) + dL("amount", 24, 24, 13, "start"),
+      ln(40, 176, 290, 104, "#4F9D78", 4) + dL("linear (adds)", 300, 96, 13, "end"),
+      pline(e, "#D9674B", 4) + dL("exponential (doubles)", 232, 30, 13, "end")
+    ];
+  });
+  dgm("animalgroups", "Animal groups", "land", ["animal groups", "groups of animals", "classify animals", "classifying animals", "classification of animals", "vertebrates", "types of animals", "kinds of animals", "five groups of animals"], {
+    mammals: [[2, 66, 64, 110], "mammal,mammals,fur,milk"], birds: [[66, 66, 62, 110], "bird,birds,feathers"], fish: [[128, 66, 64, 110], "fish,gills,fins"],
+    reptiles: [[192, 66, 62, 110], "reptile,reptiles,scales"], amphibians: [[254, 66, 64, 110], "amphibian,amphibians"]
+  }, function(){
+    var K = [["bear", "mammals"], ["bird", "birds"], ["fish", "fish"], ["turtle", "reptiles"], ["frog", "amphibians"]];
+    return [dT("animals", 160, 26, 16) + K.map(function(k, i){ return ln(160, 34, 34 + i * 63, 72, "#9AA3AD", 2); }).join("")].concat(K.map(function(k, i){
+      var x = 34 + i * 63;
+      return dI(k[0], x, 108, 52) + dL(k[1], x, 156, 11);
+    }));
+  });
+  dgm("celldivision", "Cell division", "bio", ["cell division", "cells divide", "cell divides", "mitosis"], {
+    parent: [[10, 44, 110, 130], "parent cell,original,one cell"], daughter: [[180, 14, 136, 172], "daughter cells,two cells,new cells,copies,identical"]
+  }, function(){
+    return [
+      circ(64, 100, 40, "#FCE1E4", 2.5) + circ(64, 100, 14, "#B79CD9", 2) + dL("one cell", 64, 162, 14),
+      dA(110, 92, 176, 64, INK, -6, 3) + dA(110, 108, 176, 136, INK, 6, 3) + dL("divides", 142, 104, 12),
+      circ(220, 58, 30, "#FCE1E4", 2.5) + circ(220, 58, 10, "#B79CD9", 2) + circ(220, 142, 30, "#FCE1E4", 2.5) + circ(220, 142, 10, "#B79CD9", 2),
+      dL("two new cells", 266, 104, 13)
+    ];
+  });
+  dgm("neuron", "A neuron", "bio", ["neuron", "neurons", "nerve cell", "nerve cells", "parts of a neuron", "axon", "axons", "synapse", "synapses"], {
+    dendrites: [[2, 22, 92, 156], "dendrite,dendrites"], body: [[48, 70, 62, 62], "cell body,nucleus,soma"],
+    axon: [[106, 74, 150, 56], "axon,axons,signal,signals,impulse,message"], terminals: [[250, 42, 68, 120], "synapse,synapses,terminal,terminals,neurotransmitter,neurotransmitters"]
+  }, function(){
+    var myelin = "";
+    for (var x = 116; x < 244; x += 32) myelin += rct(x, 92, 26, 16, "#F2E3B3", 7, 2);
+    return [
+      pth("M60 84 L30 52 M30 52 L16 44 M30 52 L24 34 M58 118 L28 146 M28 146 L12 150 M28 146 L32 166 M84 76 L90 42 M90 42 L80 28 M90 42 L104 32", "none", { stroke: "#C97BA8", w: 4 }) + dL("dendrites", 40, 24, 13),
+      circ(78, 100, 26, "#F4B8D2", 2.5) + circ(78, 100, 9, "#7E5DB0", 0) + dL("cell body", 78, 150, 13),
+      ln(104, 100, 252, 100, "#C97BA8", 6) + myelin + dL("axon", 180, 84, 14),
+      pth("M252 100 L280 72 M252 100 L288 100 M252 100 L280 128", "none", { stroke: "#C97BA8", w: 4 }) + circ(282, 70, 6, "#F4B8D2", 2) + circ(291, 100, 6, "#F4B8D2", 2) + circ(282, 130, 6, "#F4B8D2", 2) + dL("synapse", 284, 160, 13),
+      dA(124, 124, 236, 124, "#E9A23B", 0, 2.5) + dL("signal", 180, 142, 12)
+    ];
+  });
+
   function findDiagram(toks){
     var best = null;
     DIAGRAM_ORDER.forEach(function(k){
@@ -3719,8 +3850,8 @@ window.LESSONS = [
     <section id="g-pics" class="guide-sec">
       <h4>How the pictures are chosen</h4>
       <ul class="guide-list">
-        <li><b>A large picture library.</b> About 380 hand-drawn pictures for school topics, plus about 2,400 OpenMoji images, matched to about 3,250 words.</li>
-        <li><b>Labelled diagrams for whole topics.</b> Say a topic like “the water cycle”, “parts of a plant”, “the three branches of government” or “a story mountain” and a labelled diagram appears. Mention a part (“evaporation”, “the climax”) and it's highlighted. There are 56, from the five senses to the Pythagorean theorem; browse them under Pictures.</li>
+        <li><b>A large picture library.</b> About 380 hand-drawn pictures for school topics, plus about 2,400 OpenMoji images, matched to about 3,400 words.</li>
+        <li><b>Labelled diagrams for whole topics.</b> Say a topic like “the water cycle”, “parts of a plant”, “the three branches of government” or “a story mountain” and a labelled diagram appears. Mention a part (“evaporation”, “the climax”) and it's highlighted. There are 64, from the five senses and place value to the derivative, a payoff matrix and claim–evidence–reasoning; browse them under Pictures.</li>
         <li><b>One idea per scene.</b> Each sentence is read for its key things and how they connect. “The sun heats the ocean” shows a sun, an arrow, and the ocean.</li>
         <li><b>No guessing.</b> Words that can mean different things, like “bank” or “home”, get no picture rather than a wrong one. Small talk like “good morning everyone” shows nothing. The script editor lists words that need your help.</li>
         <li><b>Fix a picture in one tap.</b> Tap any word under the board, then pick a drawing or an emoji, or choose no picture. Your choice is remembered for every lesson.</li>
@@ -3735,7 +3866,7 @@ window.LESSONS = [
         <li><b>Project it.</b> Press F or the full-screen button. The pictures and captions scale up for the back of the room.</li>
         <li><b>Short, concrete sentences work best.</b> “Plants need sunlight” gets a clearer picture than “It's important to remember that plants, as we discussed, require…”.</li>
         <li><b>Pausing between ideas helps</b> when you're talking freely, but you don't have to stop after every sentence. A long stretch of talk is split into separate ideas at words like “then”, “because” and “when”.</li>
-        <li><b>Keep it calm.</b> In Settings, Calm mode removes motion and only draws a scene when a new idea appears. You can also hide the word labels so students name things themselves.</li>
+        <li><b>Keep it calm.</b> By default a scene is only drawn when a new idea appears, and live pictures stay up for at least a few seconds each. Calm mode in Settings also removes motion and holds pictures longer. You can hide the word labels so students name things themselves.</li>
         <li><b>Review at the end.</b> The whole storyboard appears when a lesson finishes. Tap any card to talk about it again.</li>
         <li><b>Try it before class.</b> Run your script once and fix any picture you don't like. Your fixes carry over.</li>
       </ul>
@@ -3801,8 +3932,8 @@ window.LESSONS = [
     scriptText: "", loaded: false,
     cache: {}, skipped: {}, shownKeys: {},
     frames: [], frameCount: 0, active: null, viewing: null,
-    calm: false, drawMode: "all", pauseEach: false, autoRecap: true, recapTimer: null,
-    popTimes: [], settleTimer: null, recent: [],
+    calm: false, drawMode: "new", pauseEach: false, autoRecap: true, recapTimer: null,
+    popTimes: [], settleTimer: null, recent: [], liveQueue: [], liveTimer: null, lastLiveAt: 0,
     aiPlan: null, useAi: true, sample: null, planning: null,
     voiceSeq: 0, ticker: [],
     talk: false, transcript: [], lastTalk: [], boardIsTalk: false, talkCtx: { words: [], subject: null }
@@ -4146,11 +4277,11 @@ window.LESSONS = [
 
   // ---------- board: scenes ----------
   function newOnly(){ return state.calm || state.drawMode === "new"; }
-  // Teachers repeat themselves: the same picture twice in a row, or a diagram that was up a moment ago, adds nothing.
+  // Teachers repeat themselves: the same picture twice in a row, or a diagram that was up in the last 20 scenes, adds nothing.
   function sceneSig(sc){ return E.sceneKeys(sc).join("|"); }
   function isRepeat(sc){
     var sig = sceneSig(sc), r = state.recent;
-    return sc.diagram ? r.slice(-8).indexOf(sig) >= 0 : r.length > 0 && r[r.length - 1] === sig;
+    return sc.diagram ? r.slice(-20).indexOf(sig) >= 0 : r.length > 0 && r[r.length - 1] === sig;
   }
   function shouldSkip(sc){ return isRepeat(sc) || (newOnly() && E.sceneKeys(sc).every(function(k){ return state.shownKeys[k]; })); }
 
@@ -4219,6 +4350,7 @@ window.LESSONS = [
     clearTimeout(state.settleTimer); clearTimeout(state.recapTimer);
     state.active = null; state.frames = []; state.frameCount = 0; state.viewing = null;
     state.shownKeys = {}; state.skipped = {}; state.popTimes = []; state.recent = [];
+    clearTimeout(state.liveTimer); state.liveQueue = []; state.lastLiveAt = 0;
     el.hero.hidden = true; el.hero.classList.remove("settled", "enter", "history");
     el.heroArt.innerHTML = ""; el.heroCaption.textContent = "";
     showEmpty();
@@ -4705,13 +4837,36 @@ window.LESSONS = [
     state.talkCtx.words = state.talkCtx.words.concat(words.map(E.normalize)).slice(-60);
     if (!sc.show) return "none";
     if (sc.subjects && sc.subjects.length) state.talkCtx.subject = sc.subjects[0];
-    finishActive();
-    if (shouldSkip(sc)) return "same";
+    var q = state.liveQueue;
+    if (shouldSkip(sc) || (q.length && sceneSig(q[q.length - 1]) === sceneSig(sc))) return "same";
     if (!state.talk){ el.boardSubject.textContent = "Live"; el.boardSubject.style.background = "var(--coral)"; el.boardTitle.textContent = "Listening…"; }
+    q.push(sc);
+    if (q.length > 3) q.splice(0, q.length - 3);
+    pumpLive();
+    return "shown";
+  }
+  // Live pictures each get a few seconds on screen, so students have time to look. Ones that arrive faster wait their turn;
+  // if several pile up, the newest few are kept.
+  function liveHold(){ return state.calm ? 5000 : 3000; }
+  function showLiveScene(sc){
+    finishActive();
     startFrame("v" + (++state.voiceSeq), sc, -1);
     revealTo(Infinity); finishActive();
+    state.lastLiveAt = Date.now();
     if (state.talk){ state.boardIsTalk = true; talkHeading(); }
-    return "shown";
+  }
+  function pumpLive(){
+    clearTimeout(state.liveTimer);
+    if (!state.liveQueue.length) return;
+    var wait = state.lastLiveAt + liveHold() - Date.now();
+    if (wait > 0){ state.liveTimer = setTimeout(pumpLive, wait); return; }
+    showLiveScene(state.liveQueue.shift());
+    if (state.liveQueue.length) state.liveTimer = setTimeout(pumpLive, liveHold());
+  }
+  // finishing: anything still waiting goes straight into the slideshow
+  function flushLive(){
+    clearTimeout(state.liveTimer);
+    while (state.liveQueue.length) showLiveScene(state.liveQueue.shift());
   }
 
   // ---------- just talk: no script; each idea spoken (or typed) becomes a picture ----------
@@ -4739,6 +4894,7 @@ window.LESSONS = [
   function exitTalk(showSlides){
     if (!state.talk) return;
     if (listening) stopListening();
+    flushLive();
     state.talk = false;
     state.lastTalk = state.transcript.slice();
     el.board.classList.remove("talking");
