@@ -90,7 +90,7 @@
     min-height: 560px;
   }
   @media (min-width: 961px){ .board{ position: sticky; top: 14px; } }
-  .board:fullscreen{ border-radius: 0; box-shadow: none; padding: 22px 34px 16px; min-height: 100vh; height: 100%; }
+  .board.is-fullscreen{ border-radius: 0; box-shadow: none; padding: 22px 34px 16px; min-height: 100vh; height: 100%; }
   .board-top{ display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .board-heading{ display: flex; align-items: baseline; gap: 10px; min-width: 0; }
   .subject-tag{
@@ -98,7 +98,7 @@
     color: #fff; background: var(--sub-mine); border-radius: 999px; padding: 3px 9px; flex: none;
   }
   .board-title{ font-family: var(--hand); font-size: 1.75rem; color: var(--chalk); line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .board:fullscreen .board-title{ font-size: 2.3rem; }
+  .board.is-fullscreen .board-title{ font-size: 2.3rem; }
   .board-tools{ display: flex; gap: 8px; flex: none; }
   .icon-btn{
     background: transparent; border: 1.5px solid rgba(243,239,226,0.32); color: var(--chalk);
@@ -128,13 +128,13 @@
     box-shadow: 0 0 0 3px var(--yellow), 0 20px 34px -16px rgba(0,0,0,0.65);
     transition: opacity 700ms ease, box-shadow 700ms ease;
   }
-  .board:fullscreen .hero-card{ max-width: min(1160px, 140vh); }
+  .board.is-fullscreen .hero-card, .board.is-fullscreen.talking .hero-card{ max-width: min(1160px, 140vh); }
   .hero-card svg{ display: block; width: 100%; height: auto; border-radius: 10px; }
   .hero-caption{
     font-family: var(--hand); font-size: clamp(1.45rem, 1rem + 1.5vw, 2.15rem); color: var(--chalk);
     text-align: center; max-width: 34ch; line-height: 1.15; min-height: 1.2em; transition: opacity 700ms ease;
   }
-  .board:fullscreen .hero-caption{ font-size: clamp(2rem, 1.2rem + 2vw, 3.3rem); }
+  .board.is-fullscreen .hero-caption{ font-size: clamp(2rem, 1.2rem + 2vw, 3.3rem); }
   .hero.settled .hero-card{ opacity: 0.5; box-shadow: 0 20px 34px -16px rgba(0,0,0,0.65); }
   .hero.settled .hero-caption{ opacity: 0.5; }
   .hero.history .hero-card{ box-shadow: 0 0 0 3px var(--chalk-muted), 0 20px 34px -16px rgba(0,0,0,0.65); }
@@ -156,7 +156,7 @@
   }
 
   .recap{ width: 100%; align-self: stretch; overflow-y: auto; max-height: 62vh; }
-  .board:fullscreen .recap{ max-height: none; }
+  .board.is-fullscreen .recap{ max-height: none; }
   .recap h3{ font-family: var(--hand); color: var(--chalk); font-size: 1.7rem; font-weight: 700; margin: 0 0 12px; text-align: center; }
   .recap-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; padding: 4px 6px 8px; }
   .recap-card{
@@ -353,9 +353,9 @@
   .chalk-btn:disabled{ opacity: 0.4; cursor: not-allowed; }
   .chalk-btn svg{ width: 16px; height: 16px; flex: none; }
   .start-card .small{ margin-top: 6px; font-size: 0.8rem; }
-  .board:fullscreen .start-card{ max-width: 60ch; }
-  .board:fullscreen .start-card .big{ font-size: 3.2rem; }
-  .board:fullscreen .start-icons svg{ width: 80px; height: 80px; }
+  .board.is-fullscreen .start-card{ max-width: 60ch; }
+  .board.is-fullscreen .start-card .big{ font-size: 3.2rem; }
+  .board.is-fullscreen .start-icons svg{ width: 80px; height: 80px; }
 
   .board-bottom{ flex-wrap: wrap; row-gap: 10px; }
   .t-btn.mic[aria-pressed="true"]{ background: var(--coral); border-color: var(--coral); color: #2E0E06; animation: micPulse 1.8s ease-in-out infinite; }
@@ -432,7 +432,7 @@
   .talk-type input{ flex: 1; min-width: 180px; background: rgba(243,239,226,0.08); color: var(--chalk); border-color: rgba(243,239,226,0.3); }
   .talk-type input::placeholder{ color: var(--chalk-muted); }
   .talk-done{ border: 0; border-radius: 999px; background: var(--yellow); color: var(--yellow-ink); font-family: var(--ui); font-weight: 800; font-size: 0.86rem; padding: 8px 16px; cursor: pointer; }
-  .board:fullscreen .talk-orb{ width: 130px; height: 130px; }
+  .board.is-fullscreen .talk-orb{ width: 130px; height: 130px; }
   @media (prefers-reduced-motion: reduce){ .board.mic-on .talk-orb, .board.mic-on .live-dot{ animation: none; } }
   @media (max-width: 560px){ .top-actions .btn-talk .label{ display: inline; } }
 
@@ -4699,10 +4699,23 @@ window.LESSONS = [
   el.tickerToggle.addEventListener("change", function(){ el.board.classList.toggle("no-ticker", !el.tickerToggle.checked); });
   el.recapToggle.addEventListener("change", function(){ state.autoRecap = el.recapToggle.checked; });
 
+  // Safari on older iPads only has the prefixed full-screen calls, and iPhones have none. The board gets a class while it is
+  // full screen, so one set of styles works in every browser.
+  function fsElement(){ return document.fullscreenElement || document.webkitFullscreenElement || null; }
   function toggleFullscreen(){
-    if (!document.fullscreenElement){ if (el.board.requestFullscreen) el.board.requestFullscreen().catch(function(){ toast("Full screen isn't available here."); }); }
-    else if (document.exitFullscreen) document.exitFullscreen();
+    if (fsElement()){
+      var exit = document.exitFullscreen || document.webkitExitFullscreen, done = exit ? exit.call(document) : null;
+      if (done && done.catch) done.catch(function(){});
+      return;
+    }
+    var req = el.board.requestFullscreen || el.board.webkitRequestFullscreen;
+    if (!req){ toast("Full screen isn't available on this device."); return; }
+    var p = req.call(el.board);
+    if (p && p.catch) p.catch(function(){ toast("Full screen isn't available here."); });
   }
+  function syncFullscreen(){ el.board.classList.toggle("is-fullscreen", fsElement() === el.board); }
+  document.addEventListener("fullscreenchange", syncFullscreen);
+  document.addEventListener("webkitfullscreenchange", syncFullscreen);
   el.fullscreenBtn.addEventListener("click", toggleFullscreen);
 
   document.addEventListener("keydown", function(e){
