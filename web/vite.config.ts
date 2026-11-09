@@ -21,6 +21,9 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
         cleanupOutdatedCaches: true,
         navigateFallback: "index.html",
+        // the plugin only adds these itself when it injects the register script; without them a new version waits until every tab is closed
+        skipWaiting: true,
+        clientsClaim: true,
       },
       manifest: {
         name: "Classroom Visual Companion",
