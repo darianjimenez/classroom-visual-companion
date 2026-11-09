@@ -62,13 +62,16 @@ function BoardHeader() {
 
 function Dots() {
   const dots = useApp((s) => s.dots)
+  const talk = useApp((s) => s.talk)
   const a = useApp((s) => s.actions)
+  // Just talk has no sentence list; lessons always keep the row, so the board does not shift when one loads
+  if (talk) return null
   if (!dots.length) return <div className="mt-2 h-4" />
   return (
-    <div className="mt-2 flex flex-wrap gap-1" aria-label="Lesson progress">
+    <div className="mt-2 flex gap-1" aria-label="Lesson progress">
       {dots.map((d, i) => (
         <button key={i} type="button" aria-label={"Sentence " + (i + 1)} aria-current={d.current ? "step" : undefined} disabled={!d.hasScene} onClick={() => a.viewSentence(i)}
-          className={cn("group flex h-4 w-6 items-center", d.hasScene && "cursor-pointer")}>
+          className={cn("group flex h-4 w-6 min-w-0 items-center", d.hasScene && "cursor-pointer")}>
           <span className={cn("h-1 w-full rounded-full bg-white/15 transition-colors", d.done && "bg-white/40", d.current && "bg-board-foreground", d.hasScene && "group-hover:bg-board-foreground")} />
         </button>
       ))}
@@ -131,17 +134,17 @@ function TalkScreen() {
   return (
     <div className="flex max-w-lg flex-col items-center text-center">
       <button type="button" onClick={a.talkOrb} aria-label={listening ? "Turn the microphone off" : "Turn the microphone on"}
-        className={cn("press flex size-20 items-center justify-center rounded-full shadow-[var(--shadow-thumb)] transition-colors",
+        className={cn("press flex size-20 items-center justify-center rounded-full shadow-[var(--shadow-thumb)] transition-colors [@media(max-height:860px)]:size-14 [@media(max-height:860px)]:[&_svg]:size-6",
           listening ? "bg-live text-white" : "bg-brand text-brand-foreground hover:bg-brand/90")}>
         {listening ? <Mic className="size-8" /> : <MicOff className="size-8" />}
       </button>
-      <h3 className="mt-6 font-caption text-3xl font-medium text-board-foreground">{talkBig}</h3>
-      <p className="mt-2 max-w-[44ch] text-sm text-board-muted">Talk the way you would to your class. Each idea becomes a picture, and naming a topic like “the water cycle” shows its diagram.</p>
-      <div className="mt-8 flex flex-col items-center gap-2">
+      <h3 className="mt-6 font-caption text-3xl font-medium text-board-foreground [@media(max-height:860px)]:mt-4">{talkBig}</h3>
+      <p className="mt-2 max-w-[56ch] text-sm text-balance text-board-muted">Talk the way you would to your class. Each idea becomes a picture, and naming a topic like “the water cycle” shows its diagram.</p>
+      <div className="mt-6 flex flex-col items-center gap-2 [@media(max-height:860px)]:mt-4">
         <span className="text-xs text-board-muted">No microphone? Try one:</span>
         {EXAMPLES.map((t) => (
           <button key={t} type="button" onClick={() => a.sayExample(t)}
-            className="press rounded-lg border border-white/15 px-3 py-2 font-caption text-sm text-board-foreground transition-colors hover:bg-white/10">
+            className="press rounded-lg border border-white/15 px-3 py-2 font-caption text-sm text-board-foreground transition-colors hover:bg-white/10 [@media(max-height:860px)]:py-1">
             {t}
           </button>
         ))}
@@ -158,6 +161,23 @@ function Hero() {
   const heroMode = useApp((s) => s.heroMode)
   const frame = frames.find((f) => f.n === viewing)
   const art = React.useRef<HTMLDivElement>(null)
+  const slot = React.useRef<HTMLDivElement>(null)
+  const cap = React.useRef<HTMLParagraphElement>(null)
+  const caption = frame ? frame.scene.caption : ""
+  // a long caption gets a smaller font instead of a taller slot, so the picture never moves
+  React.useLayoutEffect(() => {
+    const box = slot.current, p = cap.current
+    if (!box || !p) return
+    const fit = () => {
+      p.style.fontSize = ""
+      let size = parseFloat(getComputedStyle(p).fontSize)
+      while (p.offsetHeight > box.clientHeight + 1 && size > 14) { size -= 2; p.style.fontSize = size + "px" }
+    }
+    fit()
+    const ro = new ResizeObserver(fit)
+    ro.observe(box)
+    return () => ro.disconnect()
+  }, [caption])
   // the scene's parts appear as the matching words are spoken
   React.useLayoutEffect(() => {
     const live = frame && frame.n === activeN
@@ -165,12 +185,17 @@ function Hero() {
   }, [frame, activeN, revealAt])
   if (!frame) return null
   return (
-    <div className="hero flex w-full flex-col items-center gap-4" data-mode={heroMode}>
-      <div key={frame.n} className="hero-card relative w-full rounded-xl bg-paper p-2 shadow-[var(--shadow-card)]">
-        <span className="tabular absolute -top-3 -left-3 z-10 flex size-6 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{frame.n}</span>
-        <div ref={art} className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: frame.svg }} />
+    <div className="hero flex w-full flex-col items-center gap-3 self-stretch" data-mode={heroMode}>
+      {/* pictures are 16:10; the card takes the largest size that fits the slot, leaving room for the number badge */}
+      <div className="flex min-h-0 w-full flex-1 items-center justify-center [container-type:size]">
+        <div key={frame.n} className="hero-card relative w-[min(calc(100cqw-24px),calc((100cqh-16px)*1.6+16px))] rounded-xl bg-paper p-2 shadow-[var(--shadow-card)]">
+          <span className="tabular absolute -top-3 -left-3 z-10 flex size-6 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{frame.n}</span>
+          <div ref={art} className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: frame.svg }} />
+        </div>
       </div>
-      <p className="hero-caption max-w-[34ch] text-center font-caption text-2xl leading-snug text-board-foreground sm:text-3xl" aria-live="polite">{frame.scene.caption}</p>
+      <div ref={slot} className="hero-caption-slot h-[2lh] w-full max-w-[34ch] shrink-0 text-center font-caption text-2xl leading-snug text-board-foreground sm:text-3xl">
+        <p ref={cap} className="hero-caption text-balance" aria-live="polite">{caption}</p>
+      </div>
     </div>
   )
 }
@@ -180,14 +205,14 @@ function Recap() {
   const recap = useApp((s) => s.recap)
   const a = useApp((s) => s.actions)
   return (
-    <div className="recap w-full self-stretch">
-      <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
+    <div className="recap flex min-h-0 w-full flex-col self-stretch">
+      <div className="mb-2 flex shrink-0 flex-wrap items-center justify-center gap-2">
         <h3 className="mr-2 font-caption text-2xl font-medium text-board-foreground">{recap.title}</h3>
         <Button variant="ghost" className={onBoard} onClick={a.recapRestart}><RotateCcw />{recap.restartLabel}</Button>
         {recap.canSave && <Button variant="ghost" className={onBoard} onClick={a.recapSave}>Save as a lesson</Button>}
         <Button variant="ghost" className={onBoard} onClick={a.hideRecap}>Close</Button>
       </div>
-      <div className="grid max-h-[62vh] grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-4 overflow-y-auto px-1 pb-2 [.is-fullscreen_&]:max-h-none">
+      <div className="thumb-scroll grid min-h-0 flex-1 grid-cols-[repeat(auto-fill,minmax(190px,1fr))] content-start gap-4 overflow-y-auto p-2">
         {frames.map((f) => (
           <button key={f.n} type="button" onClick={() => a.viewFrame(f.n)}
             className="press relative rounded-lg bg-paper p-1 text-left shadow-[var(--shadow-thumb)] outline-none focus-visible:ring-2 focus-visible:ring-board-foreground">
@@ -210,16 +235,16 @@ function Filmstrip() {
   const done = frames.filter((f) => f.done).slice(-60)
   const last = done.length ? done[done.length - 1].n : 0
   React.useEffect(() => { if (ref.current) ref.current.scrollLeft = ref.current.scrollWidth }, [last])
-  if (!done.length || stage === "recap") return null
+  if (stage !== "hero") return null
   return (
-    <div ref={ref} className="thumb-scroll flex gap-3 overflow-x-auto border-t border-board-line px-2 pt-4 pb-2" aria-label="Scenes so far">
+    <div ref={ref} className="thumb-scroll flex h-25 shrink-0 gap-3 overflow-x-auto overflow-y-hidden border-t border-board-line px-2 pt-3" aria-label="Scenes so far">
+      {!done.length && <p className="self-center px-1 text-sm text-board-muted">Earlier pictures line up here.</p>}
       {done.map((f) => (
-        <button key={f.n} type="button" onClick={() => a.viewFrame(f.n)} aria-label={"Scene " + f.n + ": " + f.scene.caption}
-          className={cn("press relative w-30 shrink-0 rounded-lg bg-paper p-1 text-left opacity-80 transition-opacity outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-board-foreground",
+        <button key={f.n} type="button" onClick={() => a.viewFrame(f.n)} aria-label={"Scene " + f.n + ": " + f.scene.caption} title={f.scene.caption}
+          className={cn("press relative w-28 shrink-0 self-start rounded-lg bg-paper p-1 text-left opacity-80 transition-opacity outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-board-foreground",
             f.n === viewing && "opacity-100 ring-2 ring-board-foreground")}>
           <span className="tabular absolute -top-2 -left-2 flex size-5 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{f.n}</span>
           <div className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: f.svg }} />
-          <p className="mt-1 line-clamp-2 px-1 text-center font-caption text-xs leading-tight text-neutral-800">{f.scene.caption}</p>
         </button>
       ))}
     </div>
@@ -232,9 +257,9 @@ function TalkBar() {
   const a = useApp((s) => s.actions)
   const [text, setText] = React.useState("")
   return (
-    <div className="flex flex-col gap-2 border-t border-board-line pt-3">
-      <p className={cn("flex items-center gap-2 text-sm text-board-foreground", live.miss && "text-board-muted")} aria-live="polite">
-        <span className="live-dot size-2.5 shrink-0 rounded-full" />{live.msg}
+    <div className="flex shrink-0 flex-col gap-2 border-t border-board-line pt-3">
+      <p className={cn("flex min-w-0 items-center gap-2 text-sm text-board-foreground", live.miss && "text-board-muted")} aria-live="polite" title={live.msg}>
+        <span className="live-dot size-2.5 shrink-0 rounded-full" /><span className="truncate">{live.msg}</span>
       </p>
       <form className="flex flex-wrap gap-2" onSubmit={(e) => { e.preventDefault(); a.sayTyped(text); setText("") }}>
         <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="Or type a sentence and press Enter" aria-label="Type a sentence to show as a picture"
@@ -254,14 +279,18 @@ function Ticker() {
   const ticker = useApp((s) => s.ticker)
   const a = useApp((s) => s.actions)
   return (
-    <div className="ticker mt-2 min-h-10 border-t border-board-line px-1 pt-2 text-sm leading-relaxed text-board-muted" aria-hidden="true">
-      {ticker.length === 0 && <span className="italic opacity-70">Words show up here as you go. Tap one to change its picture.</span>}
-      {ticker.map((w) => (
-        <span key={w.id} onClick={() => a.openWord(w.t)} title="Choose a picture for this word"
-          className={cn("cursor-pointer hover:underline hover:decoration-dotted hover:underline-offset-4", w.hit && "hit font-medium", w.unsure && "unsure")}>
-          {w.t}{" "}
-        </span>
-      ))}
+    <div className="ticker mt-2 shrink-0 border-t border-board-line px-1 pt-2 text-sm leading-relaxed text-board-muted" aria-hidden="true">
+      <div className="flex h-[2lh] flex-col justify-end overflow-hidden">
+        <p>
+          {ticker.length === 0 && <span className="italic opacity-70">Words show up here as you go. Tap one to change its picture.</span>}
+          {ticker.map((w) => (
+            <span key={w.id} onClick={() => a.openWord(w.t)} title="Choose a picture for this word"
+              className={cn("cursor-pointer hover:underline hover:decoration-dotted hover:underline-offset-4", w.hit && "hit font-medium", w.unsure && "unsure")}>
+              {w.t}{" "}
+            </span>
+          ))}
+        </p>
+      </div>
     </div>
   )
 }
@@ -317,12 +346,13 @@ export function Board() {
   const prefs = useApp((s) => s.prefs)
   return (
     <section id="board" aria-label="Storyboard"
-      className={cn("board relative flex min-h-[560px] flex-col rounded-xl bg-board px-4 pt-4 pb-4 text-board-foreground shadow-[var(--shadow-board)] sm:px-5",
+      className={cn("board relative flex h-[calc(100svh-6.25rem)] min-h-[560px] flex-col rounded-xl bg-board px-4 pt-4 pb-4 text-board-foreground shadow-[var(--shadow-board)] sm:px-5",
         talk && "talking", listening && "mic-on", fullscreen && "is-fullscreen", !prefs.labels && "no-labels", prefs.calm && "calm",
         prefs.unsure && "show-unsure", !prefs.tickerOn && "no-ticker")}>
       <BoardHeader />
       <Dots />
-      <div className="relative flex min-h-[340px] flex-1 items-center justify-center px-1 py-5">
+      {/* everything else has a fixed height; this middle area gets what is left and scrolls if a screen is very short */}
+      <div className="relative flex min-h-0 flex-1 items-center-safe justify-center overflow-y-auto px-1 py-4">
         {stage === "empty" && (talk ? <TalkScreen /> : <StartCard />)}
         {stage === "hero" && <Hero />}
         {stage === "recap" && <Recap />}

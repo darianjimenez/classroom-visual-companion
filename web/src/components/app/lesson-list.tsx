@@ -68,9 +68,9 @@ export function LessonList() {
     return SUBJECTS.map((subject) => ({ subject, items: lessons.filter((L) => L.subject === subject) })).filter((g) => g.items.length)
   }, [lessons, filter, query])
 
-  // a fixed height on wide screens, not just a maximum, so the list scrolls inside the card instead of spilling past it
+  // a fixed height on wide screens, matching the board, so the list scrolls inside the card instead of spilling past it
   return (
-    <aside className="flex min-h-0 flex-col overflow-hidden rounded-xl border bg-card lg:sticky lg:top-[4.5rem] lg:h-[calc(100svh-6.25rem)]" aria-label="Lessons">
+    <aside className="flex min-h-0 flex-col overflow-hidden rounded-xl border bg-card lg:sticky lg:top-[4.5rem] lg:h-[calc(100svh-6.25rem)] lg:min-h-[560px]" aria-label="Lessons">
       <div className="flex items-center justify-between gap-2 px-4 pt-4 pb-3">
         <h2 className="text-sm font-semibold">Lessons</h2>
         <Button size="sm" variant="outline" onClick={a.newLesson}><Plus />New lesson</Button>
