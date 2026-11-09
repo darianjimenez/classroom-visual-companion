@@ -14,6 +14,8 @@ export const SUBJECT_COLORS = {
   Reading: "var(--sub-reading)", Health: "var(--sub-health)", "My lessons": "var(--sub-mine)",
 }
 const EXTRA_DEFAULTS = { animal: "🐾", switch: "🔘", soil: "🟫", friction: "🌀", weather: "⛅", game: "🎲", sport: "⚽", smile: "😊", dance: "💃", mud: "🟤" }
+// notices about the lesson list and the side panels appear on that side of the screen; board notices stay centred under the board
+const NEAR_LIST = { position: "bottom-right" }
 const KEYS = { extra: "cvc-extra-words-v4", mine: "cvc-my-lessons-v1", prefs: "cvc-prefs-v2", oldPrefs: "cvc-prefs-v1", help: "cvc-help-seen-v1" }
 export const PACES = [{ wpm: 100, label: "Slow" }, { wpm: 130, label: "Normal" }, { wpm: 170, label: "Fast" }]
 
@@ -586,7 +588,7 @@ export const useApp = create((set, get) => {
     set({ lessonId: L.id, script: L.text })
     if (quiet) { loadScript(); updateSource(); return }
     resetPlayback(); renderUnsure(); setBoardHeading(); updateSource()
-    toast("Ready: “" + L.title + "”")
+    toast("Ready: “" + L.title + "”", NEAR_LIST)
     scrollToBoard()
   }
 
@@ -645,7 +647,7 @@ export const useApp = create((set, get) => {
         save(KEYS.mine, mine)
         if (get().lessonId === L.id) set({ lessonId: null })
         setBoardHeading()
-        toast("Deleted “" + L.title + "”")
+        toast("Deleted “" + L.title + "”", NEAR_LIST)
       },
       newLesson() {
         const txt = get().script.trim(), L = curLesson()
@@ -673,7 +675,7 @@ export const useApp = create((set, get) => {
         set({ mine, lessonId: L.id, saveTitle: "", query: "", filter: "My lessons" })
         save(KEYS.mine, mine)
         setBoardHeading(); updateSource()
-        toast("Saved “" + title + "”")
+        toast("Saved “" + title + "”", NEAR_LIST)
       },
 
       // playback
@@ -700,7 +702,7 @@ export const useApp = create((set, get) => {
         const sents = get().lastTalk.map((t) => { t = t.trim(); t = t.charAt(0).toUpperCase() + t.slice(1); return /[.!?]$/.test(t) ? t : t + "." })
         set({ lessonId: null, script: sents.join(" "), panel: "script" })
         setBoardHeading(); updateSource(); renderUnsure()
-        toast("Your talk is now a script", { description: "Add a title and press Save." })
+        toast("Your talk is now a script", { ...NEAR_LIST, description: "Add a title and press Save." })
       },
       toggleFullscreen,
 

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Plus, Search, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { E, SUBJECTS, SUBJECT_COLORS, splitSentences, plural, useApp, type Lesson } from "@/app/store"
+import { E, SUBJECTS, splitSentences, plural, useApp, type Lesson } from "@/app/store"
 import { Button } from "@/components/ui/button"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const FILTERS = [{ value: "All", label: "All subjects" }].concat(SUBJECTS.map((s) => ({ value: s, label: s })))
 
-function LessonRow({ L, active }: { L: Lesson; active: boolean }) {
+function LessonRow({ L, active, showSubject }: { L: Lesson; active: boolean; showSubject: boolean }) {
   const a = useApp((s) => s.actions)
   useApp((s) => s.omVersion)
   const icons = a.lessonIcons(L).map((k) => E.iconSVG(k)).join("")
@@ -26,14 +26,13 @@ function LessonRow({ L, active }: { L: Lesson; active: boolean }) {
         )}
       >
         <span
-          className="flex h-10 w-[66px] shrink-0 items-center justify-center gap-0.5 rounded-md bg-paper ring-1 ring-black/5 [&_svg]:size-5"
+          className="flex h-10 w-18 shrink-0 items-center justify-center gap-1 rounded-sm bg-paper ring-1 ring-black/5 [&_svg]:size-5"
           dangerouslySetInnerHTML={{ __html: icons }}
         />
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-medium">{L.title}</span>
-          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span className="size-1.5 shrink-0 rounded-full" style={{ background: SUBJECT_COLORS[L.subject] }} />
-            {[L.subject === "My lessons" ? "Saved" : L.grade, plural(n, "scene", "scenes")].filter(Boolean).join(" · ")}
+          <span className="block truncate text-xs text-muted-foreground">
+            {[showSubject && L.subject !== "My lessons" ? L.subject : "", L.subject === "My lessons" ? "Saved" : L.grade, plural(n, "scene", "scenes")].filter(Boolean).join(" · ")}
           </span>
         </span>
         {active && <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-foreground" aria-hidden="true" />}
@@ -43,7 +42,7 @@ function LessonRow({ L, active }: { L: Lesson; active: boolean }) {
           variant="ghost"
           size="icon-sm"
           aria-label={"Delete " + L.title}
-          className="absolute top-1/2 right-1.5 -translate-y-1/2 text-muted-foreground opacity-0 group-hover:opacity-100 focus-visible:opacity-100 hover:text-destructive"
+          className="absolute top-1/2 right-2 -translate-y-1/2 text-muted-foreground opacity-0 group-hover:opacity-100 focus-visible:opacity-100 hover:text-destructive"
           onClick={() => a.deleteLesson(L)}
         >
           <Trash2 />
@@ -75,13 +74,13 @@ export function LessonList() {
         <h2 className="text-sm font-semibold">Lessons</h2>
         <Button size="sm" variant="outline" onClick={a.newLesson}><Plus />New lesson</Button>
       </div>
-      <div className="flex gap-2 px-4 pb-3">
+      <div className="flex gap-2 px-4 pb-4">
         <InputGroup className="flex-1">
           <InputGroupAddon><Search /></InputGroupAddon>
           <InputGroupInput id="lesson-search" placeholder="Search lessons" value={query} onChange={(e) => a.setQuery(e.target.value)} aria-label="Search lessons" />
         </InputGroup>
         <Select value={filter} onValueChange={(v) => a.setFilter(v as string)} items={FILTERS}>
-          <SelectTrigger className="w-[132px]" aria-label="Subject"><SelectValue /></SelectTrigger>
+          <SelectTrigger className="w-36" aria-label="Subject"><SelectValue /></SelectTrigger>
           <SelectContent>
             {FILTERS.map((f) => <SelectItem key={f.value} value={f.value}>{f.label}</SelectItem>)}
           </SelectContent>
@@ -97,7 +96,7 @@ export function LessonList() {
           {groups.map((g) => (
             <section key={g.subject || "all"} className="pb-1">
               {g.subject && <h3 className="px-2 pt-3 pb-1 text-xs font-medium text-muted-foreground">{g.subject}</h3>}
-              {g.items.map((L) => <LessonRow key={L.id} L={L} active={L.id === lessonId} />)}
+              {g.items.map((L) => <LessonRow key={L.id} L={L} active={L.id === lessonId} showSubject={!g.subject} />)}
             </section>
           ))}
         </div>

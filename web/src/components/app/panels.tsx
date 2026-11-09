@@ -1,6 +1,6 @@
 import * as React from "react"
 import NumberFlow from "@number-flow/react"
-import { Search, Sparkles, X } from "lucide-react"
+import { Search, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { E, PACES, useApp } from "@/app/store"
 import { Panel } from "@/components/app/panel"
@@ -30,8 +30,8 @@ function ToggleRow({ id, label, hint, checked, onChange, disabled }: {
   id: string; label: string; hint?: string; checked: boolean; onChange: (v: boolean) => void; disabled?: boolean
 }) {
   return (
-    <div className="flex items-start justify-between gap-6 py-2.5">
-      <div className="flex flex-col gap-0.5">
+    <div className="flex items-start justify-between gap-6 py-3">
+      <div className="flex flex-col gap-1">
         <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
         {hint && <p className="text-xs leading-relaxed text-muted-foreground">{hint}</p>}
       </div>
@@ -61,13 +61,10 @@ export function ScriptPanel() {
             onChange={(e) => a.setScript(e.target.value)}
             aria-label="Lesson script"
             placeholder="Paste or type what you'll say. Name a topic, like “the water cycle”, to show its diagram."
-            className="min-h-60 text-[15px] leading-relaxed"
+            className="min-h-60 text-base leading-relaxed"
           />
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <span className={cn("size-1.5 rounded-full", source.kind === "cur" ? "bg-[var(--sub-science)]" : source.kind === "ai" ? "bg-[var(--sub-math)]" : "bg-muted-foreground")} />
-              {source.msg}
-            </span>
+            <span>{source.msg}</span>
             <span className="tabular">{wc.words} words · {wc.sentences} sentences</span>
           </div>
           {progress && <p className="text-xs text-muted-foreground">{progress}</p>}
@@ -76,9 +73,9 @@ export function ScriptPanel() {
         {unsure.length > 0 && (
           <Section title="Words that need your help">
             <p className="mb-2 text-xs text-muted-foreground">These can mean different things, so they show no picture yet. Tap one to choose.</p>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {unsure.map((w) => (
-                <Badge key={w} variant="outline" render={<button type="button" onClick={() => a.openWord(w)} />} className="cursor-pointer border-dashed">
+                <Badge key={w} variant="outline" render={<button type="button" onClick={() => a.openWord(w)} />} className="cursor-pointer hover:bg-muted">
                   {w}
                 </Badge>
               ))}
@@ -90,7 +87,7 @@ export function ScriptPanel() {
           <Section title="Plan with Claude">
             <p className="mb-2 text-xs text-muted-foreground">Claude reads the whole lesson once and picks pictures by meaning. It uses your Claude account.</p>
             <div className="flex items-center justify-between gap-3">
-              <Button variant="outline" onClick={a.planWithClaude} disabled={ai.planning}><Sparkles />{ai.planning ? "Planning…" : "Plan scenes"}</Button>
+              <Button variant="outline" onClick={a.planWithClaude} disabled={ai.planning}>{ai.planning ? "Planning…" : "Plan scenes"}</Button>
               <div className="flex items-center gap-2">
                 <Label htmlFor="use-ai" className="text-sm">Use the plan</Label>
                 <Switch id="use-ai" checked={ai.useAi} onCheckedChange={(v) => a.setUseAi(!!v)} />
@@ -102,7 +99,7 @@ export function ScriptPanel() {
 
         <Section title="Save for next time">
           <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); a.saveLesson() }}>
-            <Input value={saveTitle} onChange={(e) => a.setSaveTitle(e.target.value)} placeholder="Lesson title" maxLength={60} aria-label="Lesson title" />
+            <Input value={saveTitle} onChange={(e) => a.setSaveTitle(e.target.value)} placeholder="Title, like Parts of a plant" maxLength={60} aria-label="Lesson title" />
             <Button type="submit">Save</Button>
           </form>
           <p className="mt-1 text-xs text-muted-foreground">Saved on this device, under My lessons.</p>
@@ -135,7 +132,7 @@ export function SettingsPanel() {
     <Panel open={open} onClose={a.closePanel} title="Settings" description="Remembered on this device.">
       <div className="flex flex-col gap-6">
         <Section title="Playback">
-          <div className="flex flex-col gap-3 py-2.5">
+          <div className="flex flex-col gap-3 py-3">
             <div className="flex items-center justify-between">
               <Label className="text-sm font-medium">Reading pace</Label>
               <span className="tabular text-sm text-muted-foreground"><NumberFlow value={p.speed} /> words a minute{paceName ? " · " + paceName : ""}</span>
@@ -147,7 +144,7 @@ export function SettingsPanel() {
         <Separator />
         <Section title="Keep it calm">
           <ToggleRow id="calm" label="Calm mode" hint="No motion, and pictures stay up longer." checked={p.calm} onChange={set("calm")} />
-          <div className="flex flex-col gap-2 py-2.5">
+          <div className="flex flex-col gap-2 py-3">
             <Label className="text-sm font-medium">Draw a picture</Label>
             <Select value={p.drawMode} onValueChange={(v) => a.setPref("drawMode", v)} items={DRAW_MODES}>
               <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
@@ -173,7 +170,7 @@ export function SettingsPanel() {
           <p className="text-xs leading-relaxed text-muted-foreground">{voice.status}</p>
           <details className="mt-2 text-xs">
             <summary className="cursor-pointer text-muted-foreground hover:text-foreground">Voice diagnostics</summary>
-            <pre className="mt-2 max-h-40 overflow-auto rounded-md bg-muted p-2 font-mono text-[11px] whitespace-pre-wrap">{voice.log.join("\n") || "Nothing yet."}</pre>
+            <pre className="mt-2 max-h-40 overflow-auto rounded-md bg-muted p-2 font-sans text-xs whitespace-pre-wrap">{voice.log.join("\n") || "Nothing yet."}</pre>
           </details>
         </Section>
         <Separator />
@@ -205,10 +202,10 @@ function DiagramGrid() {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {shown.map((g) => (
           <button key={g.key} type="button" onClick={() => a.showDiagram(g.key, g.title)} aria-label={"Show " + g.title + " on the board"}
-            className="press group rounded-lg border bg-card p-1.5 text-left outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50">
-            <div className="overflow-hidden rounded-md" dangerouslySetInnerHTML={{ __html: g.svg }} />
-            <p className="mt-1.5 px-0.5 text-xs font-medium">{g.title}</p>
-            <p className="truncate px-0.5 text-[11px] text-muted-foreground">Say “{g.say[0]}”</p>
+            className="press group rounded-lg border bg-card p-1 text-left outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50">
+            <div className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: g.svg }} />
+            <p className="mt-2 px-1 text-xs font-medium">{g.title}</p>
+            <p className="truncate px-1 pb-1 text-xs text-muted-foreground">Say “{g.say[0]}”</p>
           </button>
         ))}
       </div>
@@ -229,9 +226,9 @@ function DrawingGrid() {
       </InputGroup>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(76px,1fr))] gap-2">
         {shown.map((g) => (
-          <figure key={g.key} title={g.words.join(", ")} className="m-0 rounded-lg bg-paper px-1 pt-2 pb-1.5 text-center">
+          <figure key={g.key} title={g.words.join(", ")} className="m-0 rounded-lg bg-paper px-1 pt-2 pb-2 text-center ring-1 ring-black/5">
             <div className="mx-auto size-11 [&_svg]:size-11" dangerouslySetInnerHTML={{ __html: g.svg }} />
-            <figcaption className="mt-1 truncate text-[11px] text-neutral-600">{g.name}</figcaption>
+            <figcaption className="mt-1 truncate text-xs text-neutral-600">{g.name}</figcaption>
           </figure>
         ))}
       </div>
@@ -248,12 +245,13 @@ function WordList() {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-xs text-muted-foreground">Words you've given a picture, or turned off. You can also tap any word under the board while a lesson plays.</p>
-      <div className="flex flex-wrap gap-1.5">
+      {keys.length === 0 && <p className="rounded-lg border px-4 py-6 text-center text-sm text-muted-foreground">No word pictures yet. While a lesson plays, tap “magma” under the board to give it a volcano, for example.</p>}
+      <div className="flex flex-wrap gap-2">
         {keys.map((k) => {
           const v = extra[k]
           const icon = v.charAt(0) === "@" ? E.iconSVG(v.slice(1)) : ""
           return (
-            <Badge key={k} variant="secondary" className="gap-1.5 py-1 pr-1 pl-2 text-[13px]">
+            <Badge key={k} variant="secondary" className="gap-2 py-1 pr-1 pl-2 text-sm">
               {v === "-" ? <span className="text-muted-foreground">off</span> : icon ? <span className="size-4 [&_svg]:size-4" dangerouslySetInnerHTML={{ __html: icon }} /> : <span>{v}</span>}
               {k}
               <button type="button" aria-label={"Remove " + k} onClick={() => a.removeWord(k)} className="rounded-sm p-0.5 text-muted-foreground hover:bg-background hover:text-foreground"><X className="size-3" /></button>
@@ -262,8 +260,8 @@ function WordList() {
         })}
       </div>
       <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); if (a.addWord(word, emoji)) { setWord(""); setEmoji("") } }}>
-        <Input value={word} onChange={(e) => setWord(e.target.value)} placeholder="Word" maxLength={24} aria-label="Word" className="flex-[2]" />
-        <Input value={emoji} onChange={(e) => setEmoji(e.target.value)} placeholder="Emoji" maxLength={4} aria-label="Emoji" className="flex-1 text-center" />
+        <Input value={word} onChange={(e) => setWord(e.target.value)} placeholder="Word, like magma" maxLength={24} aria-label="Word" className="flex-[2]" />
+        <Input value={emoji} onChange={(e) => setEmoji(e.target.value)} placeholder="🌋" maxLength={4} aria-label="Emoji" className="flex-1 text-center" />
         <Button type="submit" variant="outline">Add</Button>
       </form>
       <Button variant="link" className="h-auto self-start p-0 text-xs text-muted-foreground" onClick={a.resetWords}>Reset word pictures</Button>

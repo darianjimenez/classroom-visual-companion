@@ -36,7 +36,7 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-[1440px] items-center gap-2 px-3 sm:gap-3 sm:px-5">
         <div className="flex min-w-0 items-center gap-2">
           <Logo className="size-7 shrink-0" />
-          <span className="hidden truncate text-[15px] font-semibold tracking-tight lg:inline">Visual Companion</span>
+          <span className="hidden truncate text-base font-semibold tracking-tight lg:inline">Visual Companion</span>
         </div>
         <Tabs value={talk ? "talk" : "lessons"} onValueChange={(v) => (v === "talk" ? a.enterTalk() : a.showLessons())} className="mx-auto">
           <TabsList>

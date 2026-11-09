@@ -3,7 +3,6 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/lexend";
-@import "@fontsource/caveat/700.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -11,6 +10,10 @@
     --font-heading: var(--font-sans);
     --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
     --font-caption: 'Lexend Variable', 'Geist Variable', sans-serif;
+    /* one strong ease-out curve for every transition and enter/exit animation */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --default-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    --default-transition-duration: 160ms;
     --color-brand: var(--brand);
     --color-brand-foreground: var(--brand-foreground);
     --color-live: var(--live);
@@ -166,35 +169,51 @@
   html {
     @apply font-sans;
     }
+  /* popups, sheets and dialogs animate with the same ease-out instead of the library's plain "ease" */
+  *, ::before, ::after { --tw-ease: cubic-bezier(0.23, 1, 0.32, 1); }
 }
 /* ---------- the board: scenes, captions and states drawn from the picture engine ---------- */
 .scene { display: block; width: 100%; height: auto; }
-.board .scene .el { transition: opacity 400ms ease-out; }
+/* two typefaces only: Geist for the interface and picture labels, Lexend for what students read */
+.scene text[font-family^="Caveat"] { font-family: var(--font-sans); font-weight: 600; letter-spacing: -0.01em; }
+.scene text[font-family^="Figtree"] { font-family: var(--font-sans); }
+.board .scene .el { transition: opacity 300ms var(--ease-out); }
 .board .scene .el.pending { opacity: 0; }
 .board.no-labels .scene .lbl { display: none; }
-.board .hero-card { transition: opacity 600ms ease, box-shadow 200ms ease; }
-.board .hero-caption { transition: opacity 600ms ease; }
-.board .hero[data-mode="enter"] .hero-card { animation: hero-in 320ms cubic-bezier(0.23, 1, 0.32, 1); }
+.board .hero-card { transition: opacity 240ms var(--ease-out), box-shadow 160ms var(--ease-out); }
+.board .hero-caption { transition: opacity 240ms var(--ease-out); }
+.board .hero[data-mode="enter"] .hero-card { animation: hero-in 280ms var(--ease-out); }
 .board .hero[data-mode="settled"] .hero-card, .board .hero[data-mode="settled"] .hero-caption { opacity: 0.55; }
-.board .hero[data-mode="history"] .hero-card { box-shadow: 0 0 0 2px var(--board-muted); }
-@keyframes hero-in { from { opacity: 0; transform: translateY(6px) scale(0.985); } }
+.board .hero[data-mode="history"] .hero-card { box-shadow: 0 0 0 1px var(--board-muted), var(--shadow-card); }
+@keyframes hero-in { from { opacity: 0; transform: translateY(8px) scale(0.985); } }
+/* the slideshow grows out of the button that opens it, top right of the board */
+.board .recap { animation: recap-in 220ms var(--ease-out); transform-origin: top right; }
+@keyframes recap-in { from { opacity: 0; transform: scale(0.98); } }
 .board.calm .scene .el, .board.calm .hero-card, .board.calm .hero-caption { transition: none; }
-.board.calm .hero[data-mode="enter"] .hero-card { animation: none; }
+.board.calm .hero[data-mode="enter"] .hero-card, .board.calm .recap { animation: none; }
 @media (prefers-reduced-motion: reduce) {
-  .board .hero[data-mode="enter"] .hero-card { animation: none; }
+  .board .hero[data-mode="enter"] .hero-card, .board .recap { animation: none; }
   .board .scene .el { transition: none; }
 }
+/* soft, layered shadows: a tight contact shadow plus a wide ambient one */
+:root {
+  --shadow-board: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 8px -2px rgb(0 0 0 / 0.06), 0 16px 32px -12px rgb(0 0 0 / 0.18);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.25), 0 8px 24px -8px rgb(0 0 0 / 0.45);
+  --shadow-thumb: 0 1px 2px rgb(0 0 0 / 0.25), 0 4px 12px -4px rgb(0 0 0 / 0.4);
+}
+.dark { --shadow-board: 0 0 0 1px rgb(255 255 255 / 0.06), 0 16px 32px -12px rgb(0 0 0 / 0.5); }
 /* keep the controls on screen on laptops: size the picture to the window height */
 @media (min-width: 1024px) {
-  .board .hero-card { max-width: min(680px, max(340px, calc((100svh - 515px) * 1.6))); }
-  .board.talking .hero-card { max-width: min(680px, max(300px, calc((100svh - 625px) * 1.6))); }
+  .board .hero-card { max-width: min(680px, max(340px, calc((100svh - 572px) * 1.6))); }
+  .board.talking .hero-card { max-width: min(680px, max(300px, calc((100svh - 680px) * 1.6))); }
 }
 .board.is-fullscreen { border-radius: 0; min-height: 100vh; padding: 1.5rem 2.25rem 1rem; }
 .board.is-fullscreen .hero-card, .board.is-fullscreen.talking .hero-card { max-width: min(1160px, 140vh); }
 .board.is-fullscreen .hero-caption { font-size: clamp(2rem, 1.2rem + 2vw, 3.2rem); }
-.board.is-fullscreen .board-title { font-size: 1.6rem; }
-.board .ticker .hit { color: var(--brand); }
-.board.show-unsure .ticker .unsure { text-decoration: underline dotted oklch(0.78 0.14 75); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.board.is-fullscreen .board-title { font-size: 1.5rem; }
+/* words that got a picture stand out by weight and brightness, not by colour */
+.board .ticker .hit { color: var(--board-foreground); }
+.board.show-unsure .ticker .unsure { text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .board.no-ticker .ticker { visibility: hidden; }
 .live-dot { background: var(--board-muted); }
 .board.mic-on .live-dot { background: var(--live); animation: live-pulse 1.6s ease-in-out infinite; }
@@ -203,5 +222,5 @@
 .tabular { font-variant-numeric: tabular-nums; }
 .thumb-scroll { scrollbar-width: thin; scrollbar-color: var(--board-line) transparent; }
 /* buttons answer the press */
-@media (hover: hover) and (pointer: fine) { .press { transition: transform 140ms ease-out; } }
+@media (hover: hover) and (pointer: fine) { .press { transition: transform 160ms var(--ease-out); } }
 .press:active { transform: scale(0.97); }

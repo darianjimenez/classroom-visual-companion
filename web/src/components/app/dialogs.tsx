@@ -29,13 +29,13 @@ export function GuideDialog() {
           <DialogDescription>It puts a simple picture of each idea on the board as you teach, so students can see what they hear.</DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="ways" className="min-h-0 gap-0">
-          <TabsList variant="line" className="w-full justify-start gap-2 border-b px-5">
+          <TabsList variant="line" className="w-full justify-start gap-2 border-b px-6">
             <TabsTrigger value="ways">Ways to use it</TabsTrigger>
             <TabsTrigger value="pictures">Pictures</TabsTrigger>
             <TabsTrigger value="class">In class</TabsTrigger>
             <TabsTrigger value="privacy">Privacy</TabsTrigger>
           </TabsList>
-          <div className="max-h-[58svh] overflow-y-auto px-6 py-5 text-sm leading-relaxed">
+          <div className="max-h-[58svh] overflow-y-auto px-6 py-6 text-sm leading-relaxed">
             <TabsContent value="ways" className="flex flex-col gap-3">
               {WAYS.map((w) => (
                 <div key={w.how} className="flex items-start justify-between gap-4 rounded-lg border p-4">
@@ -108,7 +108,7 @@ function WordPicker() {
     <Command filter={wordFilter}>
       <div className="flex items-center gap-2 border-b px-4 py-3 text-sm">
         <span className="font-medium">“{d.word}”</span>
-        <span className="flex items-center gap-1.5 text-muted-foreground">
+        <span className="flex items-center gap-2 text-muted-foreground">
           {d.now?.kind === "icon" && <span className="size-5 [&_svg]:size-5" dangerouslySetInnerHTML={{ __html: E.iconSVG(d.now.icon) }} />}
           {d.now?.kind === "emoji" && <span className="text-base">{d.now.emoji}</span>}
           {d.now?.text}
