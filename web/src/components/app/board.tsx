@@ -194,7 +194,8 @@ function Hero() {
         </div>
       </div>
       <div ref={slot} className="hero-caption-slot h-[2lh] w-full max-w-[34ch] shrink-0 text-center font-caption text-2xl leading-snug text-board-foreground sm:text-3xl">
-        <p ref={cap} className="hero-caption text-balance" aria-live="polite">{caption}</p>
+        {/* a word card already shows its words; a screen reader still hears them */}
+        <p ref={cap} className="hero-caption text-balance" aria-live="polite">{caption || <span className="sr-only">{frame.scene.words?.say}</span>}</p>
       </div>
     </div>
   )
@@ -218,7 +219,7 @@ function Recap() {
             className="press relative rounded-lg bg-paper p-1 text-left shadow-[var(--shadow-thumb)] outline-none focus-visible:ring-2 focus-visible:ring-board-foreground">
             <span className="tabular absolute -top-2 -left-2 flex size-5 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{f.n}</span>
             <div className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: f.svg }} />
-            <p className="mt-2 px-1 pb-1 text-center font-caption text-sm leading-tight text-neutral-800">{f.scene.caption}</p>
+            {f.scene.caption && <p className="mt-2 px-1 pb-1 text-center font-caption text-sm leading-tight text-neutral-800">{f.scene.caption}</p>}
           </button>
         ))}
       </div>
@@ -240,7 +241,7 @@ function Filmstrip() {
     <div ref={ref} className="thumb-scroll flex h-25 shrink-0 gap-3 overflow-x-auto overflow-y-hidden border-t border-board-line px-2 pt-3" aria-label="Scenes so far">
       {!done.length && <p className="self-center px-1 text-sm text-board-muted">Earlier pictures line up here.</p>}
       {done.map((f) => (
-        <button key={f.n} type="button" onClick={() => a.viewFrame(f.n)} aria-label={"Scene " + f.n + ": " + f.scene.caption} title={f.scene.caption}
+        <button key={f.n} type="button" onClick={() => a.viewFrame(f.n)} aria-label={"Scene " + f.n + ": " + (f.scene.caption || f.scene.words?.say)} title={f.scene.caption || f.scene.words?.say}
           className={cn("press relative w-28 shrink-0 self-start rounded-lg bg-paper p-1 text-left opacity-80 transition-opacity outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-board-foreground",
             f.n === viewing && "opacity-100 ring-2 ring-board-foreground")}>
           <span className="tabular absolute -top-2 -left-2 flex size-5 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{f.n}</span>

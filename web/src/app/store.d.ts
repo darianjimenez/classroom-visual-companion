@@ -1,6 +1,6 @@
 // Types for store.js, so the React components can use it safely.
 export type Lesson = { id: string; subject: string; grade?: string; title: string; text: string; plan?: Record<string, unknown> }
-export type Frame = { n: number; si: number; scene: { caption: string; diagram?: string }; svg: string; done: boolean }
+export type Frame = { n: number; si: number; scene: { caption: string; diagram?: string; words?: { kind: string; label: string; say: string } }; svg: string; done: boolean }
 export type TickerWord = { t: string; hit: boolean; unsure: boolean; id: number }
 export type Prefs = {
   speed: number; pauseEach: boolean; drawMode: "new" | "all"; calm: boolean; labels: boolean

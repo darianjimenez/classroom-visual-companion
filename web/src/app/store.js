@@ -85,7 +85,9 @@ export const useApp = create((set, get) => {
       sc = E.sceneFromAI(planItem, text, get().extra)
       if (sc && sc.show && !planItem.caption) { const c = sentenceCaption(text); if (c) sc.caption = c }
     }
-    return sc || E.analyze(text, get().extra)
+    sc = sc || E.analyze(text, get().extra)
+    // nothing to picture: the key point goes up in words instead, so no sentence leaves a gap in the storyboard
+    return sc.show ? sc : E.wordScene(text)
   }
   function sceneFor(si) {
     const mode = aiActive() ? "ai" : curatedActive() ? "cur" : "rule"
@@ -132,7 +134,7 @@ export const useApp = create((set, get) => {
   // ---------- board heading and start card ----------
   function talkHeading() {
     const n = get().frames.length
-    set({ heading: { tag: "Just talk", color: "var(--live)", title: n ? plural(n, "picture so far", "pictures so far") : "Live slideshow" } })
+    set({ heading: { tag: "Just talk", color: "var(--live)", title: n ? plural(n, "scene so far", "scenes so far") : "Live slideshow" } })
   }
   function setBoardHeading() {
     if (get().talk) { talkHeading(); return }
@@ -389,7 +391,9 @@ export const useApp = create((set, get) => {
   function phraseScene(text, next) {
     if (get().talk) rt.transcript.push(text)
     const words = text.split(/\s+/).filter(Boolean)
-    const sc = E.analyze(text, get().extra, { words: rt.talkCtx.words, subject: rt.talkCtx.subject, next: next || [] }), hl = E.highlightAts(sc)
+    let sc = E.analyze(text, get().extra, { words: rt.talkCtx.words, subject: rt.talkCtx.subject, next: next || [] })
+    if (!sc.show) sc = E.wordScene(text, { live: true })
+    const hl = E.highlightAts(sc)
     words.forEach((w, k) => tick(w, hl[k]))
     rt.talkCtx.words = rt.talkCtx.words.concat(words.map(E.normalize)).slice(-100)
     if (!sc.show) return "none"
@@ -398,25 +402,28 @@ export const useApp = create((set, get) => {
     if (shouldSkip(sc) || (q.length && sceneSig(q[q.length - 1]) === sceneSig(sc))) return "same"
     if (!get().talk) set({ heading: { tag: "Live", color: "var(--live)", title: "Listening…" } })
     q.push(sc)
-    if (q.length > 3) q.splice(0, q.length - 3)
+    // too many waiting: the oldest word card goes first, then the oldest picture
+    while (q.length > 3) { const i = q.findIndex((x, k) => x.words && k < q.length - 1); q.splice(i >= 0 ? i : 0, 1) }
     pumpLive()
-    return "shown"
+    return sc.words ? "words" : "shown"
   }
   // One phrase becomes pictures. Long ones are split into ideas; recent words, the last subject and the words that
   // follow go along, so "it", "they" and the lesson's topic carry over.
   function drawPhrase(text, nextText) {
     text = String(text).trim()
     if (!text) return
-    let made = 0, same = 0
+    let made = 0, words = 0, same = 0
     const parts = E.splitSpoken(text)
     parts.forEach((part, k) => {
       const next = parts.slice(k + 1).concat(nextText || "").join(" ").split(/\s+/).filter(Boolean).slice(0, 24).map(E.normalize)
       const r = phraseScene(part, next)
-      if (r === "shown") made++; else if (r === "same") same++
+      if (r === "shown") made++; else if (r === "words") words++; else if (r === "same") same++
     })
     if (!get().talk) return
     const heard = "“" + (text.length > 90 ? text.slice(0, 88) + "…" : text) + "”"
-    if (made) setLive(heard + (made > 1 ? " · " + made + " pictures" : ""))
+    if (made && words) setLive(heard + " · " + (made + words) + " scenes")
+    else if (made) setLive(heard + (made > 1 ? " · " + made + " pictures" : ""))
+    else if (words) setLive(heard + " · no picture for this, so the key words are shown")
     else if (same) setLive(heard + " · same idea, the picture stays")
     else setLive(heard + " · no picture. Try naming something, like “volcano” or “plant”.", true)
   }
@@ -459,7 +466,7 @@ export const useApp = create((set, get) => {
     set({ talk: false, lastTalk: rt.transcript.slice() })
     if (!get().frames.length) { set({ boardIsTalk: false }); clearBoard(); setBoardHeading(); return }
     const n = get().frames.length
-    set({ heading: { tag: "Your talk", color: "var(--live)", title: plural(n, "picture", "pictures") } })
+    set({ heading: { tag: "Your talk", color: "var(--live)", title: plural(n, "scene", "scenes") } })
     if (showSlides) showRecap()
   }
   function micToggle() {
