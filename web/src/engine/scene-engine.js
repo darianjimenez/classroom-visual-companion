@@ -1069,7 +1069,7 @@ window.SceneEngine = (function(){
   // a teacher can still give one a picture of their own.
   var LOOSE = {};
   ("home homes shelter place places setting settings day days week weeks month months year years season seasons date " +
-   "word words opinion talk talks piece pieces air class rest record").split(" ").forEach(function(w){ LOOSE[w] = 1; });
+   "word words opinion talk talks piece pieces air class rest record rate rates").split(" ").forEach(function(w){ LOOSE[w] = 1; });
   function looseWord(w){ var fs = forms(w); for (var i = 0; i < fs.length; i++) if (LOOSE[fs[i]]) return true; return false; }
   function extraConcept(w, extra){
     if (!extra) return undefined;
@@ -1123,12 +1123,12 @@ window.SceneEngine = (function(){
   // A long sentence whose picture is one thing ("…the laws that affected them" → a picture of laws) keeps its words in the
   // caption, so the idea isn't lost: "Laws" alone says little.
   function ruleCaption(sc, raw){
+    if (sc.relation === "cycle" && sc.subjects.length === 1) return shortCaption(sc, raw);
+    // up to 16 words the caption is the sentence itself (as in the tuned lessons), without "okay so" or "please"
+    var t = tidySentence(raw), tn = t ? t.split(" ").length : 0;
+    if (t && tn <= 16) return t;
     var c = shortCaption(sc, raw);
-    if (raw.length > 11 && c.split(" ").length <= 2){
-      var t = tidySentence(raw);
-      if (t && t.split(" ").length <= 16) return t;
-    }
-    return c;
+    return c.split(" ").length <= 3 && t && tn <= 20 ? t : c;
   }
   function shortCaption(sc, raw){
     var clean = function(t){ return t.replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, ""); };
@@ -1240,7 +1240,10 @@ window.SceneEngine = (function(){
     // history and music
     "tea party|m:🍵;boston tea party|m:🍵;declaration of independence|i:scroll;bill of rights|i:scroll;end zone|m:🏈;" +
     "string section|i:violin;brass section|i:trumpet;woodwind section|m:🎷;percussion section|i:drum;double bass|i:violin;bass guitar|i:guitar;" +
-    "bass drum|i:drum;french horn|m:🎺;electric guitar|i:guitar;sheet music|i:note";
+    "bass drum|i:drum;french horn|m:🎺;electric guitar|i:guitar;sheet music|i:note;" +
+    // middle and high school: names that use an everyday word for something else
+    "stock market|m:📈;interest rate|m:📈;cold war|-;iron curtain|-;fight or flight|m:😨;calvin cycle|-;krebs cycle|-;citric acid cycle|-;" +
+    "soviet union|-;square root|-;cube root|-;periodic table|-;new deal|-;great depression|-;dust bowl|m:🌪️;space race|i:rocket";
   var PHRASES = {};
   PHRASE_SRC.split(";").forEach(function(row){
     var p = row.split("|"), ws = p[0].split(" ").map(normalize);
@@ -1299,6 +1302,26 @@ window.SceneEngine = (function(){
   CUE.sport = cueSet("ball balls team teams player players score scored scores coach soccer football basketball baseball hockey referee halftime field court goal goals");
   CUE.fire = cueSet("fire fires flame flames stove oven burn burns burned burning cook cooking pan grill magma lava candle candles campfire sun stars star");
   CUE.bodyOrgan = cueSet("body heart lungs liver kidney kidneys stomach brain skin");
+  // cues for middle and high school subjects, where everyday words mean something else
+  CUE.cellBio = cueSet("cell cells cellular organism organisms nucleus membrane cytoplasm mitochondria chloroplast chloroplasts dna rna mrna gene genes " +
+    "genetic chromosome chromosomes ribosome ribosomes protein proteins enzyme enzymes glucose atp aerobic anaerobic fermentation photosynthesis " +
+    "tissue tissues allele alleles nucleotide nucleotides amino transcription translation bacteria");
+  CUE.genetics = cueSet("dna rna mrna gene genes genetic chromosome chromosomes ribosome ribosomes allele alleles nucleotide nucleotides amino transcription translation trait traits");
+  CUE.atomic = cueSet("atom atoms atomic proton protons neutron neutrons electron electrons valence ion ions isotope isotopes element elements periodic " +
+    "orbital orbitals molecule molecules bond bonds noble");
+  CUE.chemEq = cueSet("equation equations reaction reactions reactant reactants product products chemical chemicals yields coefficient coefficients formula formulas subscript subscripts");
+  CUE.physics = cueSet("force forces newton inertia motion mass acceleration accelerate accelerates velocity momentum friction gravity action push pushes pull pulls collision collisions");
+  CUE.mathGraph = cueSet("graph graphs graphing equation equations parabola parabolas quadratic factor factoring polynomial function functions axis intercept " +
+    "solution solutions squared formula discriminant vertex exponent exponents");
+  CUE.geometry = cueSet("angle angles triangle triangles polygon polygons acute obtuse protractor congruent isosceles hypotenuse geometry");
+  CUE.temp = cueSet("temperature hot cold warm weather fahrenheit celsius thermometer heat freezing boiling fever");
+  CUE.gov = cueSet("government congress president presidents legislative executive judicial court courts constitution framers federal federalism " +
+    "senate amendment amendments democracy king kings checks balances veto");
+  CUE.treeOnly = cueSet("tree trees trunk wood forest leaves leaf roots oak pine maple log bird birds nest climb climbed");
+  CUE.argue = cueSet("essay argument arguments argumentative claim claims thesis rebuttal counterclaim counterclaims evidence reasoning debate opinion");
+  CUE.war = cueSet("war wars soviet soviets superpower superpowers communism communist capitalism nuclear");
+  CUE.computer = cueSet("computer computers code coding coder program programs programming loop loops variable variables binary algorithm algorithms " +
+    "byte bytes bits laptop laptops software app apps website");
   function senseOf(w, i, norm, cues){
     var pv = norm[i - 1] || "", nx = norm[i + 1] || "";
     function em(e){ return { emoji: e, key: "m:" + e }; }
@@ -1343,6 +1366,28 @@ window.SceneEngine = (function(){
       case "hot": case "hotter": case "hottest": return W(CUE.fire) ? undefined : ic("thermometer");
       case "string": case "strings": return W(CUE.music) ? ic("violin") : undefined;
       case "bass": return W(CUE.music) ? ic("guitar") : undefined;
+      // biology: tissue is cells, not paper; the nucleus of a cell is not an atom; respiration in a cell is not breathing
+      case "tissue": case "tissues": return W(CUE.cellBio) || W(CUE.bodyOrgan) ? null : undefined;
+      case "nucleus": case "nuclei": return pick(CUE.atomic, CUE.cellBio) === 2 ? ic("cell") : undefined;
+      case "respiration": return L(CUE.cellBio) ? null : undefined;
+      case "code": case "codes": return pick(CUE.computer, CUE.genetics) === 2 ? null : undefined;
+      case "protein": case "proteins": return L(CUE.genetics) || L(CUE.cellBio) || W(CUE.genetics) ? null : undefined;
+      // chemistry and physics: an electron shell, the arrow in an equation, a law of nature, an equal and opposite reaction
+      case "shell": case "shells": return W(CUE.atomic) ? null : undefined;
+      case "arrow": case "arrows": return W(CUE.chemEq) || W(CUE.mathGraph) ? null : undefined;
+      case "conservation": return nx === "of" ? null : undefined;
+      case "law": case "laws": return L(CUE.physics) || L(CUE.electric) || /^(newton|ohm|boyle|charles|hooke|kepler|mendel)$/.test(pv) || (nx === "of" && /^(conservation|inertia|gravity|motion|gravitation|thermodynamics|physics|nature|reflection|averages)$/.test(norm[i + 2] || "")) ? null : undefined;
+      case "reaction": case "reactions": return L(CUE.physics) && !L(CUE.chemEq) ? null : undefined;
+      // maths: angles are measured in degrees, and a parabola's roots are numbers
+      case "degree": case "degrees": return pick(CUE.geometry, CUE.temp) === 1 ? null : undefined;
+      case "root": case "roots": return W(CUE.mathGraph) || pv === "square" || pv === "cube" ? null : undefined;
+      // civics and history: a branch of government, power that people hold, the Cold War
+      case "branch": case "branches": return pick(CUE.gov, CUE.treeOnly) === 1 ? ic("columns") : undefined;
+      case "power": case "powers": case "powerful": return L(CUE.electric) || W(CUE.electric) ? undefined : W(CUE.gov) || W(CUE.royal) || W(CUE.mathGraph) ? null : undefined;
+      case "cold": return W(CUE.war) ? null : undefined;
+      case "position": case "positions": return W(CUE.argue) ? null : undefined;
+      case "program": case "programs": case "programming": return W(CUE.computer) || W(COMPUTER_CUES) ? undefined : null;
+      case "block": case "blocks": return W(CUE.computer) ? null : undefined;
     }
     return undefined;
   }
@@ -1361,10 +1406,15 @@ window.SceneEngine = (function(){
   function dangling(text){
     var ws = String(text).split(/\s+/).filter(Boolean).map(normalize).filter(Boolean);
     if (ws.length <= 2) return true;
-    var last = ws[ws.length - 1];
-    return !!DANGLE[last] || !!PHRASES[last];
+    var last = ws[ws.length - 1], prev = ws[ws.length - 2];
+    if (/^(is|are|was|were)$/.test(last) && /^(there|it|they|we|you|he|she|that|this|what|where|who|how|which)$/.test(prev)) return false;
+    return !!DANGLE[last] || (!!PHRASES[last] && !VERB_BEFORE[last] && ws.length <= 7);
   }
+  var NEEDS_DET = cueSet("store stores log logs beat beats mask masks switch switches");
+  var NOUN_DET = cueSet("the a an this that these those my your our his her their its every each some any no one");
+  var NOUN_ADJ = cueSet("grocery toy pet book candy corner local general big small little new old light wall drum paper face");
   function usedAsVerb(w, i, norm){
+    if (NEEDS_DET[w] && !NOUN_DET[norm[i - 1]] && !(NOUN_ADJ[norm[i - 1]] && NOUN_DET[norm[i - 2]])) return true;
     if (!NOUN_VERB[w]) return false;
     var pv = norm[i - 1] || "";
     return !!VERB_BEFORE[pv];
@@ -2757,21 +2807,31 @@ window.SceneEngine = (function(){
   var WC_IMP = cueSet("ask add answer bring check choose circle close color colour compare copy count cross describe draw explain figure fill find " +
     "finish fold give grab highlight keep label line list listen look make match measure move name notice open pass pay pick place point " +
     "practice predict put raise read remember repeat reread review say share show sit solve sort spell stand start stop study take talk tell " +
-    "think trace try turn underline use wait walk wash watch work write be don't do never always only just");
+    "think trace try turn underline use wait walk wash watch work write be don't do never always only just " +
+    "cite annotate summarize summarise analyze analyse identify define evaluate calculate graph plot simplify factor prove sketch estimate convert " +
+    "classify support defend revise edit proofread avoid include record observe submit hand complete outline quote paraphrase research test " +
+    "contrast interpret construct round multiply divide subtract isolate substitute plug draft brainstorm memorize prepare select organize create " +
+    "design build type save print imagine consider skim scan log flip box address focus discuss");
+  // "Research shows…", "Practice makes…": a word that could be an instruction, followed by a verb, starts a statement instead
+  var WC_STATE_NEXT = cueSet("shows means makes helps says tells gives includes involves requires needs takes uses causes leads allows becomes " +
+    "happens works seems looks sounds explains describes proves suggests");
   var WC_NOT_IMP_NEXT = cueSet("is are was were has have had can could will would of 's");
   var WC_WH = cueSet("who what why how which whose what's how's who's");
   var WC_AUX = cueSet("is are was were do does did can could will would should has have isn't aren't don't doesn't didn't can't won't");
   var WC_AUX_SUBJ = cueSet("you we they i he she it this that there anyone anybody everyone everybody someone somebody the a an your our these those people");
   var WC_NOT_TERM = cueSet("it this that there here what which who he she they we you i one that's it's everyone everybody someone something nothing " +
-    "everything anyone people some many most all each");
+    "everything anyone people some many most all each when if while because after before since although as once unless until where why how");
   var WC_DET = cueSet("a an the this that these those our your their my his her its some");
   var WC_HEDGE = cueSet("usually often always sometimes basically just really also simply generally actually kind sort like");
+  var WC_ADJ_ONLY = cueSet("full very so too more less different similar equal same hot cold warm big small large tiny true false right wrong good bad " +
+    "easy hard ready able likely used made based known located found not usually due");
   var WC_KINDS = {
     question: { label: "Question", color: "#2F6E9E" },
     todo: { label: "To do", color: "#2F7553" },
     remember: { label: "Remember", color: "#94650B" },
     important: { label: "Important", color: "#94650B" },
     means: { label: "Key word", color: "#B0472D" },
+    example: { label: "Example", color: "#B0472D" },
     topic: { label: "Topic", color: "#5B4F9A" },
     idea: { label: "Key idea", color: "#6B6156" }
   };
@@ -2798,6 +2858,7 @@ window.SceneEngine = (function(){
       if (x === "today" && !WC_AUX[w[s + 1]]){ tag = tag || "Today"; s++; continue; }
       break;
     }
+    var lead = s0 >= 0 ? s0 : s;
     // 2. the endings that only keep the class with you
     while (e - 1 > s && (WC_TAIL[w[e - 1]] || ((WC_TAIL_COMMA[w[e - 1]] || w[e - 1] === "right") && comma(e - 2)) || (w[e - 1] === "now" && e - s > 4))) e--;
     if (e - 2 > s && ((at(e - 2, ["you", "know"]) && comma(e - 3)) || at(e - 2, ["for", "me"]) || at(e - 2, ["real", "quick"]))) e -= 2;
@@ -2808,7 +2869,7 @@ window.SceneEngine = (function(){
     if (kind === "idea"){
       var rem = at(s, ["remember", "that"]) ? 2 : at(s, ["don't", "forget", "that"]) ? 3 : at(s, ["keep", "in", "mind", "that"]) ? 4 :
         at(s, ["don't", "forget", "to"]) ? 3 : at(s, ["remember", "to"]) ? 2 : at(s, ["don't", "forget"]) ? 2 : at(s, ["keep", "in", "mind"]) ? 3 :
-        x0 === "remember" && (comma(s) || WC_AUX_SUBJ[x1] || WC_DET[x1]) ? 1 : 0;
+        x0 === "remember" && x1 ? 1 : 0;
       if (rem){ kind = "remember"; s += rem; }
     }
     if (kind === "idea"){
@@ -2820,7 +2881,8 @@ window.SceneEngine = (function(){
         if (w[t] === "are" || w[t] === "am" || w[t] === "will") t++;
         if (w[t] === "going" && w[t + 1] === "to") t += 2; else if (w[t] === "gonna") t++;
       }
-      if (t > s && WC_TOPIC_VERB[w[t]]){
+      if (t > s && (w[t] === "go" || w[t] === "going") && w[t + 1] === "over"){ term = nounPhrase(t + 2, e); if (term) kind = "topic"; }
+      else if (t > s && WC_TOPIC_VERB[w[t]]){
         var p = t + 1;
         if (w[p] === "you" || w[p] === "us") p++;
         if (/^(about|at|on|with)$/.test(w[p] || "")) p++;
@@ -2838,19 +2900,45 @@ window.SceneEngine = (function(){
     }
     if (kind === "idea" || kind === "remember"){
       // "You need to …", "I want you to …", "Make sure you …", "You only change one variable", "Underline what the question asks"
-      var pre = [["i", "want", "you", "all", "to"], ["i", "want", "you", "to"], ["i", "need", "you", "to"], ["i'd", "like", "you", "to"], ["you", "need", "to"],
+      var strong = [["i", "want", "you", "to"], ["i", "need", "you", "to"], ["i'd", "like", "you", "to"], ["you", "need", "to"],
         ["you", "have", "to"], ["you've", "got", "to"], ["you", "should"], ["you", "must"], ["you're", "going", "to"], ["you", "are", "going", "to"],
-        ["make", "sure", "that", "you"], ["make", "sure", "you"], ["make", "sure", "to"], ["be", "sure", "to"], ["try", "to"], ["go", "ahead", "and"],
-        ["please"], ["let's"], ["lets"], ["we", "need", "to"], ["we", "have", "to"], ["you", "can"], ["you", "will"], ["you'll"]];
+        ["make", "sure", "that", "you"], ["make", "sure", "you"], ["make", "sure", "to"], ["be", "sure", "to"], ["go", "ahead", "and"], ["please"],
+        ["we", "need", "to"], ["we", "have", "to"]];
+      var weak = [["try", "to"], ["let's"], ["lets"], ["you", "can"], ["you", "will"], ["you'll"]];
+      // match a frame, letting "also", "all", "really"… sit inside it; returns how many words it took
+      var frame = function(list){
+        var i = s, k = 0;
+        while (k < list.length && i < e){
+          if (w[i] === list[k]){ i++; k++; continue; }
+          if (k > 0 && /^(also|all|really|just|now|then|first|still|definitely|each|both)$/.test(w[i])){ i++; continue; }
+          return 0;
+        }
+        return k === list.length ? i - s : 0;
+      };
       var hit = 0;
-      for (var q = 0; q < pre.length && !hit; q++) if (at(s, pre[q]) && WC_IMP[w[s + pre[q].length]]) hit = pre[q].length;
-      if (!hit && w[s] === "you" && WC_IMP[w[s + 1]] && !WC_NOT_IMP_NEXT[w[s + 2]]) hit = 1;
+      for (var q = 0; q < strong.length && !hit; q++){ var fl = frame(strong[q]); if (fl && w[s + fl] && !WC_STOP[w[s + fl]] || fl && WC_IMP[w[s + fl]]) hit = fl; }
+      for (var q2 = 0; q2 < weak.length && !hit; q2++){ var fw = frame(weak[q2]); if (fw && WC_IMP[w[s + fw]]) hit = fw; }
+      if (!hit && w[s] === "you" && WC_IMP[w[s + 1]] && !WC_NOT_IMP_NEXT[w[s + 2]] && !WC_STATE_NEXT[w[s + 2]]) hit = 1;
       if (!hit && w[s] === "you" && /^(only|just|always|never|also|then|first|now)$/.test(w[s + 1] || "") && WC_IMP[w[s + 2]]) hit = 1;
       if (hit){ s += hit; if (kind === "idea") kind = "todo"; }
-      else if (kind === "idea" && WC_IMP[w[s]] && !WC_NOT_IMP_NEXT[w[s + 1]] && w[s] !== "only" && w[s] !== "just" && w[s] !== "always" && w[s] !== "never") kind = "todo";
+      else if (kind === "idea" && WC_IMP[w[s]] && !WC_NOT_IMP_NEXT[w[s + 1]] && !WC_STATE_NEXT[w[s + 1]] && w[s] !== "only" && w[s] !== "just" && w[s] !== "always" && w[s] !== "never") kind = "todo";
       else if (kind === "idea" && /^(always|never)$/.test(w[s]) && WC_IMP[w[s + 1]]) kind = "todo";
     }
     var mean = null;
+    if (kind === "idea"){
+      for (var cc = s; cc < e - 1 && !term; cc++){
+        var ex = w[cc] === "of" && /^(example|examples)$/.test(w[cc - 1] || "");
+        if (!(w[cc] === "called" || (w[cc] === "as" && w[cc - 1] === "known") || ex)) continue;
+        var ta = cc + 1;
+        while (ta < e && WC_DET[w[ta]]) ta++;
+        if (e - ta < 1 || e - ta > 4 || !termOk(ta, e)) continue;
+        var mb = cc - (w[cc] === "as" || ex ? 1 : 0);
+        while (mb > s && /^(is|are|was|were|also|which|that|this|it|it's|that's|a|an|the|sometimes|often|usually|now|known|called|example|examples|one|just)$/.test(w[mb - 1])) mb--;
+        term = { a: ta, b: e };
+        if (mb - s >= 2 && hasContent(s, mb)) mean = { a: s, b: mb };
+        kind = ex ? "example" : "means";
+      }
+    }
     if (kind === "idea"){
       // "A hypothesis is an educated guess…", "Democracy means people choose their leaders", "This idea is really important"
       for (var c = s + 1; c <= Math.min(s + 5, e - 2); c++){
@@ -2860,7 +2948,7 @@ window.SceneEngine = (function(){
         var ts = s;
         while (ts < c && WC_DET[w[ts]]) ts++;
         if (at(ts, ["idea", "of"]) || at(ts, ["concept", "of"]) || at(ts, ["word"]) && c - ts > 1) ts += w[ts] === "word" ? 1 : 2;
-        if (ts >= c || WC_NOT_TERM[w[ts]]) break;
+        if (ts >= c || WC_NOT_TERM[w[ts]] || !termOk(ts, c)) break;
         var named = true;
         for (var tq = ts + 1; tq < c; tq++) if (WC_NOT_TERM[w[tq]] || WC_DET[w[tq]]) named = false;
         if (!named) break;
@@ -2868,20 +2956,32 @@ window.SceneEngine = (function(){
         while (ys < e && (WC_HEDGE[w[ys]] || w[ys] === "of")) ys++;
         if (/^(really|very|so|super|extremely|pretty)$/.test(w[ys] || "") && /^(important|key|essential|crucial)$/.test(w[ys + 1] || "")) ys++;
         if (/^(important|key|essential|crucial)$/.test(w[ys] || "")){ kind = "important"; term = { a: ts, b: c }; break; }
-        if (/^(that|because|why|not|going|able|also|still|now|here|there|in|on|at|from|by|with|for)$/.test(w[ys] || "") || /ing$/.test(w[ys] || "")) break;
+        var defines = cv !== "is" && cv !== "are";
+        if (defines && w[ys] === "that") ys++;
+        // "X is …" defines X only when a thing follows, not "is full of tension", "is that…", "is going to…"
+        if (!defines && (/^(that|because|why|not|going|able|also|still|now|here|there|in|on|at|from|by|with|for)$/.test(w[ys] || "") || /ing$/.test(w[ys] || "") || adjOnly(ys))) break;
         if (x2){ term = { a: ys, b: e }; mean = { a: ts, b: c }; }
         else { term = { a: ts, b: c }; mean = { a: ys, b: e }; }
         while (mean.a < mean.b && WC_DET[w[mean.a]] && mean.b - mean.a > 2) mean.a++;
-        if (term.b - term.a > 4 || mean.b - mean.a < 2 || !hasContent(mean.a, mean.b)) { term = null; mean = null; break; }
+        if (term.b - term.a > 4 || mean.b - mean.a < 2 || !hasContent(mean.a, mean.b) || !termOk(term.a, term.b)) { term = null; mean = null; break; }
         kind = "means";
         break;
       }
     }
-    if (kind === "idea" && /\b(important|on the test|on the quiz|on the exam|pay attention|don't forget)\b/i.test(raw.slice(s, e).join(" "))) kind = "remember";
+    if (kind === "idea" && /\b(important|on the test|on the quiz|on the exam|pay attention|don't forget|due (on|by|tomorrow|next|this|monday|tuesday|wednesday|thursday|friday))\b/i.test(raw.slice(s, e).join(" "))) kind = "remember";
 
     function hasContent(a, b){ for (var k = a; k < b; k++) if (w[k] && !WC_STOP[w[k]]) return true; return false; }
+    // "is full of tension", "is different from", "is hot": a description, not a definition ("are different versions of…" is one)
+    function adjOnly(i){
+      if (/^(very|so|too|not|usually|more|less)$/.test(w[i] || "")) return true;
+      return !!WC_ADJ_ONLY[w[i]] && (i + 1 >= e || /^(of|to|from|than|and|or|for|in|on|at|with|by|as|because|when|if|but|enough|tomorrow|today)$/.test(w[i + 1]));
+    }
+    // a word big enough to stand alone on a card: not "b", not "this"
+    function termOk(a, b){ for (var k = a; k < b; k++) if (w[k] && !WC_STOP[w[k]] && !WC_LIGHT[w[k]] && w[k].length >= 3) return true; return false; }
     function nounPhrase(a, b){
-      while (a < b && WC_DET[w[a]]) a++;
+      while (a < b && (WC_DET[w[a]] || /^(few|several|all|both|more|another)$/.test(w[a]))) a++;
+      // "a few literary devices before we read act two" → "literary devices"
+      for (var cut2 = a + 1; cut2 < b; cut2++) if (/^(before|after|when|while|because|so|since|until|if|and|then)$/.test(w[cut2])){ b = cut2; break; }
       while (b > a && /^(today|together|now|tomorrow|first|again|next)$/.test(w[b - 1] || "")) b--;
       if (b > a + 1 && /^(this|next)$/.test(w[b - 2]) && /^(week|morning|afternoon|year|unit|time)$/.test(w[b - 1])) b -= 2;
       if (b <= a || b - a > 6 || !hasContent(a, b)) return null;
@@ -2890,8 +2990,7 @@ window.SceneEngine = (function(){
 
     // 4. the words to show: long sentences keep their first clause or two
     var MAX = 22;
-    var body = term && (kind === "topic" || kind === "important") ? null : mean || { a: s, b: e };
-    if (kind === "means") body = mean;
+    var body = term ? mean : { a: s, b: e };
     var cut = false;
     if (body && body.b - body.a > MAX){
       var best = -1;
@@ -2912,15 +3011,14 @@ window.SceneEngine = (function(){
       if (out.length) out[0].t = out[0].t.charAt(0).toUpperCase() + out[0].t.slice(1);
       return out;
     }
-    var main = term && kind !== "means" ? toks(term) : null, words = body ? toks(body) : [];
-    if (kind === "means") main = toks(term);
-    if (main && kind !== "means") main.forEach(function(tk){ tk.k = true; });
-    if (main && kind === "means") main.forEach(function(tk){ tk.k = true; });
+    var main = term ? toks(term) : null, words = body ? toks(body) : [];
+    if (main) main.forEach(function(tk){ tk.k = true; });
     if (words.length && cut) words[words.length - 1].t += "…";
     if (words.length && kind === "question" && !cut) words[words.length - 1].t += "?";
-    if (words.length && kind !== "means") words[0].t = words[0].t.charAt(0).toUpperCase() + words[0].t.slice(1);
+    if (words.length && !main) words[0].t = words[0].t.charAt(0).toUpperCase() + words[0].t.slice(1);
     if (main && main.length && kind !== "topic") main[0].t = main[0].t.charAt(0).toUpperCase() + main[0].t.slice(1);
-    if (kind === "means" && words.length) words[0].t = words[0].t.charAt(0).toLowerCase() + words[0].t.slice(1);
+    // under a big word, the meaning reads on from it in lower case, unless it starts with a name ("Juliet", "DNA")
+    if (main && words.length && !(words[0].at > 0 && /^[A-Z]/.test(raw[words[0].at])) && !/^[A-Z0-9]{2,}/.test(words[0].t) && !/^I\b/.test(words[0].t)) words[0].t = words[0].t.charAt(0).toLowerCase() + words[0].t.slice(1);
 
     // 5. is there anything here? Praise and "okay, let's go" need no card; live talk asks for a little more.
     var all = (main || []).concat(words), keyN = all.filter(function(tk){ return tk.k; }).length;
@@ -2928,16 +3026,16 @@ window.SceneEngine = (function(){
     // …but a thinking prompt made of small words still counts in a lesson: "How do you know?", "Think about what you already know"
     var prompt = !opt.live && all.length >= 4 && (kind === "todo" || (kind === "question" && WC_WH[w[s]])) && !all.some(function(tk){ return WC_LIGHT[cw(tk.t)]; });
     if (light && !prompt) return null;
-    if (opt.live && keyN < 2 && !main) return null;
+    if (opt.live && !main && keyN < (kind === "idea" || (kind === "question" && !WC_WH[w[s]]) ? 2 : 1)) return null;
     if (!keyN) all.forEach(function(tk){ tk.k = true; });
-    return { kind: kind, tag: tag, main: main, words: words, first: all.length ? Math.min.apply(null, all.map(function(tk){ return tk.at; })) : 0, raw: raw, s: s0 >= 0 ? s0 : s, e: e };
+    return { kind: kind, tag: tag, main: main, words: words, first: all.length ? Math.min.apply(null, all.map(function(tk){ return tk.at; })) : 0, raw: raw, lead: lead, e: e };
   }
   // The same sentence as plain text, with the openings and endings that only keep people listening taken off.
   function plainKeyPoint(kp){ return (kp.main || []).concat(kp.words).map(function(tk){ return tk.t; }).join(" "); }
   function tidySentence(raw){
     var kp = keyPoint(raw.join(" "));
-    if (!kp) return "";
-    var t = raw.slice(kp.s, kp.e).join(" ").replace(/[.!?;:,]+$/, "");
+    if (!kp) return raw.length ? cap(raw.join(" ").replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, "")) : "";
+    var t = raw.slice(kp.lead, kp.e).join(" ").replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, "");
     return t ? t.charAt(0).toUpperCase() + t.slice(1) : "";
   }
 
@@ -2955,8 +3053,24 @@ window.SceneEngine = (function(){
     sc.words.sig = "w:" + say.toLowerCase().replace(/[^a-z0-9 ]/g, "");
     // a big word or two on the card leaves room under it for the whole sentence
     var full = tidySentence(kp.raw);
-    sc.caption = kp.main && kp.kind !== "means" && full.split(" ").length <= 16 && full.toLowerCase() !== say.toLowerCase() ? full : "";
+    sc.caption = kp.main && !kp.words.length && full.split(" ").length <= 16 && full.toLowerCase() !== say.toLowerCase() ? full : "";
     return sc;
+  }
+
+  // The words a scene puts in front of the class: its picture labels, a diagram's title and parts, a word card's key words.
+  // Lower case and singular, so "electron" and "electrons" count as the same word.
+  function wcStem(x){ return x.length > 4 && /(ss|us|is)$/.test(x) ? x : x.length > 4 && /(ches|shes|xes|ses|zes)$/.test(x) ? x.slice(0, -2) : x.length > 3 && /ies$/.test(x) ? x.slice(0, -3) + "y" : x.length > 3 && /s$/.test(x) ? x.slice(0, -1) : x; }
+  function sceneWords(sc){
+    var out = [];
+    function add(t){ String(t).split(/[\s&,]+/).forEach(function(x){ x = cw(x); if (x && !WC_STOP[x] && x.length > 1) out.push(wcStem(x)); }); }
+    if (!sc || !sc.show) return out;
+    if (sc.words) (sc.words.main || []).concat(sc.words.words).forEach(function(tk){ if (tk.k) add(tk.t); });
+    else if (sc.diagram && DIAGRAMS[sc.diagram]){
+      var d = DIAGRAMS[sc.diagram];
+      add(d.title);
+      Object.keys(d.parts).forEach(function(k){ d.parts[k].say.forEach(function(ph){ add(ph.join(" ")); }); });
+    } else allItems(sc).forEach(function(x){ add(x.label); });
+    return out;
   }
 
   function wcLine(tokens, size){
@@ -3116,7 +3230,7 @@ window.SceneEngine = (function(){
     analyze: analyze, sceneFromAI: sceneFromAI, renderScene: renderScene, firstAt: firstAt,
     highlightAts: highlightAts, sceneKeys: sceneKeys, buildPlanPrompt: buildPlanPrompt, iconGallery: iconGallery, isUnsure: function(w, extra){ w = normalize(w); return !!w && !RELATION[w] && looseWord(w) && extraConcept(w, extra) === undefined; }, lookup: function(w, extra){ return conceptFor(normalize(w), extra); },
     setOpenMoji: function(o){ OM = o; }, hasOpenMoji: function(){ return !!OM; },
-    splitSpoken: splitSpoken, dangling: dangling, wordScene: wordScene, diagramScene: function(text, key){ return diagramScene(text, key); }, diagramCount: DIAGRAM_ORDER.length,
+    splitSpoken: splitSpoken, dangling: dangling, wordScene: wordScene, sceneWords: sceneWords, diagramScene: function(text, key){ return diagramScene(text, key); }, diagramCount: DIAGRAM_ORDER.length,
     diagramGallery: function(){
       return DIAGRAM_ORDER.map(function(k){ var d = DIAGRAMS[k], sc = diagramScene(d.title, k); sc.caption = d.title; sc.highlight = []; return { key: k, title: d.title, say: d.sayText, svg: renderScene(sc) }; });
     },

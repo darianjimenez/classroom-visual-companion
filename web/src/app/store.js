@@ -63,7 +63,7 @@ const rt = {
   cache: {}, skipped: {}, shownKeys: {}, recent: [], frameCount: 0, active: null,
   settleTimer: null, recapTimer: null, popTimes: [],
   liveQueue: [], liveTimer: null, lastLiveAt: 0, voiceSeq: 0,
-  transcript: [], talkCtx: { words: [], subject: null }, pending: "", pendingTimer: null,
+  transcript: [], talkCtx: { words: [], subject: null }, pending: "", pendingTimer: null, shownWords: {}, wordsFor: {},
   aiPlan: null, sample: null, planning: null,
   recognition: null, restarts: [], restartTimer: null,
   follow: { on: false, processed: {}, miss: [] },
@@ -90,6 +90,7 @@ export const useApp = create((set, get) => {
     return sc.show ? sc : E.wordScene(text)
   }
   function sceneFor(si) {
+    if (rt.wordsFor[si]) return rt.wordsFor[si]
     const mode = aiActive() ? "ai" : curatedActive() ? "cur" : "rule"
     const key = si + ":" + mode
     if (!(key in rt.cache)) {
@@ -167,6 +168,14 @@ export const useApp = create((set, get) => {
     return sc.diagram ? r.slice(-20).indexOf(sig) >= 0 : r.length > 0 && r[r.length - 1] === sig
   }
   const shouldSkip = (sc) => isRepeat(sc) || (newOnly() && E.sceneKeys(sc).every((k) => rt.shownKeys[k]))
+  // A sentence whose pictures are all on the board already can still say something new ("Metals tend to lose electrons"
+  // after the electron picture): then its key point goes up in words, so the idea isn't skipped.
+  function wordsInstead(text, live) {
+    const w = E.wordScene(text, live ? { live: true } : undefined)
+    if (!w.show || shouldSkip(w)) return null
+    const fresh = E.sceneWords(w).filter((k) => !rt.shownWords[k])
+    return fresh.length >= (live || get().prefs.calm ? 2 : 1) ? w : null
+  }
   const makeFrame = (n, sc, si) => ({ n, scene: sc, si, svg: E.renderScene(sc), done: false })
 
   function startFrame(id, sc, si) {
@@ -174,6 +183,7 @@ export const useApp = create((set, get) => {
     rt.frameCount++
     const rec = makeFrame(rt.frameCount, sc, si)
     E.sceneKeys(sc).forEach((k) => { rt.shownKeys[k] = true })
+    E.sceneWords(sc).forEach((w) => { rt.shownWords[w] = true })
     rt.recent.push(sceneSig(sc))
     if (rt.recent.length > 20) rt.recent.shift()
     rt.popTimes.push(Date.now())
@@ -202,7 +212,7 @@ export const useApp = create((set, get) => {
   function clearBoard() {
     clearTimeout(rt.settleTimer); clearTimeout(rt.recapTimer)
     rt.active = null; rt.frameCount = 0
-    rt.shownKeys = {}; rt.skipped = {}; rt.popTimes = []; rt.recent = []
+    rt.shownKeys = {}; rt.skipped = {}; rt.popTimes = []; rt.recent = []; rt.shownWords = {}; rt.wordsFor = {}
     clearTimeout(rt.liveTimer); rt.liveQueue = []; rt.lastLiveAt = 0
     clearTimeout(rt.pendingTimer); rt.pending = ""
     set({ frames: [], viewing: null, activeN: null, revealAt: Infinity, heroMode: "", recapOpen: false })
@@ -280,11 +290,15 @@ export const useApp = create((set, get) => {
   const needsReload = () => !rt.loaded || rt.scriptText !== get().script.trim()
   function advanceScene(si, k, last) {
     if (rt.active && rt.active.id !== si) finishActive()
-    const sc = sceneFor(si)
+    let sc = sceneFor(si)
     if (!sc.show || rt.skipped[si]) return
     if (!rt.active) {
       if (k < E.firstAt(sc) && !last) return
-      if (shouldSkip(sc)) { rt.skipped[si] = true; return }
+      if (shouldSkip(sc)) {
+        sc = wordsInstead(rt.sentences[si].text)
+        if (!sc) { rt.skipped[si] = true; return }
+        rt.wordsFor[si] = sc
+      }
       startFrame(si, sc, si)
     }
     revealTo(last ? Infinity : k)
@@ -399,7 +413,11 @@ export const useApp = create((set, get) => {
     if (!sc.show) return "none"
     if (sc.subjects && sc.subjects.length) rt.talkCtx.subject = sc.subjects[0]
     const q = rt.liveQueue
-    if (shouldSkip(sc) || (q.length && sceneSig(q[q.length - 1]) === sceneSig(sc))) return "same"
+    if (shouldSkip(sc) || (q.length && sceneSig(q[q.length - 1]) === sceneSig(sc))) {
+      const w = sc.words ? null : wordsInstead(text, true)
+      if (!w || (q.length && sceneSig(q[q.length - 1]) === sceneSig(w))) return "same"
+      sc = w
+    }
     if (!get().talk) set({ heading: { tag: "Live", color: "var(--live)", title: "Listening…" } })
     q.push(sc)
     // too many waiting: the oldest word card goes first, then the oldest picture
