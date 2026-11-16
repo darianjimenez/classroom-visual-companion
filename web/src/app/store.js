@@ -63,7 +63,7 @@ const rt = {
   cache: {}, skipped: {}, shownKeys: {}, recent: [], frameCount: 0, active: null,
   settleTimer: null, recapTimer: null, popTimes: [],
   liveQueue: [], liveTimer: null, lastLiveAt: 0, voiceSeq: 0,
-  transcript: [], talkCtx: { words: [], subject: null },
+  transcript: [], talkCtx: { words: [], subject: null }, pending: "", pendingTimer: null,
   aiPlan: null, sample: null, planning: null,
   recognition: null, restarts: [], restartTimer: null,
   follow: { on: false, processed: {}, miss: [] },
@@ -202,6 +202,7 @@ export const useApp = create((set, get) => {
     rt.active = null; rt.frameCount = 0
     rt.shownKeys = {}; rt.skipped = {}; rt.popTimes = []; rt.recent = []
     clearTimeout(rt.liveTimer); rt.liveQueue = []; rt.lastLiveAt = 0
+    clearTimeout(rt.pendingTimer); rt.pending = ""
     set({ frames: [], viewing: null, activeN: null, revealAt: Infinity, heroMode: "", recapOpen: false })
     showEmpty()
     updatePace()
@@ -384,11 +385,13 @@ export const useApp = create((set, get) => {
   }
   // finishing: anything still waiting goes straight into the slideshow
   function flushLive() { clearTimeout(rt.liveTimer); while (rt.liveQueue.length) showLiveScene(rt.liveQueue.shift()) }
-  function phraseScene(text) {
+  // next: the words said just after this phrase. Live talk waits for them, so "it" and "they", and what a word means, can settle.
+  function phraseScene(text, next) {
     if (get().talk) rt.transcript.push(text)
-    const words = text.split(/\s+/).filter(Boolean), sc = E.analyze(text, get().extra, rt.talkCtx), hl = E.highlightAts(sc)
+    const words = text.split(/\s+/).filter(Boolean)
+    const sc = E.analyze(text, get().extra, { words: rt.talkCtx.words, subject: rt.talkCtx.subject, next: next || [] }), hl = E.highlightAts(sc)
     words.forEach((w, k) => tick(w, hl[k]))
-    rt.talkCtx.words = rt.talkCtx.words.concat(words.map(E.normalize)).slice(-60)
+    rt.talkCtx.words = rt.talkCtx.words.concat(words.map(E.normalize)).slice(-100)
     if (!sc.show) return "none"
     if (sc.subjects && sc.subjects.length) rt.talkCtx.subject = sc.subjects[0]
     const q = rt.liveQueue
@@ -399,18 +402,42 @@ export const useApp = create((set, get) => {
     pumpLive()
     return "shown"
   }
-  // One phrase from the speech recogniser (everything said before a pause). Long ones are split into ideas,
-  // and recent words plus the last subject go along so "it" and "they" and the lesson's topic carry over.
-  function voicePhrase(text) {
+  // One phrase becomes pictures. Long ones are split into ideas; recent words, the last subject and the words that
+  // follow go along, so "it", "they" and the lesson's topic carry over.
+  function drawPhrase(text, nextText) {
     text = String(text).trim()
     if (!text) return
     let made = 0, same = 0
-    E.splitSpoken(text).forEach((part) => { const r = phraseScene(part); if (r === "shown") made++; else if (r === "same") same++ })
+    const parts = E.splitSpoken(text)
+    parts.forEach((part, k) => {
+      const next = parts.slice(k + 1).concat(nextText || "").join(" ").split(/\s+/).filter(Boolean).slice(0, 24).map(E.normalize)
+      const r = phraseScene(part, next)
+      if (r === "shown") made++; else if (r === "same") same++
+    })
     if (!get().talk) return
     const heard = "“" + (text.length > 90 ? text.slice(0, 88) + "…" : text) + "”"
     if (made) setLive(heard + (made > 1 ? " · " + made + " pictures" : ""))
     else if (same) setLive(heard + " · same idea, the picture stays")
     else setLive(heard + " · no picture. Try naming something, like “volcano” or “plant”.", true)
+  }
+  // The recogniser sends a phrase whenever the speaker pauses. Each one waits a moment before it is drawn: if the pause split
+  // one idea ("we're learning about American" … "football"), the two halves are joined; otherwise the next phrase becomes
+  // context for this one. A little later on screen, but far fewer wrong pictures.
+  const LOOKAHEAD_MS = 1200
+  function voicePhrase(text) {
+    text = String(text).trim()
+    if (!text) return
+    clearTimeout(rt.pendingTimer)
+    if (rt.pending && E.dangling(rt.pending)) text = rt.pending + " " + text
+    else if (rt.pending) drawPhrase(rt.pending, text)
+    rt.pending = text
+    rt.pendingTimer = setTimeout(flushPending, LOOKAHEAD_MS)
+  }
+  function flushPending() {
+    clearTimeout(rt.pendingTimer)
+    const t = rt.pending
+    rt.pending = ""
+    if (t) drawPhrase(t, "")
   }
   function enterTalk() {
     if (get().talk) { if (SR && !get().listening) startListening(); return }
@@ -428,7 +455,7 @@ export const useApp = create((set, get) => {
   function exitTalk(showSlides) {
     if (!get().talk) return
     if (get().listening) stopListening()
-    flushLive()
+    flushPending(); flushLive()
     set({ talk: false, lastTalk: rt.transcript.slice() })
     if (!get().frames.length) { set({ boardIsTalk: false }); clearBoard(); setBoardHeading(); return }
     const n = get().frames.length
@@ -552,6 +579,7 @@ export const useApp = create((set, get) => {
   }
   function stopListening(msg) {
     set({ listening: false }); clearTimeout(rt.restartTimer)
+    flushPending()
     if (rt.recognition) { try { rt.recognition.abort() } catch (e) {} }
     setVoice({ interim: "", status: msg || DEFAULT_VOICE })
     if (msg) logVoice("stopped: " + msg)
@@ -714,9 +742,16 @@ export const useApp = create((set, get) => {
         if (!SR) { setLive("Live voice doesn't work in this browser (try Google Chrome). Type sentences below instead.", true); return }
         micToggle()
       },
-      sayTyped(t) { t = String(t).trim(); if (!t || !get().talk) return; splitSentences(t).forEach(voicePhrase) },
-      sayExample: (t) => voicePhrase(t),
+      // typed sentences are complete already, so they're drawn straight away, each with the next one as context
+      sayTyped(t) {
+        t = String(t).trim(); if (!t || !get().talk) return
+        flushPending()
+        const ss = splitSentences(t)
+        ss.forEach((x, k) => drawPhrase(x, ss[k + 1] || ""))
+      },
+      sayExample: (t) => { flushPending(); drawPhrase(t, "") },
       finishTalk() {
+        flushPending(); flushLive()
         if (!get().frames.length) { exitTalk(false); toast("No pictures yet, so there's no slideshow."); return }
         exitTalk(true)
       },
