@@ -11,7 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 // buttons that sit on the dark board
-const onBoard = "text-board-foreground/85 hover:bg-white/10 hover:text-board-foreground aria-pressed:bg-white/15 aria-pressed:text-board-foreground dark:hover:bg-white/10"
+const onBoard = "text-board-foreground/85 hover:bg-board-hover hover:text-board-foreground aria-pressed:bg-board-press aria-pressed:text-board-foreground dark:hover:bg-board-hover"
 
 function BoardButton({ label, onClick, pressed, disabled, className, children }: {
   label: string; onClick: () => void; pressed?: boolean; disabled?: boolean; className?: string; children: React.ReactNode
@@ -72,7 +72,7 @@ function Dots() {
       {dots.map((d, i) => (
         <button key={i} type="button" aria-label={"Sentence " + (i + 1)} aria-current={d.current ? "step" : undefined} disabled={!d.hasScene} onClick={() => a.viewSentence(i)}
           className={cn("group flex h-4 w-6 min-w-0 items-center", d.hasScene && "cursor-pointer")}>
-          <span className={cn("h-1 w-full rounded-full bg-white/15 transition-colors", d.done && "bg-white/40", d.current && "bg-board-foreground", d.hasScene && "group-hover:bg-board-foreground")} />
+          <span className={cn("h-1 w-full rounded-full bg-board-track transition-colors", d.done && "bg-board-track-done", d.current && "bg-board-foreground", d.hasScene && "group-hover:bg-board-foreground")} />
         </button>
       ))}
     </div>
@@ -98,7 +98,7 @@ function StartCard() {
   const icons = start.icons.map((k) => E.iconSVG(k)).join("")
   return (
     <div className="flex max-w-lg flex-col items-center text-center">
-      {icons && <div className="mb-6 flex gap-3 rounded-lg bg-paper px-4 py-3 shadow-[var(--shadow-thumb)] [&_svg]:size-11 sm:[&_svg]:size-12" dangerouslySetInnerHTML={{ __html: icons }} />}
+      {icons && <div className="mb-6 flex gap-3 rounded-lg bg-paper px-4 py-3 shadow-[var(--shadow-thumb)] ring-1 ring-board-line [&_svg]:size-11 sm:[&_svg]:size-12" dangerouslySetInnerHTML={{ __html: icons }} />}
       <h3 className="font-caption text-3xl leading-tight font-medium text-board-foreground sm:text-4xl">{start.title}</h3>
       <p className="mt-2 text-sm text-board-muted">{start.meta}</p>
       <Button onClick={a.start} className="mt-8 h-11 gap-2 bg-brand px-6 text-base font-semibold text-brand-foreground hover:bg-brand/90">
@@ -144,7 +144,7 @@ function TalkScreen() {
         <span className="text-xs text-board-muted">No microphone? Try one:</span>
         {EXAMPLES.map((t) => (
           <button key={t} type="button" onClick={() => a.sayExample(t)}
-            className="press rounded-lg border border-white/15 px-3 py-2 font-caption text-sm text-board-foreground transition-colors hover:bg-white/10 [@media(max-height:860px)]:py-1">
+            className="press rounded-lg border border-board-edge px-3 py-2 font-caption text-sm text-board-foreground transition-colors hover:bg-board-hover [@media(max-height:860px)]:py-1">
             {t}
           </button>
         ))}
@@ -188,8 +188,8 @@ function Hero() {
     <div className="hero flex w-full flex-col items-center gap-3 self-stretch" data-mode={heroMode}>
       {/* pictures are 16:10; the card takes the largest size that fits the slot, leaving room for the number badge */}
       <div className="flex min-h-0 w-full flex-1 items-center justify-center [container-type:size]">
-        <div key={frame.n} className="hero-card relative w-[min(calc(100cqw-24px),calc((100cqh-16px)*1.6+16px))] rounded-xl bg-paper p-2 shadow-[var(--shadow-card)]">
-          <span className="tabular absolute -top-3 -left-3 z-10 flex size-6 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{frame.n}</span>
+        <div key={frame.n} className="hero-card relative w-[min(calc(100cqw-24px),calc((100cqh-16px)*1.6+16px))] rounded-xl bg-paper p-2 shadow-[var(--shadow-card)] ring-1 ring-board-line">
+          <span className="tabular absolute -top-3 -left-3 z-10 flex size-6 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-board-edge">{frame.n}</span>
           <div ref={art} className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: frame.svg }} />
         </div>
       </div>
@@ -216,8 +216,8 @@ function Recap() {
       <div className="thumb-scroll grid min-h-0 flex-1 grid-cols-[repeat(auto-fill,minmax(190px,1fr))] content-start gap-4 overflow-y-auto p-2">
         {frames.map((f) => (
           <button key={f.n} type="button" onClick={() => a.viewFrame(f.n)}
-            className="press relative rounded-lg bg-paper p-1 text-left shadow-[var(--shadow-thumb)] outline-none focus-visible:ring-2 focus-visible:ring-board-foreground">
-            <span className="tabular absolute -top-2 -left-2 flex size-5 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{f.n}</span>
+            className="press relative rounded-lg bg-paper p-1 text-left shadow-[var(--shadow-thumb)] ring-1 ring-board-line outline-none focus-visible:ring-2 focus-visible:ring-board-foreground">
+            <span className="tabular absolute -top-2 -left-2 flex size-5 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-board-edge">{f.n}</span>
             <div className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: f.svg }} />
             {f.scene.caption && <p className="mt-2 px-1 pb-1 text-center font-caption text-sm leading-tight text-neutral-800">{f.scene.caption}</p>}
           </button>
@@ -242,9 +242,9 @@ function Filmstrip() {
       {!done.length && <p className="self-center px-1 text-sm text-board-muted">Earlier pictures line up here.</p>}
       {done.map((f) => (
         <button key={f.n} type="button" onClick={() => a.viewFrame(f.n)} aria-label={"Scene " + f.n + ": " + (f.scene.caption || f.scene.words?.say)} title={f.scene.caption || f.scene.words?.say}
-          className={cn("press relative w-28 shrink-0 self-start rounded-lg bg-paper p-1 text-left opacity-80 transition-opacity outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-board-foreground",
+          className={cn("press relative w-28 shrink-0 self-start rounded-lg bg-paper p-1 text-left opacity-80 ring-1 ring-board-line transition-opacity outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-board-foreground",
             f.n === viewing && "opacity-100 ring-2 ring-board-foreground")}>
-          <span className="tabular absolute -top-2 -left-2 flex size-5 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-white/20">{f.n}</span>
+          <span className="tabular absolute -top-2 -left-2 flex size-5 items-center justify-center rounded-full bg-board text-xs font-semibold text-board-foreground ring-1 ring-board-edge">{f.n}</span>
           <div className="overflow-hidden rounded-sm" dangerouslySetInnerHTML={{ __html: f.svg }} />
         </button>
       ))}
@@ -264,11 +264,11 @@ function TalkBar() {
       </p>
       <form className="flex flex-wrap gap-2" onSubmit={(e) => { e.preventDefault(); a.sayTyped(text); setText("") }}>
         <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="Or type a sentence and press Enter" aria-label="Type a sentence to show as a picture"
-          className="min-w-[180px] flex-1 border-white/20 bg-white/5 text-board-foreground placeholder:text-board-muted dark:bg-white/5" />
-        <Button type="submit" variant="ghost" className={cn("border border-white/20", onBoard)}>Show</Button>
+          className="min-w-[180px] flex-1 border-board-edge bg-board-field text-board-foreground placeholder:text-board-muted dark:bg-board-field" />
+        <Button type="submit" variant="ghost" className={cn("border border-board-edge", onBoard)}>Show</Button>
         {/* only the main action once there is something to show; until then the microphone is */}
-        <Button type="button" onClick={a.finishTalk} disabled={!hasPictures}
-          className={hasPictures ? "bg-brand font-semibold text-brand-foreground hover:bg-brand/90" : cn("border border-white/20", onBoard)}>
+        <Button type="button" onClick={a.finishTalk} disabled={!hasPictures} variant={hasPictures ? "default" : "ghost"}
+          className={hasPictures ? "bg-brand font-semibold text-brand-foreground hover:bg-brand/90" : cn("border border-board-edge", onBoard)}>
           Finish & see slideshow
         </Button>
       </form>
@@ -309,7 +309,7 @@ function Controls() {
     <div className="mt-2 grid grid-cols-[auto_1fr] items-center gap-3 sm:grid-cols-[1fr_auto_1fr]">
       <div className="justify-self-start">
         <BoardButton label={listening ? "Stop listening (M)" : "Microphone (M)"} onClick={a.micToggle} pressed={listening} disabled={!supported}
-          className={cn("size-10 rounded-full border border-white/20", listening && "border-live bg-live text-white hover:bg-live/90 aria-pressed:bg-live")}>
+          className={cn("size-10 rounded-full border border-board-edge", listening && "border-live bg-live text-white hover:bg-live/90 aria-pressed:bg-live")}>
           {listening ? <Mic /> : <MicOff />}
         </BoardButton>
       </div>
@@ -318,7 +318,7 @@ function Controls() {
         <BoardButton label="Previous scene (←)" onClick={a.prevScene} className="size-10"><SkipBack /></BoardButton>
         {!talk && (
           <Button aria-label={playing ? "Pause (Space)" : "Play (Space)"} onClick={a.togglePlay} variant={startShowing ? "ghost" : "default"}
-            className={cn("size-12 rounded-full", startShowing ? cn("border border-white/20", onBoard) : "bg-brand text-brand-foreground hover:bg-brand/90")}>
+            className={cn("size-12 rounded-full", startShowing ? cn("border border-board-edge", onBoard) : "bg-brand text-brand-foreground hover:bg-brand/90")}>
             {playing ? <Pause className="size-5 fill-current" /> : <Play className="size-5 translate-x-px fill-current" />}
           </Button>
         )}
@@ -326,10 +326,10 @@ function Controls() {
       </div>
       {!talk && (
         <ToggleGroup value={[String(speed)]} onValueChange={(v: string[]) => v[0] && a.setPref("speed", +v[0])} aria-label="Reading pace"
-          className="col-span-2 justify-self-center rounded-lg border border-white/20 p-1 sm:col-span-1 sm:justify-self-end" spacing={0}>
+          className="col-span-2 justify-self-center rounded-lg border border-board-edge p-1 sm:col-span-1 sm:justify-self-end" spacing={0}>
           {PACES.map((p) => (
             <ToggleGroupItem key={p.wpm} value={String(p.wpm)} size="sm"
-              className="h-6 rounded-sm px-3 text-xs font-medium text-board-muted hover:bg-white/10 hover:text-board-foreground data-[pressed]:bg-white/15 data-[pressed]:text-board-foreground">
+              className="h-6 rounded-sm px-3 text-xs font-medium text-board-muted hover:bg-board-hover hover:text-board-foreground data-[pressed]:bg-board-press data-[pressed]:text-board-foreground">
               {p.label}
             </ToggleGroupItem>
           ))}
@@ -347,7 +347,7 @@ export function Board() {
   const prefs = useApp((s) => s.prefs)
   return (
     <section id="board" aria-label="Storyboard"
-      className={cn("board relative flex h-[calc(100svh-6.25rem)] min-h-[560px] flex-col rounded-xl bg-board px-4 pt-4 pb-4 text-board-foreground shadow-[var(--shadow-board)] sm:px-5",
+      className={cn("board relative flex h-[calc(100svh-6.25rem)] min-h-[560px] flex-col rounded-xl border border-board-line bg-board px-4 pt-4 pb-4 text-board-foreground shadow-[var(--shadow-board)] sm:px-5",
         talk && "talking", listening && "mic-on", fullscreen && "is-fullscreen", !prefs.labels && "no-labels", prefs.calm && "calm",
         prefs.unsure && "show-unsure", !prefs.tickerOn && "no-ticker")}>
       <BoardHeader />

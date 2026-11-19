@@ -22,6 +22,12 @@
     --color-board-foreground: var(--board-foreground);
     --color-board-muted: var(--board-muted);
     --color-board-line: var(--board-line);
+    --color-board-edge: var(--board-edge);
+    --color-board-hover: var(--board-hover);
+    --color-board-press: var(--board-press);
+    --color-board-track: var(--board-track);
+    --color-board-track-done: var(--board-track-done);
+    --color-board-field: var(--board-field);
     --color-paper: var(--paper);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
@@ -87,11 +93,17 @@
     --brand-foreground: #FFFFFF;
     --link: #3F4FC1;
     --live: oklch(0.64 0.17 32);
-    /* the board stays a dark stage for projectors, now a deep indigo */
-    --board: #1F2346;
-    --board-foreground: #FDFBF7;
-    --board-muted: #AEB3D6;
-    --board-line: oklch(1 0 0 / 0.13);
+    /* the board is a white card like the lesson list; pictures sit on it as paper cards */
+    --board: #FFFFFF;
+    --board-foreground: #2A2A2A;
+    --board-muted: #5C5C5C;
+    --board-line: #E9E7E3;
+    --board-edge: #DEDBD5;
+    --board-hover: rgb(42 42 42 / 0.05);
+    --board-press: rgb(42 42 42 / 0.08);
+    --board-track: rgb(42 42 42 / 0.1);
+    --board-track-done: rgb(42 42 42 / 0.3);
+    --board-field: #FDFBF7;
     --paper: #FFFDF6;
     --sub-science: oklch(0.6 0.09 160);
     --sub-history: oklch(0.6 0.09 65);
@@ -138,10 +150,17 @@
     --brand-foreground: #FFFFFF;
     --link: #93A0F0;
     --live: oklch(0.68 0.16 32);
+    /* in dark mode a white board would glare: it stays a deep indigo stage */
     --board: #1B1F3E;
     --board-foreground: #FDFBF7;
     --board-muted: #AAB0D6;
     --board-line: oklch(1 0 0 / 0.12);
+    --board-edge: oklch(1 0 0 / 0.2);
+    --board-hover: oklch(1 0 0 / 0.1);
+    --board-press: oklch(1 0 0 / 0.15);
+    --board-track: oklch(1 0 0 / 0.15);
+    --board-track-done: oklch(1 0 0 / 0.4);
+    --board-field: oklch(1 0 0 / 0.05);
     --paper: #FFFDF6;
     --sub-science: oklch(0.7 0.09 160);
     --sub-history: oklch(0.72 0.09 65);
@@ -203,10 +222,14 @@
 /* soft, layered shadows: a tight contact shadow plus a wide ambient one */
 :root {
   --shadow-board: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 8px -2px rgb(0 0 0 / 0.06), 0 16px 32px -12px rgb(0 0 0 / 0.18);
+  --shadow-card: 0 1px 2px rgb(42 42 42 / 0.08), 0 8px 24px -8px rgb(42 42 42 / 0.16);
+  --shadow-thumb: 0 1px 2px rgb(42 42 42 / 0.08), 0 4px 12px -4px rgb(42 42 42 / 0.14);
+}
+.dark {
+  --shadow-board: 0 0 0 1px rgb(255 255 255 / 0.06), 0 16px 32px -12px rgb(0 0 0 / 0.5);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.25), 0 8px 24px -8px rgb(0 0 0 / 0.45);
   --shadow-thumb: 0 1px 2px rgb(0 0 0 / 0.25), 0 4px 12px -4px rgb(0 0 0 / 0.4);
 }
-.dark { --shadow-board: 0 0 0 1px rgb(255 255 255 / 0.06), 0 16px 32px -12px rgb(0 0 0 / 0.5); }
 .board.is-fullscreen { border-radius: 0; padding: 1.5rem 2.25rem 1rem; }
 .board.is-fullscreen .hero-caption-slot { font-size: clamp(2rem, 1.2rem + 2vw, 3.2rem); }
 .board.is-fullscreen .board-title { font-size: 1.5rem; }

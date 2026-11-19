@@ -11,10 +11,10 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
 export function Logo({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" className={className}>
-      <rect x="2" y="5" width="28" height="22" rx="6" fill="var(--board)" />
+      <rect x="2" y="5" width="28" height="22" rx="6" fill="var(--brand)" />
       <rect x="6.5" y="10" width="11" height="8.5" rx="2" fill="var(--paper)" />
-      <circle cx="10" cy="14.2" r="2" fill="var(--brand)" />
-      <path d="M21 11.5h5M21 15.5h3.5M7.5 22h17" stroke="var(--board-foreground)" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+      <circle cx="10" cy="14.2" r="2" fill="#F6C343" />
+      <path d="M21 11.5h5M21 15.5h3.5M7.5 22h17" stroke="#FFFFFF" strokeWidth="1.6" strokeLinecap="round" opacity="0.8" />
     </svg>
   )
 }
