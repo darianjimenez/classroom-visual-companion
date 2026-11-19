@@ -219,7 +219,7 @@ function DrawingGrid() {
   const shown = all.filter((g) => !q || (g.key + " " + g.words.join(" ")).toLowerCase().includes(q.toLowerCase()))
   return (
     <div className="flex flex-col gap-3">
-      <p className="text-xs text-muted-foreground">{E.iconCount} drawings, about {Math.round(E.wordCount / 50) * 50} words. Emoji artwork by <a href="credits.html" target="_blank" rel="noopener" className="underline underline-offset-2">OpenMoji</a> (CC BY-SA 4.0).</p>
+      <p className="text-xs text-muted-foreground">{E.iconCount} drawings, about {Math.round(E.wordCount / 50) * 50} words. Emoji artwork by <a href="credits.html" target="_blank" rel="noopener" className="text-link underline underline-offset-2">OpenMoji</a> (CC BY-SA 4.0).</p>
       <InputGroup>
         <InputGroupAddon><Search /></InputGroupAddon>
         <InputGroupInput value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search drawings, like rocket or vote" aria-label="Search drawings" />

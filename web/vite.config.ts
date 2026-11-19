@@ -26,14 +26,14 @@ export default defineConfig({
         clientsClaim: true,
       },
       manifest: {
-        name: "Classroom Visual Companion",
-        short_name: "Visual Companion",
+        name: "Plato",
+        short_name: "Plato",
         description: "Turns what a teacher says into a live picture storyboard for the class.",
         start_url: "./",
         scope: "./",
         display: "standalone",
-        background_color: "#F8F6F1",
-        theme_color: "#1F3D36",
+        background_color: "#FDFBF7",
+        theme_color: "#FDFBF7",
         icons: [
           { src: "icons/icon-192.png", sizes: "192x192", type: "image/png" },
           { src: "icons/icon-512.png", sizes: "512x512", type: "image/png" },

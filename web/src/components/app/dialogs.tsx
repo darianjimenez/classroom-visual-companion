@@ -25,7 +25,7 @@ export function GuideDialog() {
     <Dialog open={open} onOpenChange={(o) => { if (!o) a.closeGuide() }}>
       <DialogContent className="max-h-[88svh] gap-0 overflow-hidden p-0 sm:max-w-2xl">
         <DialogHeader className="border-b px-6 pt-6 pb-4">
-          <DialogTitle className="text-lg">How Visual Companion works</DialogTitle>
+          <DialogTitle className="text-lg">How Plato works</DialogTitle>
           <DialogDescription>It puts a simple picture of each idea on the board as you teach, so students can see what they hear.</DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="ways" className="min-h-0 gap-0">
