@@ -10,7 +10,7 @@ export function load<T>(key: string, fallback: T): T {
 }
 export function save(key: string, val: unknown) { try { localStorage.setItem(key, JSON.stringify(val)) } catch { /* storage full or blocked */ } }
 
-export const DEFAULT_PREFS: Prefs = { speed: 130, pauseEach: false, drawMode: "new", calm: false, labels: true, tickerOn: true, unsure: false, autoRecap: true, follow: true }
+export const DEFAULT_PREFS: Prefs = { speed: 130, pauseEach: false, drawMode: "new", calm: false, labels: true, tickerOn: true, unsure: false, autoRecap: true, follow: true, liveSeconds: 6 }
 export function loadPrefs(): Prefs {
   const p = load<Partial<Prefs> | null>(KEYS.prefs, null)
   if (p) return { ...DEFAULT_PREFS, ...p }

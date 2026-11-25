@@ -10,6 +10,8 @@ export type TickerWord = { t: string; hit: boolean; unsure: boolean; id: number 
 export type Prefs = {
   speed: number; pauseEach: boolean; drawMode: "new" | "all"; calm: boolean; labels: boolean
   tickerOn: boolean; unsure: boolean; autoRecap: boolean; follow: boolean
+  /** seconds each picture stays up in Just talk before the next one */
+  liveSeconds: number
 }
 /** the settings that are on or off */
 export type Toggle = { [K in keyof Prefs]: Prefs[K] extends boolean ? K : never }[keyof Prefs]

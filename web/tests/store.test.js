@@ -98,7 +98,7 @@ test("Just talk, typed: pictures, word cards, the slideshow", () => {
   check("talk 1", board())
   a().sayTyped("A hypothesis is an educated guess about what will happen. The heart has four chambers: two atria and two ventricles.")
   check("talk 2, waiting their turn", board())
-  mock.timers.tick(3000)
+  mock.timers.tick(6000)
   check("talk 2, next shown", board())
   a().sayTyped("Great job, that's exactly right.")
   a().sayTyped("Electrons move around the nucleus of an atom.")

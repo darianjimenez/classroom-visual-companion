@@ -139,6 +139,13 @@ export function SettingsPanel() {
             </div>
             <Slider min={60} max={220} step={10} value={p.speed} onValueChange={(v) => a.setPref("speed", Array.isArray(v) ? v[0] : v)} aria-label="Words per minute" />
           </div>
+          <div className="flex flex-col gap-3 py-3">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm font-medium">Just talk: time on each picture</Label>
+              <span className="tabular text-sm text-muted-foreground"><NumberFlow value={p.liveSeconds} /> seconds</span>
+            </div>
+            <Slider min={3} max={15} step={1} value={p.liveSeconds} onValueChange={(v) => a.setPref("liveSeconds", Array.isArray(v) ? v[0] : v)} aria-label="Seconds on each picture in Just talk" />
+          </div>
           <ToggleRow id="pause-each" label="Pause after each sentence" hint="Press Play or → to go on, so you can talk about each picture." checked={p.pauseEach} onChange={set("pauseEach")} />
         </Section>
         <Separator />

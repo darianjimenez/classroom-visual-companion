@@ -11,7 +11,7 @@ import { startListening, stopListening } from "./voice.ts"
 
 /** the status line under the board in Just talk; miss marks it as a problem */
 export const setLive = (msg: string, miss?: boolean) => set({ live: { msg, miss: !!miss } })
-const liveHold = () => (get().prefs.calm ? 5000 : 3000)
+const liveHold = () => 1000 * (get().prefs.calm ? Math.max(get().prefs.liveSeconds, 10) : get().prefs.liveSeconds)
 function showLiveScene(sc: Scene) {
   finishActive()
   startFrame("v" + ++rt.voiceSeq, sc, -1)

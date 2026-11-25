@@ -1056,19 +1056,19 @@
  "saved": {
   "mine": [
    [
-    "my-1700000017312",
+    "my-1700000020312",
     "Atoms review",
     "My lessons"
    ]
   ],
   "filter": "My lessons",
-  "lessonId": "my-1700000017312",
+  "lessonId": "my-1700000020312",
   "heading": {
    "tag": "My lessons",
    "color": "var(--sub-mine)",
    "title": "Atoms review"
   },
-  "stored": "[{\"id\":\"my-1700000017312\",\"subject\":\"My lessons\",\"grade\":\"\",\"title\":\"Atoms review\",\"text\":\"Virginia and Massachusetts were two of the first colonies. A hypothesis is an educated guess about what will happen. The heart has four chambers: two atria and two ventricles. Great job, that's exactly right. Electrons move around the nucleus of an atom. Metals tend to lose electrons and form positive ions.\",\"plan\":{}}]"
+  "stored": "[{\"id\":\"my-1700000020312\",\"subject\":\"My lessons\",\"grade\":\"\",\"title\":\"Atoms review\",\"text\":\"Virginia and Massachusetts were two of the first colonies. A hypothesis is an educated guess about what will happen. The heart has four chambers: two atria and two ventricles. Great job, that's exactly right. Electrons move around the nucleus of an atom. Metals tend to lose electrons and form positive ions.\",\"plan\":{}}]"
  },
  "deleted": {
   "mine": 0,
@@ -1145,7 +1145,8 @@
    "tickerOn": true,
    "unsure": false,
    "autoRecap": true,
-   "follow": true
+   "follow": true,
+   "liveSeconds": 6
   },
   "stored": {
    "speed": 170,
@@ -1156,7 +1157,8 @@
    "tickerOn": true,
    "unsure": false,
    "autoRecap": true,
-   "follow": true
+   "follow": true,
+   "liveSeconds": 6
   }
  },
  "mic without speech recognition": {
