@@ -6,6 +6,7 @@
     "loose": "Words that only loosely match a picture (\"home\" -> house, \"day\" -> calendar). Better to show nothing than a wrong or off-topic picture; a teacher can still give one a picture of their own."
   },
   "never": [
+    "bit", "trap", "traps", "trapped", "trapping", "mummy", "mummies",
     "time", "kind", "kinds", "saw", "job", "deal", "deals", "watch", "minimum", "maximum", "rich", "department", "religion",
     "religions", "culture", "cultures", "crossing", "bronze", "mechanics", "death", "card", "cards", "steps", "plate",
     "plates"

@@ -12,8 +12,8 @@ export function loadEngine() {
   return { E: SceneEngine, LESSONS }
 }
 
-export const splitSentences = (text) =>
-  (String(text).replace(/\s+/g, " ").trim().match(/[^.!?]+[.!?]+["')\]]*|[^.!?]+$/g) || []).map((s) => s.trim()).filter(Boolean)
+// the app's own sentence splitter
+export { splitSentences } from "../src/app/store/text.ts"
 
 const pic = (x) => x.label + "=" + (x.icon ? "i:" + x.icon : x.sym ? "s:" + x.sym : "m:" + x.emoji)
 // one line per scene: what is drawn, how it is connected, and the caption

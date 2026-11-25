@@ -3,7 +3,7 @@
 // is left out of the check, since it repeats the sentence.
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { loadEngine, describe, lessonScene, replayLive } from "./engine.js"
+import { loadEngine, describe, lessonScene, replayLive, splitSentences } from "./engine.js"
 
 const CASES = [
   // words that mean more than one thing
@@ -91,4 +91,9 @@ test("blocks: a thing after a word like stone, an action before what it stops", 
   const { E } = loadEngine()
   assert.notEqual(E.analyze("Workers moved huge stone blocks with ramps and sleds.", {}).relation, "versus")
   assert.equal(E.analyze("The goalie blocks the ball.", {}).relation, "versus")
+})
+
+test("a title's full stop doesn't end the sentence", () => {
+  assert.deepEqual(splitSentences("Martin Luther King Jr. led peaceful marches. Dr. Lee agreed."),
+    ["Martin Luther King Jr. led peaceful marches.", "Dr. Lee agreed."])
 })

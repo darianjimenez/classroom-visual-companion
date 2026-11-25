@@ -473,11 +473,16 @@
     "group": "teamwork"
   },
   "remap": {
+    "wolf": "m:🐺",
+    "wolves": "m:🐺",
+    "worm": "m:🪱",
+    "worms": "m:🪱",
+    "earthworm": "m:🪱",
+    "earthworms": "m:🪱",
+    "cloudy": "i:cloud",
     "hieroglyph": "i:scroll",
     "hieroglyphs": "i:scroll",
     "hieroglyphics": "i:scroll",
-    "mummy": "-",
-    "mummies": "-",
     "fisherman": "m:🎣",
     "fishermen": "m:🎣",
     "seismograph": "i:earthquake",
