@@ -1,5 +1,5 @@
 // Diagrams kept as files (from Wikimedia Commons, credited in public/credits.html), shown as pictures.
-import { IMAGE_DIAGRAM_LIST } from "../data/image-diagrams.js"
+import IMAGE_DIAGRAM_LIST from "../data/image-diagrams.json" with { type: "json" }
 import { IMAGE_DIAGRAM, dgm } from "./registry.js"
 import { ASSET_BASE } from "../vocabulary.js"
 

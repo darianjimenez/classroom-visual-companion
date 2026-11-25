@@ -1,0 +1,109 @@
+{
+  "about": "The word lists word cards are built from: filler, instructions, questions, definitions. Read by src/engine/word-cards.js.",
+  "notes": {
+    "stop": "words that carry no idea of their own: shown lighter, and a card needs at least one word that isn't one of these",
+    "light": "praise and classroom management: a sentence made only of these needs no card (\"Great job, that's exactly right\")",
+    "lead": "said at the start of a sentence just to keep talking; dropped from the card",
+    "leadComma": "dropped at the start only when a comma follows (\"Everyone, look up here\"), since \"Everyone makes mistakes\" means it",
+    "stateNext": "\"Research shows…\", \"Practice makes…\": a word that could be an instruction, followed by a verb, starts a statement instead"
+  },
+  "stop": [
+    "a", "an", "the", "and", "or", "but", "nor", "so", "if", "then", "than", "that", "this", "these", "those", "there", "here",
+    "it", "its", "it's", "itself", "they", "them", "their", "theirs", "themselves", "he", "him", "his", "she", "her", "hers",
+    "we", "us", "our", "ours", "you", "your", "yours", "yourself", "yourselves", "i", "me", "my", "mine", "myself", "is",
+    "are", "was", "were", "be", "been", "being", "am", "do", "does", "did", "done", "doing", "have", "has", "had", "having",
+    "will", "would", "can", "could", "should", "shall", "may", "might", "must", "i'm", "you're", "we're", "they're", "he's",
+    "she's", "that's", "there's", "here's", "what's", "who's", "where's", "how's", "let's", "let", "i'll", "you'll", "we'll",
+    "they'll", "it'll", "that'll", "i've", "you've", "we've", "they've", "i'd", "you'd", "we'd", "they'd", "isn't", "aren't",
+    "wasn't", "weren't", "don't", "doesn't", "didn't", "can't", "cannot", "won't", "wouldn't", "couldn't", "shouldn't",
+    "haven't", "hasn't", "hadn't", "ain't", "gonna", "wanna", "gotta", "kinda", "sorta", "to", "of", "in", "on", "at", "by",
+    "for", "with", "about", "from", "into", "onto", "over", "under", "up", "down", "out", "off", "as", "like", "just", "only",
+    "also", "very", "really", "too", "such", "much", "many", "more", "most", "what", "which", "who", "whom", "whose", "when",
+    "where", "why", "how", "whether", "all", "any", "some", "each", "every", "both", "either", "neither", "no", "not", "none",
+    "one", "ones", "another", "other", "others", "get", "gets", "got", "getting", "go", "goes", "going", "gone", "went",
+    "come", "comes", "came", "coming", "make", "makes", "made", "making", "take", "takes", "took", "taking", "put", "puts",
+    "say", "says", "said", "tell", "tells", "told", "see", "sees", "saw", "seen", "look", "looks", "know", "knows", "knew",
+    "think", "thinks", "thought", "want", "wants", "wanted", "need", "needs", "needed", "try", "tries", "thing", "things",
+    "stuff", "something", "anything", "everything", "nothing", "someone", "anyone", "everyone", "somebody", "anybody",
+    "everybody", "way", "lot", "lots", "kind", "sort", "bit", "part", "okay", "ok", "alright", "yeah", "yes", "yep", "well",
+    "now", "today", "right", "pretty", "quite", "always", "never", "usually", "often", "sometimes", "maybe", "probably",
+    "actually", "basically", "again", "still", "even", "ever", "already", "yet", "though", "although", "because", "while"
+  ],
+  "light": [
+    "good", "great", "nice", "awesome", "amazing", "excellent", "perfect", "wonderful", "fantastic", "cool", "super", "job",
+    "work", "thanks", "thank", "please", "sorry", "correct", "exactly", "sure", "fine", "guys", "class", "friends", "folks",
+    "minute", "minutes", "second", "seconds", "sec", "moment", "hold", "wait", "quiet", "ready", "hi", "hello", "bye",
+    "goodbye", "morning", "afternoon", "welcome", "back", "done", "finished", "start", "started", "starting", "begin",
+    "beginning", "give", "keep", "hear"
+  ],
+  "lead": [
+    "okay", "ok", "alright", "so", "now", "well", "um", "uh", "erm", "hmm", "oh", "and", "but", "yeah", "yes", "anyway",
+    "anyways", "basically", "actually", "also", "plus", "hey"
+  ],
+  "leadComma": ["right","everybody","everyone","guys","class","friends","folks","listen","look","boys","girls","kids"],
+  "step": {
+    "first": "First",
+    "firstly": "First",
+    "second": "Second",
+    "secondly": "Second",
+    "third": "Third",
+    "next": "Next",
+    "then": "Then",
+    "afterwards": "Next",
+    "finally": "Finally",
+    "lastly": "Finally"
+  },
+  "tail": ["please","okay","ok","alright","guys"],
+  "tailComma": ["everyone","everybody","class","friends","folks"],
+  "topicVerb": [
+    "talk", "talking", "learn", "learning", "look", "looking", "study", "studying", "read", "reading", "start", "starting",
+    "begin", "beginning", "review", "reviewing", "focus", "focusing", "practice", "practicing", "cover", "covering", "explore",
+    "exploring", "discuss", "discussing", "continue", "continuing", "work", "working"
+  ],
+  "imp": [
+    "ask", "add", "answer", "bring", "check", "choose", "circle", "close", "color", "colour", "compare", "copy", "count",
+    "cross", "describe", "draw", "explain", "figure", "fill", "find", "finish", "fold", "give", "grab", "highlight", "keep",
+    "label", "line", "list", "listen", "look", "make", "match", "measure", "move", "name", "notice", "open", "pass", "pay",
+    "pick", "place", "point", "practice", "predict", "put", "raise", "read", "remember", "repeat", "reread", "review", "say",
+    "share", "show", "sit", "solve", "sort", "spell", "stand", "start", "stop", "study", "take", "talk", "tell", "think",
+    "trace", "try", "turn", "underline", "use", "wait", "walk", "wash", "watch", "work", "write", "be", "don't", "do", "never",
+    "always", "only", "just", "cite", "annotate", "summarize", "summarise", "analyze", "analyse", "identify", "define",
+    "evaluate", "calculate", "graph", "plot", "simplify", "factor", "prove", "sketch", "estimate", "convert", "classify",
+    "support", "defend", "revise", "edit", "proofread", "avoid", "include", "record", "observe", "submit", "hand", "complete",
+    "outline", "quote", "paraphrase", "research", "test", "contrast", "interpret", "construct", "round", "multiply", "divide",
+    "subtract", "isolate", "substitute", "plug", "draft", "brainstorm", "memorize", "prepare", "select", "organize", "create",
+    "design", "build", "type", "save", "print", "imagine", "consider", "skim", "scan", "log", "flip", "box", "address",
+    "focus", "discuss"
+  ],
+  "stateNext": [
+    "shows", "means", "makes", "helps", "says", "tells", "gives", "includes", "involves", "requires", "needs", "takes", "uses",
+    "causes", "leads", "allows", "becomes", "happens", "works", "seems", "looks", "sounds", "explains", "describes", "proves",
+    "suggests"
+  ],
+  "notImpNext": ["is","are","was","were","has","have","had","can","could","will","would","of","'s"],
+  "wh": ["who","what","why","how","which","whose","what's","how's","who's"],
+  "aux": [
+    "is", "are", "was", "were", "do", "does", "did", "can", "could", "will", "would", "should", "has", "have", "isn't",
+    "aren't", "don't", "doesn't", "didn't", "can't", "won't"
+  ],
+  "auxSubj": [
+    "you", "we", "they", "i", "he", "she", "it", "this", "that", "there", "anyone", "anybody", "everyone", "everybody",
+    "someone", "somebody", "the", "a", "an", "your", "our", "these", "those", "people"
+  ],
+  "notTerm": [
+    "it", "this", "that", "there", "here", "what", "which", "who", "he", "she", "they", "we", "you", "i", "one", "that's",
+    "it's", "everyone", "everybody", "someone", "something", "nothing", "everything", "anyone", "people", "some", "many",
+    "most", "all", "each", "when", "if", "while", "because", "after", "before", "since", "although", "as", "once", "unless",
+    "until", "where", "why", "how"
+  ],
+  "det": ["a","an","the","this","that","these","those","our","your","their","my","his","her","its","some"],
+  "hedge": [
+    "usually", "often", "always", "sometimes", "basically", "just", "really", "also", "simply", "generally", "actually",
+    "kind", "sort", "like"
+  ],
+  "adjOnly": [
+    "full", "very", "so", "too", "more", "less", "different", "similar", "equal", "same", "hot", "cold", "warm", "big",
+    "small", "large", "tiny", "true", "false", "right", "wrong", "good", "bad", "easy", "hard", "ready", "able", "likely",
+    "used", "made", "based", "known", "located", "found", "not", "usually", "due"
+  ]
+}

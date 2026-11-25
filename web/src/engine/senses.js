@@ -1,24 +1,25 @@
 // Words that mean different things: the sentence and the talk around it decide ("football", "law", "branch", verbs used as verbs).
 import { normalize } from "./lookup.js"
 import { PHRASE_START } from "./phrases.js"
+import SENSES from "./words/senses.json" with { type: "json" }
 
 // A word whose picture depends on the rest of the lesson: "brush your teeth", "spring" the season or the coil, "3 times 4".
-function cueSet(s){ var o = {}; s.split(" ").forEach(function(w){ o[w] = 1; }); return o; }
-var TEETH = cueSet("teeth tooth toothbrush toothpaste floss dentist"),
-    PHYS = cueSet("force forces stretch stretched compress compressed mass bounce coil push pull weight newton energy"),
-    CHEM = cueSet("dissolve dissolves dissolved mixture mixtures liquid liquids salt sugar chemical chemicals acid concentration"),
-    LOUD = cueSet("loud louder quiet quieter sound sounds music speaker hear hearing noise"),
-    SKY = cueSet("planet planets star stars rocket rockets astronaut astronauts orbit moon sun galaxy outer satellite"),
-    MUSIC = cueSet("music song songs sing singing melody piano notes rhythm instrument"),
+function cueSet(s){ var o = {}; (Array.isArray(s) ? s : s.split(" ")).forEach(function(w){ o[w] = 1; }); return o; }
+var TEETH = cueSet(SENSES.teeth),
+    PHYS = cueSet(SENSES.phys),
+    CHEM = cueSet(SENSES.chem),
+    LOUD = cueSet(SENSES.loud),
+    SKY = cueSet(SENSES.sky),
+    MUSIC = cueSet(SENSES.music),
     // speech recognizers sometimes write the wrong homophone; where it sits in the sentence usually gives it away
-    MODAL = cueSet("to will can could would should must might may gonna wanna not never always just also cant wont dont didnt ill youll well theyll lets"),
-    WHO = cueSet("i you he she it we they who everybody nobody somebody someone everyone"),
-    PREP = cueSet("of in to for with around from on at about into"), BE = cueSet("is are was were be been am"),
-    BONDS = cueSet("lone unshared shared electron electrons bond bonds atom atoms carbon nitrogen oxygen hydrogen"),
-    HOMO_NEXT = cueSet("a an the you your it its we they i he she that this what how if or to not careful patient positive kind nice happy quiet ready able sure"),
-    BRAIN = cueSet("brain brains neuron neurons mental psychology cortex nerve nerves"),
-    STORY = cueSet("story stories character characters book books setting author chapter climax conflict resolution events reader readers ending"),
-    NUM_WORD = cueSet("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty hundred");
+    MODAL = cueSet(SENSES.modal),
+    WHO = cueSet(SENSES.who),
+    PREP = cueSet(SENSES.prep), BE = cueSet(SENSES.be),
+    BONDS = cueSet(SENSES.bonds),
+    HOMO_NEXT = cueSet(SENSES.homoNext),
+    BRAIN = cueSet(SENSES.brain),
+    STORY = cueSet(SENSES.story),
+    NUM_WORD = cueSet(SENSES.numWord);
 function isNum(t){ return t != null && (/^\d/.test(t) || !!NUM_WORD[normalize(t)]); }
 function contextual(w, i, raw, cues){
   var pv = normalize(raw[i - 1] || ""), nx = normalize(raw[i + 1] || "");
@@ -53,56 +54,9 @@ function contextual(w, i, raw, cues){
 }
 
 // Words with more than one meaning: the rest of the talk decides (the sentence, what came before and, live, what comes next).
-var CUE = {
-  usFootball: cueSet("quarterback quarterbacks touchdown touchdowns nfl superbowl linebacker tackle tackled endzone helmet helmets"),
-  soccer: cueSet("soccer goalie goalkeeper fifa premier messi ronaldo striker midfielder worldcup"),
-  ballgame: cueSet("baseball cricket batter batting pitcher pitch inning innings swing swung hit hits homerun ball umpire"),
-  tree: cueSet("tree trees trunk branch branches wood forest leaves roots oak pine maple log"),
-  dog: cueSet("dog dogs puppy puppies woof growl loud"),
-  duckBird: cueSet("duck ducks bird birds beak platypus feathers"),
-  law: cueSet("law laws congress senate senator president vote voted signed sign government lawmakers representatives house"),
-  royal: cueSet("king kings queen queens kingdom kingdoms empire emperor throne crown reign reigned ruled power powerful pharaoh land country people"),
-  measure: cueSet("measure measured measuring length width height inches inch centimeters centimeter cm long longer short"),
-  birdish: cueSet("bird birds wings wade wades wading legs feathers fly flies marsh pond"),
-  building: cueSet("lift lifts lifted building construction steel beam beams heavy site tower machine"),
-  eye: cueSet("eye eyes iris lens light dark retina vision see"),
-  phone: cueSet("phone phones call calls text texting signal battery app apps"),
-  jail: cueSet("prison jail locked"),
-  lock: cueSet("lock locks door unlock locked open"),
-  elephant: cueSet("elephant elephants"),
-  sea: cueSet("ocean sea swim swims fish ice arctic zoo flipper flippers pup pups beach"),
-  music: cueSet("music song songs sing singing melody piano notes note rhythm instrument instruments band"),
-  map: cueSet("map maps symbol symbols legend miles distance"),
-  fish: cueSet("fish fishes scales reptile reptiles snake snakes skin"),
-  data: cueSet("data chart charts rows row columns column graph graphs record results tally"),
-  electric: cueSet("electricity electric circuit circuits battery batteries wire wires charge voltage"),
-  water: cueSet("river rivers ocean water swim stream sea waves")
-};
-CUE.batAnimal = cueSet("cave caves sleep sleeps wings wing night nocturnal upside mammal mammals echolocation insects vampire roost hang hangs");
-CUE.kick = cueSet("kick kicks kicked kicking"); CUE.goal = cueSet("goal goals net nets");
-CUE.sport = cueSet("ball balls team teams player players score scored scores coach soccer football basketball baseball hockey referee halftime field court goal goals");
-CUE.fire = cueSet("fire fires flame flames stove oven burn burns burned burning cook cooking pan grill magma lava candle candles campfire sun stars star");
-CUE.bodyOrgan = cueSet("body heart lungs liver kidney kidneys stomach brain skin");
-// cues for middle and high school subjects, where everyday words mean something else
-CUE.cellBio = cueSet("cell cells cellular organism organisms nucleus membrane cytoplasm mitochondria chloroplast chloroplasts dna rna mrna gene genes " +
-  "genetic chromosome chromosomes ribosome ribosomes protein proteins enzyme enzymes glucose atp aerobic anaerobic fermentation photosynthesis " +
-  "tissue tissues allele alleles nucleotide nucleotides amino transcription translation bacteria");
-CUE.genetics = cueSet("dna rna mrna gene genes genetic chromosome chromosomes ribosome ribosomes allele alleles nucleotide nucleotides amino transcription translation trait traits");
-CUE.atomic = cueSet("atom atoms atomic proton protons neutron neutrons electron electrons valence ion ions isotope isotopes element elements periodic " +
-  "orbital orbitals molecule molecules bond bonds noble");
-CUE.chemEq = cueSet("equation equations reaction reactions reactant reactants product products chemical chemicals yields coefficient coefficients formula formulas subscript subscripts");
-CUE.physics = cueSet("force forces newton inertia motion mass acceleration accelerate accelerates velocity momentum friction gravity action push pushes pull pulls collision collisions");
-CUE.mathGraph = cueSet("graph graphs graphing equation equations parabola parabolas quadratic factor factoring polynomial function functions axis intercept " +
-  "solution solutions squared formula discriminant vertex exponent exponents");
-CUE.geometry = cueSet("angle angles triangle triangles polygon polygons acute obtuse protractor congruent isosceles hypotenuse geometry");
-CUE.temp = cueSet("temperature hot cold warm weather fahrenheit celsius thermometer heat freezing boiling fever");
-CUE.gov = cueSet("government congress president presidents legislative executive judicial court courts constitution framers federal federalism " +
-  "senate amendment amendments democracy king kings checks balances veto");
-CUE.treeOnly = cueSet("tree trees trunk wood forest leaves leaf roots oak pine maple log bird birds nest climb climbed");
-CUE.argue = cueSet("essay argument arguments argumentative claim claims thesis rebuttal counterclaim counterclaims evidence reasoning debate opinion");
-CUE.war = cueSet("war wars soviet soviets superpower superpowers communism communist capitalism nuclear");
-CUE.computer = cueSet("computer computers code coding coder program programs programming loop loops variable variables binary algorithm algorithms " +
-  "byte bytes bits laptop laptops software app apps website");
+var CUE = {};
+Object.keys(SENSES.cues).forEach(function(k){ CUE[k] = cueSet(SENSES.cues[k]); });
+
 function senseOf(w, i, norm, cues){
   var pv = norm[i - 1] || "", nx = norm[i + 1] || "";
   function em(e){ return { emoji: e, key: "m:" + e }; }
@@ -172,18 +126,14 @@ function senseOf(w, i, norm, cues){
   }
   return undefined;
 }
-var BIO = cueSet("organism organisms nucleus membrane cytoplasm mitochondria plant plants animal animals body blood tissue bacteria microscope");
+var BIO = cueSet(SENSES.bio);
 // Words that are nouns with a picture but also everyday verbs: right after "to", "can", "you", "we"... they're the verb ("train your dog",
 // "likes to bark", "let's face it"), and the noun's picture would only confuse.
-var NOUN_VERB = cueSet("train trains bark ring rings face faces check checks change changes park parks point points present show shows rock rocks " +
-  "wave fire match bear duck book hand head land mind object record sink stamp star tie trip type file mark iron box light play run sign order " +
-  "watch saw fly ship bowl spring");
-var VERB_BEFORE = cueSet("to can could will would should must might may lets please dont didnt doesnt cant wont gonna wanna ill youll well theyll " +
-  "i you we they he she just also always never really");
+var NOUN_VERB = cueSet(SENSES.nounVerb);
+var VERB_BEFORE = cueSet(SENSES.verbBefore);
 // Does a phrase stop mid-idea? Then live talk joins it to the next one instead of drawing it alone
 // ("we're learning about American" … "football", "the power" … "plant", "put it in the" … "fridge").
-var DANGLE = cueSet("the a an of to and or but in on at for with about from into onto by as than like my your our their his her its this that " +
-  "these those very more most some any every each another other no not is are was were be being");
+var DANGLE = cueSet(SENSES.dangle);
 function dangling(text){
   var ws = String(text).split(/\s+/).filter(Boolean).map(normalize).filter(Boolean);
   if (ws.length <= 2) return true;
@@ -191,9 +141,9 @@ function dangling(text){
   if (/^(is|are|was|were)$/.test(last) && /^(there|it|they|we|you|he|she|that|this|what|where|who|how|which)$/.test(prev)) return false;
   return !!DANGLE[last] || (!!PHRASE_START[last] && !VERB_BEFORE[last] && ws.length <= 7);
 }
-var NEEDS_DET = cueSet("store stores log logs beat beats mask masks switch switches");
-var NOUN_DET = cueSet("the a an this that these those my your our his her their its every each some any no one");
-var NOUN_ADJ = cueSet("grocery toy pet book candy corner local general big small little new old light wall drum paper face");
+var NEEDS_DET = cueSet(SENSES.needsDet);
+var NOUN_DET = cueSet(SENSES.nounDet);
+var NOUN_ADJ = cueSet(SENSES.nounAdj);
 function usedAsVerb(w, i, norm){
   if (NEEDS_DET[w] && !NOUN_DET[norm[i - 1]] && !(NOUN_ADJ[norm[i - 1]] && NOUN_DET[norm[i - 2]])) return true;
   if (!NOUN_VERB[w]) return false;
@@ -202,10 +152,10 @@ function usedAsVerb(w, i, norm){
 }
 
 // Fraction pictures (pizza, halves...) only make sense in a maths sentence; "the whole cycle" must not show a pizza.
-var MATH_ONLY = { whole: 1, half: 1, slice: 1, pizza: 1 };
-var MATH_CUES = { fraction: 1, fractions: 1, equal: 1, equally: 1, parts: 1, part: 1, numerator: 1, denominator: 1, divide: 1, divided: 1, pizza: 1, pie: 1, cut: 1, third: 1, thirds: 1, fourth: 1, fourths: 1, fifth: 1, fifths: 1, eighth: 1, eighths: 1, quarter: 1, quarters: 1, halves: 1, slices: 1 };
+var MATH_ONLY = cueSet(SENSES.mathOnly);
+var MATH_CUES = cueSet(SENSES.mathCues);
 function hasMathCue(norm){ for (var k = 0; k < norm.length; k++) if (MATH_CUES[norm[k]] || MATH_CUES[norm[k].replace(/s$/, "")]) return true; return false; }
-var FRACTION_TALK = { fraction: 1, fractions: 1, numerator: 1, denominator: 1, pizza: 1, pie: 1, slice: 1, slices: 1, equal: 1, equally: 1, parts: 1 };
-var COMPUTER_CUES = { computer: 1, keyboard: 1, screen: 1, click: 1, laptop: 1, cursor: 1, code: 1, internet: 1, monitor: 1, tablet: 1 };
+var FRACTION_TALK = cueSet(SENSES.fractionTalk);
+var COMPUTER_CUES = cueSet(SENSES.computerCues);
 function hasCue(norm, cues){ for (var k = 0; k < norm.length; k++) if (cues[norm[k]]) return true; return false; }
 export { COMPUTER_CUES, CUE, FRACTION_TALK, MATH_ONLY, contextual, cueSet, dangling, hasCue, hasMathCue, senseOf, usedAsVerb };

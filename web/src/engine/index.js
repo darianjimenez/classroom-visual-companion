@@ -7,12 +7,12 @@ import { DIAGRAMS, DIAGRAM_ORDER, diagramScene } from "./diagrams/registry.js"
 import { I, art } from "./drawings.js"
 import { allItems, conceptFor, extraConcept, looseWord, normalize } from "./lookup.js"
 import { OM, setOpenMoji } from "./openmoji.js"
-import { PHRASES } from "./phrases.js"
+import { PHRASES, addSymbolPhrases } from "./phrases.js"
 import { buildPlanPrompt } from "./prompt.js"
 import { RELATION } from "./relations.js"
 import { renderScene } from "./render.js"
 import { dangling } from "./senses.js"
-import { ASSET_BASE, EMOJI_LIB, SYM, SYM_WORDS, VOCAB, WORD_TO_ICON, setAssetBase, symArt } from "./vocabulary.js"
+import { ASSET_BASE, EMOJI_LIB, SYM, SYM_WORDS, VOCAB, WORD_TO_ICON, applySymbols, setAssetBase, symArt } from "./vocabulary.js"
 import { sceneWords, wordScene } from "./word-cards.js"
 
 // ---------- helpers for the app ----------
@@ -51,9 +51,13 @@ export const SceneEngine = {
   diagramGallery: function(){
     return DIAGRAM_ORDER.map(function(k){ var d = DIAGRAMS[k], sc = diagramScene(d.title, k); sc.caption = d.title; sc.highlight = []; return { key: k, title: d.title, say: d.sayText, svg: renderScene(sc) }; });
   },
-  normalize: normalize, iconCount: Object.keys(I).length, wordCount: Object.keys(WORD_TO_ICON).length + Object.keys(EMOJI_LIB).length + Object.keys(SYM_WORDS).length,
-  symbolCount: (function(){ var u = {}; Object.keys(SYM.words).concat(Object.keys(SYM.phrases)).forEach(function(k){ u[SYM.words[k] || SYM.phrases[k]] = 1; }); return Object.keys(u).length; })(),
-  emojiCount: (function(){ var u = {}; Object.keys(EMOJI_LIB).forEach(function(k){ u[EMOJI_LIB[k]] = 1; }); return Object.keys(u).length; })(),
+  normalize: normalize, iconCount: Object.keys(I).length,
+  // these grow when the symbol table arrives, so they are worked out when asked
+  get wordCount(){ return Object.keys(WORD_TO_ICON).length + Object.keys(EMOJI_LIB).length + Object.keys(SYM_WORDS).length; },
+  get symbolCount(){ var u = {}; Object.keys(SYM.words).concat(Object.keys(SYM.phrases)).forEach(function(k){ u[SYM.words[k] || SYM.phrases[k]] = 1; }); return Object.keys(u).length; },
+  get emojiCount(){ var u = {}; Object.keys(EMOJI_LIB).forEach(function(k){ u[EMOJI_LIB[k]] = 1; }); return Object.keys(u).length; },
+  // the symbol table (public/symbols/index.json), once fetched
+  setSymbols: function(table){ applySymbols(table); addSymbolPhrases(table.phrases || {}); },
   setAssetBase: setAssetBase, symbolArt: function(name){ return symArt(name); }, ICONS: I,
   // for the asset tests: every symbol file, diagram file and emoji the engine can ask for
   symbolTable: function(){ return { words: SYM.words, phrases: SYM.phrases }; },

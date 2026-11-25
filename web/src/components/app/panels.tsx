@@ -2,7 +2,7 @@ import * as React from "react"
 import NumberFlow from "@number-flow/react"
 import { Search, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { E, PACES, useApp } from "@/app/store"
+import { E, PACES, useApp, type Toggle } from "@/app/store"
 import { Panel } from "@/components/app/panel"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -126,7 +126,7 @@ export function SettingsPanel() {
   const voice = useApp((s) => s.voice)
   const listening = useApp((s) => s.listening)
   const a = useApp((s) => s.actions)
-  const set = (k: string) => (v: boolean) => a.setPref(k, v)
+  const set = (k: Toggle) => (v: boolean) => a.setPref(k, v)
   const paceName = PACES.find((x) => x.wpm === p.speed)?.label
   return (
     <Panel open={open} onClose={a.closePanel} title="Settings" description="Remembered on this device.">
@@ -146,7 +146,7 @@ export function SettingsPanel() {
           <ToggleRow id="calm" label="Calm mode" hint="No motion, and pictures stay up longer." checked={p.calm} onChange={set("calm")} />
           <div className="flex flex-col gap-2 py-3">
             <Label className="text-sm font-medium">Draw a picture</Label>
-            <Select value={p.drawMode} onValueChange={(v) => a.setPref("drawMode", v)} items={DRAW_MODES}>
+            <Select value={p.drawMode} onValueChange={(v) => v && a.setPref("drawMode", v)} items={DRAW_MODES}>
               <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
               <SelectContent>{DRAW_MODES.map((m) => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent>
             </Select>

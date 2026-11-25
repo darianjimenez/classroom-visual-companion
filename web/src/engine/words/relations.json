@@ -1,0 +1,123 @@
+{
+  "about": "Action words that link things in a scene, and the kind of link each draws (heats, rises, becomes…). Read by src/engine/relations.js.",
+  "notes": {
+    "words": "each action word and the kind of link it draws; a word listed twice keeps its last kind"
+  },
+  "types": ["heats","cools","rises","falls","becomes","powers","contains","versus","wants","needs","pulls","leads","splits","cycle","and"],
+  "chainable": ["becomes","rises","falls","heats","cools","powers","leads","pulls","splits"],
+  "reverseNext": ["by","from"],
+  "words": [
+    [
+      "heats",
+      ["heats","heated","heating","warms","warmed","warming","burns","burned","burning"]
+    ],
+    [
+      "rises",
+      [
+        "rise", "rises", "rose", "rising", "risen", "evaporates", "evaporate", "evaporated", "evaporating", "climbs",
+        "climbed", "floats", "floated", "ascends", "erupts", "erupted"
+      ]
+    ],
+    [
+      "falls",
+      [
+        "fall", "falls", "fell", "falling", "releases", "release", "released", "releasing", "pours", "poured", "sinks", "sank",
+        "flows", "flowed", "flowing", "drips"
+      ]
+    ],
+    [
+      "becomes",
+      [
+        "becomes", "become", "became", "forms", "form", "formed", "forming", "turns", "turn", "turned", "turning", "changes",
+        "changed", "changing", "makes", "make", "made", "making", "creates", "create", "created", "produces", "produced",
+        "builds", "build", "built", "melts", "melted", "freezes", "froze", "condenses", "condensed"
+      ]
+    ],
+    [
+      "powers",
+      ["powers","powered","powering","drives","drove","driven","fuels","fueled","energizes"]
+    ],
+    [
+      "contains",
+      [
+        "contains", "contain", "contained", "inside", "within", "holds", "hold", "held", "carries", "carry", "carried",
+        "stores", "stored", "includes", "include"
+      ]
+    ],
+    [
+      "versus",
+      [
+        "fights", "fight", "fought", "fighting", "attacks", "attack", "attacked", "defeats", "defeat", "defeated", "against",
+        "battled", "reduces", "reduce", "reduced", "prevents", "prevent", "prevented", "blocks", "blocked", "stops", "stopped"
+      ]
+    ],
+    [
+      "wants",
+      ["demands","demand","demanded","wants","want","wanted","asks","asked"]
+    ],
+    [
+      "needs",
+      [
+        "needs", "need", "needed", "depends", "depend", "depended", "rely", "relies", "relied", "requires", "require",
+        "required", "uses", "use", "used", "eats", "eat", "ate", "absorbs", "absorb", "absorbed"
+      ]
+    ],
+    [
+      "cycle",
+      ["cycle","cycles","repeats","repeat","repeated","orbits","orbit","orbited","orbiting","spins","rotates","rotate","rotated"]
+    ],
+    [
+      "cools",
+      ["cools","cool","cooled","cooling","hardens","harden","hardened","chills"]
+    ],
+    [
+      "splits",
+      [
+        "splits", "split", "splitting", "divides", "divide", "divided", "breaks", "break", "broke", "separates", "separate",
+        "separated", "cuts", "cut", "shares", "share", "shared"
+      ]
+    ],
+    [
+      "becomes",
+      [
+        "grows", "grow", "grew", "growing", "hatches", "hatch", "hatched", "develops", "develop", "developed", "evolves",
+        "evolved", "invented", "invents", "discovered", "discovers", "designed", "transforms", "transform", "transformed",
+        "combine", "combines", "combined", "joins", "join", "joined", "equals", "equal"
+      ]
+    ],
+    [
+      "leads",
+      [
+        "pumps", "pump", "pumped", "sends", "send", "sent", "gives", "give", "gave", "protects", "protect", "protected",
+        "saves", "heals", "sells", "sold", "buys", "bought", "trades", "traded", "connects", "connect", "connected", "brings",
+        "brought", "delivers", "moves", "move"
+      ]
+    ],
+    [
+      "wants",
+      [
+        "says", "said", "tells", "told", "writes", "wrote", "written", "explains", "explained", "describes", "described",
+        "argues", "argued", "speaks", "spoke", "shouts"
+      ]
+    ],
+    [
+      "versus",
+      ["hunts","hunt","hunted","chases","chase","chased","catches","catch","caught","attack","attacks"]
+    ],
+    [
+      "needs",
+      ["breathe","breathes","breathed","consumes","consume","consumed","takes","take","took","collects","collect","collected"]
+    ],
+    [
+      "pulls",
+      ["pulls","pull","pulled","pushes","push","pushed","attracts","attract","attracted","lifts","lifted"]
+    ],
+    [
+      "leads",
+      [
+        "causes", "cause", "caused", "leads", "led", "helps", "help", "helped", "travels", "travel", "traveled", "ride",
+        "rides", "rode", "fly", "flies", "flew", "reach", "reaches", "reached", "sails", "sailed"
+      ]
+    ]
+  ]
+}

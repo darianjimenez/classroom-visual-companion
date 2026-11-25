@@ -17,8 +17,9 @@ export default defineConfig({
       filename: "sw.js",
       workbox: {
         globPatterns: ["**/*.{js,css,html,png,svg,woff2,json}"],
-        // about 1,400 symbol pictures and the diagram files: each is cached the first time a lesson shows it, not all at install
-        globIgnores: ["symbols/**", "diagrams/**"],
+        // about 1,500 symbol pictures and the diagram files: each is cached the first time a lesson shows it, not all at install
+        // (the small table of which word shows which symbol, symbols/index.json, is cached at install)
+        globIgnores: ["symbols/*.svg", "diagrams/**"],
         runtimeCaching: [{ urlPattern: /\/(symbols|diagrams)\/[^/]+\.svg$/, handler: "CacheFirst", options: { cacheName: "pictures", expiration: { maxEntries: 3000 } } }],
         // the OpenMoji picture bundle is about 5 MB
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,

@@ -2,6 +2,7 @@
 import { I } from "./drawings.js"
 import { RELATION } from "./relations.js"
 import { EMOJI_LIB, ICON_SETTING, SETTING_ORDER, SYM_WORDS, WORD_TO_ICON } from "./vocabulary.js"
+import RULES from "./words/rules.json" with { type: "json" }
 
 function normalize(raw){ return String(raw).toLowerCase().replace(/[^a-z']/g, "").replace(/'s$/, "").replace(/'/g, ""); }
 function forms(w){
@@ -15,8 +16,7 @@ function forms(w){
 // Words that only loosely match a picture ("home" -> house, "day" -> calendar). Better to show nothing than a wrong or off-topic picture;
 // a teacher can still give one a picture of their own.
 var LOOSE = {};
-("home homes shelter place places setting settings day days week weeks month months year years season seasons date " +
- "word words opinion talk talks piece pieces air class rest record rate rates").split(" ").forEach(function(w){ LOOSE[w] = 1; });
+RULES.loose.forEach(function(w){ LOOSE[w] = 1; });
 function looseWord(w){ var fs = forms(w); for (var i = 0; i < fs.length; i++) if (LOOSE[fs[i]]) return true; return false; }
 function extraConcept(w, extra){
   if (!extra) return undefined;

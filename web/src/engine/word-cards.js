@@ -5,6 +5,7 @@ import { allItems, cap } from "./lookup.js"
 import { INK, circ, esc, f, pth, rct } from "./primitives.js"
 import { el } from "./render.js"
 import { cueSet } from "./senses.js"
+import CARDS from "./words/word-cards.json" with { type: "json" }
 
 // ---------- word cards ----------
 // A sentence with nothing to picture ("A hypothesis is an educated guess…", "Always check your answer") still gets a card in
@@ -12,54 +13,28 @@ import { cueSet } from "./senses.js"
 // (a question, something to do, something to remember, a key word, the topic). So the lesson has no gaps.
 function cw(t){ return String(t).toLowerCase().replace(/[‘’]/g, "'").replace(/[^a-z0-9'-]/g, "").replace(/^['-]+|['-]+$/g, ""); }
 // words that carry no idea of their own: shown lighter, and a card needs at least one word that isn't one of these
-var WC_STOP = cueSet("a an the and or but nor so if then than that this these those there here it its it's itself they them their theirs themselves " +
-  "he him his she her hers we us our ours you your yours yourself yourselves i me my mine myself " +
-  "is are was were be been being am do does did done doing have has had having will would can could should shall may might must " +
-  "i'm you're we're they're he's she's that's there's here's what's who's where's how's let's let i'll you'll we'll they'll it'll that'll " +
-  "i've you've we've they've i'd you'd we'd they'd isn't aren't wasn't weren't don't doesn't didn't can't cannot won't wouldn't couldn't " +
-  "shouldn't haven't hasn't hadn't ain't gonna wanna gotta kinda sorta " +
-  "to of in on at by for with about from into onto over under up down out off as like just only also very really too such much many more most " +
-  "what which who whom whose when where why how whether all any some each every both either neither no not none one ones another other others " +
-  "get gets got getting go goes going gone went come comes came coming make makes made making take takes took taking put puts say says said " +
-  "tell tells told see sees saw seen look looks know knows knew think thinks thought want wants wanted need needs needed try tries " +
-  "thing things stuff something anything everything nothing someone anyone everyone somebody anybody everybody " +
-  "way lot lots kind sort bit part okay ok alright yeah yes yep well now today right pretty quite " +
-  "always never usually often sometimes maybe probably actually basically again still even ever already yet though although because while");
+var WC_STOP = cueSet(CARDS.stop);
 // praise and classroom management: a sentence made only of these needs no card ("Great job, that's exactly right")
-var WC_LIGHT = cueSet("good great nice awesome amazing excellent perfect wonderful fantastic cool super job work thanks thank please sorry " +
-  "correct exactly sure fine guys class friends folks minute minutes second seconds sec moment hold wait quiet ready hi hello bye goodbye " +
-  "morning afternoon welcome back done finished start started starting begin beginning give keep hear");
+var WC_LIGHT = cueSet(CARDS.light);
 // said at the start of a sentence just to keep talking; dropped from the card
-var WC_LEAD = cueSet("okay ok alright so now well um uh erm hmm oh and but yeah yes anyway anyways basically actually also plus hey");
+var WC_LEAD = cueSet(CARDS.lead);
 // dropped at the start only when a comma follows ("Everyone, look up here"), since "Everyone makes mistakes" means it
-var WC_LEAD_COMMA = cueSet("right everybody everyone guys class friends folks listen look boys girls kids");
-var WC_STEP = { first: "First", firstly: "First", second: "Second", secondly: "Second", third: "Third", next: "Next", then: "Then",
-  afterwards: "Next", finally: "Finally", lastly: "Finally" };
-var WC_TAIL = cueSet("please okay ok alright guys");
-var WC_TAIL_COMMA = cueSet("everyone everybody class friends folks");
-var WC_TOPIC_VERB = cueSet("talk talking learn learning look looking study studying read reading start starting begin beginning review reviewing " +
-  "focus focusing practice practicing cover covering explore exploring discuss discussing continue continuing work working");
-var WC_IMP = cueSet("ask add answer bring check choose circle close color colour compare copy count cross describe draw explain figure fill find " +
-  "finish fold give grab highlight keep label line list listen look make match measure move name notice open pass pay pick place point " +
-  "practice predict put raise read remember repeat reread review say share show sit solve sort spell stand start stop study take talk tell " +
-  "think trace try turn underline use wait walk wash watch work write be don't do never always only just " +
-  "cite annotate summarize summarise analyze analyse identify define evaluate calculate graph plot simplify factor prove sketch estimate convert " +
-  "classify support defend revise edit proofread avoid include record observe submit hand complete outline quote paraphrase research test " +
-  "contrast interpret construct round multiply divide subtract isolate substitute plug draft brainstorm memorize prepare select organize create " +
-  "design build type save print imagine consider skim scan log flip box address focus discuss");
+var WC_LEAD_COMMA = cueSet(CARDS.leadComma);
+var WC_STEP = CARDS.step;
+var WC_TAIL = cueSet(CARDS.tail);
+var WC_TAIL_COMMA = cueSet(CARDS.tailComma);
+var WC_TOPIC_VERB = cueSet(CARDS.topicVerb);
+var WC_IMP = cueSet(CARDS.imp);
 // "Research shows…", "Practice makes…": a word that could be an instruction, followed by a verb, starts a statement instead
-var WC_STATE_NEXT = cueSet("shows means makes helps says tells gives includes involves requires needs takes uses causes leads allows becomes " +
-  "happens works seems looks sounds explains describes proves suggests");
-var WC_NOT_IMP_NEXT = cueSet("is are was were has have had can could will would of 's");
-var WC_WH = cueSet("who what why how which whose what's how's who's");
-var WC_AUX = cueSet("is are was were do does did can could will would should has have isn't aren't don't doesn't didn't can't won't");
-var WC_AUX_SUBJ = cueSet("you we they i he she it this that there anyone anybody everyone everybody someone somebody the a an your our these those people");
-var WC_NOT_TERM = cueSet("it this that there here what which who he she they we you i one that's it's everyone everybody someone something nothing " +
-  "everything anyone people some many most all each when if while because after before since although as once unless until where why how");
-var WC_DET = cueSet("a an the this that these those our your their my his her its some");
-var WC_HEDGE = cueSet("usually often always sometimes basically just really also simply generally actually kind sort like");
-var WC_ADJ_ONLY = cueSet("full very so too more less different similar equal same hot cold warm big small large tiny true false right wrong good bad " +
-  "easy hard ready able likely used made based known located found not usually due");
+var WC_STATE_NEXT = cueSet(CARDS.stateNext);
+var WC_NOT_IMP_NEXT = cueSet(CARDS.notImpNext);
+var WC_WH = cueSet(CARDS.wh);
+var WC_AUX = cueSet(CARDS.aux);
+var WC_AUX_SUBJ = cueSet(CARDS.auxSubj);
+var WC_NOT_TERM = cueSet(CARDS.notTerm);
+var WC_DET = cueSet(CARDS.det);
+var WC_HEDGE = cueSet(CARDS.hedge);
+var WC_ADJ_ONLY = cueSet(CARDS.adjOnly);
 var WC_KINDS = {
   question: { label: "Question", color: "#2F6E9E" },
   todo: { label: "To do", color: "#2F7553" },

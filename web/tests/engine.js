@@ -1,8 +1,12 @@
 // Test helpers: the picture engine as the app uses it, scenes described as short readable text, and live talk replayed the way
 // the app replays it (a phrase waits for the next one, a phrase that stops mid-idea is joined to it, recent words are context).
 import { createHash } from "node:crypto"
+import { readFileSync } from "node:fs"
 import { SceneEngine } from "../src/engine/index.js"
 import { LESSONS } from "../src/engine/lessons.js"
+
+// the symbol table arrives in the app after the first screen; here it is handed over once, before any test runs
+SceneEngine.setSymbols(JSON.parse(readFileSync(new URL("../public/symbols/index.json", import.meta.url), "utf8")))
 
 export function loadEngine() {
   return { E: SceneEngine, LESSONS }

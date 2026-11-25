@@ -1,0 +1,26 @@
+{
+  "about": "Words kept without a picture (never), words whose picture is too loose to show (loose), and generic words that can join a picture but never make one (weak).",
+  "notes": {
+    "never": "Found by replaying recorded lessons through the app. These words are nearly always meant another way in real teaching (\"kind of\", \"I saw\", \"good job\", \"watch this\", \"one more time\", \"the steps\"), so they get no picture unless a teacher picks one.",
+    "weak": "Generic words (\"people\", \"a good question\", \"great idea\", \"I'd love to\") can join a picture of something else, but never make one alone.",
+    "loose": "Words that only loosely match a picture (\"home\" -> house, \"day\" -> calendar). Better to show nothing than a wrong or off-topic picture; a teacher can still give one a picture of their own."
+  },
+  "never": [
+    "time", "kind", "kinds", "saw", "job", "deal", "deals", "watch", "minimum", "maximum", "rich", "department", "religion",
+    "religions", "culture", "cultures", "crossing", "bronze", "mechanics", "death", "card", "cards", "steps", "plate",
+    "plates"
+  ],
+  "weak": [
+    "people", "person", "persons", "man", "men", "woman", "women", "guy", "guys", "kid", "kids", "child", "children", "boy",
+    "boys", "girl", "girls", "student", "students", "teacher", "teachers", "friend", "friends", "everybody", "everyone",
+    "human", "humans", "adult", "adults", "mom", "dad", "mother", "father", "parents", "family", "families", "professor",
+    "question", "questions", "problem", "problems", "idea", "ideas", "thinking", "think", "mind", "minds", "number", "numbers",
+    "story", "stories", "game", "games", "school", "classroom", "hand", "hands", "love", "loves", "page", "pages", "paper",
+    "list", "picture", "pictures", "book", "books", "region", "community", "choose", "chose", "choosing", "image", "images"
+  ],
+  "loose": [
+    "home", "homes", "shelter", "place", "places", "setting", "settings", "day", "days", "week", "weeks", "month", "months",
+    "year", "years", "season", "seasons", "date", "word", "words", "opinion", "talk", "talks", "piece", "pieces", "air",
+    "class", "rest", "record", "rate", "rates"
+  ]
+}

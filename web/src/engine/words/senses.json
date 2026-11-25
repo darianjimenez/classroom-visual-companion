@@ -1,0 +1,190 @@
+{
+  "about": "Cue words that decide which meaning a word has (football, bat, law, cell…), and the word lists the meaning rules use. Read by src/engine/senses.js.",
+  "notes": {
+    "cues": "Words with more than one meaning: the rest of the talk decides (the sentence, what came before and, live, what comes next).",
+    "nounVerb": "Words that are nouns with a picture but also everyday verbs: right after \"to\", \"can\", \"you\", \"we\"... they're the verb (\"train your dog\", \"likes to bark\", \"let's face it\"), and the noun's picture would only confuse.",
+    "dangle": "Does a phrase stop mid-idea? Then live talk joins it to the next one instead of drawing it alone (\"we're learning about American\" … \"football\", \"the power\" … \"plant\", \"put it in the\" … \"fridge\").",
+    "mathOnly": "Fraction pictures (pizza, halves...) only make sense in a maths sentence; \"the whole cycle\" must not show a pizza."
+  },
+  "teeth": ["teeth","tooth","toothbrush","toothpaste","floss","dentist"],
+  "phys": [
+    "force", "forces", "stretch", "stretched", "compress", "compressed", "mass", "bounce", "coil", "push", "pull", "weight",
+    "newton", "energy"
+  ],
+  "chem": [
+    "dissolve", "dissolves", "dissolved", "mixture", "mixtures", "liquid", "liquids", "salt", "sugar", "chemical", "chemicals",
+    "acid", "concentration"
+  ],
+  "loud": ["loud","louder","quiet","quieter","sound","sounds","music","speaker","hear","hearing","noise"],
+  "sky": [
+    "planet", "planets", "star", "stars", "rocket", "rockets", "astronaut", "astronauts", "orbit", "moon", "sun", "galaxy",
+    "outer", "satellite"
+  ],
+  "music": ["music","song","songs","sing","singing","melody","piano","notes","rhythm","instrument"],
+  "modal": [
+    "to", "will", "can", "could", "would", "should", "must", "might", "may", "gonna", "wanna", "not", "never", "always",
+    "just", "also", "cant", "wont", "dont", "didnt", "ill", "youll", "well", "theyll", "lets"
+  ],
+  "who": ["i","you","he","she","it","we","they","who","everybody","nobody","somebody","someone","everyone"],
+  "prep": ["of","in","to","for","with","around","from","on","at","about","into"],
+  "be": ["is","are","was","were","be","been","am"],
+  "bonds": ["lone","unshared","shared","electron","electrons","bond","bonds","atom","atoms","carbon","nitrogen","oxygen","hydrogen"],
+  "homoNext": [
+    "a", "an", "the", "you", "your", "it", "its", "we", "they", "i", "he", "she", "that", "this", "what", "how", "if", "or",
+    "to", "not", "careful", "patient", "positive", "kind", "nice", "happy", "quiet", "ready", "able", "sure"
+  ],
+  "brain": ["brain","brains","neuron","neurons","mental","psychology","cortex","nerve","nerves"],
+  "story": [
+    "story", "stories", "character", "characters", "book", "books", "setting", "author", "chapter", "climax", "conflict",
+    "resolution", "events", "reader", "readers", "ending"
+  ],
+  "numWord": [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+    "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty", "hundred"
+  ],
+  "cues": {
+    "usFootball": [
+      "quarterback", "quarterbacks", "touchdown", "touchdowns", "nfl", "superbowl", "linebacker", "tackle", "tackled",
+      "endzone", "helmet", "helmets"
+    ],
+    "soccer": ["soccer","goalie","goalkeeper","fifa","premier","messi","ronaldo","striker","midfielder","worldcup"],
+    "ballgame": [
+      "baseball", "cricket", "batter", "batting", "pitcher", "pitch", "inning", "innings", "swing", "swung", "hit", "hits",
+      "homerun", "ball", "umpire"
+    ],
+    "tree": ["tree","trees","trunk","branch","branches","wood","forest","leaves","roots","oak","pine","maple","log"],
+    "dog": ["dog","dogs","puppy","puppies","woof","growl","loud"],
+    "duckBird": ["duck","ducks","bird","birds","beak","platypus","feathers"],
+    "law": [
+      "law", "laws", "congress", "senate", "senator", "president", "vote", "voted", "signed", "sign", "government",
+      "lawmakers", "representatives", "house"
+    ],
+    "royal": [
+      "king", "kings", "queen", "queens", "kingdom", "kingdoms", "empire", "emperor", "throne", "crown", "reign", "reigned",
+      "ruled", "power", "powerful", "pharaoh", "land", "country", "people"
+    ],
+    "measure": [
+      "measure", "measured", "measuring", "length", "width", "height", "inches", "inch", "centimeters", "centimeter", "cm",
+      "long", "longer", "short"
+    ],
+    "birdish": ["bird","birds","wings","wade","wades","wading","legs","feathers","fly","flies","marsh","pond"],
+    "building": ["lift","lifts","lifted","building","construction","steel","beam","beams","heavy","site","tower","machine"],
+    "eye": ["eye","eyes","iris","lens","light","dark","retina","vision","see"],
+    "phone": ["phone","phones","call","calls","text","texting","signal","battery","app","apps"],
+    "jail": ["prison","jail","locked"],
+    "lock": ["lock","locks","door","unlock","locked","open"],
+    "elephant": ["elephant","elephants"],
+    "sea": ["ocean","sea","swim","swims","fish","ice","arctic","zoo","flipper","flippers","pup","pups","beach"],
+    "music": ["music","song","songs","sing","singing","melody","piano","notes","note","rhythm","instrument","instruments","band"],
+    "map": ["map","maps","symbol","symbols","legend","miles","distance"],
+    "fish": ["fish","fishes","scales","reptile","reptiles","snake","snakes","skin"],
+    "data": ["data","chart","charts","rows","row","columns","column","graph","graphs","record","results","tally"],
+    "electric": ["electricity","electric","circuit","circuits","battery","batteries","wire","wires","charge","voltage"],
+    "water": ["river","rivers","ocean","water","swim","stream","sea","waves"],
+    "batAnimal": [
+      "cave", "caves", "sleep", "sleeps", "wings", "wing", "night", "nocturnal", "upside", "mammal", "mammals", "echolocation",
+      "insects", "vampire", "roost", "hang", "hangs"
+    ],
+    "kick": ["kick","kicks","kicked","kicking"],
+    "goal": ["goal","goals","net","nets"],
+    "sport": [
+      "ball", "balls", "team", "teams", "player", "players", "score", "scored", "scores", "coach", "soccer", "football",
+      "basketball", "baseball", "hockey", "referee", "halftime", "field", "court", "goal", "goals"
+    ],
+    "fire": [
+      "fire", "fires", "flame", "flames", "stove", "oven", "burn", "burns", "burned", "burning", "cook", "cooking", "pan",
+      "grill", "magma", "lava", "candle", "candles", "campfire", "sun", "stars", "star"
+    ],
+    "bodyOrgan": ["body","heart","lungs","liver","kidney","kidneys","stomach","brain","skin"],
+    "cellBio": [
+      "cell", "cells", "cellular", "organism", "organisms", "nucleus", "membrane", "cytoplasm", "mitochondria", "chloroplast",
+      "chloroplasts", "dna", "rna", "mrna", "gene", "genes", "genetic", "chromosome", "chromosomes", "ribosome", "ribosomes",
+      "protein", "proteins", "enzyme", "enzymes", "glucose", "atp", "aerobic", "anaerobic", "fermentation", "photosynthesis",
+      "tissue", "tissues", "allele", "alleles", "nucleotide", "nucleotides", "amino", "transcription", "translation",
+      "bacteria"
+    ],
+    "genetics": [
+      "dna", "rna", "mrna", "gene", "genes", "genetic", "chromosome", "chromosomes", "ribosome", "ribosomes", "allele",
+      "alleles", "nucleotide", "nucleotides", "amino", "transcription", "translation", "trait", "traits"
+    ],
+    "atomic": [
+      "atom", "atoms", "atomic", "proton", "protons", "neutron", "neutrons", "electron", "electrons", "valence", "ion", "ions",
+      "isotope", "isotopes", "element", "elements", "periodic", "orbital", "orbitals", "molecule", "molecules", "bond",
+      "bonds", "noble"
+    ],
+    "chemEq": [
+      "equation", "equations", "reaction", "reactions", "reactant", "reactants", "product", "products", "chemical",
+      "chemicals", "yields", "coefficient", "coefficients", "formula", "formulas", "subscript", "subscripts"
+    ],
+    "physics": [
+      "force", "forces", "newton", "inertia", "motion", "mass", "acceleration", "accelerate", "accelerates", "velocity",
+      "momentum", "friction", "gravity", "action", "push", "pushes", "pull", "pulls", "collision", "collisions"
+    ],
+    "mathGraph": [
+      "graph", "graphs", "graphing", "equation", "equations", "parabola", "parabolas", "quadratic", "factor", "factoring",
+      "polynomial", "function", "functions", "axis", "intercept", "solution", "solutions", "squared", "formula",
+      "discriminant", "vertex", "exponent", "exponents"
+    ],
+    "geometry": [
+      "angle", "angles", "triangle", "triangles", "polygon", "polygons", "acute", "obtuse", "protractor", "congruent",
+      "isosceles", "hypotenuse", "geometry"
+    ],
+    "temp": ["temperature","hot","cold","warm","weather","fahrenheit","celsius","thermometer","heat","freezing","boiling","fever"],
+    "gov": [
+      "government", "congress", "president", "presidents", "legislative", "executive", "judicial", "court", "courts",
+      "constitution", "framers", "federal", "federalism", "senate", "amendment", "amendments", "democracy", "king", "kings",
+      "checks", "balances", "veto"
+    ],
+    "treeOnly": [
+      "tree", "trees", "trunk", "wood", "forest", "leaves", "leaf", "roots", "oak", "pine", "maple", "log", "bird", "birds",
+      "nest", "climb", "climbed"
+    ],
+    "argue": [
+      "essay", "argument", "arguments", "argumentative", "claim", "claims", "thesis", "rebuttal", "counterclaim",
+      "counterclaims", "evidence", "reasoning", "debate", "opinion"
+    ],
+    "war": ["war","wars","soviet","soviets","superpower","superpowers","communism","communist","capitalism","nuclear"],
+    "computer": [
+      "computer", "computers", "code", "coding", "coder", "program", "programs", "programming", "loop", "loops", "variable",
+      "variables", "binary", "algorithm", "algorithms", "byte", "bytes", "bits", "laptop", "laptops", "software", "app",
+      "apps", "website"
+    ]
+  },
+  "bio": [
+    "organism", "organisms", "nucleus", "membrane", "cytoplasm", "mitochondria", "plant", "plants", "animal", "animals",
+    "body", "blood", "tissue", "bacteria", "microscope"
+  ],
+  "nounVerb": [
+    "train", "trains", "bark", "ring", "rings", "face", "faces", "check", "checks", "change", "changes", "park", "parks",
+    "point", "points", "present", "show", "shows", "rock", "rocks", "wave", "fire", "match", "bear", "duck", "book", "hand",
+    "head", "land", "mind", "object", "record", "sink", "stamp", "star", "tie", "trip", "type", "file", "mark", "iron", "box",
+    "light", "play", "run", "sign", "order", "watch", "saw", "fly", "ship", "bowl", "spring"
+  ],
+  "verbBefore": [
+    "to", "can", "could", "will", "would", "should", "must", "might", "may", "lets", "please", "dont", "didnt", "doesnt",
+    "cant", "wont", "gonna", "wanna", "ill", "youll", "well", "theyll", "i", "you", "we", "they", "he", "she", "just", "also",
+    "always", "never", "really"
+  ],
+  "dangle": [
+    "the", "a", "an", "of", "to", "and", "or", "but", "in", "on", "at", "for", "with", "about", "from", "into", "onto", "by",
+    "as", "than", "like", "my", "your", "our", "their", "his", "her", "its", "this", "that", "these", "those", "very", "more",
+    "most", "some", "any", "every", "each", "another", "other", "no", "not", "is", "are", "was", "were", "be", "being"
+  ],
+  "needsDet": ["store","stores","log","logs","beat","beats","mask","masks","switch","switches"],
+  "nounDet": [
+    "the", "a", "an", "this", "that", "these", "those", "my", "your", "our", "his", "her", "their", "its", "every", "each",
+    "some", "any", "no", "one"
+  ],
+  "nounAdj": [
+    "grocery", "toy", "pet", "book", "candy", "corner", "local", "general", "big", "small", "little", "new", "old", "light",
+    "wall", "drum", "paper", "face"
+  ],
+  "mathOnly": ["whole","half","slice","pizza"],
+  "mathCues": [
+    "fraction", "fractions", "equal", "equally", "parts", "part", "numerator", "denominator", "divide", "divided", "pizza",
+    "pie", "cut", "third", "thirds", "fourth", "fourths", "fifth", "fifths", "eighth", "eighths", "quarter", "quarters",
+    "halves", "slices"
+  ],
+  "fractionTalk": ["fraction","fractions","numerator","denominator","pizza","pie","slice","slices","equal","equally","parts"],
+  "computerCues": ["computer","keyboard","screen","click","laptop","cursor","code","internet","monitor","tablet"]
+}

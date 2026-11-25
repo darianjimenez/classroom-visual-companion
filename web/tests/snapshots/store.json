@@ -1,0 +1,1175 @@
+{
+ "open": {
+  "stage": "empty",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": null,
+  "progress": "Sentence 1 of 5 · word 0 of 53",
+  "playing": false,
+  "talk": false,
+  "viewing": null,
+  "revealAt": "all",
+  "heroMode": "",
+  "frames": [],
+  "dots": "- - - - -",
+  "ticker": "",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "step 1": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 1,
+   "total": 5,
+   "done": false
+  },
+  "progress": "Sentence 2 of 5 · word 7 of 53",
+  "playing": false,
+  "talk": false,
+  "viewing": 1,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ]
+  ],
+  "dots": "ds - - - -",
+  "ticker": "Today we're talking about the water* cycle.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "step 2": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 2,
+   "total": 5,
+   "done": false
+  },
+  "progress": "Sentence 3 of 5 · word 17 of 53",
+  "playing": false,
+  "talk": false,
+  "viewing": 2,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ],
+   [
+    2,
+    1,
+    true,
+    "The sun heats the ocean, turning liquid water into vapor",
+    "72d7bdf1d205"
+   ]
+  ],
+  "dots": "ds ds - - -",
+  "ticker": "Today we're talking about the water* cycle.* The sun* heats* the ocean,* turning* liquid water into vapor.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "step 3": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 3,
+   "total": 5,
+   "done": false
+  },
+  "progress": "Sentence 4 of 5 · word 26 of 53",
+  "playing": false,
+  "talk": false,
+  "viewing": 3,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ],
+   [
+    2,
+    1,
+    true,
+    "The sun heats the ocean, turning liquid water into vapor",
+    "72d7bdf1d205"
+   ],
+   [
+    3,
+    2,
+    true,
+    "That vapor rises and cools to form a cloud",
+    "785bf5af18ee"
+   ]
+  ],
+  "dots": "ds ds ds - -",
+  "ticker": "sun* heats* the ocean,* turning* liquid water into vapor.* That vapor* rises* and cools to form a cloud.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "lesson done": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 5,
+   "total": 5,
+   "done": true
+  },
+  "progress": "Finished: 5 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": false,
+  "viewing": 5,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ],
+   [
+    2,
+    1,
+    true,
+    "The sun heats the ocean, turning liquid water into vapor",
+    "72d7bdf1d205"
+   ],
+   [
+    3,
+    2,
+    true,
+    "That vapor rises and cools to form a cloud",
+    "785bf5af18ee"
+   ],
+   [
+    4,
+    3,
+    true,
+    "Eventually the cloud releases rain, which falls back into rivers and the ocean",
+    "2d7775f4a2de"
+   ],
+   [
+    5,
+    4,
+    true,
+    "The whole cycle repeats, powered by the sun's energy and the pull of gravity",
+    "7cde5ee62122"
+   ]
+  ],
+  "dots": "ds ds ds ds ds",
+  "ticker": "rivers* and the ocean.* The whole cycle* repeats, powered by the sun's* energy* and the pull of gravity.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "storyboard": {
+  "stage": "recap",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 5,
+   "total": 5,
+   "done": true
+  },
+  "progress": "Finished: 5 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": false,
+  "viewing": 5,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ],
+   [
+    2,
+    1,
+    true,
+    "The sun heats the ocean, turning liquid water into vapor",
+    "72d7bdf1d205"
+   ],
+   [
+    3,
+    2,
+    true,
+    "That vapor rises and cools to form a cloud",
+    "785bf5af18ee"
+   ],
+   [
+    4,
+    3,
+    true,
+    "Eventually the cloud releases rain, which falls back into rivers and the ocean",
+    "2d7775f4a2de"
+   ],
+   [
+    5,
+    4,
+    true,
+    "The whole cycle repeats, powered by the sun's energy and the pull of gravity",
+    "7cde5ee62122"
+   ]
+  ],
+  "dots": "ds ds ds ds ds",
+  "ticker": "rivers* and the ocean.* The whole cycle* repeats, powered by the sun's* energy* and the pull of gravity.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": {
+   "title": "The storyboard",
+   "restartLabel": "Start over",
+   "canSave": false
+  },
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "looking back": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 5,
+   "total": 5,
+   "done": true
+  },
+  "progress": "Finished: 5 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": false,
+  "viewing": 3,
+  "revealAt": "all",
+  "heroMode": "history",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ],
+   [
+    2,
+    1,
+    true,
+    "The sun heats the ocean, turning liquid water into vapor",
+    "72d7bdf1d205"
+   ],
+   [
+    3,
+    2,
+    true,
+    "That vapor rises and cools to form a cloud",
+    "785bf5af18ee"
+   ],
+   [
+    4,
+    3,
+    true,
+    "Eventually the cloud releases rain, which falls back into rivers and the ocean",
+    "2d7775f4a2de"
+   ],
+   [
+    5,
+    4,
+    true,
+    "The whole cycle repeats, powered by the sun's energy and the pull of gravity",
+    "7cde5ee62122"
+   ]
+  ],
+  "dots": "ds ds ds ds ds",
+  "ticker": "rivers* and the ocean.* The whole cycle* repeats, powered by the sun's* energy* and the pull of gravity.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "playing, six words in": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 1,
+   "total": 5,
+   "done": false
+  },
+  "progress": "Sentence 1 of 5 · word 6 of 53",
+  "playing": true,
+  "talk": false,
+  "viewing": 1,
+  "revealAt": 5,
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    false,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ]
+  ],
+  "dots": "-cs - - - -",
+  "ticker": "Today we're talking about the water*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "playing, more words": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 3,
+   "total": 5,
+   "done": false
+  },
+  "progress": "Sentence 4 of 5 · word 26 of 53",
+  "playing": true,
+  "talk": false,
+  "viewing": 3,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ],
+   [
+    2,
+    1,
+    true,
+    "The sun heats the ocean, turning liquid water into vapor",
+    "72d7bdf1d205"
+   ],
+   [
+    3,
+    2,
+    true,
+    "That vapor rises and cools to form a cloud",
+    "785bf5af18ee"
+   ]
+  ],
+  "dots": "ds ds ds - -",
+  "ticker": "sun* heats* the ocean,* turning* liquid water into vapor.* That vapor* rises* and cools to form a cloud.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "paused": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Science",
+   "color": "var(--sub-science)",
+   "title": "The water cycle"
+  },
+  "count": {
+   "cur": 3,
+   "total": 5,
+   "done": false
+  },
+  "progress": "Sentence 4 of 5 · word 26 of 53",
+  "playing": false,
+  "talk": false,
+  "viewing": 3,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "diagram: watercycle",
+    "aa750334a9ba"
+   ],
+   [
+    2,
+    1,
+    true,
+    "The sun heats the ocean, turning liquid water into vapor",
+    "72d7bdf1d205"
+   ],
+   [
+    3,
+    2,
+    true,
+    "That vapor rises and cools to form a cloud",
+    "785bf5af18ee"
+   ]
+  ],
+  "dots": "ds ds ds - -",
+  "ticker": "sun* heats* the ocean,* turning* liquid water into vapor.* That vapor* rises* and cools to form a cloud.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [
+    "sun",
+    "wave",
+    "vapor"
+   ],
+   "title": "The water cycle",
+   "meta": "Science · Grades 2–5 · 5 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "cur",
+   "msg": "Pictures are tuned for this lesson"
+  }
+ },
+ "custom script": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Your script",
+   "color": "var(--sub-mine)",
+   "title": "Custom lesson"
+  },
+  "count": {
+   "cur": 8,
+   "total": 8,
+   "done": true
+  },
+  "progress": "Finished: 7 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": false,
+  "viewing": 7,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "Everything around you is made of matter, and matter is made of atoms",
+    "d13f8365b0b5"
+   ],
+   [
+    2,
+    1,
+    true,
+    "diagram: atomparts",
+    "a305422678c5"
+   ],
+   [
+    3,
+    2,
+    true,
+    "Isotopes are atoms of the same element with different numbers of neutrons",
+    "22d208ce40e6"
+   ],
+   [
+    4,
+    3,
+    true,
+    "words: Key word: Valence electrons electrons in the outermost shell",
+    "a878ca9de646"
+   ],
+   [
+    5,
+    4,
+    true,
+    "words: Key idea: Metals tend to lose electrons and form positive ions",
+    "263ecbced4b8"
+   ],
+   [
+    6,
+    5,
+    true,
+    "words: Key idea: Nonmetals tend to gain electrons and form negative ions",
+    "4f5985d4b623"
+   ],
+   [
+    7,
+    7,
+    true,
+    "words: Key word: Hypothesis educated guess about what will happen",
+    "297c7eaa0cde"
+   ]
+  ],
+  "dots": "ds ds ds ds ds ds d ds",
+  "ticker": "form* negative* ions.* Great job, that's exactly right. A hypothesis* is an educated* guess* about what will happen.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [],
+   "title": "Your script",
+   "meta": "8 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "rule",
+   "msg": "Pictures come from the built-in reader"
+  }
+ },
+ "custom script, every sentence": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Your script",
+   "color": "var(--sub-mine)",
+   "title": "Custom lesson"
+  },
+  "count": {
+   "cur": 8,
+   "total": 8,
+   "done": true
+  },
+  "progress": "Finished: 7 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": false,
+  "viewing": 7,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    0,
+    true,
+    "Everything around you is made of matter, and matter is made of atoms",
+    "d13f8365b0b5"
+   ],
+   [
+    2,
+    1,
+    true,
+    "diagram: atomparts",
+    "a305422678c5"
+   ],
+   [
+    3,
+    2,
+    true,
+    "Isotopes are atoms of the same element with different numbers of neutrons",
+    "22d208ce40e6"
+   ],
+   [
+    4,
+    3,
+    true,
+    "Valence electrons are the electrons in the outermost shell",
+    "80d9112effb8"
+   ],
+   [
+    5,
+    4,
+    true,
+    "Metals tend to lose electrons and form positive ions",
+    "12a32e825826"
+   ],
+   [
+    6,
+    5,
+    true,
+    "words: Key idea: Nonmetals tend to gain electrons and form negative ions",
+    "4f5985d4b623"
+   ],
+   [
+    7,
+    7,
+    true,
+    "words: Key word: Hypothesis educated guess about what will happen",
+    "297c7eaa0cde"
+   ]
+  ],
+  "dots": "ds ds ds ds ds ds d ds",
+  "ticker": "form* negative* ions.* Great job, that's exactly right. A hypothesis* is an educated* guess* about what will happen.*",
+  "live": {
+   "msg": "",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [],
+   "title": "Your script",
+   "meta": "8 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "rule",
+   "msg": "Pictures come from the built-in reader"
+  }
+ },
+ "talk open": {
+  "stage": "empty",
+  "heading": {
+   "tag": "Just talk",
+   "color": "var(--live)",
+   "title": "Live slideshow"
+  },
+  "count": null,
+  "progress": "Finished: 7 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": true,
+  "viewing": null,
+  "revealAt": "all",
+  "heroMode": "",
+  "frames": [],
+  "dots": "",
+  "ticker": "",
+  "live": {
+   "msg": "Live voice doesn't work in this browser (try Google Chrome). You can type sentences below instead.",
+   "miss": true
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [],
+   "title": "Your script",
+   "meta": "8 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "rule",
+   "msg": "Pictures come from the built-in reader"
+  }
+ },
+ "talk 1": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Just talk",
+   "color": "var(--live)",
+   "title": "1 scene so far"
+  },
+  "count": null,
+  "progress": "Finished: 7 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": true,
+  "viewing": 1,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    -1,
+    true,
+    "Virginia and Massachusetts were two of the first colonies",
+    "d5136b41c112"
+   ]
+  ],
+  "dots": "d d d d d d d d",
+  "ticker": "Virginia* and Massachusetts* were two of the first colonies.*",
+  "live": {
+   "msg": "“Virginia and Massachusetts were two of the first colonies.”",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [],
+   "title": "Your script",
+   "meta": "8 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "rule",
+   "msg": "Pictures come from the built-in reader"
+  }
+ },
+ "talk 2, waiting their turn": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Just talk",
+   "color": "var(--live)",
+   "title": "1 scene so far"
+  },
+  "count": null,
+  "progress": "Finished: 7 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": true,
+  "viewing": 1,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    -1,
+    true,
+    "Virginia and Massachusetts were two of the first colonies",
+    "d5136b41c112"
+   ]
+  ],
+  "dots": "d d d d d d d d",
+  "ticker": "is an educated* guess* about what will happen.* The heart has four* chambers:* two atria and two ventricles.",
+  "live": {
+   "msg": "“The heart has four chambers: two atria and two ventricles.”",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [],
+   "title": "Your script",
+   "meta": "8 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "rule",
+   "msg": "Pictures come from the built-in reader"
+  }
+ },
+ "talk 2, next shown": {
+  "stage": "hero",
+  "heading": {
+   "tag": "Just talk",
+   "color": "var(--live)",
+   "title": "2 scenes so far"
+  },
+  "count": null,
+  "progress": "Finished: 7 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": true,
+  "viewing": 2,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    -1,
+    true,
+    "Virginia and Massachusetts were two of the first colonies",
+    "d5136b41c112"
+   ],
+   [
+    2,
+    -1,
+    true,
+    "words: Key word: Hypothesis educated guess about what will happen",
+    "297c7eaa0cde"
+   ]
+  ],
+  "dots": "d d d d d d d d",
+  "ticker": "is an educated* guess* about what will happen.* The heart has four* chambers:* two atria and two ventricles.",
+  "live": {
+   "msg": "“The heart has four chambers: two atria and two ventricles.”",
+   "miss": false
+  },
+  "recap": null,
+  "start": {
+   "mode": "ready",
+   "icons": [],
+   "title": "Your script",
+   "meta": "8 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "rule",
+   "msg": "Pictures come from the built-in reader"
+  }
+ },
+ "talk finished": {
+  "stage": "recap",
+  "heading": {
+   "tag": "Your talk",
+   "color": "var(--live)",
+   "title": "5 scenes"
+  },
+  "count": null,
+  "progress": "Finished: 7 scenes. Press Start over or pick another lesson.",
+  "playing": false,
+  "talk": false,
+  "viewing": 5,
+  "revealAt": "all",
+  "heroMode": "enter",
+  "frames": [
+   [
+    1,
+    -1,
+    true,
+    "Virginia and Massachusetts were two of the first colonies",
+    "d5136b41c112"
+   ],
+   [
+    2,
+    -1,
+    true,
+    "words: Key word: Hypothesis educated guess about what will happen",
+    "297c7eaa0cde"
+   ],
+   [
+    3,
+    -1,
+    true,
+    "diagram: heartparts",
+    "95ba56f1f02c"
+   ],
+   [
+    4,
+    -1,
+    true,
+    "Electrons move around the nucleus of an atom",
+    "ffd0e2b0c633"
+   ],
+   [
+    5,
+    -1,
+    true,
+    "Metals tend to lose electrons and form positive ions",
+    "12a32e825826"
+   ]
+  ],
+  "dots": "d d d d d d d d",
+  "ticker": "right. Electrons* move* around the nucleus of an atom.* Metals tend to lose electrons* and form positive ions.",
+  "live": {
+   "msg": "“Metals tend to lose electrons and form positive ions.”",
+   "miss": false
+  },
+  "recap": {
+   "title": "Your slideshow",
+   "restartLabel": "Talk again",
+   "canSave": true
+  },
+  "start": {
+   "mode": "ready",
+   "icons": [],
+   "title": "Your script",
+   "meta": "8 sentences",
+   "hasScript": true
+  },
+  "source": {
+   "kind": "rule",
+   "msg": "Pictures come from the built-in reader"
+  }
+ },
+ "talk transcript": [
+  "Virginia and Massachusetts were two of the first colonies.",
+  "A hypothesis is an educated guess about what will happen.",
+  "The heart has four chambers: two atria and two ventricles.",
+  "Great job, that's exactly right.",
+  "Electrons move around the nucleus of an atom.",
+  "Metals tend to lose electrons and form positive ions."
+ ],
+ "talk saved as a script": {
+  "script": "Virginia and Massachusetts were two of the first colonies. A hypothesis is an educated guess about what will happen. The heart has four chambers: two atria and two ventricles. Great job, that's exactly right. Electrons move around the nucleus of an atom. Metals tend to lose electrons and form positive ions.",
+  "panel": "script"
+ },
+ "saved": {
+  "mine": [
+   [
+    "my-1700000017312",
+    "Atoms review",
+    "My lessons"
+   ]
+  ],
+  "filter": "My lessons",
+  "lessonId": "my-1700000017312",
+  "heading": {
+   "tag": "My lessons",
+   "color": "var(--sub-mine)",
+   "title": "Atoms review"
+  },
+  "stored": "[{\"id\":\"my-1700000017312\",\"subject\":\"My lessons\",\"grade\":\"\",\"title\":\"Atoms review\",\"text\":\"Virginia and Massachusetts were two of the first colonies. A hypothesis is an educated guess about what will happen. The heart has four chambers: two atria and two ventricles. Great job, that's exactly right. Electrons move around the nucleus of an atom. Metals tend to lose electrons and form positive ions.\",\"plan\":{}}]"
+ },
+ "deleted": {
+  "mine": 0,
+  "lessonId": null,
+  "heading": {
+   "tag": "Your script",
+   "color": "var(--sub-mine)",
+   "title": "Custom lesson"
+  }
+ },
+ "word dialog": {
+  "dog": {
+   "kind": "icon",
+   "icon": "dog",
+   "text": "Shows a drawing"
+  },
+  "volcano": {
+   "kind": "icon",
+   "icon": "volcano",
+   "text": "Shows a drawing"
+  },
+  "pour": {
+   "kind": "symbol",
+   "sym": "pour",
+   "text": "Shows a symbol"
+  },
+  "virginia": {
+   "kind": "symbol",
+   "sym": "state-virginia",
+   "text": "Shows a symbol"
+  },
+  "kangaroo": {
+   "kind": "emoji",
+   "emoji": "🦘",
+   "text": "Shows an emoji"
+  },
+  "zzyzx": {
+   "kind": "none",
+   "text": "No picture yet"
+  },
+  "bat": {
+   "kind": "none",
+   "text": "No picture yet"
+  }
+ },
+ "own picture": {
+  "now": {
+   "kind": "emoji",
+   "emoji": "🦘",
+   "text": "Shows an emoji"
+  },
+  "overridden": true,
+  "extra": "🦘"
+ },
+ "words reset": {
+  "animal": "🐾",
+  "switch": "🔘",
+  "soil": "🟫",
+  "friction": "🌀",
+  "weather": "⛅",
+  "game": "🎲",
+  "sport": "⚽",
+  "smile": "😊",
+  "dance": "💃",
+  "mud": "🟤"
+ },
+ "prefs": {
+  "prefs": {
+   "speed": 170,
+   "pauseEach": false,
+   "drawMode": "new",
+   "calm": true,
+   "labels": true,
+   "tickerOn": true,
+   "unsure": false,
+   "autoRecap": true,
+   "follow": true
+  },
+  "stored": {
+   "speed": 170,
+   "pauseEach": false,
+   "drawMode": "new",
+   "calm": true,
+   "labels": true,
+   "tickerOn": true,
+   "unsure": false,
+   "autoRecap": true,
+   "follow": true
+  }
+ },
+ "mic without speech recognition": {
+  "talk": false,
+  "live": {
+   "msg": "“Metals tend to lose electrons and form positive ions.”",
+   "miss": false
+  },
+  "voice": "Live voice isn't supported in this browser. Try Google Chrome on a computer.",
+  "talkBig": "Type to begin"
+ },
+ "talk orb": {
+  "msg": "Live voice doesn't work in this browser (try Google Chrome). Type sentences below instead.",
+  "miss": true
+ }
+}

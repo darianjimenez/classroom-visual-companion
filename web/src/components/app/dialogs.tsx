@@ -1,6 +1,6 @@
 import * as React from "react"
 import { BookOpen, CircleHelp, Images, Maximize, Mic, Play, Plus, SlidersHorizontal, StepForward } from "lucide-react"
-import { E, useApp } from "@/app/store"
+import { E, useApp, type Way } from "@/app/store"
 import { Button } from "@/components/ui/button"
 import {
   Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut,
@@ -10,7 +10,7 @@ import { Kbd } from "@/components/ui/kbd"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // ---------- guide ----------
-const WAYS = [
+const WAYS: { how: Way; title: string; body: string }[] = [
   { how: "talk", title: "Just talk", body: "No script and no setup. Turn on the microphone and teach as you normally would. Each idea becomes a picture, and at the end you get a slideshow you can replay or save. No microphone? Type sentences or tap the examples." },
   { how: "play", title: "Play a ready lesson", body: "Pick one of 25 lessons in science, history, math, reading and health, then press Start. It reads at the pace you choose." },
   { how: "step", title: "One sentence at a time", body: "Each press of → (or a presentation clicker) shows the next picture, so you can stop and talk about each one." },
@@ -109,7 +109,7 @@ function WordPicker() {
       <div className="flex items-center gap-2 border-b px-4 py-3 text-sm">
         <span className="font-medium">“{d.word}”</span>
         <span className="flex items-center gap-2 text-muted-foreground">
-          {d.now?.kind === "icon" && <span className="size-5 [&_svg]:size-5" dangerouslySetInnerHTML={{ __html: E.iconSVG(d.now.icon) }} />}
+          {d.now?.kind === "icon" && <span className="size-5 [&_svg]:size-5" dangerouslySetInnerHTML={{ __html: E.iconSVG(d.now.icon ?? "") }} />}
           {d.now?.kind === "emoji" && <span className="text-base">{d.now.emoji}</span>}
           {d.now?.kind === "symbol" && <img src={import.meta.env.BASE_URL + "symbols/" + d.now.sym + ".svg"} alt="" className="size-5" />}
           {d.now?.text}

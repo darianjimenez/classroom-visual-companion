@@ -1,0 +1,12 @@
+{
+  "about": "Where live talk is split into separate ideas. Read by src/engine/analyze.js.",
+  "notes": {
+    "splitAt": "Speech arrives without punctuation, so a long stretch of talk is one phrase. Split it where a new idea usually starts."
+  },
+  "splitAt": [
+    "so", "then", "but", "because", "next", "finally", "now", "also", "however", "meanwhile", "later", "after", "afterwards",
+    "when", "while", "until"
+  ],
+  "clauseStart": ["the","it","they","we","you","he","she","this","these","those","that","there"],
+  "pronouns": ["it","they","he","she"]
+}

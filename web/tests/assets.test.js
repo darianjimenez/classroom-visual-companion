@@ -14,7 +14,7 @@ test("symbol files: every word and phrase points at a file, and every file is us
   const { E } = loadEngine()
   const table = E.symbolTable()
   const named = new Set([...Object.values(table.words), ...Object.values(table.phrases)])
-  const files = new Set(readdirSync(new URL("symbols/", PUBLIC)).map((f) => f.replace(/\.svg$/, "")))
+  const files = new Set(readdirSync(new URL("symbols/", PUBLIC)).filter((f) => f.endsWith(".svg")).map((f) => f.replace(/\.svg$/, "")))
   const missing = [...named].filter((s) => !files.has(s))
   const unused = [...files].filter((s) => !named.has(s))
   assert.deepEqual(missing, [], "symbol files missing")

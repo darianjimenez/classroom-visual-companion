@@ -8,6 +8,8 @@ import { CHAINABLE, RELATION, RELATIONS, REVERSE_NEXT } from "./relations.js"
 import { COMPUTER_CUES, CUE, FRACTION_TALK, MATH_ONLY, contextual, hasCue, hasMathCue, senseOf, usedAsVerb } from "./senses.js"
 import { SETTINGS, SYM_MINOR, WEAK } from "./vocabulary.js"
 import { keyPoint, tidySentence } from "./word-cards.js"
+import SPEECH from "./words/speech.json" with { type: "json" }
+function toSet(list){ var o = {}; list.forEach(function(w){ o[w] = 1; }); return o; }
 
 // A long sentence whose picture is one thing ("…the laws that affected them" → a picture of laws) keeps its words in the
 // caption, so the idea isn't lost: "Laws" alone says little.
@@ -41,9 +43,9 @@ function shortCaption(sc, raw){
   return cap(s);
 }
 // Speech arrives without punctuation, so a long stretch of talk is one phrase. Split it where a new idea usually starts.
-var SPLIT_AT = { so: 1, then: 1, but: 1, because: 1, next: 1, finally: 1, now: 1, also: 1, however: 1, meanwhile: 1, later: 1, after: 1, afterwards: 1, when: 1, while: 1, until: 1 };
-var CLAUSE_START = { the: 1, it: 1, they: 1, we: 1, you: 1, he: 1, she: 1, this: 1, these: 1, those: 1, that: 1, there: 1 };
-var PRONOUN = { it: 1, they: 1, he: 1, she: 1 };
+var SPLIT_AT = toSet(SPEECH.splitAt);
+var CLAUSE_START = toSet(SPEECH.clauseStart);
+var PRONOUN = toSet(SPEECH.pronouns);
 function splitSpoken(text){
   var words = String(text).split(/\s+/).filter(Boolean);
   if (words.length <= 12) return words.length ? [words.join(" ")] : [];
