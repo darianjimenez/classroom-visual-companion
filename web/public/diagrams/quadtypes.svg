@@ -1,0 +1,35 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="-325 -420 640 640">
+ <title>Euler diagram of some types of quadrilaterals</title>
+ <desc>Euler diagram of some types of quadrilaterals by CMG Lee. (UK) denotes British English and (US) denotes American English.</desc>
+ <g fill="none">
+  <g stroke-width="4" stroke-linejoin="round">
+   <path id="sq" d="M  -40  40 H   40      V -40      H  -40      Z" stroke="#ff0000"/>
+   <path id="re" d="M  -50 130 H   50      V -50      H  -50      Z" stroke="#ff0099" stroke-dasharray="4,1"/>
+   <path id="ob" d="M  -40 110 H   40      V  70      H  -40      Z" stroke="#9900ff"/>
+   <path id="rd" d="M -205 130 H -105      L -60   70 H -160      Z" stroke="#666600"/>
+   <path id="rs" d="M -140  50 H   60      L 180 -110 H  -20      Z" stroke="#993300"/>
+   <path id="ki" d="M -160  60 H   90      L 240 -140 L  -60 -240 Z" stroke="#ff9900"/>
+   <path id="pa" d="M -240 150 H   50      L 250 -120 H  -40      Z" stroke="#009900" stroke-dasharray="4,1"/>
+   <path id="tr" d="M -270 170 H   50      L 270 -130 H -110      Z" stroke="#006699"/>
+   <path id="cx" d="M -300 190 H   50      L 290 -140 L  -70 -255 Z" stroke="#0000ff" stroke-dasharray="4,1"/>
+   <path id="cc" d="M -240  30 L  -80 -270 L 260 -165 L  -90 -380 Z" stroke="#999999"/>
+   <path id="da" d="M -130 -220 L -70 -320 L  50 -280 L  -80 -350 Z" stroke="#333333" stroke-dasharray="4,1"/>
+   <path id="si" d="M -320 210 H   50      L 310 -150 L -100 -410 Z" stroke="#000000"/>
+  </g>
+  <g font-family="sans-serif" font-size="18" letter-spacing="-1" text-anchor="middle">
+   <text x="0"    y="34"   fill="#ff0000">Square</text>
+   <text x="0"    y="126"  fill="#ff0099">Rectangle</text>
+   <text x="0"    y="104"  fill="#9900ff">Oblong</text>
+   <text x="-145" y="127"  fill="#666600">Rhomboid</text>
+   <text x="-90"  y="47"   fill="#993300">Rhombus</text>
+   <text x="-40"  y="-210" fill="#ff9900" font-weight="bold">Kite</text>
+   <text x="-90"  y="146"  fill="#009900">Parallelogram</text>
+   <text x="-110" y="166"  fill="#006699">Trapezium (UK) / Trapezoid (US)</text>
+   <text x="-120" y="186"  fill="#0000ff">Convex quadrilateral</text>
+   <text x="40"   y="-265" fill="#999999"><tspan>Concave</tspan><tspan x="45" dy="15">quadrilateral</tspan></text>
+   <text x="-68"  y="-323" fill="#333333">Dart</text>
+   <text x="-130" y="206"  fill="#000000">Simple quadrilateral</text>
+  </g>
+ </g>
+</svg>

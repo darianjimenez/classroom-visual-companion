@@ -7,7 +7,7 @@ export type Prefs = {
   tickerOn: boolean; unsure: boolean; autoRecap: boolean; follow: boolean
 }
 export type Panel = "script" | "settings" | "pictures" | null
-export type WordNow = { kind: "off" | "icon" | "emoji" | "unsure" | "none"; text: string; icon?: string; emoji?: string }
+export type WordNow = { kind: "off" | "icon" | "emoji" | "symbol" | "unsure" | "none"; text: string; icon?: string; emoji?: string; sym?: string }
 
 // the store's actions come from plain JavaScript, so their arguments are left open
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

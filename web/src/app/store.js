@@ -2,10 +2,13 @@
 // but instead of writing to the page they update this store and React draws it.
 import { create } from "zustand"
 import { toast } from "sonner"
+// the symbol table must be in place before the engine reads it
+import "../engine/symbols.js"
 import "../engine/scene-engine.js"
 import "../engine/lessons.js"
 
 export const E = window.SceneEngine
+E.setAssetBase(import.meta.env.BASE_URL)
 export const LESSONS = window.LESSONS || []
 
 export const SUBJECTS = ["Science", "History", "Math", "Reading", "Health", "My lessons"]
@@ -80,6 +83,8 @@ export const useApp = create((set, get) => {
   function sceneForText(text, planItem) {
     // a sentence that names a whole topic gets its labelled diagram, even in tuned lessons
     let sc = planItem && planItem.diagram ? null : E.diagramScene(text)
+    // a tuned lesson keeps its own pictures: only the drawn diagrams step in there, not the detailed ones from Wikimedia Commons
+    if (sc && sc.imageDiagram && planItem) sc = null
     if (sc) return sc
     if (planItem) {
       sc = E.sceneFromAI(planItem, text, get().extra)
@@ -807,6 +812,7 @@ export const useApp = create((set, get) => {
         if (v === "-") now = { kind: "off", text: "No picture (you turned it off)" }
         else if (c && c.icon) now = { kind: "icon", icon: c.icon, text: "Shows a drawing" }
         else if (c && c.emoji) now = { kind: "emoji", emoji: c.emoji, text: "Shows an emoji" }
+        else if (c && c.sym) now = { kind: "symbol", sym: c.sym, text: "Shows a symbol" }
         else if (E.isUnsure(w, extra)) now = { kind: "unsure", text: "Could mean different things here, so nothing shows" }
         else now = { kind: "none", text: "No picture yet" }
         set({ wordDialog: { open: true, word: w, now, overridden: v != null } })

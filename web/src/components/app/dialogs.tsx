@@ -111,6 +111,7 @@ function WordPicker() {
         <span className="flex items-center gap-2 text-muted-foreground">
           {d.now?.kind === "icon" && <span className="size-5 [&_svg]:size-5" dangerouslySetInnerHTML={{ __html: E.iconSVG(d.now.icon) }} />}
           {d.now?.kind === "emoji" && <span className="text-base">{d.now.emoji}</span>}
+          {d.now?.kind === "symbol" && <img src={import.meta.env.BASE_URL + "symbols/" + d.now.sym + ".svg"} alt="" className="size-5" />}
           {d.now?.text}
         </span>
       </div>

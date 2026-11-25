@@ -989,6 +989,20 @@ window.SceneEngine = (function(){
     if (v.slice(0, 2) === "i:" && I[v.slice(2)]) WORD_TO_ICON[w] = v.slice(2);
     else if (v.slice(0, 2) === "m:") EMOJI_LIB[w] = v.slice(2);
   });
+  // More words for OpenMoji pictures that had none, picked by going through the whole set: "black hole", "judge", "avalanche"…
+  var EMOJI_MORE = {"amazed":"😲","anxiety":"😰","applaud":"👏","applause":"👏","arthritis":"","astonished":"😲","avalanche":"","avalanches":"","awkward":"😬","backache":"","ballerina":"🩰","ballet":"🩰","banned":"🚫","barcode":"","barcodes":"","beg":"🥺","bored":"😑","boredom":"😑","boring":"😑","cafeteria":"","caution":"⚠","checkmark":"✔","climb":"🧗‍♂","climbed":"🧗‍♂","climbs":"🧗‍♂","cringe":"😬","curacao":"🇨🇼","curiosity":"🧐","curious":"🧐","curling":"🥌","deaf":"🧏","disappointed":"😞","disappointment":"😞","dizziness":"💫","dizzy":"💫","drone":"","drones":"","earache":"","ecg":"","electrocardiogram":"","embarrassed":"😳","embarrassing":"😳","embarrassment":"😳","employee":"👩‍💼","employees":"👩‍💼","euro":"💶","euros":"💶","evacuate":"","evacuated":"","evacuation":"","exhausted":"😩","exhaustion":"😩","fingerprint":"🫆","fingerprints":"🫆","fracture":"","fractured":"","fractures":"","frisbee":"🥏","frustrated":"😣","frustration":"😣","goggles":"🥽","golfing":"🏌‍♀","guard":"💂","guards":"💂","guinea-bissau":"🇬🇼","gymnast":"🤸‍♂","heartbroken":"💔","hiking":"🥾","inspect":"🧐","investigator":"🕵‍♂","jersey":"🇯🇪","jockey":"🏇","jordan":"🇯🇴","juggle":"🤹‍♀","juggler":"🤹‍♀","juggling":"🤹‍♀","kneel":"🧎‍♀","kneeling":"🧎‍♀","kneels":"🧎‍♀","knelt":"🧎‍♀","landslide":"🛘","landslides":"🛘","leafless":"🪾","mausoleum":"","menorah":"🕎","midday":"🕛","mousetrap":"🪤","mudslide":"🛘","mudslides":"🛘","myanmar":"🇲🇲","narwhal":"","narwhals":"","noon":"🕛","photovoltaic":"","pleading":"🥺","policewoman":"👮‍♂","polluted":"","pomegranate":"","pomegranates":"","poppies":"","poppy":"","prohibited":"🚫","quarantine":"","quiet":"🤫","quietly":"🤫","regret":"😔","relief":"😌","relieved":"😌","reunion":"🇷🇪","salute":"🫡","saluted":"🫡","saluting":"🫡","sanitizer":"","sark":"🇨🇶","shh":"🤫","shrug":"🤷","shrugged":"🤷","shrugs":"🤷","smartwatch":"","sneezed":"","speak":"🗣","speaking":"🗣","speaks":"🗣","stretcher":"","struggling":"😣","surf":"🏄‍♂","surfer":"🏄‍♂","surfers":"🏄‍♂","surveillance":"","thoughtful":"😔","ticket":"🎫","tickets":"🎫","timor-leste":"🇹🇱","trap":"🪤","traps":"🪤","turkiye":"🇹🇷","wand":"🪄","wands":"🪄","warning":"⚠","warnings":"⚠","yawning":"🥱"};
+  Object.keys(EMOJI_MORE).forEach(function(w){ if (!WORD_TO_ICON[w] && !EMOJI_LIB[w] && !NEVER[w]) EMOJI_LIB[w] = EMOJI_MORE[w]; });
+  // Mulberry Symbols (CC BY-SA 4.0), made for children and adults who communicate with pictures, and maps of the US states. They are
+  // separate files, loaded the first time they are shown, and only used for words nothing above covers. See public/credits.html.
+  var SYM = (typeof window !== "undefined" && window.PICTURE_SYMBOLS) || { words: {}, phrases: {} };
+  var SYM_WORDS = {}, SYM_MINOR = {};
+  (SYM.minor || []).forEach(function(k){ SYM_MINOR[k] = 1; });
+  Object.keys(SYM.words).forEach(function(w){ if (!WORD_TO_ICON[w] && !EMOJI_LIB[w] && !NEVER[w]) SYM_WORDS[w] = SYM.words[w]; });
+  // a country named on its own shows its map (which carries its flag) rather than the flag alone; "American", "French" keep the flag
+  (SYM.override || []).forEach(function(w){ if (SYM.words[w] && !WORD_TO_ICON[w]){ delete EMOJI_LIB[w]; SYM_WORDS[w] = SYM.words[w]; } });
+  var ASSET_BASE = "";
+  function symArt(name){ return '<image href="' + ASSET_BASE + 'symbols/' + String(name).replace(/[^a-z0-9-]/g, "") + '.svg" x="3" y="3" width="94" height="94"/>'; }
+
   // Generic words ("people", "a good question", "great idea", "I'd love to") can join a picture of something else, but never make one alone.
   var WEAK = {};
   ("people person persons man men woman women guy guys kid kids child children boy boys girl girls student students teacher teachers friend friends " +
@@ -1091,6 +1105,8 @@ window.SceneEngine = (function(){
     var fs = forms(w), i;
     for (i = 0; i < fs.length; i++) if (WORD_TO_ICON[fs[i]]) return { icon: WORD_TO_ICON[fs[i]], key: "i:" + WORD_TO_ICON[fs[i]] };
     for (i = 0; i < fs.length; i++) if (EMOJI_LIB[fs[i]]) return { emoji: EMOJI_LIB[fs[i]], key: "m:" + EMOJI_LIB[fs[i]] };
+    var sw = SYM_WORDS[w] ? w : /[^s]s$/.test(w) && SYM_WORDS[w.slice(0, -1)] ? w.slice(0, -1) : /(s|x|z|ch|sh)es$/.test(w) && SYM_WORDS[w.slice(0, -2)] ? w.slice(0, -2) : "";
+    if (sw) return { sym: SYM_WORDS[sw], key: "s:" + SYM_WORDS[sw] };
     return null;
   }
   function labelOf(raw){
@@ -1105,7 +1121,7 @@ window.SceneEngine = (function(){
         if (o.label.toLowerCase() !== c.label.toLowerCase() && o.label.indexOf("&") < 0) o.label += " & " + c.label;
         return;
       }
-      var copy = { icon: c.icon, emoji: c.emoji, key: c.key, label: c.label, at: c.at != null ? c.at : c.i };
+      var copy = { icon: c.icon, emoji: c.emoji, sym: c.sym, key: c.key, label: c.label, at: c.at != null ? c.at : c.i };
       seen[c.key] = copy;
       out.push(copy);
     });
@@ -1249,11 +1265,23 @@ window.SceneEngine = (function(){
     var p = row.split("|"), ws = p[0].split(" ").map(normalize);
     (PHRASES[ws[0]] = PHRASES[ws[0]] || []).push({ words: ws, pic: p[1] });
   });
+  var PHRASE_START = {};
+  Object.keys(PHRASES).forEach(function(k){ PHRASE_START[k] = 1; });
+  var PHRASE_MORE = {"air pollution":"","aland islands":"🇦🇽","antigua and barbuda":"🇦🇬","ascension island":"🇦🇨","atom bomb":"","atomic bomb":"","atomic bombs":"","augmented reality":"","autonomous car":"","ballet shoes":"🩰","bar code":"","bare tree":"🪾","bare trees":"🪾","black hole":"","black holes":"","blood donation":"","blood transfusion":"","bosnia and herzegovina":"🇧🇦","british virgin islands":"🇻🇬","broken heart":"💔","bullet train":"🚅","car exhaust":"","car mechanic":"👩‍🔧","caribbean netherlands":"🇧🇶","cat scan":"","central african republic":"🇨🇫","check mark":"✔","christmas island":"🇨🇽","code editor":"","colon cancer":"","colossus of rhodes":"","congo - brazzaville":"🇨🇬","congo - kinshasa":"🇨🇩","construction site":"👷","construction worker":"👷‍♀","construction workers":"👷‍♀","cook islands":"🇨🇰","cote divoire":"🇨🇮","crystal ball":"🔮","ct scan":"","deaf people":"🧏","donate blood":"","driverless car":"","ear infection":"","eiffel tower":"","eight o'clock":"🕗","el salvador":"🇸🇻","eleven o'clock":"🕚","equatorial guinea":"🇬🇶","european union":"🇪🇺","exchange rate":"💱","exhaust fumes":"","face mask":"","face masks":"","factory worker":"👨‍🏭","factory workers":"👨‍🏭","first aid":"","first quarter":"🌓","first quarter moon":"🌓","five o'clock":"🕔","flying disc":"🥏","fortune teller":"🔮","four leaf clover":"🍀","four o'clock":"🕓","four-leaf clover":"🍀","french guiana":"🇬🇫","french polynesia":"🇵🇫","french southern territories":"🇹🇫","full moon":"🌕","geiger counter":"","good luck":"🍀","great pyramid":"","great pyramid of giza":"","guide dog":"🦮","guide dogs":"🦮","hand sanitizer":"","hanging gardens":"","hanging gardens of babylon":"","heart beat":"💓","heart rate":"","high speed rail":"🚅","high visibility vest":"🦺","high-speed train":"🚅","hiking boot":"🥾","hiking boots":"🥾","horse race":"🏇","horse racing":"🏇","ice melting":"","ice sheet":"","ice shelf":"","isle of man":"🇮🇲","iv drip":"","joint pain":"","lab coat":"🥼","lab coats":"🥼","large intestine":"","last quarter":"🌗","last quarter moon":"🌗","lift weights":"🏋‍♀","lifting weights":"🏋‍♀","lighthouse of alexandria":"","magic wand":"🪄","mausoleum at halicarnassus":"","melting glaciers":"","melting ice":"","mountain bike":"🚵","mountain biking":"🚵","mouse trap":"🪤","mri scan":"","new moon":"🌑","nine o'clock":"🕘","north macedonia":"🇲🇰","northern mariana islands":"🇲🇵","not allowed":"🚫","nuclear bomb":"","nuclear energy":"","nuclear plant":"","nuclear power":"","nuclear power plant":"","nuclear reactor":"","nuclear waste":"","nuclear weapons":"","office worker":"👩‍💼","office workers":"👩‍💼","oil spill":"","oil spills":"","one o'clock":"🕐","please help":"🥺","police officer":"👮‍♂","police officers":"👮‍♂","puerto rico":"🇵🇷","pyramid of giza":"","pyramids of giza":"","qr code":"","radioactive waste":"","raise hands":"🙋‍♀","raise your hand":"🙋‍♀","raised hand":"🙋‍♀","raised her hand":"🙋‍♀","raised his hand":"🙋‍♀","renewable energy":"","reusable bag":"","rising sea levels":"","rock climbing":"🧗‍♂","row a boat":"🚣‍♂","safety glasses":"🥽","safety vest":"🦺","saint barthelemy":"🇧🇱","saint helena":"🇸🇭","saint kitts and nevis":"🇰🇳","saint lucia":"🇱🇨","saint martin":"🇲🇫","saint pierre and miquelon":"🇵🇲","saint vincent and grenadines":"🇻🇨","san marino":"🇸🇲","sao tome and principe":"🇸🇹","sea ice":"","sea level rise":"","sea levels":"","security guard":"💂","self driving car":"","self-driving car":"","service dog":"🦮","seven o'clock":"🕖","sint maarten":"🇸🇽","six o'clock":"🕕","smart watch":"","social distancing":"","solar cell":"","solar cells":"","solar energy":"","solar power":"","south sudan":"🇸🇸","space shuttle":"","speech bubble":"💬","speech bubbles":"💬","speech therapy":"🗣","statue of zeus":"","svalbard and jan mayen":"🇸🇯","temple of artemis":"","ten o'clock":"🕙","third quarter":"🌗","thought bubble":"💭","thought bubbles":"💭","three o'clock":"🕒","thumbs down":"👎","treasure chest":"🪎","tristan da cunha":"🇹🇦","turks and caicos islands":"🇹🇨","twelve o'clock":"🕛","two o'clock":"🕑","u.s. outlying islands":"🇺🇲","u.s. virgin islands":"🇻🇮","united states":"🇺🇸","vatican city":"🇻🇦","virtual reality":"","vr headset":"","waning crescent":"🌘","waning gibbous":"🌖","water polo":"🤽","waxing crescent":"🌒","waxing gibbous":"🌔","wheelchair user":"🧑‍🦽","whisper quietly":"🤫","wind energy":"","wind farm":"","wind power":"","wind turbine":"","wind turbines":"","yin and yang":"☯","yin yang":"☯"};
+  function addPhrase(text, pic){
+    var ws = String(text).split(" ").map(normalize).filter(Boolean);
+    if (ws.length < 2) return;
+    var list = PHRASES[ws[0]] = PHRASES[ws[0]] || [], key = ws.join(" ");
+    if (!list.some(function(x){ return x.words.join(" ") === key; })) list.push({ words: ws, pic: pic });
+  }
+  Object.keys(PHRASE_MORE).forEach(function(t){ addPhrase(t, "m:" + PHRASE_MORE[t]); });
+  Object.keys(SYM.phrases).forEach(function(t){ addPhrase(t, "s:" + SYM.phrases[t]); });
   Object.keys(PHRASES).forEach(function(k){ PHRASES[k].sort(function(a, b){ return b.words.length - a.words.length; }); });
   function picOf(spec){
     if (!spec || spec === "-") return null;
     if (spec.slice(0, 2) === "i:" && I[spec.slice(2)]) return { icon: spec.slice(2), key: "i:" + spec.slice(2) };
     if (spec.slice(0, 2) === "m:") return { emoji: spec.slice(2), key: "m:" + spec.slice(2) };
+    if (spec.slice(0, 2) === "s:") return { sym: spec.slice(2), key: "s:" + spec.slice(2) };
     return null;
   }
   // the longest phrase starting at word i, or null
@@ -1408,7 +1436,7 @@ window.SceneEngine = (function(){
     if (ws.length <= 2) return true;
     var last = ws[ws.length - 1], prev = ws[ws.length - 2];
     if (/^(is|are|was|were)$/.test(last) && /^(there|it|they|we|you|he|she|that|this|what|where|who|how|which)$/.test(prev)) return false;
-    return !!DANGLE[last] || (!!PHRASES[last] && !VERB_BEFORE[last] && ws.length <= 7);
+    return !!DANGLE[last] || (!!PHRASE_START[last] && !VERB_BEFORE[last] && ws.length <= 7);
   }
   var NEEDS_DET = cueSet("store stores log logs beat beats mask masks switch switches");
   var NOUN_DET = cueSet("the a an this that these those my your our his her their its every each some any no one");
@@ -1434,8 +1462,8 @@ window.SceneEngine = (function(){
   function isName(raw, norm, i){
     if (!isCap(raw, norm, i)) return false;
     var a = i, z = i;
-    while (isCap(raw, norm, a - 1)) a--;
-    while (isCap(raw, norm, z + 1)) z++;
+    while (isCap(raw, norm, a - 1) && !/,$/.test(raw[a - 1])) a--;
+    while (isCap(raw, norm, z + 1) && !/,$/.test(raw[z])) z++;
     if (z === a) return false;
     // topic phrases ("Industrial Revolution", "French Revolution", "Cold War") are not people
     for (var j = a; j <= z; j++) if (TOPIC_WORD.test(norm[j])) return false;
@@ -1503,7 +1531,7 @@ window.SceneEngine = (function(){
       // a phrase that means one thing ("american football", "cell phone") is one picture, or none
       var ph = phraseAt(norm, i);
       if (ph){
-        if (ph.c) concepts.push({ i: i, icon: ph.c.icon, emoji: ph.c.emoji, key: ph.c.key, label: raw.slice(i, i + ph.len).map(labelOf).join(" "), weak: false });
+        if (ph.c) concepts.push({ i: i, icon: ph.c.icon, emoji: ph.c.emoji, sym: ph.c.sym, key: ph.c.key, label: raw.slice(i, i + ph.len).map(labelOf).join(" "), weak: false });
         i += ph.len - 1;
         continue;
       }
@@ -1516,7 +1544,24 @@ window.SceneEngine = (function(){
       if (cx !== undefined) c = cx;
       if (c && (c.emoji === "🐭" || c.icon === "mouse") && hasCue(cues, COMPUTER_CUES)) c = { emoji: "🖱️", key: "m:🖱️" };
       if (c && MATH_ONLY[c.icon] && (!hasMathCue(cues) || (hasCue(cues, CUE.sport) && !hasCue(norm, FRACTION_TALK)))) c = null;
-      if (c) concepts.push({ i: i, icon: c.icon, emoji: c.emoji, key: c.key, label: labelOf(raw[i]), weak: !!WEAK[w] && extraConcept(w, extra) === undefined });
+      if (c) concepts.push({ i: i, icon: c.icon, emoji: c.emoji, sym: c.sym, key: c.key, label: labelOf(raw[i]), weak: !!WEAK[w] && extraConcept(w, extra) === undefined,
+        minor: !!c.sym && !!SYM_MINOR[c.sym], extraSym: !!c.sym });
+    }
+    // An action or a state ("pour", "dig", "hungry") is pictured only when the sentence has little else to show, and the symbols added
+    // for words the drawings and emoji don't cover give way first when there are more things than fit on the card.
+    var mainN = concepts.filter(function(c){ return !c.minor && !c.weak; }).length;
+    if (mainN >= 2) concepts = concepts.filter(function(c){ return !c.minor; });
+    var keys = {};
+    concepts.forEach(function(c){ keys[c.key] = 1; });
+    if (Object.keys(keys).length > 3){
+      var nonSym = concepts.filter(function(c){ return !c.extraSym; });
+      var nk = {}; nonSym.forEach(function(c){ nk[c.key] = 1; });
+      var room = 3 - Object.keys(nk).length;
+      if (Object.keys(nk).length >= 2) concepts = concepts.filter(function(c){
+        if (!c.extraSym || nk[c.key]) return true;
+        if (room > 0){ room--; nk[c.key] = 1; return true; }
+        return false;
+      });
     }
     for (i = 0; i < n; i++){
       if (norm[i] !== "into") continue;
@@ -1560,7 +1605,7 @@ window.SceneEngine = (function(){
           if (!subs.length && context && context.subject){
             for (var p = prevI + 1; p < r.i; p++) if (PRONOUN[norm[p]]){
               var cs = context.subject;
-              subs = [{ icon: cs.icon, emoji: cs.emoji, key: cs.key, label: cs.label, at: p }];
+              subs = [{ icon: cs.icon, emoji: cs.emoji, sym: cs.sym, key: cs.key, label: cs.label, at: p }];
               break;
             }
           }
@@ -1630,7 +1675,7 @@ window.SceneEngine = (function(){
       if (typeof k !== "string") return null;
       var key = k.trim().toLowerCase(), item = null;
       if (I[key]) item = { icon: key, key: "i:" + key };
-      else { var c = conceptFor(normalize(key), extra); if (c) item = { icon: c.icon, emoji: c.emoji, key: c.key }; }
+      else { var c = conceptFor(normalize(key), extra); if (c) item = { icon: c.icon, emoji: c.emoji, sym: c.sym, key: c.key }; }
       if (!item || used[item.key]) return null;
       used[item.key] = true;
       var lab = labels[k] != null ? labels[k] : labels[key];
@@ -1742,7 +1787,7 @@ window.SceneEngine = (function(){
     if (art) return circ(50, 50, 40, "#FFFDF6", 2) + '<g transform="translate(13,13) scale(1.03)">' + art + '</g>';
     return circ(50, 50, 38, "#FFFDF6") + '<text x="50" y="53" text-anchor="middle" dominant-baseline="middle" font-size="44" font-family="' + EMOJI_FONT + '">' + esc(e) + '</text>';
   }
-  function iconArt(item){ return item.icon && I[item.icon] ? art(item.icon) : emojiBadge(item.emoji || "❓"); }
+  function iconArt(item){ return item.icon && I[item.icon] ? art(item.icon) : item.sym ? symArt(item.sym) : emojiBadge(item.emoji || "❓"); }
   function el(at, inner){ return '<g class="el" data-at="' + (at | 0) + '">' + inner + '</g>'; }
 
   function placeGroup(items, cx, cy, size, dir){
@@ -2164,7 +2209,7 @@ window.SceneEngine = (function(){
         dLead(140, 100, 204, 103) + dL("vacuole", 250, 108, 14) + dLead(66, 130, 204, 141) + dL("nucleus", 248, 146, 14) + dLead(166, 166, 204, 178) + dL("membrane", 254, 183, 14)
     ];
   });
-  dgm("bodyorgans", "Organs of the body", "bio", ["human body", "body systems", "organs of the body", "organ systems", "digestive system", "circulatory system", "respiratory system", "nervous system", "major organs"], {
+  dgm("bodyorgans", "Organs of the body", "bio", ["human body", "body systems", "organs of the body", "organ systems", "circulatory system", "nervous system", "major organs"], {
     brain: [[6, 6, 150, 46], "brain,nervous,nerves,think"], lungs: [[6, 64, 146, 42], "lung,lungs,respiratory,breathe,breathing,oxygen"],
     heart: [[170, 64, 146, 42], "heart,circulatory,blood,pumps"], stomach: [[170, 110, 146, 42], "stomach,digestive,digest,digestion,food"],
     intestines: [[6, 120, 150, 48], "intestine,intestines,digestive,gut"]
@@ -2730,6 +2775,54 @@ window.SceneEngine = (function(){
     ];
   });
 
+  // Labelled diagrams from Wikimedia Commons (public domain or Creative Commons, each credited in public/credits.html), kept as
+  // files and shown as pictures. A sentence naming the topic brings one up, the same way as the drawn diagrams above.
+  // @image-diagrams-start
+  var IMAGE_DIAGRAMS = [
+    ["earparts", "Parts of the ear", ["parts of the ear", "inner ear", "middle ear", "outer ear", "eardrum", "ear drum", "eardrums", "cochlea", "ear canal", "how we hear", "how hearing works", "semicircular canals"], "svg"],
+    ["heartparts", "Inside the heart", ["chambers of the heart", "parts of the heart", "four chambers", "atrium", "atria", "ventricle", "ventricles", "aorta", "heart valves", "inside the heart", "right atrium", "left ventricle"], "svg"],
+    ["dnahelix", "DNA's double helix", ["double helix", "base pair", "base pairs", "dna structure", "structure of dna", "nitrogen bases", "nitrogen base", "adenine", "thymine", "guanine", "cytosine"], "svg"],
+    ["cellorganelles", "Organelles of an animal cell", ["organelles", "organelle", "golgi", "golgi apparatus", "endoplasmic reticulum", "lysosome", "lysosomes"], "svg"],
+    ["membrane", "The cell membrane up close", ["phospholipid", "phospholipids", "lipid bilayer", "phospholipid bilayer", "plasma membrane", "membrane proteins", "membrane protein", "selectively permeable", "semipermeable"], "svg"],
+    ["digestion", "The digestive system", ["digestive system", "digestion", "digestive tract", "small intestine", "esophagus", "digest food", "digests food", "digested"], "svg"],
+    ["respiration", "The respiratory system", ["respiratory system", "bronchi", "bronchus", "alveoli", "diaphragm", "breathing system", "airway", "airways"], "png"],
+    ["skeleton", "The human skeleton", ["skeleton", "skeletal system", "human skeleton", "bones in the body", "bones of the body", "206 bones"], "svg"],
+    ["eyeparts", "Parts of the eye", ["parts of the eye", "retina", "cornea", "optic nerve", "human eye", "inside the eye", "how we see", "how the eye works"], "png"],
+    ["brainlobes", "Lobes of the brain", ["lobes of the brain", "frontal lobe", "parietal lobe", "temporal lobe", "occipital lobe", "brain lobes", "cerebrum"], "png"],
+    ["flowerparts", "Parts of a flower", ["parts of a flower", "flower parts", "stamen", "stamens", "pistil", "anther", "anthers", "sepal", "sepals", "ovule", "ovules"], "png"],
+    ["meiosis", "Meiosis", ["meiosis", "sex cells", "gametes"], "png"],
+    ["energypyramid", "The energy pyramid", ["energy pyramid", "ecological pyramid", "trophic level", "trophic levels", "ten percent rule", "10 percent rule"], "svg"],
+    ["carboncycle", "The carbon cycle", ["carbon cycle"], "svg"],
+    ["nitrogencycle", "The nitrogen cycle", ["nitrogen cycle", "nitrogen fixation", "nitrogen-fixing bacteria"], "png"],
+    ["periodictable", "The periodic table", ["periodic table", "table of elements", "periodic table of elements"], "png"],
+    ["emspectrum", "The electromagnetic spectrum", ["electromagnetic spectrum", "electromagnetic waves", "electromagnetic radiation", "em spectrum", "radio waves", "microwaves", "infrared", "ultraviolet", "x-rays", "x rays", "gamma rays", "visible light"], "svg"],
+    ["watermolecule", "A water molecule", ["water molecule", "water molecules", "h2o", "polar molecule"], "png"],
+    ["normaldist", "The normal distribution", ["normal distribution", "bell curve", "standard deviation", "standard deviations"], "png"],
+    ["unitcircle", "The unit circle", ["unit circle", "radians", "radian"], "svg"],
+    ["oceanzones", "Zones of the ocean", ["ocean zones", "zones of the ocean", "sunlight zone", "twilight zone", "midnight zone", "abyssal zone", "hadal zone", "ocean layers", "layers of the ocean"], "png"],
+    ["soillayers", "Layers of soil", ["soil layers", "layers of soil", "soil horizons", "soil horizon", "topsoil", "subsoil", "bedrock", "soil profile"], "png"],
+    ["triangletypes", "Kinds of triangles", ["types of triangles", "kinds of triangles", "classify triangles", "classifying triangles", "triangle types"], "svg"],
+    ["quadtypes", "Kinds of quadrilaterals", ["types of quadrilaterals", "kinds of quadrilaterals", "quadrilaterals", "classify quadrilaterals", "classifying quadrilaterals"], "svg"],
+    ["lever", "A lever", ["fulcrum", "first class lever", "first-class lever", "parts of a lever", "effort and load", "lever and fulcrum"], "png"],
+    ["prism", "Light through a prism", ["refraction", "refracts", "refracted", "glass prism", "light through a prism", "prism splits", "splits white light", "light bends"], "svg"],
+    ["eclipse", "A solar eclipse", ["solar eclipse", "eclipse of the sun", "total eclipse", "eclipses"], "png"],
+    ["tides", "Tides", ["ocean tides", "high tide", "low tide", "high and low tide", "spring tide", "neap tide", "tidal", "causes the tides", "cause the tides", "causes tides", "makes tides"], "png"],
+    ["aquifer", "Groundwater and aquifers", ["aquifer", "aquifers", "groundwater", "ground water", "water table"], "svg"],
+    ["europe1914", "Europe's alliances in 1914", ["triple entente", "triple alliance", "central powers", "allied powers", "alliance system", "alliances in 1914", "europe in 1914"], "svg"],
+    ["thirteencolonies", "The thirteen colonies", ["thirteen colonies", "13 colonies", "thirteen original colonies", "american colonies", "british colonies", "colonial america"], "svg"],
+    ["coldwareurope", "Europe in the Cold War", ["cold war", "iron curtain", "warsaw pact", "nato", "eastern bloc", "soviet bloc"], "png"],
+    ["usstates", "The fifty states", ["fifty states", "50 states", "map of the united states", "united states map", "states of america", "all the states"], "svg"]
+  ];
+  // @image-diagrams-end
+  var IMAGE_DIAGRAM = {};
+  IMAGE_DIAGRAMS.forEach(function(d){
+    IMAGE_DIAGRAM[d[0]] = 1;
+    dgm(d[0], d[1], "plain", d[2], {}, function(){
+      return ['<rect x="6" y="6" width="308" height="188" rx="6" fill="#FFFFFF"/><image href="' + ASSET_BASE + 'diagrams/' + d[0] + '.' + (d[3] || "svg") +
+        '" x="10" y="10" width="300" height="180" preserveAspectRatio="xMidYMid meet"/>'];
+    });
+  });
+
   function findDiagram(toks){
     var best = null;
     DIAGRAM_ORDER.forEach(function(k){
@@ -2761,6 +2854,7 @@ window.SceneEngine = (function(){
     if (hl.length > 2) hl = [];   // a sentence naming most of the parts is an overview: nothing to single out
     var sc = emptyScene();
     sc.show = true; sc.diagram = d.key; sc.diagramAt = at; sc.highlight = hl; sc.hlAts = hlAts; sc.verbAt = at; sc.setting = d.setting;
+    sc.imageDiagram = !!IMAGE_DIAGRAM[d.key];
     sc.caption = raw.length <= 14 ? cap(raw.join(" ").replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, "")) : d.title;
     return sc;
   }
@@ -3234,6 +3328,9 @@ window.SceneEngine = (function(){
     diagramGallery: function(){
       return DIAGRAM_ORDER.map(function(k){ var d = DIAGRAMS[k], sc = diagramScene(d.title, k); sc.caption = d.title; sc.highlight = []; return { key: k, title: d.title, say: d.sayText, svg: renderScene(sc) }; });
     },
-    normalize: normalize, iconCount: Object.keys(I).length, wordCount: Object.keys(WORD_TO_ICON).length + Object.keys(EMOJI_LIB).length, ICONS: I
+    normalize: normalize, iconCount: Object.keys(I).length, wordCount: Object.keys(WORD_TO_ICON).length + Object.keys(EMOJI_LIB).length + Object.keys(SYM_WORDS).length,
+    symbolCount: (function(){ var u = {}; Object.keys(SYM.words).concat(Object.keys(SYM.phrases)).forEach(function(k){ u[SYM.words[k] || SYM.phrases[k]] = 1; }); return Object.keys(u).length; })(),
+    emojiCount: (function(){ var u = {}; Object.keys(EMOJI_LIB).forEach(function(k){ u[EMOJI_LIB[k]] = 1; }); return Object.keys(u).length; })(),
+    setAssetBase: function(b){ ASSET_BASE = b || ""; }, symbolArt: function(name){ return symArt(name); }, ICONS: I
   };
 })();
