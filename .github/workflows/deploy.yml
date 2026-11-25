@@ -1,4 +1,4 @@
-# Builds the app in web/ and publishes it to GitHub Pages on every push to main.
+# Checks and builds the app in web/ and publishes it to GitHub Pages on every push to main.
 name: Deploy to GitHub Pages
 
 on:
@@ -29,6 +29,9 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
       - run: npm ci
+      # nothing reaches classrooms unless these pass: the scene tests catch a wrong picture, a missing file or a broken diagram
+      - run: npm run lint
+      - run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

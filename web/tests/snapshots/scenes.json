@@ -1,0 +1,2017 @@
+{
+ "lessons": {
+  "water-cycle 1": {
+   "tuned": null,
+   "rule": "DIAGRAM watercycle ‹Today we're talking about the water cycle›",
+   "svg": "aa750334a9ba"
+  },
+  "water-cycle 2": {
+   "tuned": null,
+   "rule": "sun=i:sun heats→ ocean=i:wave → turning into vapor=i:vapor ‹The sun heats the ocean, turning liquid water into vapor›",
+   "svg": "72d7bdf1d205"
+  },
+  "water-cycle 3": {
+   "tuned": null,
+   "rule": "vapor=i:vapor rises→ cloud=i:cloud ‹That vapor rises and cools to form a cloud›",
+   "svg": "785bf5af18ee"
+  },
+  "water-cycle 4": {
+   "tuned": null,
+   "rule": "cloud=i:cloud releases→ rain=i:rain → falls rivers=i:river + ocean=i:wave ‹Eventually the cloud releases rain, which falls back into rivers and the ocean›",
+   "svg": "2d7775f4a2de"
+  },
+  "water-cycle 5": {
+   "tuned": null,
+   "rule": "sun=i:sun + energy=i:bolt + gravity=i:gravity ‹The whole cycle repeats, powered by the sun's energy and the pull of gravity›",
+   "svg": "7cde5ee62122"
+  },
+  "photosynthesis 1": {
+   "tuned": "DIAGRAM photosynthesis (sugar) ‹Plants make their own food through photosynthesis›",
+   "rule": "DIAGRAM photosynthesis (sugar) ‹Plants make their own food through photosynthesis›",
+   "svg": "723e10393924"
+  },
+  "photosynthesis 2": {
+   "tuned": null,
+   "rule": "leaf=i:leaf collects→ sunlight=i:sun + solar panel=i:solar ‹A leaf collects sunlight like a tiny solar panel›",
+   "svg": "0a4594e1f267"
+  },
+  "photosynthesis 3": {
+   "tuned": "roots=i:sprout pull up→ water=i:drop ‹Roots pull water up from the soil›",
+   "rule": "roots=i:sprout pull→ water=i:drop + soil=i:soil ‹Roots pull water up from the soil›",
+   "svg": "2f512075403e"
+  },
+  "photosynthesis 4": {
+   "tuned": "leaf=i:leaf takes in→ carbon dioxide=i:co2 ‹The leaf takes in carbon dioxide from the air›",
+   "rule": "leaf=i:leaf takes→ carbon dioxide=i:co2 ‹The leaf takes in carbon dioxide from the air›",
+   "svg": "37df6b3f9afa"
+  },
+  "photosynthesis 5": {
+   "tuned": "water=i:drop + carbon dioxide=i:co2 turns into→ sugar=i:sugar ‹Using the sun's energy, the leaf turns water and carbon dioxide into sugar›",
+   "rule": "energy=i:bolt + leaf=i:leaf turns into→ sugar=i:sugar ‹Using the sun's energy, the leaf turns water and carbon dioxide into sugar›",
+   "svg": "ae00949eaac4"
+  },
+  "photosynthesis 6": {
+   "tuned": "plant=i:sprout releases→ oxygen=i:oxygen ‹As a bonus, the plant releases oxygen for us to breathe›",
+   "rule": "plant=i:sprout releases→ oxygen=i:oxygen ‹As a bonus, the plant releases oxygen for us to breathe›",
+   "svg": "e760a29b5e4b"
+  },
+  "food-chain 1": {
+   "tuned": "DIAGRAM foodchain (sun) ‹Every food chain starts with the sun›",
+   "rule": "DIAGRAM foodchain (sun) ‹Every food chain starts with the sun›",
+   "svg": "7dbc5218e777"
+  },
+  "food-chain 2": {
+   "tuned": "sunlight=i:sun helps grow→ grass=i:grass ‹Grass uses sunlight to grow›",
+   "rule": "grass=i:grass uses→ sunlight=i:sun ‹Grass uses sunlight to grow›",
+   "svg": "e49e03275132"
+  },
+  "food-chain 3": {
+   "tuned": null,
+   "rule": "rabbit=i:rabbit eats→ grass=i:grass ‹A rabbit eats the grass›",
+   "svg": "145a0bb0d36a"
+  },
+  "food-chain 4": {
+   "tuned": null,
+   "rule": "fox=i:fox hunts→ rabbit=i:rabbit ‹Then a fox hunts the rabbit›",
+   "svg": "fbddc827dde2"
+  },
+  "food-chain 5": {
+   "tuned": "decomposers=i:mushroom break down→ fox=i:fox ‹When the fox dies, mushrooms and other decomposers break it down›",
+   "rule": "fox=i:fox + mushrooms & decomposers=i:mushroom ‹When the fox dies, mushrooms and other decomposers break it down›",
+   "svg": "d69cfbe9b79e"
+  },
+  "food-chain 6": {
+   "tuned": "grass=i:grass + rabbit=i:rabbit + fox=i:fox ‹The food chain starts again›",
+   "rule": "nutrients=i:apple into→ soil=i:soil + grass=i:grass ‹The nutrients go back into the soil, and new grass grows again›",
+   "svg": "4db623c0ccac"
+  },
+  "butterfly 1": {
+   "tuned": "leaf=i:leaf on a leaf→ tiny egg=i:egg ‹A butterfly starts life as a tiny egg on a leaf›",
+   "rule": "butterfly=i:butterfly + egg=i:egg + leaf=i:leaf ‹A butterfly starts life as a tiny egg on a leaf›",
+   "svg": "b5b9f7ed4db5"
+  },
+  "butterfly 2": {
+   "tuned": null,
+   "rule": "egg=i:egg hatches into→ caterpillar=i:caterpillar ‹The egg hatches into a hungry caterpillar›",
+   "svg": "82be9daa5c88"
+  },
+  "butterfly 3": {
+   "tuned": "caterpillar=i:caterpillar eats→ leaves=i:leaf ‹The caterpillar eats leaves and grows bigger every day›",
+   "rule": "caterpillar=i:caterpillar eats→ leaves=i:leaf ‹The caterpillar eats leaves and grows bigger every day›",
+   "svg": "a04d2a0260ca"
+  },
+  "butterfly 4": {
+   "tuned": "caterpillar=i:caterpillar wraps in→ chrysalis=i:cocoon ‹Then it wraps itself in a chrysalis›",
+   "rule": "chrysalis=i:cocoon ‹Then it wraps itself in a chrysalis›",
+   "svg": "5c44537bd90d"
+  },
+  "butterfly 5": {
+   "tuned": "chrysalis=i:cocoon transforms into→ butterfly=i:butterfly ‹Inside the chrysalis, the caterpillar transforms into a butterfly›",
+   "rule": "chrysalis=i:cocoon inside→ caterpillar=i:caterpillar + butterfly=i:butterfly ‹Inside the chrysalis, the caterpillar transforms into a butterfly›",
+   "svg": "c0ce976eab75"
+  },
+  "butterfly 6": {
+   "tuned": "butterfly=i:butterfly + egg=i:egg + caterpillar=i:caterpillar ‹The life cycle repeats›",
+   "rule": "butterfly=i:butterfly + eggs=i:egg ‹The butterfly lays new eggs, and the cycle repeats›",
+   "svg": "845128944a7d"
+  },
+  "matter 1": {
+   "tuned": "DIAGRAM matterstates ‹Matter comes in three states: solid, liquid, and gas›",
+   "rule": "DIAGRAM matterstates ‹Matter comes in three states: solid, liquid, and gas›",
+   "svg": "40223fa830f9"
+  },
+  "matter 2": {
+   "tuned": "ice (solid)=i:snowflake packed tight→ molecules=i:atom ‹Ice is a solid, and its molecules hold tightly together›",
+   "rule": "ice=i:snowflake + molecules=i:atom ‹Ice is a solid, and its molecules hold tightly together›",
+   "svg": "04629acd25cc"
+  },
+  "matter 3": {
+   "tuned": "heat=i:flame melts→ ice=i:snowflake → becomes liquid water=i:drop ‹When heat melts the ice, it becomes liquid water›",
+   "rule": "heat=i:flame melts→ ice=i:snowflake → becomes liquid & water=i:drop ‹When heat melts the ice, it becomes liquid water›",
+   "svg": "87f6f2597613"
+  },
+  "matter 4": {
+   "tuned": null,
+   "rule": "water=i:drop evaporates→ steam=i:vapor ‹If we keep heating the water, it evaporates into steam›",
+   "svg": "ac96ac2b4af8"
+  },
+  "matter 5": {
+   "tuned": "steam=i:vapor cooling→ water=i:drop ‹Cooling the steam turns it back into water›",
+   "rule": "steam=i:vapor turns into→ water=i:drop ‹Cooling the steam turns it back into water›",
+   "svg": "a072e4650b40"
+  },
+  "cells 1": {
+   "tuned": null,
+   "rule": "cells=i:cell ‹Every living thing is built from tiny cells›",
+   "svg": "ea2162011ef8"
+  },
+  "cells 2": {
+   "tuned": null,
+   "rule": "cell=i:cell inside→ DNA=i:dna ‹Inside each cell, DNA carries the instructions for life›",
+   "svg": "5680619d4cf5"
+  },
+  "cells 3": {
+   "tuned": null,
+   "rule": "cell=i:cell uses→ energy=i:bolt + food=i:apple ‹A cell uses energy from food to grow, repair itself, and even fight off a virus›",
+   "svg": "508a9fcf71ad"
+  },
+  "cells 4": {
+   "tuned": null,
+   "rule": "plants=i:sprout + animals=m:🐾 depend→ cells=i:cell ‹Plants and animals both depend on healthy cells to survive›",
+   "svg": "e9e71d5d7937"
+  },
+  "solar-system 1": {
+   "tuned": "DIAGRAM solarsystem ‹Our solar system has one star at its center: the sun›",
+   "rule": "DIAGRAM solarsystem ‹Our solar system has one star at its center: the sun›",
+   "svg": "a8d4a119937f"
+  },
+  "solar-system 2": {
+   "tuned": null,
+   "rule": "gravity=i:gravity + sun=i:sun pulls→ planet=i:planet ‹Gravity from the sun pulls every planet into its orbit›",
+   "svg": "30ed18db4120"
+  },
+  "solar-system 3": {
+   "tuned": "Earth=i:globe + sun=i:sun ‹Earth orbits the sun once a year›",
+   "rule": "earth=i:globe + sun=i:sun ‹Earth orbits the sun once a year›",
+   "svg": "c80255cf5960"
+  },
+  "solar-system 4": {
+   "tuned": null,
+   "rule": "DIAGRAM tides ‹The moon's gravity pulls on our ocean to make tides›",
+   "svg": "f717baea7754"
+  },
+  "solar-system 5": {
+   "tuned": "comet=i:comet made of→ ice=i:snowflake + rock=i:rock ‹A comet is a ball of ice and rock that swings around the sun›",
+   "rule": "comet=i:comet + ice=i:snowflake + rock=i:rock ‹A comet is a ball of ice and rock that swings around the sun›",
+   "svg": "77081dc90b8c"
+  },
+  "solar-system 6": {
+   "tuned": null,
+   "rule": "astronauts=i:person ride→ rocket=i:rocket → reach moon=i:moon ‹Astronauts ride a rocket to reach the moon›",
+   "svg": "5ced5f90cef9"
+  },
+  "machines 1": {
+   "tuned": "DIAGRAM simplemachines ‹Simple machines make hard work easier›",
+   "rule": "DIAGRAM simplemachines ‹Simple machines make hard work easier›",
+   "svg": "b3b00f478fee"
+  },
+  "machines 2": {
+   "tuned": "lever=i:lever lifts→ something heavy=i:cube ‹A lever helps you lift something heavy using less force›",
+   "rule": "lever=i:lever helps→ force=i:muscle ‹A lever helps you lift something heavy using less force›",
+   "svg": "7e531ea08475"
+  },
+  "machines 3": {
+   "tuned": "ramp=i:ramp helps push→ heavy box=i:cube ‹A ramp lets you push a heavy box up instead of lifting it›",
+   "rule": "ramp=i:ramp push→ box=i:cube ‹A ramp lets you push a heavy box up instead of lifting it›",
+   "svg": "d1bedf71cdae"
+  },
+  "machines 4": {
+   "tuned": "pulley=i:pulley lifts→ a load=i:cube ‹A pulley uses a rope and a wheel to lift a load›",
+   "rule": "pulley=i:pulley uses→ wheel=i:gear ‹A pulley uses a rope and a wheel to lift a load›",
+   "svg": "82c2af46b2d5"
+  },
+  "machines 5": {
+   "tuned": null,
+   "rule": "machines=i:gear built→ robot=i:robot ‹Put a few machines together and you've basically built a robot›",
+   "svg": "136dfe8aeaf2"
+  },
+  "electricity 1": {
+   "tuned": null,
+   "rule": "electricity=i:bolt needs→ circuit=i:plug ‹Electricity needs a complete path called a circuit›",
+   "svg": "3522389a43e4"
+  },
+  "electricity 2": {
+   "tuned": "battery=i:battery pushes energy→ wire=i:plug ‹A battery pushes energy through the wire›",
+   "rule": "battery=i:battery pushes→ energy=i:bolt + wire=i:plug ‹A battery pushes energy through the wire›",
+   "svg": "458200fd2450"
+  },
+  "electricity 3": {
+   "tuned": "energy=i:bolt makes it glow→ light bulb=i:bulb ‹The energy reaches the light bulb and makes it glow›",
+   "rule": "energy=i:bolt reaches→ light bulb=i:bulb ‹The energy reaches the light bulb and makes it glow›",
+   "svg": "638fc1461aa7"
+  },
+  "electricity 4": {
+   "tuned": "cut wire=i:plug cut→ light goes out=i:bulb ‹If you cut the wire, the circuit breaks and the light goes out›",
+   "rule": "wire & circuit=i:plug breaks→ light=i:bulb ‹If you cut the wire, the circuit breaks and the light goes out›",
+   "svg": "a05257837ba8"
+  },
+  "electricity 5": {
+   "tuned": "you=i:hand flips the switch→ circuit=i:plug ‹A switch is just a safe way to open and close the circuit›",
+   "rule": "switch=i:switch + circuit=i:plug ‹A switch is just a safe way to open and close the circuit›",
+   "svg": "7636501ba217"
+  },
+  "body 1": {
+   "tuned": "lungs=i:lungs breathe in→ oxygen=i:oxygen ‹Your lungs breathe in oxygen from the air›",
+   "rule": "lungs=i:lungs breathe→ oxygen=i:oxygen ‹Your lungs breathe in oxygen from the air›",
+   "svg": "d01df1feacb1"
+  },
+  "body 2": {
+   "tuned": "heart=i:heart pumps blood to→ your body=i:person ‹The heart pumps blood all around your body›",
+   "rule": "heart=i:heart pumps→ blood=m:🩸 ‹The heart pumps blood all around your body›",
+   "svg": "abad483d3998"
+  },
+  "body 3": {
+   "tuned": "oxygen=i:oxygen carried to→ every muscle=i:muscle ‹Blood carries oxygen to every muscle›",
+   "rule": "blood=m:🩸 carries→ oxygen=i:oxygen + muscle=i:muscle ‹Blood carries oxygen to every muscle›",
+   "svg": "eae6daa530a6"
+  },
+  "body 4": {
+   "tuned": "oxygen=i:oxygen fuels→ muscles=i:muscle → make energy=i:bolt ‹Your muscles use that oxygen to make energy so you can move›",
+   "rule": "muscles=i:muscle use→ oxygen=i:oxygen → make energy=i:bolt ‹Your muscles use that oxygen to make energy so you can move›",
+   "svg": "99b74198fd0d"
+  },
+  "body 5": {
+   "tuned": "lungs=i:lungs breathe out→ carbon dioxide=i:co2 ‹Then your lungs breathe out carbon dioxide›",
+   "rule": "lungs=i:lungs breathe→ carbon dioxide=i:co2 ‹Then your lungs breathe out carbon dioxide›",
+   "svg": "8a4236778af0"
+  },
+  "volcanoes 1": {
+   "tuned": "rock=i:rock melts into→ magma=i:flame ‹Deep underground, rock melts into hot magma›",
+   "rule": "rock=i:rock melts into→ hot=i:flame + magma=i:volcano ‹Deep underground, rock melts into hot magma›",
+   "svg": "e19f6f3a261d"
+  },
+  "volcanoes 2": {
+   "tuned": "magma=i:flame pushed up→ the surface=i:volcano ‹Pressure pushes the magma up toward the surface›",
+   "rule": "magma=i:volcano ‹Pressure pushes the magma up toward the surface›",
+   "svg": "761d7443e0bf"
+  },
+  "volcanoes 3": {
+   "tuned": "volcano=i:volcano erupts→ lava=i:flame ‹When a volcano erupts, the magma pours out as lava›",
+   "rule": "volcano & magma=i:volcano ‹When a volcano erupts, the magma pours out as lava›",
+   "svg": "01a1bb0d5678"
+  },
+  "volcanoes 4": {
+   "tuned": "lava=i:flame cools & hardens→ new rock=i:rock ‹The lava cools and hardens into new rock›",
+   "rule": "lava=i:volcano cools→ rock=i:rock ‹The lava cools and hardens into new rock›",
+   "svg": "fd822516b4f1"
+  },
+  "volcanoes 5": {
+   "tuned": "many eruptions=i:volcano grows into→ mountain=i:mountain ‹Over many eruptions, the volcano grows into a mountain›",
+   "rule": "eruptions & volcano=i:volcano grows into→ mountain=i:mountain ‹Over many eruptions, the volcano grows into a mountain›",
+   "svg": "8122fed8f2fe"
+  },
+  "light 1": {
+   "tuned": "sun=i:sun 8 minutes→ Earth=i:globe ‹Light travels from the sun to Earth in about eight minutes›",
+   "rule": "sun=i:sun + earth=i:globe travels→ light=i:bulb ‹Light travels from the sun to Earth in about eight minutes›",
+   "svg": "a18c273db200"
+  },
+  "light 2": {
+   "tuned": "DIAGRAM prism ‹Sunlight looks white, but a prism splits it into a rainbow›",
+   "rule": "DIAGRAM prism ‹Sunlight looks white, but a prism splits it into a rainbow›",
+   "svg": "c3fb4526bcc1"
+  },
+  "light 3": {
+   "tuned": "colors=i:palette bounce into→ eye=i:eye ‹Our eyes see color when light bounces off objects and into the eye›",
+   "rule": "color=i:palette + light=i:bulb into→ eye=i:eye ‹Our eyes see color when light bounces off objects and into the eye›",
+   "svg": "406b79c53e28"
+  },
+  "light 4": {
+   "tuned": "telescope=i:telescope collects light→ distant stars=i:star ‹A telescope collects light so we can see distant stars›",
+   "rule": "telescope=i:telescope collects→ light=i:bulb + stars=i:stars ‹A telescope collects light so we can see distant stars›",
+   "svg": "101bda642c96"
+  },
+  "dinosaurs 1": {
+   "tuned": "dinosaur=i:dinosaur ‹Dinosaurs lived on Earth millions of years ago›",
+   "rule": "dinosaurs=i:dinosaur + earth=i:globe ‹Dinosaurs lived on Earth millions of years ago›",
+   "svg": "014284aa14ab"
+  },
+  "dinosaurs 2": {
+   "tuned": "mud & sand=i:rock buried→ bones=i:bone ‹When a dinosaur died, mud and sand covered its bones›",
+   "rule": "dinosaur=i:dinosaur + sand=i:sandy + bones=i:bone ‹When a dinosaur died, mud and sand covered its bones›",
+   "svg": "dca919e6807d"
+  },
+  "dinosaurs 3": {
+   "tuned": "bones=i:bone turned into→ stone fossils=i:fossil ‹Over time, the bones turned into fossils made of stone›",
+   "rule": "bones=i:bone turned into→ fossils=i:fossil → made stone=i:rock ‹Over time, the bones turned into fossils made of stone›",
+   "svg": "5d52b956d805"
+  },
+  "dinosaurs 4": {
+   "tuned": "scientists=i:person study→ fossil=i:fossil ‹Scientists dig up fossils and study them to learn how dinosaurs lived›",
+   "rule": "scientists=i:person + fossils=i:fossil + dinosaurs=i:dinosaur ‹Scientists dig up fossils and study them to learn how dinosaurs lived›",
+   "svg": "d448d789b48a"
+  },
+  "egypt 1": {
+   "tuned": "Egypt=i:pyramid grew along→ Nile River=i:river ‹Ancient Egypt grew up along the Nile River›",
+   "rule": "ancient=m:🏺 + egypt=i:pyramid ‹Ancient Egypt grew up along the Nile River›",
+   "svg": "e9666ad4b3c5"
+  },
+  "egypt 2": {
+   "tuned": "Nile floods=i:river floods feed→ wheat=i:wheat ‹Every year the river flooded and left rich soil for farmers to grow wheat›",
+   "rule": "soil=i:soil + farmers=i:person grow→ wheat=i:wheat ‹Every year the river flooded and left rich soil for farmers to grow wheat›",
+   "svg": "5fb3c634b081"
+  },
+  "egypt 3": {
+   "tuned": "pharaoh=i:crown built→ pyramids=i:pyramid ‹The pharaoh ruled as king and built giant pyramids›",
+   "rule": "pharaoh & king=i:crown built→ pyramids=i:pyramid ‹The pharaoh ruled as king and built giant pyramids›",
+   "svg": "008f8d3b31f7"
+  },
+  "egypt 4": {
+   "tuned": "workers=i:group moved→ huge stones=i:rock → to build pyramid=i:pyramid ‹Workers moved huge stones to build each pyramid›",
+   "rule": "workers=i:group + stones=i:rock build→ pyramid=i:pyramid ‹Workers moved huge stones to build each pyramid›",
+   "svg": "6646ba46102d"
+  },
+  "egypt 5": {
+   "tuned": "scribes=i:quill wrote→ papyrus scrolls=i:scroll ‹Scribes wrote records on papyrus scrolls›",
+   "rule": "scribes=i:quill wrote→ papyrus=i:scroll + scrolls=m:📜 ‹Scribes wrote records on papyrus scrolls›",
+   "svg": "070020d66493"
+  },
+  "french-revolution 1": {
+   "tuned": null,
+   "rule": "anger=i:angry + king & queen=i:crown into→ revolution=i:fist ‹In 1789, anger at the king and queen boiled over into revolution›",
+   "svg": "061f6fde5fb1"
+  },
+  "french-revolution 2": {
+   "tuned": null,
+   "rule": "citizens=i:group demanded→ freedom=i:dove + government=i:columns ‹Citizens demanded freedom and a voice in their government›",
+   "svg": "4d6c8f50b9ff"
+  },
+  "french-revolution 3": {
+   "tuned": null,
+   "rule": "war=i:swords fought→ soldiers=i:group + ideas=i:bulb ‹It became a war fought not just with soldiers, but with new ideas›",
+   "svg": "ff1138a034d9"
+  },
+  "industrial 1": {
+   "tuned": "industry=i:factory changed→ workers=i:group ‹In the 1800s, the Industrial Revolution changed how people worked›",
+   "rule": "industrial=i:factory + revolution=i:fist changed→ people=i:group ‹In the 1800s, the Industrial Revolution changed how people worked›",
+   "svg": "bcb44c9941cd"
+  },
+  "industrial 2": {
+   "tuned": null,
+   "rule": "steam=i:vapor + engines=i:gear powered→ factories=i:factory ‹Steam engines powered new factories›",
+   "svg": "26ce073fafce"
+  },
+  "industrial 3": {
+   "tuned": "farms=i:farm moved to→ cities=i:city ‹Many families moved from farms to crowded cities›",
+   "rule": "families=i:group + farms=i:farm + cities=i:city ‹Many families moved from farms to crowded cities›",
+   "svg": "6d206a4278a6"
+  },
+  "industrial 4": {
+   "tuned": "train=i:train carried→ coal=i:rock + goods=i:coins ‹Trains carried coal and goods across the country›",
+   "rule": "trains=i:train carried→ coal=i:rock + goods=i:coins ‹Trains carried coal and goods across the country›",
+   "svg": "7bc896346b85"
+  },
+  "industrial 5": {
+   "tuned": "unions=i:group demanded→ fair pay=i:coins + safety=i:shield ‹Workers formed unions to demand fair pay and safer factories›",
+   "rule": "workers=i:group formed→ unions=i:handshake ‹Workers formed unions to demand fair pay and safer factories›",
+   "svg": "92263730924b"
+  },
+  "democracy 1": {
+   "tuned": "citizens=i:group choose→ leaders=i:person ‹In a democracy, citizens choose their leaders›",
+   "rule": "democracy=i:columns + citizens=i:group + leaders=i:person ‹In a democracy, citizens choose their leaders›",
+   "svg": "e8f57b52d683"
+  },
+  "democracy 2": {
+   "tuned": "people=i:group vote→ election=i:ballot → to pick president=i:person ‹People vote in an election to pick a president›",
+   "rule": "people=i:group + vote & election=i:ballot + president=i:person ‹People vote in an election to pick a president›",
+   "svg": "80f064ed7780"
+  },
+  "democracy 3": {
+   "tuned": "Congress=i:columns writes→ laws=i:scroll ‹Congress writes the laws›",
+   "rule": "congress & laws=i:columns ‹Congress writes the laws›",
+   "svg": "e88303b42699"
+  },
+  "democracy 4": {
+   "tuned": "courts=i:scale decide→ what laws mean=i:scroll ‹Courts decide what the laws mean›",
+   "rule": "courts & laws=i:columns ‹Courts decide what the laws mean›",
+   "svg": "ec9c15be3a50"
+  },
+  "democracy 5": {
+   "tuned": "newspaper=i:newspaper informs→ citizens=i:group ‹A newspaper helps citizens learn the facts before they vote›",
+   "rule": "newspaper=i:newspaper helps→ citizens=i:group + vote=i:ballot ‹A newspaper helps citizens learn the facts before they vote›",
+   "svg": "43dd2d0620a1"
+  },
+  "explorers 1": {
+   "tuned": "explorers=i:ship sailed across→ ocean=i:wave → to find trade routes=i:map ‹Long ago, explorers sailed ships across the ocean to find new trade routes›",
+   "rule": "explorers=i:ship sailed→ ocean=i:wave + trade=i:coins ‹Long ago, explorers sailed ships across the ocean to find new trade routes›",
+   "svg": "0e829c0571d7"
+  },
+  "explorers 2": {
+   "tuned": null,
+   "rule": "compass=i:compass helped→ sailors=i:ship ‹A compass helped sailors find north›",
+   "svg": "c566ed6fb33f"
+  },
+  "explorers 3": {
+   "tuned": null,
+   "rule": "gold & spices=i:coins traded→ countries=i:globe ‹They traded gold and spices with other countries›",
+   "svg": "b3901d786be4"
+  },
+  "explorers 4": {
+   "tuned": null,
+   "rule": "maps=i:map ‹New maps showed the lands they discovered›",
+   "svg": "5208657d31c7"
+  },
+  "fractions 1": {
+   "tuned": "part of a whole=i:pizza ‹A fraction shows part of a whole›",
+   "rule": "fraction=i:pizza + whole=i:whole ‹A fraction shows part of a whole›",
+   "svg": "013d21d886b5"
+  },
+  "fractions 2": {
+   "tuned": "pizza=i:whole cut into 4→ one quarter=i:slice ‹If you cut a pizza into four equal slices, each slice is one quarter›",
+   "rule": "pizza=i:pizza equal→ slices & slice=i:slice ‹If you cut a pizza into four equal slices, each slice is one quarter›",
+   "svg": "7341015c6030"
+  },
+  "fractions 3": {
+   "tuned": "2 quarters=i:slice two make→ one half=i:half ‹Two quarters make one half›",
+   "rule": "quarters=i:slice make→ half=i:half ‹Two quarters make one half›",
+   "svg": "5b5c354e4893"
+  },
+  "fractions 4": {
+   "tuned": "4 quarters=i:slice four make→ the whole pizza=i:whole ‹Four quarters equal the whole pizza›",
+   "rule": "quarters=i:slice equal→ whole=i:whole + pizza=i:pizza ‹Four quarters equal the whole pizza›",
+   "svg": "13ae9025f33e"
+  },
+  "shapes 1": {
+   "tuned": null,
+   "rule": "triangle=i:triangle ‹A triangle has three sides and three corners›",
+   "svg": "b1e580bd0c87"
+  },
+  "shapes 2": {
+   "tuned": null,
+   "rule": "square=i:square ‹A square has four equal sides›",
+   "svg": "e894ecfcfa19"
+  },
+  "shapes 3": {
+   "tuned": null,
+   "rule": "circle=i:circle ‹A circle has no corners at all›",
+   "svg": "a1e30c6f4509"
+  },
+  "shapes 4": {
+   "tuned": "squares=i:square stack into 3D→ cube=i:cube ‹Stack squares into three dimensions and you get a cube›",
+   "rule": "squares=i:square into→ cube=i:cube ‹Stack squares into three dimensions and you get a cube›",
+   "svg": "2118056f29c2"
+  },
+  "measurement 1": {
+   "tuned": "length=i:ruler ‹We use a ruler to measure length›",
+   "rule": "ruler & measure=i:ruler ‹We use a ruler to measure length›",
+   "svg": "082c4c75a3bf"
+  },
+  "measurement 2": {
+   "tuned": "weight=i:scale ‹A scale measures weight›",
+   "rule": "scale & weight=i:scale + measures=i:ruler ‹A scale measures weight›",
+   "svg": "4d2953a64d39"
+  },
+  "measurement 3": {
+   "tuned": "temperature=i:thermometer ‹A thermometer measures temperature›",
+   "rule": "thermometer & temperature=i:thermometer + measures=i:ruler ‹A thermometer measures temperature›",
+   "svg": "bfab2239ecbe"
+  },
+  "measurement 4": {
+   "tuned": "time=i:clock + days=i:calendar ‹A clock measures time, and a calendar keeps track of days›",
+   "rule": "clock=i:clock + measures=i:ruler + calendar=i:calendar ‹A clock measures time, and a calendar keeps track of days›",
+   "svg": "e79333eb258c"
+  },
+  "story 1": {
+   "tuned": "characters=i:person + setting=i:map + plot=i:puzzle ‹Every story has characters, a setting, and a plot›",
+   "rule": "story=i:book + characters=i:person + plot=i:puzzle ‹Every story has characters, a setting, and a plot›",
+   "svg": "0e467f1a1ea2"
+  },
+  "story 2": {
+   "tuned": "author=i:quill writes about→ a problem=i:question ‹The author writes about a problem the characters must solve›",
+   "rule": "author=i:quill writes→ problem=i:question + characters=i:person ‹The author writes about a problem the characters must solve›",
+   "svg": "8d44e2ba8f9a"
+  },
+  "story 3": {
+   "tuned": "plot=i:puzzle builds to→ climax=i:trophy ‹The plot builds to an exciting climax›",
+   "rule": "plot=i:puzzle builds→ climax=i:trophy ‹The plot builds to an exciting climax›",
+   "svg": "000c0d010e72"
+  },
+  "story 4": {
+   "tuned": "hero=i:person solves→ problem=i:question → then the end=i:book ‹In the end, the hero solves the problem and the story wraps up›",
+   "rule": "hero=i:person + problem=i:question + story=i:book ‹In the end, the hero solves the problem and the story wraps up›",
+   "svg": "97aaaf4bce7e"
+  },
+  "research 1": {
+   "tuned": "a question=i:question ‹Good research starts with a question›",
+   "rule": "research=i:magnifier + question=i:question ‹Good research starts with a question›",
+   "svg": "17532914c470"
+  },
+  "research 2": {
+   "tuned": "you=i:person collect clues→ books=i:book + internet=i:computer ‹You collect clues from books and the internet›",
+   "rule": "clues=i:magnifier collect→ books=i:book ‹You collect clues from books and the internet›",
+   "svg": "0d4fe8a95c35"
+  },
+  "research 3": {
+   "tuned": "detective=i:magnifier checks→ evidence=i:scroll ‹A detective checks the evidence before trusting it›",
+   "rule": "detective & evidence=i:magnifier ‹A detective checks the evidence before trusting it›",
+   "svg": "af4f17931eb0"
+  },
+  "research 4": {
+   "tuned": "you=i:person writes→ your own words=i:speech ‹Then you write your answer in your own words›",
+   "rule": "write=s:write ‹Then you write your answer in your own words›",
+   "svg": "2f0f52e2ec5a"
+  },
+  "habits 1": {
+   "tuned": "healthy body=i:heart + strong=i:muscle ‹Healthy habits keep your body strong›",
+   "rule": "[Key idea] HEALTHY HABITS keep your BODY STRONG",
+   "svg": "69a6c0f97a5a"
+  },
+  "habits 2": {
+   "tuned": "fruit=i:apple + vegetables=i:carrot give→ energy=i:bolt ‹Eating fruit and vegetables gives you energy›",
+   "rule": "fruit=i:apple + vegetables=i:carrot gives→ energy=i:bolt ‹Eating fruit and vegetables gives you energy›",
+   "svg": "3c857013013f"
+  },
+  "habits 3": {
+   "tuned": "sleep=i:bed helps→ memory=i:brain ‹Sleep helps your brain remember what you learned›",
+   "rule": "sleep=i:bed helps→ brain=i:brain ‹Sleep helps your brain remember what you learned›",
+   "svg": "8687552a41ef"
+  },
+  "habits 4": {
+   "tuned": "soap=i:soap stops→ germs=i:virus ‹Washing your hands with soap stops germs from spreading›",
+   "rule": "hands=i:hand + soap=i:soap stops→ germs=i:virus ‹Washing your hands with soap stops germs from spreading›",
+   "svg": "73df9db9c1a4"
+  },
+  "habits 5": {
+   "tuned": "exercise=i:person makes stronger→ heart=i:heart + muscles=i:muscle ‹Exercise makes your heart and muscles stronger›",
+   "rule": "exercise=i:dumbbell makes→ heart=i:heart + muscles=i:muscle ‹Exercise makes your heart and muscles stronger›",
+   "svg": "6193f2198993"
+  },
+  "immune 1": {
+   "tuned": "immune system=i:shield protects from→ germs=i:virus ‹Your immune system protects you from germs›",
+   "rule": "immune=i:shield protects→ germs=i:virus ‹Your immune system protects you from germs›",
+   "svg": "e3400d462f98"
+  },
+  "immune 2": {
+   "tuned": "white blood cells=i:cell attack→ virus=i:virus ‹When a virus enters the body, white blood cells attack it›",
+   "rule": "virus=i:virus + white blood cells=i:cell ‹When a virus enters the body, white blood cells attack it›",
+   "svg": "89fe5fb5b422"
+  },
+  "immune 3": {
+   "tuned": "vaccine=i:pill trains→ immune system=i:shield ‹A vaccine trains the immune system to recognize the virus early›",
+   "rule": "vaccine=i:pill + trains=i:train + immune=i:shield ‹A vaccine trains the immune system to recognize the virus early›",
+   "svg": "3f3e34281081"
+  },
+  "immune 4": {
+   "tuned": "protection=i:shield keeps healthy→ you=i:person ‹That shield of protection keeps you healthy›",
+   "rule": "shield & protection=i:shield ‹That shield of protection keeps you healthy›",
+   "svg": "ac879ac198cb"
+  }
+ },
+ "lectures": {
+  "MS cells 1": {
+   "text": "Good morning, everyone.",
+   "scene": "—",
+   "svg": "df611bdba0e4"
+  },
+  "MS cells 2": {
+   "text": "Today we're going to look at the parts of a cell and what each one does.",
+   "scene": "DIAGRAM animalcell ‹An animal cell›",
+   "svg": "378a1ab1b742"
+  },
+  "MS cells 3": {
+   "text": "Remember that all living things are made of cells.",
+   "scene": "cells=i:cell ‹Remember that all living things are made of cells›",
+   "svg": "9c240c491c9e"
+  },
+  "MS cells 4": {
+   "text": "The cell membrane controls what goes in and out of the cell.",
+   "scene": "cell & membrane=i:cell ‹The cell membrane controls what goes in and out of the cell›",
+   "svg": "25146cb1fbe6"
+  },
+  "MS cells 5": {
+   "text": "Inside the cell is a jelly-like fluid called cytoplasm.",
+   "scene": "cell & cytoplasm=i:cell ‹Inside the cell is a jelly-like fluid called cytoplasm›",
+   "svg": "6ed97aeeb386"
+  },
+  "MS cells 6": {
+   "text": "The nucleus contains the cell's genetic material.",
+   "scene": "nucleus=i:cell contains→ genetic=i:dna ‹The nucleus contains the cell's genetic material›",
+   "svg": "ed3a9a0eaf4c"
+  },
+  "MS cells 7": {
+   "text": "Mitochondria break down sugar to release energy for the cell.",
+   "scene": "mitochondria=i:cell break→ sugar=i:sugar → release energy=i:bolt ‹Mitochondria break down sugar to release energy for the cell›",
+   "svg": "4cd8b85c18d1"
+  },
+  "MS cells 8": {
+   "text": "Plant cells also have a cell wall, which gives them structure and support.",
+   "scene": "DIAGRAM plantcell (wall) ‹Plant cells also have a cell wall, which gives them structure and support›",
+   "svg": "a4118a155fb3"
+  },
+  "MS cells 9": {
+   "text": "Chloroplasts are where photosynthesis happens.",
+   "scene": "DIAGRAM photosynthesis ‹Chloroplasts are where photosynthesis happens›",
+   "svg": "26564816a7b9"
+  },
+  "MS cells 10": {
+   "text": "So what's one difference between a plant cell and an animal cell?",
+   "scene": "DIAGRAM animalcell ‹So what's one difference between a plant cell and an animal cell›",
+   "svg": "5f3a2593cf8d"
+  },
+  "MS cells 11": {
+   "text": "Write that in your notebook.",
+   "scene": "write=s:write + notebook=i:notebook ‹Write that in your notebook›",
+   "svg": "bca8e27ad77f"
+  },
+  "MS cells 12": {
+   "text": "Unicellular organisms, like bacteria, are made of just one cell.",
+   "scene": "organisms & cell=i:cell + bacteria=i:virus ‹Unicellular organisms, like bacteria, are made of just one cell›",
+   "svg": "e1c6d47f1a0f"
+  },
+  "MS cells 13": {
+   "text": "Multicellular organisms have specialized cells that work together as tissues and organs.",
+   "scene": "organisms & cells=i:cell + organs=m:🫀 ‹Multicellular organisms have specialized cells that work together as tissues and organs›",
+   "svg": "eb61829a6b63"
+  },
+  "HS photosynthesis 1": {
+   "text": "Let's review the equation for photosynthesis.",
+   "scene": "DIAGRAM photosynthesis ‹Let's review the equation for photosynthesis›",
+   "svg": "dd6505e426dc"
+  },
+  "HS photosynthesis 2": {
+   "text": "Plants take in carbon dioxide and water and use light energy to make glucose and oxygen.",
+   "scene": "plants=i:sprout take→ carbon dioxide=i:co2 + water=i:drop ‹Plants take in carbon dioxide and water and use light energy to make glucose and oxygen›",
+   "svg": "6de5861696d7"
+  },
+  "HS photosynthesis 3": {
+   "text": "This happens in two stages: the light-dependent reactions and the Calvin cycle.",
+   "scene": "reactions=i:flask ‹This happens in two stages: the light-dependent reactions and the Calvin cycle›",
+   "svg": "43d645883e68"
+  },
+  "HS photosynthesis 4": {
+   "text": "Cellular respiration is basically the reverse process.",
+   "scene": "[Key word] «CELLULAR RESPIRATION» REVERSE PROCESS",
+   "svg": "354fe3cc9f00"
+  },
+  "HS photosynthesis 5": {
+   "text": "Cells break down glucose to produce ATP, which is the energy currency of the cell.",
+   "scene": "cells=i:cell break→ glucose=i:sugar + energy=i:bolt ‹Cells break down glucose to produce ATP, which is the energy currency of the cell›",
+   "svg": "9222eb229f89"
+  },
+  "HS photosynthesis 6": {
+   "text": "Aerobic respiration requires oxygen, while anaerobic respiration does not.",
+   "scene": "oxygen=i:oxygen ‹Aerobic respiration requires oxygen, while anaerobic respiration does not›",
+   "svg": "8bf9b76b07e4"
+  },
+  "HS photosynthesis 7": {
+   "text": "Fermentation is a type of anaerobic respiration that produces lactic acid in your muscles.",
+   "scene": "acid=i:testtube produces→ muscles=i:muscle ‹Fermentation is a type of anaerobic respiration that produces lactic acid in your muscles›",
+   "svg": "2c01ba0583c8"
+  },
+  "HS photosynthesis 8": {
+   "text": "That's why your legs burn when you sprint.",
+   "scene": "legs=m:🦵 ‹That's why your legs burn when you sprint›",
+   "svg": "08cfc3feea92"
+  },
+  "HS DNA 1": {
+   "text": "DNA is a double helix made of two strands of nucleotides.",
+   "scene": "DIAGRAM dnahelix ‹DNA is a double helix made of two strands of nucleotides›",
+   "svg": "92ad72b28469"
+  },
+  "HS DNA 2": {
+   "text": "Each nucleotide has a sugar, a phosphate group, and a nitrogen base.",
+   "scene": "DIAGRAM dnahelix ‹Each nucleotide has a sugar, a phosphate group, and a nitrogen base›",
+   "svg": "49bfc901f6f6"
+  },
+  "HS DNA 3": {
+   "text": "Adenine always pairs with thymine, and guanine always pairs with cytosine.",
+   "scene": "DIAGRAM dnahelix ‹Adenine always pairs with thymine, and guanine always pairs with cytosine›",
+   "svg": "44855cb9a48f"
+  },
+  "HS DNA 4": {
+   "text": "During transcription, the DNA code is copied into messenger RNA.",
+   "scene": "DNA=i:dna + code=i:computer ‹During transcription, the DNA code is copied into messenger RNA›",
+   "svg": "8b9463d11271"
+  },
+  "HS DNA 5": {
+   "text": "A gene is a section of DNA that codes for a specific protein.",
+   "scene": "gene & DNA=i:dna ‹A gene is a section of DNA that codes for a specific protein›",
+   "svg": "950bfe6ee40e"
+  },
+  "HS DNA 6": {
+   "text": "Alleles are different versions of the same gene.",
+   "scene": "alleles & gene=i:dna ‹Alleles are different versions of the same gene›",
+   "svg": "436470075c34"
+  },
+  "HS DNA 7": {
+   "text": "A dominant allele masks the effect of a recessive allele.",
+   "scene": "allele=i:dna ‹A dominant allele masks the effect of a recessive allele›",
+   "svg": "b6d695603aa3"
+  },
+  "HS DNA 8": {
+   "text": "Let's draw a Punnett square to predict the offspring of two heterozygous parents.",
+   "scene": "DIAGRAM punnett ‹Let's draw a Punnett square to predict the offspring of two heterozygous parents›",
+   "svg": "0fe28bbb9a4f"
+  },
+  "HS atoms 1": {
+   "text": "Everything around you is made of matter, and matter is made of atoms.",
+   "scene": "matter & atoms=i:atom ‹Everything around you is made of matter, and matter is made of atoms›",
+   "svg": "d13f8365b0b5"
+  },
+  "HS atoms 2": {
+   "text": "An atom has a nucleus with protons and neutrons, surrounded by electrons.",
+   "scene": "DIAGRAM atomparts (nucleus,electron) ‹An atom has a nucleus with protons and neutrons, surrounded by electrons›",
+   "svg": "a305422678c5"
+  },
+  "HS atoms 3": {
+   "text": "The periodic table is organized by atomic number.",
+   "scene": "DIAGRAM periodictable ‹The periodic table is organized by atomic number›",
+   "svg": "78617a776dc9"
+  },
+  "HS atoms 4": {
+   "text": "The noble gases on the far right are very stable because their outer shell is full.",
+   "scene": "gases=i:vapor ‹The noble gases on the far right are very stable because their outer shell is full›",
+   "svg": "318fc44fec45"
+  },
+  "HS atoms 5": {
+   "text": "Metals tend to lose electrons and form positive ions.",
+   "scene": "electrons=m:⚛️ ‹Metals tend to lose electrons and form positive ions›",
+   "svg": "5be9afe81f22"
+  },
+  "HS atoms 6": {
+   "text": "Take out your periodic table and find sodium and chlorine.",
+   "scene": "DIAGRAM periodictable ‹Take out your periodic table and find sodium and chlorine›",
+   "svg": "7c9ad649ccca"
+  },
+  "HS atoms 7": {
+   "text": "Water is a polar molecule because oxygen pulls the shared electrons closer.",
+   "scene": "DIAGRAM watermolecule ‹Water is a polar molecule because oxygen pulls the shared electrons closer›",
+   "svg": "7af380004d73"
+  },
+  "HS atoms 8": {
+   "text": "Count the atoms of each element on both sides of the arrow.",
+   "scene": "count=i:numbers + atoms & element=i:atom + arrow=i:bowarrow ‹Count the atoms of each element on both sides of the arrow›",
+   "svg": "f350627275fe"
+  },
+  "HS atoms 9": {
+   "text": "A catalyst speeds up a reaction without being used up.",
+   "scene": "speeds=i:speedometer + reaction=i:flask ‹A catalyst speeds up a reaction without being used up›",
+   "svg": "b4d4b4d7506b"
+  },
+  "HS physics 1": {
+   "text": "Newton's first law says an object at rest stays at rest unless a net force acts on it.",
+   "scene": "force=i:muscle ‹Newton's first law says an object at rest stays at rest unless a net force acts on it›",
+   "svg": "3f22f937cd75"
+  },
+  "HS physics 2": {
+   "text": "If you push a heavier cart with the same force, it accelerates less.",
+   "scene": "cart=i:wagon push→ force=i:muscle ‹If you push a heavier cart with the same force, it accelerates less›",
+   "svg": "b361bf29d02e"
+  },
+  "HS physics 3": {
+   "text": "When a rocket pushes gas down, the gas pushes the rocket up.",
+   "scene": "rocket=i:rocket pushes→ gas=i:vapor ‹When a rocket pushes gas down, the gas pushes the rocket up›",
+   "svg": "509583c6ba17"
+  },
+  "HS physics 4": {
+   "text": "Momentum is mass times velocity, and it's conserved in collisions.",
+   "scene": "mass=i:scale + velocity=i:speedometer ‹Momentum is mass times velocity, and it's conserved in collisions›",
+   "svg": "a2c3c3205fb6"
+  },
+  "HS physics 5": {
+   "text": "Electric current is the flow of charge through a conductor.",
+   "scene": "electric & current=i:bolt ‹Electric current is the flow of charge through a conductor›",
+   "svg": "746ece120017"
+  },
+  "HS physics 6": {
+   "text": "In a parallel circuit, if one bulb burns out, the others stay lit.",
+   "scene": "parallel=i:lines + circuit=i:plug + bulb=m:💡 ‹In a parallel circuit, if one bulb burns out, the others stay lit›",
+   "svg": "0a3b511aff75"
+  },
+  "HS physics 7": {
+   "text": "A wave transfers energy without transferring matter.",
+   "scene": "wave=i:wave + energy=i:bolt + matter=i:atom ‹A wave transfers energy without transferring matter›",
+   "svg": "b486c7c0da88"
+  },
+  "HS physics 8": {
+   "text": "Sound is a longitudinal wave, but light is a transverse wave.",
+   "scene": "sound=i:sound + wave=i:wave + light=i:bulb ‹Sound is a longitudinal wave, but light is a transverse wave›",
+   "svg": "2eb283391856"
+  },
+  "HS physics 9": {
+   "text": "A prism splits white light into a rainbow of colors.",
+   "scene": "DIAGRAM prism ‹A prism splits white light into a rainbow of colors›",
+   "svg": "fa039f631549"
+  },
+  "MS earth 1": {
+   "text": "The Earth's crust is broken into huge pieces called tectonic plates.",
+   "scene": "DIAGRAM tectonics ‹The Earth's crust is broken into huge pieces called tectonic plates›",
+   "svg": "0c95843e99de"
+  },
+  "MS earth 2": {
+   "text": "Earthquakes happen when plates slide past each other at a transform boundary.",
+   "scene": "earthquakes=i:earthquake ‹Earthquakes happen when plates slide past each other at a transform boundary›",
+   "svg": "7515ba001198"
+  },
+  "MS earth 3": {
+   "text": "Igneous rock forms when magma or lava cools.",
+   "scene": "igneous=m:🪨 + rock=i:rock forms→ magma & lava=i:volcano ‹Igneous rock forms when magma or lava cools›",
+   "svg": "4f6df0cac69a"
+  },
+  "MS earth 4": {
+   "text": "Fossils are usually found in sedimentary rock.",
+   "scene": "fossils=i:fossil + sedimentary=m:🪨 + rock=i:rock ‹Fossils are usually found in sedimentary rock›",
+   "svg": "9ab1af24edbc"
+  },
+  "MS earth 5": {
+   "text": "Weathering breaks rocks down, and erosion carries the pieces away.",
+   "scene": "weathering=i:rock breaks→ erosion=m:🏔️ ‹Weathering breaks rocks down, and erosion carries the pieces away›",
+   "svg": "d861484112df"
+  },
+  "MS earth 6": {
+   "text": "The layers of the atmosphere are the troposphere, stratosphere, mesosphere and thermosphere.",
+   "scene": "atmosphere=i:atmosphere ‹The layers of the atmosphere are the troposphere, stratosphere, mesosphere and thermosphere›",
+   "svg": "b3335275dc85"
+  },
+  "MS earth 7": {
+   "text": "Groundwater is stored in an aquifer under the ground.",
+   "scene": "DIAGRAM aquifer ‹Groundwater is stored in an aquifer under the ground›",
+   "svg": "88d7445fcaff"
+  },
+  "MS earth 8": {
+   "text": "The moon's gravity causes the tides.",
+   "scene": "DIAGRAM tides ‹The moon's gravity causes the tides›",
+   "svg": "424e3f42939b"
+  },
+  "Math 1": {
+   "text": "A ratio compares two quantities.",
+   "scene": "compares=i:scale ‹A ratio compares two quantities›",
+   "svg": "25bcc3064a3f"
+  },
+  "Math 2": {
+   "text": "To find a percent, write the part over the whole and multiply by one hundred.",
+   "scene": "percent=i:percent + whole=i:whole + multiply=i:times ‹To find a percent, write the part over the whole and multiply by one hundred›",
+   "svg": "181b22c503b3"
+  },
+  "Math 3": {
+   "text": "Negative times negative is always positive.",
+   "scene": "[Key idea] NEGATIVE TIMES NEGATIVE is always POSITIVE",
+   "svg": "b723b7af3ba1"
+  },
+  "Math 4": {
+   "text": "Slope is rise over run.",
+   "scene": "DIAGRAM slopeline ‹Slope is rise over run›",
+   "svg": "dc5c9a6da26e"
+  },
+  "Math 5": {
+   "text": "A function is a relation where each input has exactly one output.",
+   "scene": "[Key word] «FUNCTION» RELATION where each INPUT has exactly one OUTPUT",
+   "svg": "9951c7bf3f3c"
+  },
+  "Math 6": {
+   "text": "The vertex is the highest or lowest point of the parabola.",
+   "scene": "[Key word] «VERTEX» HIGHEST or LOWEST POINT of the PARABOLA",
+   "svg": "954beac4cd51"
+  },
+  "Math 7": {
+   "text": "The angles in a triangle always add up to one hundred eighty degrees.",
+   "scene": "angles=i:angle + triangle=i:triangle ‹The angles in a triangle always add up to one hundred eighty degrees›",
+   "svg": "5d792cb2db13"
+  },
+  "Math 8": {
+   "text": "An isosceles triangle has two congruent sides.",
+   "scene": "isosceles triangle=s:triangle-isosceles ‹An isosceles triangle has two congruent sides›",
+   "svg": "118d54c839ad"
+  },
+  "Math 9": {
+   "text": "A parallelogram has two pairs of parallel sides.",
+   "scene": "parallelogram=s:parallelogram + parallel=i:lines ‹A parallelogram has two pairs of parallel sides›",
+   "svg": "542c764c9e0b"
+  },
+  "Math 10": {
+   "text": "The mean is the average of the data, and the median is the middle value.",
+   "scene": "average & data=i:chart ‹The mean is the average of the data, and the median is the middle value›",
+   "svg": "c9f0a767760f"
+  },
+  "US history 1": {
+   "text": "The thirteen colonies were ruled by Britain.",
+   "scene": "DIAGRAM thirteencolonies ‹The thirteen colonies were ruled by Britain›",
+   "svg": "498c0b7a05aa"
+  },
+  "US history 2": {
+   "text": "Virginia and Massachusetts were two of the first colonies.",
+   "scene": "virginia=s:state-virginia + massachusetts=s:state-massachusetts + colonies=i:map ‹Virginia and Massachusetts were two of the first colonies›",
+   "svg": "70ba1a503247"
+  },
+  "US history 3": {
+   "text": "In eighteen sixty, Abraham Lincoln was elected president.",
+   "scene": "president=i:person ‹In eighteen sixty, Abraham Lincoln was elected president›",
+   "svg": "3061caf096e5"
+  },
+  "US history 4": {
+   "text": "The Battle of Gettysburg was fought in Pennsylvania.",
+   "scene": "battle=i:swords fought→ pennsylvania=s:state-pennsylvania ‹The Battle of Gettysburg was fought in Pennsylvania›",
+   "svg": "a64dfc5e56c4"
+  },
+  "US history 5": {
+   "text": "Many families lost their farms and moved west to California.",
+   "scene": "families=i:group + farms=i:farm + west=i:compass ‹Many families lost their farms and moved west to California›",
+   "svg": "c9d9101e4aae"
+  },
+  "US history 6": {
+   "text": "Rosa Parks refused to give up her seat on a bus in Montgomery, Alabama.",
+   "scene": "seat=i:chair give→ bus=i:bus ‹Rosa Parks refused to give up her seat on a bus in Montgomery, Alabama›",
+   "svg": "1ef57b2a1fad"
+  },
+  "US history 7": {
+   "text": "The March on Washington brought more than two hundred thousand people to the capital.",
+   "scene": "[Key idea] The MARCH on WASHINGTON BROUGHT more than TWO HUNDRED THOUSAND PEOPLE to the CAPITAL",
+   "svg": "932d18c1d83d"
+  },
+  "US history 8": {
+   "text": "Texas joined the United States in eighteen forty five.",
+   "scene": "texas=s:state-texas joined→ united states=m:🇺🇸 ‹Texas joined the United States in eighteen forty five›",
+   "svg": "811a891ed324"
+  },
+  "World history 1": {
+   "text": "The alliance system meant that a small conflict could quickly become a big war.",
+   "scene": "DIAGRAM europe1914 ‹The alliance system meant that a small conflict could quickly become a big war›",
+   "svg": "c849023fb45d"
+  },
+  "World history 2": {
+   "text": "Soldiers on the Western Front fought from trenches for years.",
+   "scene": "soldiers=i:group ‹Soldiers on the Western Front fought from trenches for years›",
+   "svg": "b4096720f672"
+  },
+  "World history 3": {
+   "text": "The Cold War was a rivalry between the United States and the Soviet Union.",
+   "scene": "DIAGRAM coldwareurope ‹The Cold War was a rivalry between the United States and the Soviet Union›",
+   "svg": "d73d50ebe057"
+  },
+  "World history 4": {
+   "text": "Winston Churchill said an iron curtain had divided Europe.",
+   "scene": "DIAGRAM coldwareurope ‹Winston Churchill said an iron curtain had divided Europe›",
+   "svg": "b9884849053f"
+  },
+  "World history 5": {
+   "text": "The Great Pyramid of Giza is one of the Seven Wonders of the Ancient World.",
+   "scene": "great pyramid of giza=m: + ancient=m:🏺 + world=i:globe ‹The Great Pyramid of Giza is one of the Seven Wonders of the Ancient World›",
+   "svg": "a22fc0991019"
+  },
+  "World history 6": {
+   "text": "The Hanging Gardens of Babylon may never have existed.",
+   "scene": "hanging gardens of babylon=m: ‹The Hanging Gardens of Babylon may never have existed›",
+   "svg": "568135797678"
+  },
+  "World history 7": {
+   "text": "Traders carried silk and spices along the Silk Road.",
+   "scene": "spices=i:coins ‹Traders carried silk and spices along the Silk Road›",
+   "svg": "ceb28c04d90a"
+  },
+  "World history 8": {
+   "text": "Japan, China and South Korea are in East Asia.",
+   "scene": "japan=s:country-japan + china=s:country-china + south korea=s:country-south-korea ‹Japan, China and South Korea are in East Asia›",
+   "svg": "805088a33837"
+  },
+  "World history 9": {
+   "text": "New Zealand and Australia are in the Pacific.",
+   "scene": "new zealand=s:country-new-zealand + australia=m:🌏 ‹New Zealand and Australia are in the Pacific›",
+   "svg": "b65001560811"
+  },
+  "Government and economics 1": {
+   "text": "The Constitution is the supreme law of the land.",
+   "scene": "constitution=i:scroll + law=i:columns ‹The Constitution is the supreme law of the land›",
+   "svg": "099df7ac92f6"
+  },
+  "Government and economics 2": {
+   "text": "The judge listens to both sides before making a decision.",
+   "scene": "judge=m:🧑‍⚖️ making→ decision=i:choice ‹The judge listens to both sides before making a decision›",
+   "svg": "3d77d65e07c7"
+  },
+  "Government and economics 3": {
+   "text": "Every citizen over eighteen can vote in an election.",
+   "scene": "citizen=i:group + vote & election=i:ballot ‹Every citizen over eighteen can vote in an election›",
+   "svg": "8ddccc2b8c89"
+  },
+  "Government and economics 4": {
+   "text": "Scarcity means there isn't enough to satisfy everyone's wants.",
+   "scene": "[Key word] «SCARCITY» there isn't ENOUGH to SATISFY EVERYONE'S wants",
+   "svg": "c2217933cfa7"
+  },
+  "Government and economics 5": {
+   "text": "The law of demand says that when prices go up, people buy less.",
+   "scene": "DIAGRAM supplydemand (equilibrium) ‹The law of demand says that when prices go up, people buy less›",
+   "svg": "17b748d5aaba"
+  },
+  "Government and economics 6": {
+   "text": "The stock market crashed in nineteen twenty nine.",
+   "scene": "stock market=m:📈 ‹The stock market crashed in nineteen twenty nine›",
+   "svg": "1a180680d646"
+  },
+  "ELA 1": {
+   "text": "In To Kill a Mockingbird, the story is told from Scout's point of view.",
+   "scene": "point of view=m:👁️ told→ story=i:book ‹In To Kill a Mockingbird, the story is told from Scout's point of view›",
+   "svg": "e4bad403bd73"
+  },
+  "ELA 2": {
+   "text": "The mockingbird is a symbol of innocence.",
+   "scene": "[Key word] «MOCKINGBIRD» SYMBOL of INNOCENCE",
+   "svg": "456fb78135d3"
+  },
+  "ELA 3": {
+   "text": "Find a quote that shows how Scout has changed, and explain it in your own words.",
+   "scene": "[To do] FIND a QUOTE that SHOWS how SCOUT has CHANGED, and EXPLAIN it in your OWN WORDS",
+   "svg": "caeca6c52634"
+  },
+  "ELA 4": {
+   "text": "Shakespeare uses metaphors to compare Juliet to the sun.",
+   "scene": "compare=i:scale uses→ sun=i:sun ‹Shakespeare uses metaphors to compare Juliet to the sun›",
+   "svg": "30833f8f26f3"
+  },
+  "ELA 5": {
+   "text": "Always cite your sources using MLA format.",
+   "scene": "[To do] Always CITE your SOURCES USING MLA FORMAT",
+   "svg": "36e6c9d1f341"
+  },
+  "ELA 6": {
+   "text": "Write a rough draft, then revise and edit it.",
+   "scene": "draft=i:notebook + revise & edit=i:eraser ‹Write a rough draft, then revise and edit it›",
+   "svg": "b6f82ec517dd"
+  },
+  "CS and health 1": {
+   "text": "A loop repeats a block of code until a condition is met.",
+   "scene": "code=i:computer ‹The code cycle›",
+   "svg": "55ca73c3ede3"
+  },
+  "CS and health 2": {
+   "text": "Open your laptops and log in to the coding website.",
+   "scene": "laptops & coding=i:computer + website=i:website ‹Open your laptops and log in to the coding website›",
+   "svg": "8c98ed8c4832"
+  },
+  "CS and health 3": {
+   "text": "The nervous system sends signals between your brain and your body.",
+   "scene": "DIAGRAM bodyorgans (brain) ‹The nervous system sends signals between your brain and your body›",
+   "svg": "8c0dd729f081"
+  },
+  "CS and health 4": {
+   "text": "Your heart beats faster and you breathe more quickly.",
+   "scene": "heart beats=m:💓 ‹Your heart beats faster and you breathe more quickly›",
+   "svg": "049897f37bfb"
+  },
+  "CS and health 5": {
+   "text": "The heart has four chambers: two atria and two ventricles.",
+   "scene": "DIAGRAM heartparts ‹The heart has four chambers: two atria and two ventricles›",
+   "svg": "9ac3b7d50c43"
+  },
+  "CS and health 6": {
+   "text": "Food travels from your mouth down the esophagus to your stomach.",
+   "scene": "DIAGRAM digestion ‹Food travels from your mouth down the esophagus to your stomach›",
+   "svg": "04300dc23717"
+  },
+  "CS and health 7": {
+   "text": "Air goes down the trachea into the lungs.",
+   "scene": "trachea=s:trachea into→ lungs=i:lungs ‹Air goes down the trachea into the lungs›",
+   "svg": "e381b7326324"
+  },
+  "CS and health 8": {
+   "text": "Wash your hands for twenty seconds so germs don't spread.",
+   "scene": "hands=i:hand + germs=i:virus ‹Wash your hands for twenty seconds so germs don't spread›",
+   "svg": "9413df97f6d5"
+  },
+  "CS and health 9": {
+   "text": "Cover your mouth when you sneeze.",
+   "scene": "mouth=i:mouth + sneeze=m:🤧 ‹Cover your mouth when you sneeze›",
+   "svg": "241dfcc443c6"
+  },
+  "CS and health 10": {
+   "text": "If you feel anxious, take a deep breath and count to ten.",
+   "scene": "anxious=m:😟 take→ breath=i:lungs + count=i:numbers ‹If you feel anxious, take a deep breath and count to ten›",
+   "svg": "edcd5b2cb5ef"
+  },
+  "Elementary 1": {
+   "text": "Let's read the story together.",
+   "scene": "read=s:read + story=i:book ‹Let's read the story together›",
+   "svg": "81a4f2a99c66"
+  },
+  "Elementary 2": {
+   "text": "Pour the water into the cup.",
+   "scene": "water=i:drop into→ cup=i:cup ‹Pour the water into the cup›",
+   "svg": "d3a87d537c18"
+  },
+  "Elementary 3": {
+   "text": "The caterpillar eats leaves until it is very hungry.",
+   "scene": "caterpillar=i:caterpillar eats→ leaves=i:leaf ‹The caterpillar eats leaves until it is very hungry›",
+   "svg": "217fb48d3dd7"
+  },
+  "Elementary 4": {
+   "text": "Put your pencil sharpener away.",
+   "scene": "pencil sharpener=s:pencil-sharpener ‹Put your pencil sharpener away›",
+   "svg": "ac8af80958be"
+  },
+  "Elementary 5": {
+   "text": "The farmer feeds the chickens every morning.",
+   "scene": "farmer=i:person + chickens=i:chicken ‹The farmer feeds the chickens every morning›",
+   "svg": "edeb1053f987"
+  },
+  "Elementary 6": {
+   "text": "Climb the ladder carefully.",
+   "scene": "climb=m:🧗‍♂ + ladder=i:ladder ‹Climb the ladder carefully›",
+   "svg": "e37f658e5289"
+  },
+  "Elementary 7": {
+   "text": "The ice cube will melt in the sun.",
+   "scene": "ice cube=m:🧊 + sun=i:sun ‹The ice cube will melt in the sun›",
+   "svg": "3434f810a86c"
+  },
+  "Elementary 8": {
+   "text": "Clap your hands three times.",
+   "scene": "clap=m:👏 + hands=i:hand ‹Clap your hands three times›",
+   "svg": "8f8d62457e2d"
+  },
+  "Elementary 9": {
+   "text": "Are you excited for the field trip?",
+   "scene": "excited=s:excited-lady + trip=m:🧳 ‹Are you excited for the field trip›",
+   "svg": "dd1008161ea3"
+  },
+  "Elementary 10": {
+   "text": "Please put on your coat and hat before recess.",
+   "scene": "coat=i:shirt + hat=i:hat + recess=i:playground ‹Please put on your coat and hat before recess›",
+   "svg": "d348bc1b760c"
+  },
+  "Elementary 11": {
+   "text": "My grandparents live on a farm.",
+   "scene": "grandparents=s:grandparents + farm=i:farm ‹My grandparents live on a farm›",
+   "svg": "b7d87634c201"
+  },
+  "Elementary 12": {
+   "text": "We use a ruler to measure the line.",
+   "scene": "ruler & measure=i:ruler ‹We use a ruler to measure the line›",
+   "svg": "cf900bd19709"
+  },
+  "Elementary 13": {
+   "text": "The fire truck has a long ladder.",
+   "scene": "fire truck=m:🚒 + ladder=i:ladder ‹The fire truck has a long ladder›",
+   "svg": "cd5b29bf0cdc"
+  },
+  "Elementary 14": {
+   "text": "A kangaroo carries her baby in a pouch.",
+   "scene": "kangaroo=m:🦘 carries→ baby=m:👶 ‹A kangaroo carries her baby in a pouch›",
+   "svg": "c17e1c6fb525"
+  },
+  "Science K-5 1": {
+   "text": "A magnet attracts iron and steel.",
+   "scene": "magnet=i:magnet ‹A magnet attracts iron and steel›",
+   "svg": "dc7750ad4169"
+  },
+  "Science K-5 2": {
+   "text": "Some materials are transparent, like glass, and some are opaque, like wood.",
+   "scene": "transparent=s:transparent + opaque=s:opaque + wood=i:tree ‹Some materials are transparent, like glass, and some are opaque, like wood›",
+   "svg": "a81933823712"
+  },
+  "Science K-5 3": {
+   "text": "Waterproof boots keep your feet dry.",
+   "scene": "waterproof=s:waterproof + boots=i:shoe + feet=m:🦶 ‹Waterproof boots keep your feet dry›",
+   "svg": "ffe04415a318"
+  },
+  "Science K-5 4": {
+   "text": "Seeds need water, soil and sunlight to grow.",
+   "scene": "seeds=i:sprout need→ water=i:drop + soil=i:soil ‹Seeds need water, soil and sunlight to grow›",
+   "svg": "341657caa1a9"
+  },
+  "Science K-5 5": {
+   "text": "Bees carry pollen from flower to flower.",
+   "scene": "bees=i:bee carry→ flower=i:flower ‹Bees carry pollen from flower to flower›",
+   "svg": "3bbe31b3dc18"
+  },
+  "Science K-5 6": {
+   "text": "The wind turbine turns wind into electricity.",
+   "scene": "wind turbine=i:turbine turns into→ electricity=i:bolt ‹The wind turbine turns wind into electricity›",
+   "svg": "05bd69c9cb80"
+  },
+  "Science K-5 7": {
+   "text": "Solar panels turn sunlight into electricity.",
+   "scene": "solar panels=i:solar turn into→ electricity=i:bolt ‹Solar panels turn sunlight into electricity›",
+   "svg": "cbb5a7cb76fb"
+  },
+  "Science K-5 8": {
+   "text": "Recycling bottles and cans helps the planet.",
+   "scene": "recycling=i:recycle + bottles=i:bottle helps→ planet=i:planet ‹Recycling bottles and cans helps the planet›",
+   "svg": "a3dcb2631fcd"
+  },
+  "Science K-5 9": {
+   "text": "Polar bears live on the sea ice in the Arctic.",
+   "scene": "polar bears=m:🐻‍❄️ + sea ice=m: + arctic=m:🧊 ‹Polar bears live on the sea ice in the Arctic›",
+   "svg": "72ab22bed80f"
+  }
+ },
+ "ideas": {
+  "Today we're going to talk about theme.": {
+   "scene": "[Today] «THEME»  ‹Today we're going to talk about theme›",
+   "card": "[Today] «THEME»  ‹Today we're going to talk about theme›"
+  },
+  "The theme is the message or lesson the author wants you to learn.": {
+   "scene": "message=i:envelope + author=i:quill ‹The theme is the message or lesson the author wants you to learn›",
+   "card": "[Key word] «THEME» MESSAGE or LESSON the AUTHOR wants you to LEARN"
+  },
+  "It's different from the main idea, which is what the story is mostly about.": {
+   "scene": "DIAGRAM mainidea ‹It's different from the main idea, which is what the story is mostly about›",
+   "card": "[Key idea] It's DIFFERENT from the MAIN IDEA, which is what the STORY is MOSTLY about"
+  },
+  "Ask yourself what the character learned.": {
+   "scene": "character=i:person ‹Ask yourself what the character learned›",
+   "card": "[To do] ASK yourself what the CHARACTER LEARNED"
+  },
+  "Remember, a theme is usually a full sentence, not just one word.": {
+   "scene": "[Remember] A THEME is usually a FULL SENTENCE, not just one WORD",
+   "card": "[Remember] A THEME is usually a FULL SENTENCE, not just one WORD"
+  },
+  "They believed it was unfair to be taxed without representation.": {
+   "scene": "[Key idea] They BELIEVED it was UNFAIR to be TAXED WITHOUT REPRESENTATION",
+   "card": "[Key idea] They BELIEVED it was UNFAIR to be TAXED WITHOUT REPRESENTATION"
+  },
+  "Over time, more and more people agreed that they should govern themselves.": {
+   "scene": "[Key idea] Over TIME, more and more PEOPLE AGREED that they should GOVERN themselves",
+   "card": "[Key idea] Over TIME, more and more PEOPLE AGREED that they should GOVERN themselves"
+  },
+  "This idea of self-government is really important.": {
+   "scene": "[Important] «SELF-GOVERNMENT»  ‹This idea of self-government is really important›",
+   "card": "[Important] «SELF-GOVERNMENT»  ‹This idea of self-government is really important›"
+  },
+  "First you ask a question and make a hypothesis.": {
+   "scene": "[First] ASK a QUESTION and make a HYPOTHESIS",
+   "card": "[First] ASK a QUESTION and make a HYPOTHESIS"
+  },
+  "A hypothesis is an educated guess about what will happen.": {
+   "scene": "[Key word] «HYPOTHESIS» EDUCATED GUESS about what will HAPPEN",
+   "card": "[Key word] «HYPOTHESIS» EDUCATED GUESS about what will HAPPEN"
+  },
+  "If you change too many things, you won't know what caused the result.": {
+   "scene": "[Key idea] If you CHANGE too many things, you won't know what CAUSED the RESULT",
+   "card": "[Key idea] If you CHANGE too many things, you won't know what CAUSED the RESULT"
+  },
+  "Let's look at this word problem together.": {
+   "scene": "[Topic] «WORD PROBLEM»  ‹Let's look at this word problem together›",
+   "card": "[Topic] «WORD PROBLEM»  ‹Let's look at this word problem together›"
+  },
+  "First, underline what the question is asking.": {
+   "scene": "[First] UNDERLINE what the QUESTION is ASKING",
+   "card": "[First] UNDERLINE what the QUESTION is ASKING"
+  },
+  "Then figure out what information you need.": {
+   "scene": "[Then] FIGURE out what INFORMATION you need",
+   "card": "[Then] FIGURE out what INFORMATION you need"
+  },
+  "How do you know?": {
+   "scene": "[Question] HOW DO YOU KNOW?",
+   "card": "[Question] HOW DO YOU KNOW?"
+  },
+  "Always check whether your answer makes sense.": {
+   "scene": "[To do] Always CHECK whether your ANSWER makes SENSE",
+   "card": "[To do] Always CHECK whether your ANSWER makes SENSE"
+  },
+  "Who can tell me what we learned yesterday?": {
+   "scene": "[Question] Who can tell me what we LEARNED YESTERDAY?",
+   "card": "[Question] Who can tell me what we LEARNED YESTERDAY?"
+  },
+  "Great job, that's exactly right.": {
+   "scene": "—",
+   "card": "—"
+  },
+  "Any questions before we move on?": {
+   "scene": "[Question] Any QUESTIONS BEFORE we MOVE on?",
+   "card": "[Question] Any QUESTIONS BEFORE we MOVE on?"
+  },
+  "This will be on the test next week.": {
+   "scene": "[Remember] This will be on the TEST NEXT WEEK",
+   "card": "[Remember] This will be on the TEST NEXT WEEK"
+  },
+  "Everyone makes mistakes and that's how we learn.": {
+   "scene": "[Key idea] Everyone makes MISTAKES and that's how we LEARN",
+   "card": "[Key idea] Everyone makes MISTAKES and that's how we LEARN"
+  },
+  "Be respectful when someone else is talking.": {
+   "scene": "[To do] Be RESPECTFUL when someone ELSE is TALKING",
+   "card": "[To do] Be RESPECTFUL when someone ELSE is TALKING"
+  },
+  "It's okay to ask for help if you are stuck.": {
+   "scene": "[Key idea] It's okay to ASK for HELP if you are STUCK",
+   "card": "[Key idea] It's okay to ASK for HELP if you are STUCK"
+  },
+  "Scarcity means there isn't enough to satisfy everyone's wants.": {
+   "scene": "[Key word] «SCARCITY» there isn't ENOUGH to SATISFY EVERYONE'S wants",
+   "card": "[Key word] «SCARCITY» there isn't ENOUGH to SATISFY EVERYONE'S wants"
+  },
+  "Debugging means finding and fixing those mistakes.": {
+   "scene": "[Key word] «DEBUGGING» FINDING and FIXING those MISTAKES",
+   "card": "[Key word] «DEBUGGING» FINDING and FIXING those MISTAKES"
+  },
+  "That's called subduction.": {
+   "scene": "[Key word] «SUBDUCTION»  ‹That's called subduction›",
+   "card": "[Key word] «SUBDUCTION»  ‹That's called subduction›"
+  },
+  "This is also called the law of inertia.": {
+   "scene": "[Key word] «LAW OF INERTIA»  ‹This is also called the law of inertia›",
+   "card": "[Key word] «LAW OF INERTIA»  ‹This is also called the law of inertia›"
+  },
+  "Inside the cell is a jelly-like fluid called cytoplasm.": {
+   "scene": "cell & cytoplasm=i:cell ‹Inside the cell is a jelly-like fluid called cytoplasm›",
+   "card": "[Key word] «CYTOPLASM» INSIDE the CELL is a JELLY-LIKE FLUID"
+  },
+  "That's an example of dramatic irony.": {
+   "scene": "[Example] «DRAMATIC IRONY»  ‹That's an example of dramatic irony›",
+   "card": "[Example] «DRAMATIC IRONY»  ‹That's an example of dramatic irony›"
+  },
+  "You also need to address a counterclaim.": {
+   "scene": "[To do] ADDRESS a COUNTERCLAIM",
+   "card": "[To do] ADDRESS a COUNTERCLAIM"
+  },
+  "Always cite your sources using MLA format.": {
+   "scene": "[To do] Always CITE your SOURCES USING MLA FORMAT",
+   "card": "[To do] Always CITE your SOURCES USING MLA FORMAT"
+  },
+  "Let's go over a few literary devices before we read act two.": {
+   "scene": "[Topic] «LITERARY DEVICES»  ‹Let's go over a few literary devices before we read act two›",
+   "card": "[Topic] «LITERARY DEVICES»  ‹Let's go over a few literary devices before we read act two›"
+  },
+  "Your rough draft is due on Friday.": {
+   "scene": "draft=i:notebook ‹Your rough draft is due on Friday›",
+   "card": "[Remember] Your ROUGH DRAFT is DUE on FRIDAY"
+  },
+  "When inflation is high, your money buys less.": {
+   "scene": "inflation=m:📈 + money=i:coins ‹When inflation is high, your money buys less›",
+   "card": "[Key idea] When INFLATION is HIGH, your MONEY BUYS LESS"
+  },
+  "Alleles are different versions of the same gene.": {
+   "scene": "alleles & gene=i:dna ‹Alleles are different versions of the same gene›",
+   "card": "[Key word] «ALLELES» DIFFERENT VERSIONS of the SAME GENE"
+  }
+ },
+ "spoken": {
+  "okay so": {
+   "lesson": "—",
+   "live": "—"
+  },
+  "alright everybody let's get started": {
+   "lesson": "—",
+   "live": "—"
+  },
+  "can everyone see the board": {
+   "lesson": "[Question] Can everyone see the BOARD?",
+   "live": "—"
+  },
+  "give me one second": {
+   "lesson": "—",
+   "live": "—"
+  },
+  "good morning everyone": {
+   "lesson": "—",
+   "live": "—"
+  },
+  "thank you": {
+   "lesson": "—",
+   "live": "—"
+  },
+  "are you ready": {
+   "lesson": "—",
+   "live": "—"
+  },
+  "any questions": {
+   "lesson": "[Key idea] Any QUESTIONS",
+   "live": "—"
+  },
+  "raise your hand if you know the answer": {
+   "lesson": "[To do] RAISE your HAND if you know the ANSWER",
+   "live": "[To do] RAISE your HAND if you know the ANSWER"
+  },
+  "so today we're going to learn about erosion": {
+   "lesson": "[Today] «EROSION»  ‹Today we're going to learn about erosion›",
+   "live": "[Today] «EROSION»  ‹Today we're going to learn about erosion›"
+  },
+  "erosion is when wind or water slowly wears away rock": {
+   "lesson": "[Key word] «EROSION» when WIND or WATER SLOWLY WEARS AWAY ROCK",
+   "live": "[Key word] «EROSION» when WIND or WATER SLOWLY WEARS AWAY ROCK"
+  },
+  "a noun is a person place or thing": {
+   "lesson": "[Key word] «NOUN» PERSON PLACE or thing",
+   "live": "[Key word] «NOUN» PERSON PLACE or thing"
+  },
+  "remember that every sentence needs a subject and a verb": {
+   "lesson": "[Remember] Every SENTENCE needs a SUBJECT and a VERB",
+   "live": "[Remember] Every SENTENCE needs a SUBJECT and a VERB"
+  },
+  "i want you to find three adjectives in the first paragraph": {
+   "lesson": "[To do] FIND THREE ADJECTIVES in the FIRST PARAGRAPH",
+   "live": "[To do] FIND THREE ADJECTIVES in the FIRST PARAGRAPH"
+  },
+  "you need to show your work on every problem": {
+   "lesson": "[To do] SHOW your work on every PROBLEM",
+   "live": "[To do] SHOW your work on every PROBLEM"
+  },
+  "why do you think the author chose that title": {
+   "lesson": "[Question] Why do you think the AUTHOR CHOSE that TITLE?",
+   "live": "[Question] Why do you think the AUTHOR CHOSE that TITLE?"
+  },
+  "this is really important so pay attention": {
+   "lesson": "[Remember] This is really IMPORTANT so PAY ATTENTION",
+   "live": "[Remember] This is really IMPORTANT so PAY ATTENTION"
+  },
+  "the reason this matters is that it affects everyone": {
+   "lesson": "[Key idea] The REASON this MATTERS is that it AFFECTS everyone",
+   "live": "[Key idea] The REASON this MATTERS is that it AFFECTS everyone"
+  },
+  "democracy means the people choose their leaders": {
+   "lesson": "[Key word] «DEMOCRACY» PEOPLE CHOOSE their LEADERS",
+   "live": "[Key word] «DEMOCRACY» PEOPLE CHOOSE their LEADERS"
+  },
+  "the opposite of that is a dictatorship": {
+   "lesson": "[Key idea] The OPPOSITE of that is a DICTATORSHIP",
+   "live": "[Key idea] The OPPOSITE of that is a DICTATORSHIP"
+  },
+  "first read the question carefully": {
+   "lesson": "[First] READ the QUESTION CAREFULLY",
+   "live": "[First] READ the QUESTION CAREFULLY"
+  },
+  "finally write your answer in a complete sentence": {
+   "lesson": "[Finally] WRITE your ANSWER in a COMPLETE SENTENCE",
+   "live": "[Finally] WRITE your ANSWER in a COMPLETE SENTENCE"
+  },
+  "our topic for this week is ecosystems": {
+   "lesson": "[Topic] «ECOSYSTEMS»  ‹Our topic for this week is ecosystems›",
+   "live": "[Topic] «ECOSYSTEMS»  ‹Our topic for this week is ecosystems›"
+  },
+  "today's lesson is about persuasive writing": {
+   "lesson": "[Topic] «PERSUASIVE WRITING»  ‹Today's lesson is about persuasive writing›",
+   "live": "[Topic] «PERSUASIVE WRITING»  ‹Today's lesson is about persuasive writing›"
+  },
+  "keep in mind that correlation is not causation": {
+   "lesson": "[Remember] CORRELATION is not CAUSATION",
+   "live": "[Remember] CORRELATION is not CAUSATION"
+  },
+  "don't forget to put your name on your paper": {
+   "lesson": "[Remember] Put your NAME on your PAPER",
+   "live": "[Remember] Put your NAME on your PAPER"
+  },
+  "think about what you already know": {
+   "lesson": "[To do] THINK ABOUT WHAT YOU ALREADY KNOW",
+   "live": "—"
+  },
+  "and b is the y-intercept": {
+   "lesson": "[Key idea] B is the Y-INTERCEPT",
+   "live": "[Key idea] B is the Y-INTERCEPT"
+  },
+  "so the whole play is full of tension": {
+   "lesson": "[Key idea] The WHOLE PLAY is FULL of TENSION",
+   "live": "[Key idea] The WHOLE PLAY is FULL of TENSION"
+  },
+  "so what is its momentum": {
+   "lesson": "[Question] What is its MOMENTUM?",
+   "live": "[Question] What is its MOMENTUM?"
+  },
+  "but remember correlation does not prove causation": {
+   "lesson": "[Remember] CORRELATION does not PROVE CAUSATION",
+   "live": "[Remember] CORRELATION does not PROVE CAUSATION"
+  }
+ },
+ "live": {
+  "today we are learning about american / football and the rules of the game": [
+   "today we are learning about american football | american football=m:🏈 ‹Today we are learning about american football›",
+   "and the rules of the game | rules=i:clipboard ‹The rules of the game›"
+  ],
+  "we are going to visit the power / plant to see how electricity is made": [
+   "we are going to visit the power plant to see how electricity is made | power plant=i:factory + electricity=i:bolt ‹We are going to visit the power plant to see how electricity is made›"
+  ],
+  "the bat flew out of the / cave at night to eat insects": [
+   "the bat flew out of the cave at night to eat insects | bat=i:bat flew→ cave=i:cave + night=m:🌙 ‹The bat flew out of the cave at night to eat insects›"
+  ],
+  "look at the crane / it is lifting steel beams on the construction site": [
+   "look at the crane | crane=m:🏗️ ‹Look at the crane›",
+   "it is lifting steel beams on the construction site | construction site=m:👷 ‹It is lifting steel beams on the construction site›"
+  ],
+  "the ruler / of egypt was called the pharaoh": [
+   "the ruler of egypt was called the pharaoh | ruler & pharaoh=i:crown + egypt=i:pyramid ‹The ruler of egypt was called the pharaoh›"
+  ],
+  "every cell / phone has a battery inside": [
+   "every cell phone has a battery inside | cell phone=i:phone + battery=i:battery ‹Every cell phone has a battery inside›"
+  ],
+  "the cell membrane controls what goes in and out of the cell / inside the cell is a jelly-like fluid called cytoplasm": [
+   "the cell membrane controls what goes in and out of the cell | cell & membrane=i:cell ‹The cell membrane controls what goes in and out of the cell›",
+   "inside the cell is a jelly-like fluid called cytoplasm | cell & cytoplasm=i:cell ‹Inside the cell is a jelly-like fluid called cytoplasm›"
+  ],
+  "dramatic irony is when the audience knows something the characters don't / a soliloquy is a speech where a character speaks their thoughts aloud alone on stage": [
+   "dramatic irony is when the audience knows something the characters don't | characters=i:person ‹Dramatic irony is when the audience knows something the characters don't›",
+   "a soliloquy is a speech where a character speaks their thoughts aloud alone on stage | speech=i:speech + character=i:person ‹A soliloquy is a speech where a character speaks their thoughts aloud alone on stage›"
+  ]
+ },
+ "drawings": {
+  "sun": "b594db04e3d0",
+  "cloud": "e7b3c7d9054a",
+  "rain": "4445eb40457c",
+  "drop": "94bb90271281",
+  "wave": "ad69ed30fea8",
+  "river": "67f2fbd028f6",
+  "mountain": "3283bb4f7c7b",
+  "tree": "43b250875df2",
+  "sprout": "a45a78ff78aa",
+  "flower": "38f1f31d0030",
+  "leaf": "f76bdb11d7ba",
+  "cell": "b0b64a3b3d89",
+  "dna": "e3789c8a0fbf",
+  "virus": "620100a0e6e5",
+  "atom": "e02523554917",
+  "magnet": "a3385688ea35",
+  "bolt": "2085b21a5363",
+  "flame": "dcf27936d011",
+  "snowflake": "a29e40d0d1ce",
+  "rocket": "d6ff485cb820",
+  "planet": "1e6d6100a35e",
+  "moon": "62dfd52f2e7b",
+  "star": "f71791883885",
+  "globe": "35689c12ce07",
+  "crown": "e54d978c1d86",
+  "castle": "33c1f5180b21",
+  "person": "dd595a146c46",
+  "group": "bf133fcb1354",
+  "ship": "a30eba90b5fd",
+  "gear": "6a359202f10e",
+  "lever": "e2139e2f79ee",
+  "robot": "3e1cf972bf6a",
+  "book": "c912a54834f0",
+  "brain": "46d7f71a5812",
+  "heart": "3f2e077858e6",
+  "apple": "159f63ebcb3a",
+  "gravity": "e91b5132296f",
+  "columns": "1da995356810",
+  "ballot": "619c4f31e00a",
+  "fish": "abb3f7230367",
+  "volcano": "89f5679062d0",
+  "vapor": "474769c2daa4",
+  "bulb": "d17d5204e0a3",
+  "scroll": "8c0014c84e38",
+  "swords": "631cbcbda41a",
+  "coins": "fe5ff56e583a",
+  "flag": "775890fbebcd",
+  "clock": "22634760cc97",
+  "chart": "10d4dbc897de",
+  "flask": "9f3568193eca",
+  "rainbow": "638bb38723c0",
+  "wind": "7fded14e773f",
+  "thermometer": "b1eb49aa9883",
+  "storm": "5c461157a002",
+  "rock": "b4052d07520f",
+  "fossil": "b5e43d189c0d",
+  "cactus": "b413f4b015a6",
+  "island": "51e15fe3116e",
+  "earthquake": "2b5272ce4f92",
+  "bee": "b383753e2439",
+  "butterfly": "b3aed3349b92",
+  "caterpillar": "1d11138d5d77",
+  "cocoon": "d5a32de82622",
+  "egg": "eb2ef2b014b2",
+  "frog": "857f77892685",
+  "bone": "68cebcb78157",
+  "tooth": "353c09af10e3",
+  "eye": "4071fea526a9",
+  "lungs": "dcac2a108be7",
+  "stomach": "9f8e9fc2bfe5",
+  "grass": "00c6a9bb8636",
+  "mushroom": "9356d16bb17f",
+  "whale": "60b13ff0831a",
+  "comet": "d53bf5a01f6c",
+  "telescope": "725b00759645",
+  "satellite": "f5c720cc2b97",
+  "battery": "82044ff8574a",
+  "plug": "808ba5dcb3ce",
+  "sound": "e3dbae7a19eb",
+  "note": "af2379f56dbb",
+  "prism": "5bce63d02092",
+  "microscope": "ae526ece62f9",
+  "beaker": "d6dda0e30c6f",
+  "scale": "930f7076bd4f",
+  "ramp": "43459ac07fdb",
+  "pulley": "ea355d5ee8b8",
+  "spring": "7d83e2d936e3",
+  "car": "a12a0467531b",
+  "train": "94909f78125a",
+  "plane": "3b363c508a32",
+  "computer": "7dd4ddca69e6",
+  "phone": "548c3080ad2e",
+  "envelope": "9f85d8fb7523",
+  "pizza": "40dcc778c56d",
+  "whole": "4c0dab8a3c8d",
+  "half": "f646930753cc",
+  "slice": "ba011b45b210",
+  "triangle": "061f55db7b88",
+  "square": "f6ba47faaa42",
+  "circle": "ed9e79e937fb",
+  "cube": "2a66bf82b0b1",
+  "ruler": "9a0239841695",
+  "numbers": "d8c08ab876e8",
+  "sugar": "a15a21d03a29",
+  "pyramid": "b968581cdba4",
+  "house": "2f699692a2fb",
+  "city": "75086d264376",
+  "factory": "1897b0f00a25",
+  "farm": "dd66782e9418",
+  "wheat": "714f8634f345",
+  "bridge": "0adf153dd135",
+  "wall": "2f79b8632d37",
+  "map": "27e0c7cf3241",
+  "compass": "ff990d2a8808",
+  "quill": "35d25dde37c6",
+  "newspaper": "f248af7aa8de",
+  "pencil": "0c134d5a55c8",
+  "speech": "d65950b85fcc",
+  "question": "28a55726565a",
+  "magnifier": "755db7ca472b",
+  "puzzle": "6bb4fce158f2",
+  "trophy": "11e15511b7bd",
+  "calendar": "d248bcb4a7be",
+  "palette": "5b33d974add9",
+  "carrot": "2f14ed5d2519",
+  "bed": "70b4572c8920",
+  "soap": "936eef86ed8b",
+  "shield": "3324bef0af69",
+  "pill": "2251b89a0870",
+  "oxygen": "9b7bdf0e07c5",
+  "co2": "744ecaa89083",
+  "dog": "335ed52f2178",
+  "cat": "b80e8c3c883c",
+  "cow": "b4a142580e05",
+  "pig": "8ae4ecdd9fc1",
+  "sheep": "fb4e154b9e0a",
+  "duck": "0a72e1605b21",
+  "elephant": "85d5130dbab2",
+  "lion": "41544e4427e3",
+  "bear": "135c41ee540d",
+  "monkey": "2fa5d2bcdec2",
+  "spider": "c7387f96532a",
+  "octopus": "eb6ad6dc1455",
+  "crab": "0ce597ddad68",
+  "penguin": "6505ac1ae17a",
+  "owl": "723c182d5bc3",
+  "mouse": "835e4b8c26ab",
+  "snail": "da48f27fe43d",
+  "jellyfish": "6c2446283084",
+  "key": "5aca54199cff",
+  "lock": "f1e875aca492",
+  "umbrella": "dc370655cc00",
+  "scissors": "309d42417204",
+  "hammer": "d32091872abc",
+  "wrench": "6f14b621e970",
+  "ladder": "9541d8fe7e42",
+  "bucket": "2ab37596fd61",
+  "lamp": "a6e545eefdaa",
+  "candle": "5478845b9534",
+  "door": "ecd2ea1f2f0e",
+  "window": "5acfd9e94939",
+  "chair": "5fa12a3f2c05",
+  "table": "8201866b86a0",
+  "cup": "7ab8f17e2a16",
+  "bottle": "e7027d2db54a",
+  "bowl": "063de11dc30c",
+  "fork": "d708ef446b39",
+  "shoe": "7799c1ae9b53",
+  "shirt": "d9401a19169f",
+  "hat": "23249c35de52",
+  "glasses": "d85f26e8c0e0",
+  "backpack": "92bbfc02794f",
+  "balloon": "377e7dd61b7a",
+  "gift": "03ef97dd2ff5",
+  "kite": "127bd311081a",
+  "bicycle": "0025042a7b8a",
+  "bus": "36d483b46616",
+  "tractor": "9acfa0ab70ef",
+  "sailboat": "6eb1b19ebf54",
+  "anchor": "706362ebeb3b",
+  "lighthouse": "27fce8a53d65",
+  "tent": "95fac4e77cd1",
+  "campfire": "3d163de6c1bb",
+  "bell": "92479be93047",
+  "camera": "07abc994a04f",
+  "headphones": "c513fc042bb9",
+  "piano": "bad8412a4cf6",
+  "drum": "ca542c7abc57",
+  "paintbrush": "b150e688b5b8",
+  "parachute": "4b18843ee272",
+  "hourglass": "c738f024cc27",
+  "eraser": "0414cd4ef1d2",
+  "graduation": "7064cce19b83",
+  "notebook": "d61f8089700c",
+  "clipboard": "62cc8acf55ab",
+  "school": "b30a64327916",
+  "treasure": "f982766fe302",
+  "stamp": "38cfd1b1426c",
+  "mailbox": "00777807147d",
+  "microphone": "e9106676e671",
+  "toolbox": "2ed1eff80a90",
+  "testtube": "944512d8f177",
+  "petri": "9851f2e952e7",
+  "solar": "a1f3f9f24a2c",
+  "turbine": "f7970dba2600",
+  "dam": "f8068b2db5f7",
+  "recycle": "17d7f9a0d97c",
+  "trash": "7eeb77ef6121",
+  "pendulum": "e5cbd2790237",
+  "lens": "b8ac07b4ff4d",
+  "earthlayers": "92d96228c691",
+  "skeleton": "9d180507b029",
+  "skull": "4db908d485d2",
+  "syringe": "2e0202c46f4a",
+  "stethoscope": "230e36ad54af",
+  "kidneys": "b194ede9c9f0",
+  "waterfall": "3f67e030316a",
+  "lake": "78ca76b1caf8",
+  "iceberg": "a0941fc371ff",
+  "igloo": "f2de29f3ae8c",
+  "cave": "56aab2d7423a",
+  "canyon": "ccea287314de",
+  "sandy": "a73ea2df583c",
+  "forest": "9848716da654",
+  "torch": "984abd5c1f95",
+  "amphora": "b70f79cb78bf",
+  "cannon": "d392bd5355d4",
+  "bowarrow": "cc4dd49bbfbb",
+  "windmill": "681d6ab70e28",
+  "wagon": "4036262cbee7",
+  "throne": "59fb417306ba",
+  "knight": "0bcfca88669b",
+  "vikingship": "d4ba7845df74",
+  "printing": "14370beb34f4",
+  "telegraph": "15bf46a5f3ef",
+  "oilrig": "c7e0351ab1a0",
+  "wheelbarrow": "2c5759a5b44b",
+  "bread": "76e3e0942bdf",
+  "cheese": "7778eec1371a",
+  "milk": "f159150e658b",
+  "banana": "84d265f9a245",
+  "orange": "a506944fa6fc",
+  "grapes": "986ebd62309f",
+  "strawberry": "06400746401b",
+  "tomato": "d2914c20e7d5",
+  "corn": "cc60324bae35",
+  "ricebowl": "768c59e90431",
+  "cake": "c1d56cf7c117",
+  "cookie": "5ab3ce8a3681",
+  "soup": "fd171eaa9e4a",
+  "plus": "7071355b9665",
+  "minus": "2f8d92d98e10",
+  "times": "78ea20fe7c22",
+  "divide": "8fc067790e41",
+  "equals": "88f821ca2626",
+  "percent": "440e82c32e77",
+  "angle": "b8f7b45d193b",
+  "numberline": "32c10c909402",
+  "hexagon": "e1a306efc0e4",
+  "pentagon": "f2106cbd3fcc",
+  "diamond": "483289179d7a",
+  "oval": "a2b7d3757134",
+  "cylinder": "a0cfbe07e4fe",
+  "cone": "7806bb7f8341",
+  "sphere": "2d85c92625e9",
+  "piechart": "e5b376aae6f8",
+  "happy": "ddfb5af2048b",
+  "sad": "472de2a32417",
+  "angry": "6e87a28a403b",
+  "surprised": "28012fb3af86",
+  "sleepy": "3f9172c4e301",
+  "idea2": "3e6336148e74",
+  "heartbeat": "a8a725e66412",
+  "sunrise": "e0b75a032de5",
+  "stars": "ee4c572f1c5a",
+  "newmoon": "695fe4ab5cbf",
+  "fullmoon": "de5b6de7eaa9",
+  "crescent": "5bde142dd2c8",
+  "nest": "7507a5857101",
+  "web": "9e7b711545df",
+  "crystal": "4b26a4be26aa",
+  "glue": "3a96e52d4a5c",
+  "playground": "99357c666db9",
+  "locker": "4956be666388",
+  "stairs": "929a8b6bafa7",
+  "roof": "dcd39c8a8fd1",
+  "fence": "9b91d6964a06",
+  "pillow": "05b6d138c4b0",
+  "blanket": "9e9065db0eec",
+  "towel": "8b6f1f846343",
+  "mittens": "c614f1bf9a9a",
+  "pajamas": "59b2ed35895b",
+  "nail": "623643bf60cd",
+  "drill": "50d79f6d607d",
+  "submarine": "1d1da7cdbfda",
+  "dragonfly": "bd381c8944e0",
+  "bat": "b0f030a47d24",
+  "easel": "03a159b4e4f4",
+  "stage": "01d2bdadabad",
+  "mask": "a74c38c0e929",
+  "puppet": "094ded2cddc2",
+  "choir": "3738cdebc0a0",
+  "orchestra": "c7c369d22079",
+  "mailbag": "60876895b78c",
+  "compost": "2f31546f1388",
+  "shadow": "676b7eb39181",
+  "echo": "ac420649d466",
+  "switch": "0fd7de46af91",
+  "speedometer": "8b416b5b6c1d",
+  "vitamin": "0fd85f9826da",
+  "seatbelt": "dd1751123a03",
+  "siren": "052cb5091ba6",
+  "video": "f30f8a85ad0a",
+  "website": "f390c2fa060d",
+  "orbit": "13fcf687a3ca",
+  "rotation": "eb64eaa4ce3b",
+  "symmetry": "71e8c5955a82",
+  "pattern": "632fe9bef042",
+  "decimal": "aba4f060fb78",
+  "quiz": "abdd77485989",
+  "drought": "f6ececa16363",
+  "weather": "2d44d0e6275b",
+  "dumbbell": "c57dc471a0ec",
+  "password": "2ef036524ee1",
+  "piggybank": "0b58a6f5dd4a",
+  "feelings": "4eb08feeddd8",
+  "soil": "04b5d664fb84",
+  "liver": "be9c7ab24d7f",
+  "friction": "15eb66a4defe",
+  "wedge": "1c740e929843",
+  "tally": "84f238de0ab7",
+  "shapes": "ec6a9201042c",
+  "lines": "1e8c65e6a02c",
+  "pi": "a98f27e83cf0",
+  "punctuation": "b08a2d32f612",
+  "chalkboard": "5171667da9f7",
+  "migration": "ce68b01e0127",
+  "hibernate": "d8dc79f8dacd",
+  "atmosphere": "b2d5bcfd7100",
+  "dissolve": "4497f8ae35aa",
+  "variable": "97b581e10b7f",
+  "intestines": "f4a331db9567",
+  "choice": "7c949bb08e8d",
+  "sorting": "7ea3ba537a7a",
+  "habitat": "6a19cd731a3b",
+  "greenhouse": "5e7634a8299a",
+  "bird": "83d64c8d0b14",
+  "dove": "79aa95829bc3",
+  "fist": "69f6d91f1b80",
+  "tornado": "16d375c63af2",
+  "dinosaur": "64230f0cb8b3",
+  "ear": "b267889b1d5f",
+  "hand": "9e1349b39273",
+  "muscle": "00d89e511b94",
+  "rabbit": "3c87ba35468f",
+  "fox": "901c1bc0f140",
+  "handshake": "884f62709202",
+  "horse": "6a0fa38208fa",
+  "chicken": "bac65e4a81d1",
+  "snake": "e2ef1838c17c",
+  "turtle": "03316d859567",
+  "ant": "b5f6733cd210",
+  "shark": "e83f1ef30eef",
+  "giraffe": "dd8c787a4186",
+  "deer": "206ff971f28d",
+  "squirrel": "65e00efcff49",
+  "dolphin": "0a6d9f24f3f5",
+  "guitar": "fb43a596c95f",
+  "trumpet": "d1edd3970747",
+  "violin": "921c85c9e49b",
+  "flashlight": "54c69201192f",
+  "helicopter": "ec6a4fd9c53d",
+  "footprint": "835b54f1c0ec",
+  "jungle": "ca4185df74af",
+  "statue": "f7cdf601195f",
+  "liberty": "f7cdf601195f",
+  "helmet": "72990defe720",
+  "bandage": "7ef24101dff6",
+  "meat": "9063a6360ecb",
+  "thumbsup": "aa2ea7a03a2f",
+  "nose": "e062da11b073",
+  "mouth": "ebf8f3857c9e",
+  "coral": "713470add1c5"
+ },
+ "diagrams": {
+  "watercycle": "5c5dcf227351",
+  "plantparts": "17e18c7e0ac7",
+  "butterflylife": "bacdff52106b",
+  "froglife": "9802fa3bfa43",
+  "plantlife": "8155b89908e5",
+  "foodchain": "973b4848dfec",
+  "solarsystem": "b63a6963ea29",
+  "earthlayers": "b4371790d3e1",
+  "matterstates": "32f8c7a6e641",
+  "photosynthesis": "433f64536eb9",
+  "animalcell": "c7546a85f4cc",
+  "plantcell": "b90b34dacf24",
+  "bodyorgans": "072607bacc1b",
+  "fivesenses": "90d0fd392cb9",
+  "moonphases": "8da46f622966",
+  "daynight": "e0fdb7ced929",
+  "seasons": "a5c4e2e61741",
+  "rockcycle": "ef09c2cebe22",
+  "circuit": "e832f91d9ccc",
+  "volcanoparts": "cf53ef2ec138",
+  "atomparts": "dad2d409329b",
+  "simplemachines": "13c6eea46e5c",
+  "scimethod": "46b6de453277",
+  "punnett": "13bf7b39e188",
+  "wave": "177760b12d22",
+  "tectonics": "e1a79ec9a990",
+  "numberlinebig": "805fee328cb6",
+  "fractionbars": "6360c87aea4f",
+  "fractionparts": "6bf027bb33c1",
+  "placevalue": "eadc8fd4a13d",
+  "clockface": "d116a19c2e90",
+  "shapes2d": "cb8217f4c925",
+  "shapes3d": "5a26de3c3b7f",
+  "coordplane": "e620fa9849df",
+  "angletypes": "a80706c33c76",
+  "arraygrid": "5002eef5af04",
+  "bargraph": "c9c866573d29",
+  "areaperimeter": "e2b29ff4e240",
+  "pythagoras": "c080ffb05bb9",
+  "slopeline": "80481c3fe9ff",
+  "storymountain": "506d14e6753f",
+  "venn": "5c580be2f79e",
+  "mainidea": "36a8364ea6d8",
+  "paragraph": "85adb1a18a19",
+  "sequencebox": "1c7a8fb3c3d8",
+  "causeeffect": "627a7dc2a5d1",
+  "partsofspeech": "845a6959cab7",
+  "timelinebig": "d20bfc6288cc",
+  "compassrose": "d97f32827682",
+  "govbranches": "f9cd0ca61a82",
+  "landforms": "8c476fa0177b",
+  "continents": "eb93122c070c",
+  "feudal": "4d3dc4e3c4ac",
+  "billtolaw": "cfbddcf7e6b4",
+  "supplydemand": "56073ecb9dfc",
+  "myplate": "d21873a514fb",
+  "functionmachine": "bf072ee70441",
+  "derivative": "1a85104fd551",
+  "payoffmatrix": "d56e03aa86a7",
+  "cer": "98a5b00ac7b1",
+  "growthcurve": "0826a90db208",
+  "animalgroups": "ff73f643d739",
+  "celldivision": "35f92df9854d",
+  "neuron": "1db22f9aef28",
+  "earparts": "641f98dbaa7a",
+  "heartparts": "6d891365689a",
+  "dnahelix": "b0bde7f55f31",
+  "cellorganelles": "a049a7b30ebc",
+  "membrane": "897608e66f82",
+  "digestion": "65de958ea737",
+  "respiration": "b8bf5b860b3c",
+  "skeleton": "80400e259ec4",
+  "eyeparts": "803b27511295",
+  "brainlobes": "8d255b7349d5",
+  "flowerparts": "f7fbc43bcc91",
+  "meiosis": "766d94d5b4bf",
+  "energypyramid": "0f5cf95c36be",
+  "carboncycle": "453a27a86ba4",
+  "nitrogencycle": "d7b86c25a069",
+  "periodictable": "08b1dcefd77c",
+  "emspectrum": "49e0f8356ae7",
+  "watermolecule": "7d12261cd343",
+  "normaldist": "5732e9ec8a90",
+  "unitcircle": "18ec721c258e",
+  "oceanzones": "5cba6e8acd5b",
+  "soillayers": "753c9d74890e",
+  "triangletypes": "20189c7c0152",
+  "quadtypes": "cc21af7924c1",
+  "lever": "c454de4d92aa",
+  "prism": "457a60010568",
+  "eclipse": "be01b9760528",
+  "tides": "584079c78637",
+  "aquifer": "443951b44a9d",
+  "europe1914": "0bb48ee5b9cc",
+  "thirteencolonies": "1e7dc6ff9c21",
+  "coldwareurope": "02b47ec4c5e6",
+  "usstates": "221b498a5fd6"
+ },
+ "counts": {
+  "all": {
+   "drawings": 383,
+   "emoji": 981,
+   "symbols": 1478,
+   "diagrams": 97,
+   "words": 4355
+  }
+ }
+}

@@ -1,5 +1,5 @@
-// The built-in lesson library (sets window.LESSONS), moved verbatim from the original single-file app.
-window.LESSONS = [
+// The built-in lesson library, each lesson with its hand-tuned scenes (PLANS below), from the original single-file app.
+export const LESSONS = [
   // ---------------- Science ----------------
   { id: "water-cycle", subject: "Science", grade: "Grades 2–5", title: "The water cycle", text:
     "Today we're talking about the water cycle. The sun heats the ocean, turning liquid water into vapor. That vapor rises and cools to form a cloud. Eventually the cloud releases rain, which falls back into rivers and the ocean. The whole cycle repeats, powered by the sun's energy and the pull of gravity." },
@@ -205,5 +205,5 @@ window.LESSONS = [
       4: P(["shield"], "leads", "keeps healthy", ["person"], { shield: "protection", person: "you" }, { set: "bio" })
     }
   };
-  window.LESSONS.forEach(function(L){ L.plan = PLANS[L.id] || {}; });
+  LESSONS.forEach(function(L){ L.plan = PLANS[L.id] || {}; });
 })();

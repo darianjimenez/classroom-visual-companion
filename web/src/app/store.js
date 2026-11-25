@@ -2,14 +2,12 @@
 // but instead of writing to the page they update this store and React draws it.
 import { create } from "zustand"
 import { toast } from "sonner"
-// the symbol table must be in place before the engine reads it
-import "../engine/symbols.js"
-import "../engine/scene-engine.js"
-import "../engine/lessons.js"
+import { SceneEngine } from "../engine/index.js"
+import { LESSONS as BUILT_IN } from "../engine/lessons.js"
 
-export const E = window.SceneEngine
+export const E = SceneEngine
 E.setAssetBase(import.meta.env.BASE_URL)
-export const LESSONS = window.LESSONS || []
+export const LESSONS = BUILT_IN
 
 export const SUBJECTS = ["Science", "History", "Math", "Reading", "Health", "My lessons"]
 export const SUBJECT_COLORS = {
