@@ -16,7 +16,10 @@ const next = {}
 function check(group, key, value) {
   next[group] = next[group] || {}
   next[group][key] = value
-  if (!UPDATE) assert.deepEqual(value, saved[group] && saved[group][key], group + ": " + key)
+  // compared as text: a deep diff of these large values can take minutes when they differ
+  if (UPDATE) return
+  const was = JSON.stringify(saved[group] && saved[group][key]), now = JSON.stringify(value)
+  if (was !== now) assert.fail(group + ": " + key + "\n  saved: " + String(was).slice(0, 400) + "\n  now:   " + now.slice(0, 400))
 }
 
 test("lesson library: tuned scenes and the rule reader", () => {

@@ -47,7 +47,9 @@ const saved = existsSync(FILE) ? JSON.parse(readFileSync(FILE, "utf8")) : {}
 const next = {}
 function check(key, value) {
   next[key] = JSON.parse(JSON.stringify(value))
-  if (!UPDATE) assert.deepEqual(next[key], saved[key], key)
+  if (UPDATE) return
+  const was = JSON.stringify(saved[key]), now = JSON.stringify(next[key])
+  if (was !== now) assert.fail(key + "\n  saved: " + String(was).slice(0, 400) + "\n  now:   " + now.slice(0, 400))
 }
 
 test("opening the app: the first lesson is ready", async () => {

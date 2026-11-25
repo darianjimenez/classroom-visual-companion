@@ -75,3 +75,20 @@ test("live talk: small talk gets no card", () => {
     assert.equal(E.wordScene(s, { live: true }).show, false, s)
   }
 })
+
+test("a sentence that says not to do something gets words, not a picture of doing it", () => {
+  const { E } = loadEngine()
+  for (const s of ["Do not jump in after them.", "It was not a real railroad.", "Never run on the wet pool deck.", "Don’t touch the stove."]) {
+    assert.equal(E.analyze(s, {}).show, false, s)
+    assert.ok(E.wordScene(s).words, s + " has a word card")
+  }
+  // a plain claim, or a "not" in a side clause, keeps its picture
+  for (const s of ["Wash your hands for twenty seconds so germs don't spread.", "It became a war fought not just with soldiers, but with new ideas."])
+    assert.equal(E.analyze(s, {}).show, true, s)
+})
+
+test("blocks: a thing after a word like stone, an action before what it stops", () => {
+  const { E } = loadEngine()
+  assert.notEqual(E.analyze("Workers moved huge stone blocks with ramps and sleds.", {}).relation, "versus")
+  assert.equal(E.analyze("The goalie blocks the ball.", {}).relation, "versus")
+})

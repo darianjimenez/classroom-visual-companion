@@ -62,6 +62,26 @@ function splitSpoken(text){
   if (parts.length > 1 && parts[parts.length - 1].length < 4) parts[parts.length - 2] = parts[parts.length - 2].concat(parts.pop());
   return parts.map(function(p){ return p.join(" "); });
 }
+// "Do not jump in", "It was not a railroad", "Never run": a picture of the action would say the opposite, so a negated sentence
+// gets no picture and its key words go up on a word card instead. "Not only … but also" and "not just" are plain claims, and a
+// "not" in a side clause ("wash your hands so germs don't spread", "… while anaerobic respiration does not") leaves the main
+// idea standing, so those keep their pictures.
+var NOT_WORD = /^(not|never|cannot)$|n[\u2019']t$/i;
+var SIDE_CLAUSE = { so: 1, while: 1, whereas: 1, although: 1, though: 1, because: 1, than: 1, unless: 1 };
+function negated(text){
+  var ws = String(text).toLowerCase().split(/\s+/).map(function(w){ return w.replace(/^[^a-z]+|[^a-z\u2019']+$/g, ""); });
+  for (var i = 0; i < ws.length; i++){
+    if (SIDE_CLAUSE[ws[i]]) return false;
+    if (NOT_WORD.test(ws[i])) return !(ws[i] === "not" && (ws[i + 1] === "only" || ws[i + 1] === "just"));
+  }
+  return false;
+}
+// "stone blocks", "building blocks with ramps": a thing, not the action of blocking
+var BLOCK_NOUN_NEXT = { with: 1, and: 1, or: 1, to: 1, for: 1, of: 1, in: 1, on: 1, from: 1, into: 1, at: 1, by: 1, that: 1, which: 1 };
+function blocksIsNoun(norm, i){
+  if (norm[i] !== "blocks") return false;
+  return i === norm.length - 1 || !!BLOCK_NOUN_NEXT[norm[i + 1]];
+}
 function emptyScene(){ return { show: false, relation: null, verb: "", verbAt: 0, subjects: [], objects: [], then: null, setting: "plain", caption: "" }; }
 
 // Rule-based reading of one sentence: find the things, find the action between them.
@@ -70,6 +90,7 @@ function analyze(text, extra, context){
   var norm = raw.map(normalize), n = raw.length, i;
   var dsc = diagramScene(text);
   if (dsc) return dsc;
+  if (negated(text)) return emptyScene();
   var cues = norm.concat(context && context.words || [], context && context.next || []), names = spokenNames(raw, norm);
   var concepts = [], rels = [];
   for (i = 0; i < n; i++){
@@ -82,7 +103,7 @@ function analyze(text, extra, context){
       i += ph.len - 1;
       continue;
     }
-    if (RELATION[w]){ rels.push({ i: i, type: RELATION[w] }); continue; }
+    if (RELATION[w] && !blocksIsNoun(norm, i)){ rels.push({ i: i, type: RELATION[w] }); continue; }
     if (names[i] || isName(raw, norm, i)) continue;
     var own = extraConcept(w, extra) !== undefined;
     if (!own && usedAsVerb(w, i, norm)) continue;

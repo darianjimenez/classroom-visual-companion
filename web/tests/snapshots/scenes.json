@@ -979,8 +979,8 @@
   },
   "World history 6": {
    "text": "The Hanging Gardens of Babylon may never have existed.",
-   "scene": "hanging gardens of babylon=m: ‹The Hanging Gardens of Babylon may never have existed›",
-   "svg": "568135797678"
+   "scene": "[Key idea] The HANGING GARDENS of BABYLON may never have EXISTED",
+   "svg": "565203934814"
   },
   "World history 7": {
    "text": "Traders carried silk and spices along the Silk Road.",
@@ -1517,7 +1517,7 @@
    "inside the cell is a jelly-like fluid called cytoplasm | cell & cytoplasm=i:cell ‹Inside the cell is a jelly-like fluid called cytoplasm›"
   ],
   "dramatic irony is when the audience knows something the characters don't / a soliloquy is a speech where a character speaks their thoughts aloud alone on stage": [
-   "dramatic irony is when the audience knows something the characters don't | characters=i:person ‹Dramatic irony is when the audience knows something the characters don't›",
+   "dramatic irony is when the audience knows something the characters don't | [Key word] «DRAMATIC IRONY» when the AUDIENCE knows something the CHARACTERS don't",
    "a soliloquy is a speech where a character speaks their thoughts aloud alone on stage | speech=i:speech + character=i:person ‹A soliloquy is a speech where a character speaks their thoughts aloud alone on stage›"
   ]
  },
