@@ -473,6 +473,15 @@
     "group": "teamwork"
   },
   "remap": {
+    "hieroglyph": "i:scroll",
+    "hieroglyphs": "i:scroll",
+    "hieroglyphics": "i:scroll",
+    "mummy": "-",
+    "mummies": "-",
+    "fisherman": "m:🎣",
+    "fishermen": "m:🎣",
+    "seismograph": "i:earthquake",
+    "seismographs": "i:earthquake",
     "letter": "m:🔤",
     "letters": "m:🔤",
     "spell": "m:🔤",

@@ -332,8 +332,8 @@
   },
   "egypt 1": {
    "tuned": "Egypt=i:pyramid grew along→ Nile River=i:river ‹Ancient Egypt grew up along the Nile River›",
-   "rule": "ancient=m:🏺 + egypt=i:pyramid ‹Ancient Egypt grew up along the Nile River›",
-   "svg": "e9666ad4b3c5"
+   "rule": "ancient=m:🏺 + egypt=i:pyramid grew→ nile river=i:river ‹Ancient Egypt grew up along the Nile River›",
+   "svg": "50d0df7a92e3"
   },
   "egypt 2": {
    "tuned": "Nile floods=i:river floods feed→ wheat=i:wheat ‹Every year the river flooded and left rich soil for farmers to grow wheat›",
@@ -2011,7 +2011,7 @@
    "emoji": 981,
    "symbols": 1478,
    "diagrams": 97,
-   "words": 4355
+   "words": 4359
   }
  }
 }
