@@ -818,7 +818,7 @@
   "dots": "",
   "ticker": "",
   "live": {
-   "msg": "Live voice doesn't work in this browser (try Google Chrome). You can type sentences below instead.",
+   "msg": "Live voice doesn't work in this browser. You can type sentences below instead.",
    "miss": true
   },
   "recap": null,
@@ -1146,7 +1146,9 @@
    "unsure": false,
    "autoRecap": true,
    "follow": true,
-   "liveSeconds": 6
+   "liveSeconds": 6,
+   "onDevice": false,
+   "accurateVoice": false
   },
   "stored": {
    "speed": 170,
@@ -1158,7 +1160,9 @@
    "unsure": false,
    "autoRecap": true,
    "follow": true,
-   "liveSeconds": 6
+   "liveSeconds": 6,
+   "onDevice": false,
+   "accurateVoice": false
   }
  },
  "mic without speech recognition": {
@@ -1167,11 +1171,11 @@
    "msg": "“Metals tend to lose electrons and form positive ions.”",
    "miss": false
   },
-  "voice": "Live voice isn't supported in this browser. Try Google Chrome on a computer.",
+  "voice": "Live voice isn't supported in this browser. Try a recent Chrome, Edge, Safari or Firefox.",
   "talkBig": "Type to begin"
  },
  "talk orb": {
-  "msg": "Live voice doesn't work in this browser (try Google Chrome). Type sentences below instead.",
+  "msg": "Live voice doesn't work in this browser. Type sentences below instead.",
   "miss": true
  }
 }

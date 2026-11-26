@@ -4,7 +4,7 @@ import { clearBoard, finishActive, hideRecap, revealTo, sceneSig, setBoardHeadin
 import { E, get, set } from "./core.ts"
 import { pause, resetPlayback } from "./playback.ts"
 import { rt } from "./runtime.ts"
-import { SR } from "./speech.ts"
+import { canListen } from "./speech.ts"
 import { plural, scrollToBoard, splitSentences } from "./text.ts"
 import type { Scene } from "./types.ts"
 import { startListening, stopListening } from "./voice.ts"
@@ -96,16 +96,16 @@ export function flushPending() {
 }
 
 export function enterTalk() {
-  if (get().talk) { if (SR && !get().listening) startListening(); return }
+  if (get().talk) { if (canListen && !get().listening) startListening(); return }
   pause(); hideRecap()
   if (get().listening) stopListening()
   rt.loaded = false; rt.transcript = []; rt.talkCtx = { words: [], subject: null }
   set({ talk: true, boardIsTalk: true, ticker: [], dots: [], count: null, panel: null })
   clearBoard()
   talkHeading()
-  set({ talkBig: SR ? "Start talking" : "Type to begin" })
-  if (SR) { setLive("Starting the microphone…"); startListening() }
-  else setLive("Live voice doesn't work in this browser (try Google Chrome). You can type sentences below instead.", true)
+  set({ talkBig: canListen ? "Start talking" : "Type to begin" })
+  if (canListen) { setLive("Starting the microphone…"); startListening() }
+  else setLive("Live voice doesn't work in this browser. You can type sentences below instead.", true)
   scrollToBoard()
 }
 export function exitTalk(showSlides?: boolean) {
@@ -121,10 +121,10 @@ export function exitTalk(showSlides?: boolean) {
 export function micToggle() {
   if (get().listening) { stopListening(); return }
   if (get().talk || !get().prefs.follow || !get().script.trim()) enterTalk()
-  else if (SR) startListening()
+  else if (canListen) startListening()
 }
 export function talkOrb() {
-  if (!SR) { setLive("Live voice doesn't work in this browser (try Google Chrome). Type sentences below instead.", true); return }
+  if (!canListen) { setLive("Live voice doesn't work in this browser. Type sentences below instead.", true); return }
   micToggle()
 }
 // typed sentences are complete already, so they're drawn straight away, each with the next one as context

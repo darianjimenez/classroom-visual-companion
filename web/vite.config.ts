@@ -20,7 +20,12 @@ export default defineConfig({
         // about 1,500 symbol pictures and the diagram files: each is cached the first time a lesson shows it, not all at install
         // (the small table of which word shows which symbol, symbols/index.json, is cached at install)
         globIgnores: ["symbols/*.svg", "diagrams/**"],
-        runtimeCaching: [{ urlPattern: /\/(symbols|diagrams)\/[^/]+\.svg$/, handler: "CacheFirst", options: { cacheName: "pictures", expiration: { maxEntries: 3000 } } }],
+        runtimeCaching: [
+          { urlPattern: /\/(symbols|diagrams)\/[^/]+\.svg$/, handler: "CacheFirst", options: { cacheName: "pictures", expiration: { maxEntries: 3000 } } },
+          // on-device voice: the speech engine (27 MB) is fetched the first time someone uses it, then kept for offline use.
+          // The Whisper model itself is kept by transformers.js in its own cache.
+          { urlPattern: /\.wasm$/, handler: "CacheFirst", options: { cacheName: "speech", expiration: { maxEntries: 4 } } },
+        ],
         // the OpenMoji picture bundle is about 5 MB
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
         cleanupOutdatedCaches: true,

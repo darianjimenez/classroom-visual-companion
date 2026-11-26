@@ -17,7 +17,7 @@ import { EXTRA_DEFAULTS, KEYS, load, loadPrefs, save } from "./persist.ts"
 import { addWord, closeWord, openWord, removeWord, resetWords, setPref, setWordPicture, showDiagram } from "./pictures.ts"
 import { nextSentence, pause, play, prevScene, restart, start, togglePlay } from "./playback.ts"
 import { allLessons, lessonIcons, renderUnsure, updateSource } from "./scenes.ts"
-import { DEFAULT_VOICE, SR } from "./speech.ts"
+import { canListen, voiceBlurb } from "./speech.ts"
 import { enterTalk, exitTalk, finishTalk, micToggle, recapRestart, sayExample, sayTyped, talkOrb } from "./talk.ts"
 import type { Actions, AppData, AppState, Extra, Lesson } from "./types.ts"
 import { closeGuide, closePanel, openGuide, openPanel, setCommandOpen, showLessons, syncFullscreen, toggleFullscreen, tryWay } from "./ui.ts"
@@ -25,6 +25,7 @@ import { readAloud, voiceButton } from "./voice.ts"
 
 export { E, LESSONS, PACES, SUBJECTS, SUBJECT_COLORS } from "./core.ts"
 export { plural, splitSentences } from "./text.ts"
+export { NATIVE, ON_DEVICE, usesWhisper } from "./speech.ts"
 export type * from "./types.ts"
 
 function init() {
@@ -51,7 +52,7 @@ const initial = (): AppData => ({
   live: { msg: "", miss: false }, talkBig: "Start talking",
   source: { kind: "rule", msg: "" }, wordCount: { words: 0, sentences: 0 }, unsureWords: [],
   prefs: loadPrefs(),
-  voice: { supported: !!SR, status: SR ? DEFAULT_VOICE : "Live voice isn't supported in this browser. Try Google Chrome on a computer.", interim: "", log: [] },
+  voice: { supported: canListen, status: voiceBlurb(loadPrefs()), interim: "", log: [] },
   ai: { available: false, status: "", planning: false, useAi: true },
   // panels and dialogs
   panel: null, guideOpen: !load(KEYS.help, null), commandOpen: false,

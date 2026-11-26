@@ -108,7 +108,7 @@ function StartCard() {
         <div className="mt-4 flex flex-wrap justify-center gap-1">
           <Button variant="ghost" className={onBoard} onClick={a.nextSentence}><StepForward />One sentence at a time</Button>
           <Button variant="ghost" className={onBoard} onClick={a.readAloud} disabled={!voice.supported}
-            title={voice.supported ? "Read the script aloud and the pictures keep up with you" : "Live voice needs Google Chrome"}>
+            title={voice.supported ? "Read the script aloud and the pictures keep up with you" : "This browser can't listen to the microphone"}>
             <Mic />Read it aloud
           </Button>
         </div>

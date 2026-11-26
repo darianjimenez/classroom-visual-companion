@@ -2,7 +2,7 @@ import * as React from "react"
 import NumberFlow from "@number-flow/react"
 import { Search, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { E, PACES, useApp, type Toggle } from "@/app/store"
+import { E, NATIVE, ON_DEVICE, PACES, useApp, usesWhisper, type Toggle } from "@/app/store"
 import { Panel } from "@/components/app/panel"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -170,6 +170,12 @@ export function SettingsPanel() {
         <Separator />
         <Section title="Live voice">
           <ToggleRow id="follow" label="Follow the lesson script" hint="With a script loaded, the microphone follows along as you read it. Turn off to always use Just talk." checked={p.follow} onChange={set("follow")} />
+          {NATIVE && ON_DEVICE && (
+            <ToggleRow id="on-device" label="Keep voice on this device" hint="Turns speech into text with Whisper in the browser instead of sending the audio to Google. Needs a one-time download." checked={p.onDevice} onChange={set("onDevice")} />
+          )}
+          {usesWhisper(p) && (
+            <ToggleRow id="accurate-voice" label="More accurate voice" hint="A larger speech model that mishears fewer words. A bigger first download, and slower on older computers." checked={p.accurateVoice} onChange={set("accurateVoice")} />
+          )}
           <div className="flex items-center gap-3 py-2">
             <Button variant="outline" onClick={a.voiceButton} disabled={!voice.supported}>{listening ? "Stop listening" : "Start listening"}</Button>
             {voice.interim && <span className="truncate text-xs text-muted-foreground italic">{voice.interim}</span>}

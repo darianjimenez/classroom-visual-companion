@@ -12,6 +12,10 @@ export type Prefs = {
   tickerOn: boolean; unsure: boolean; autoRecap: boolean; follow: boolean
   /** seconds each picture stays up in Just talk before the next one */
   liveSeconds: number
+  /** recognise speech on this device with Whisper, even where Chrome's online service is available */
+  onDevice: boolean
+  /** the larger Whisper model: more accurate, a bigger first download, slower on old computers */
+  accurateVoice: boolean
 }
 /** the settings that are on or off */
 export type Toggle = { [K in keyof Prefs]: Prefs[K] extends boolean ? K : never }[keyof Prefs]

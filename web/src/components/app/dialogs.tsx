@@ -65,8 +65,8 @@ export function GuideDialog() {
             </TabsContent>
             <TabsContent value="privacy" className="flex flex-col gap-3 text-muted-foreground">
               <p><span className="font-medium text-foreground">Nothing to sign up for.</span> Lessons, settings and word pictures are saved only in this browser. The app doesn't record or store anything you say.</p>
-              <p><span className="font-medium text-foreground">Speech-to-text is done by your browser.</span> In Chrome, microphone audio is sent to Google's speech service to turn it into text. If that isn't allowed at your school, use the lessons, one sentence at a time, or typing in Just talk.</p>
-              <p><span className="font-medium text-foreground">Browsers.</span> Live voice needs Chrome or Edge on a computer. Everything else works in any modern browser, and offline after your first visit.</p>
+              <p><span className="font-medium text-foreground">Speech-to-text.</span> In Chrome and Edge, microphone audio is sent to Google's speech service to turn it into text. If that isn't allowed at your school, turn on Settings → Keep voice on this device: Whisper then runs in the browser and the audio never leaves the room.</p>
+              <p><span className="font-medium text-foreground">Browsers.</span> Live voice works in Chrome and Edge, and in Safari, Firefox and others with Whisper on the device (a one-time 41 MB download). Everything works offline after your first visit.</p>
               <p>This is an early version for testing. If something looks wrong, tell the person who sent you the link.</p>
             </TabsContent>
           </div>

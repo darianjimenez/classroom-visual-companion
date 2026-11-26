@@ -4,7 +4,7 @@ import { LESSONS, get, set } from "./core.ts"
 import { selectLesson } from "./lessons.ts"
 import { KEYS, save } from "./persist.ts"
 import { nextSentence, play, resetPlayback } from "./playback.ts"
-import { SR } from "./speech.ts"
+import { canListen } from "./speech.ts"
 import { enterTalk, exitTalk } from "./talk.ts"
 import { scrollToBoard } from "./text.ts"
 import type { Panel, Way } from "./types.ts"
@@ -45,7 +45,7 @@ export function tryWay(how: Way) {
   if (how === "play") { resetPlayback(); play() }
   else if (how === "step") { resetPlayback(); nextSentence() }
   else if (how === "read") {
-    if (!SR) { toast("Reading aloud needs Google Chrome or Microsoft Edge."); return }
+    if (!canListen) { toast("Reading aloud needs a microphone, and this browser can't listen."); return }
     set((s) => ({ prefs: { ...s.prefs, follow: true } })); resetPlayback(); startListening()
   }
   scrollToBoard()

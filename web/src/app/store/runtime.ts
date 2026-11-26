@@ -27,6 +27,6 @@ export const rt = {
   aiPlan: null as { script: string; scenes: (PlanItem | null)[] } | null,
   sample: null as Sample | null, planning: null as AbortController | null,
   // the microphone, and following along a script read aloud
-  recognition: null as Recognizer | null, restarts: [] as number[], restartTimer: undefined as Timer | undefined,
+  recognition: null as Recognizer | null, nativeFailed: false, restarts: [] as number[], restartTimer: undefined as Timer | undefined,
   follow: { on: false, processed: {} as Record<number, number>, miss: [] as string[] },
 }

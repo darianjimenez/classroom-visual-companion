@@ -6,11 +6,17 @@ import { EXTRA_DEFAULTS, KEYS, save } from "./persist.ts"
 import { onTimer, pause } from "./playback.ts"
 import { rt } from "./runtime.ts"
 import { renderUnsure } from "./scenes.ts"
+import { voiceBlurb } from "./speech.ts"
 import { scrollToBoard } from "./text.ts"
 import type { Extra, Prefs, WordNow } from "./types.ts"
+import { stopListening } from "./voice.ts"
 
 export function setPref<K extends keyof Prefs>(key: K, value: Prefs[K]) {
   set((s) => ({ prefs: { ...s.prefs, [key]: value } }))
+  if (key === "onDevice" || key === "accurateVoice") {
+    if (get().listening) stopListening()
+    set((s) => ({ voice: { ...s.voice, status: voiceBlurb(s.prefs) } }))
+  }
   if (key === "speed" && get().playing) { clearInterval(rt.timer); rt.timer = setInterval(onTimer, 60000 / (value as number)) }
 }
 
