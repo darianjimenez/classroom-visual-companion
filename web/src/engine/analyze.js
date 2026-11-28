@@ -82,12 +82,35 @@ function blocksIsNoun(norm, i){
   if (norm[i] !== "blocks") return false;
   return i === norm.length - 1 || !!BLOCK_NOUN_NEXT[norm[i + 1]];
 }
+// Speech recognisers write numbers as digits: "50%" is "fifty percent"
+function normTok(t){ return /\d%/.test(t) ? "percent" : /^0[.,;:!?]*$/.test(t) ? "zero" : normalize(t); }
+// "In fall, the leaves change color", "this fall": the season, not falling
+var SEASON_BEFORE = { in: 1, this: 1, last: 1, next: 1, every: 1, during: 1, early: 1, late: 1 };
+function isSeasonFall(raw, norm, i){
+  var pv = norm[i - 1] || "";
+  if (SEASON_BEFORE[pv] || (pv === "the" && SEASON_BEFORE[norm[i - 2] || ""])) return true;
+  return /,$/.test(raw[i]) && (i === 0 || SEASON_BEFORE[pv]);
+}
+// Words that tell rather than act ("the law says", "they told myths", "asked big questions"): no link between the pictures
+var SPEECH_VERB = toSet(["says", "said", "say", "tells", "told", "tell", "explains", "explained", "describes", "described", "speaks", "spoke", "shouts"]);
+var ASK_ABOUT = toSet(["question", "questions", "about", "if", "how", "what", "why", "who", "whether", "where", "when"]);
+// "it's your turn", "take turns": a turn in a game, not turning into something
+var TURN_BEFORE = toSet(["your", "my", "his", "her", "our", "their", "whose", "its", "take", "takes", "took", "taking", "next"]);
+function notALink(w, i, norm){
+  var pv = norm[i - 1] || "", nx = norm[i + 1] || "";
+  if (SPEECH_VERB[w]) return true;
+  if (/^ask(s|ed|ing)?$/.test(w) && (ASK_ABOUT[nx] || ASK_ABOUT[norm[i + 2] || ""])) return true;
+  if (/^turns?$/.test(w) && TURN_BEFORE[pv]) return true;
+  // "factories stopped making cars": they stopped doing something, nothing was stopped
+  if (/^stop(s|ped|ping)?$/.test(w) && /ing$/.test(nx)) return true;
+  return false;
+}
 function emptyScene(){ return { show: false, relation: null, verb: "", verbAt: 0, subjects: [], objects: [], then: null, setting: "plain", caption: "" }; }
 
 // Rule-based reading of one sentence: find the things, find the action between them.
 function analyze(text, extra, context){
   var raw = String(text).split(/\s+/).filter(Boolean);
-  var norm = raw.map(normalize), n = raw.length, i;
+  var norm = raw.map(normTok), n = raw.length, i;
   var dsc = diagramScene(text);
   if (dsc) return dsc;
   if (negated(text)) return emptyScene();
@@ -96,6 +119,14 @@ function analyze(text, extra, context){
   for (i = 0; i < n; i++){
     var w = norm[i];
     if (w === "into") continue;
+    // before the phrases, which would read "make up" as cosmetics
+    // "was made up of city-states" (the whole holds its parts); "cells make up tissues" (the other way round)
+    if (/^(make|makes|made|making)$/.test(w) && norm[i + 1] === "up" && !/^(on|wear|wears|wearing|wore|her|his|some|of|the)$/.test(norm[i - 1] || "")){
+      var of = norm[i + 2] === "of";
+      rels.push({ i: i, type: "contains", swap: !of, objStart: i + (of ? 3 : 2), upText: of ? " up of" : " up" });
+      i += of ? 2 : 1;
+      continue;
+    }
     // a phrase that means one thing ("american football", "cell phone") is one picture, or none
     var ph = phraseAt(norm, i);
     if (ph){
@@ -103,6 +134,8 @@ function analyze(text, extra, context){
       i += ph.len - 1;
       continue;
     }
+    if (w === "fall" && isSeasonFall(raw, norm, i)){ concepts.push({ i: i, emoji: "🍁", key: "m:🍁", label: "fall", weak: false }); continue; }
+    if (RELATION[w] && notALink(w, i, norm)) continue;
     if (RELATION[w] && !blocksIsNoun(norm, i)){ rels.push({ i: i, type: RELATION[w] }); continue; }
     if (names[i] || isName(raw, norm, i)) continue;
     var own = extraConcept(w, extra) !== undefined;
@@ -146,7 +179,7 @@ function analyze(text, extra, context){
   var scene = emptyScene();
   if (!concepts.some(function(c){ return !c.weak; })) return scene;
   scene.show = true;
-  function verbText(r){ return r.bare ? "into" : labelOf(raw[r.i]).toLowerCase() + (r.into ? " into" : ""); }
+  function verbText(r){ return r.bare ? "into" : labelOf(raw[r.i]).toLowerCase() + (r.into ? " into" : "") + (r.upText || ""); }
   var all = uniq(concepts);
 
   if (rels.length && rels[0].type === "cycle"){
@@ -180,7 +213,7 @@ function analyze(text, extra, context){
             break;
           }
         }
-        if (REVERSE_NEXT[norm[r.i + 1]]){ var t = subs; subs = objs; objs = t; }
+        if (REVERSE_NEXT[norm[r.i + 1]] || r.swap){ var t = subs; subs = objs; objs = t; }
       }
       objs = objs.filter(function(o){ return !subs.some(function(s){ return s.key === o.key; }); });
       prevI = r.i;
@@ -197,7 +230,8 @@ function analyze(text, extra, context){
         var tObjs = steps[1].objects.filter(function(o){ return !used[o.key]; });
         if (tObjs.length) scene.then = { relation: steps[1].type, verb: steps[1].verb, verbAt: steps[1].verbAt, objects: tObjs };
       }
-    } else if (loose && all.length >= 2){
+    } else if (loose && all.length >= 2 && all.some(function(c){ return c.at < loose.i; })){
+      // nothing pictured before the action ("they told myths about … lightning"): a link from a later picture would read wrong
       var before = all.filter(function(c){ return c.at < loose.i; }), afterC = all.filter(function(c){ return c.at > loose.i; });
       var S = before.length ? before.slice(-2) : [all[0]];
       var O = (afterC.length ? afterC.slice(0, 2) : [all[all.length - 1]]).filter(function(o){ return !S.some(function(x){ return x.key === o.key; }); });

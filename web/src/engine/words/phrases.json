@@ -227,7 +227,17 @@
       "bass drum": "i:drum",
       "french horn": "m:🎺",
       "electric guitar": "i:guitar",
-      "sheet music": "i:note"
+      "sheet music": "i:note",
+      "baby bird": "m:🐣",
+      "baby chick": "m:🐣",
+      "sum up": "-",
+      "sums up": "-",
+      "summed up": "-",
+      "summing up": "-",
+      "world war": "i:swords",
+      "shopping cart": "m:🛒",
+      "grocery cart": "m:🛒",
+      "victory garden": "m:🌻"
     },
     "middle and high school: names that use an everyday word for something else": {
       "stock market": "m:📈",

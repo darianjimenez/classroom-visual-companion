@@ -432,8 +432,8 @@
   },
   "explorers 3": {
    "tuned": null,
-   "rule": "gold & spices=i:coins traded→ countries=i:globe ‹They traded gold and spices with other countries›",
-   "svg": "b3901d786be4"
+   "rule": "gold & spices=i:coins + countries=i:globe ‹They traded gold and spices with other countries›",
+   "svg": "ba3066130618"
   },
   "explorers 4": {
    "tuned": null,
@@ -527,8 +527,8 @@
   },
   "research 2": {
    "tuned": "you=i:person collect clues→ books=i:book + internet=i:computer ‹You collect clues from books and the internet›",
-   "rule": "clues=i:magnifier collect→ books=i:book ‹You collect clues from books and the internet›",
-   "svg": "0d4fe8a95c35"
+   "rule": "clues=i:magnifier + books=i:book + internet=i:computer ‹You collect clues from books and the internet›",
+   "svg": "8dc619527083"
   },
   "research 3": {
    "tuned": "detective=i:magnifier checks→ evidence=i:scroll ‹A detective checks the evidence before trusting it›",
@@ -684,8 +684,8 @@
   },
   "HS photosynthesis 7": {
    "text": "Fermentation is a type of anaerobic respiration that produces lactic acid in your muscles.",
-   "scene": "acid=i:testtube produces→ muscles=i:muscle ‹Fermentation is a type of anaerobic respiration that produces lactic acid in your muscles›",
-   "svg": "2c01ba0583c8"
+   "scene": "acid=i:testtube + muscles=i:muscle ‹Fermentation is a type of anaerobic respiration that produces lactic acid in your muscles›",
+   "svg": "696085776a8f"
   },
   "HS photosynthesis 8": {
    "text": "That's why your legs burn when you sprint.",
@@ -784,8 +784,8 @@
   },
   "HS physics 2": {
    "text": "If you push a heavier cart with the same force, it accelerates less.",
-   "scene": "cart=i:wagon push→ force=i:muscle ‹If you push a heavier cart with the same force, it accelerates less›",
-   "svg": "b361bf29d02e"
+   "scene": "cart=i:wagon + force=i:muscle + accelerates=i:speedometer ‹If you push a heavier cart with the same force, it accelerates less›",
+   "svg": "4fe2f05b805f"
   },
   "HS physics 3": {
    "text": "When a rocket pushes gas down, the gas pushes the rocket up.",
@@ -939,8 +939,8 @@
   },
   "US history 6": {
    "text": "Rosa Parks refused to give up her seat on a bus in Montgomery, Alabama.",
-   "scene": "seat=i:chair give→ bus=i:bus ‹Rosa Parks refused to give up her seat on a bus in Montgomery, Alabama›",
-   "svg": "1ef57b2a1fad"
+   "scene": "seat=i:chair + bus=i:bus + alabama=s:state-alabama ‹Rosa Parks refused to give up her seat on a bus in Montgomery, Alabama›",
+   "svg": "802dd5db0802"
   },
   "US history 7": {
    "text": "The March on Washington brought more than two hundred thousand people to the capital.",
@@ -1029,8 +1029,8 @@
   },
   "ELA 1": {
    "text": "In To Kill a Mockingbird, the story is told from Scout's point of view.",
-   "scene": "point of view=m:👁️ told→ story=i:book ‹In To Kill a Mockingbird, the story is told from Scout's point of view›",
-   "svg": "e4bad403bd73"
+   "scene": "story=i:book + point of view=m:👁️ ‹In To Kill a Mockingbird, the story is told from Scout's point of view›",
+   "svg": "fd95d4172b6c"
   },
   "ELA 2": {
    "text": "The mockingbird is a symbol of innocence.",
@@ -1044,8 +1044,8 @@
   },
   "ELA 4": {
    "text": "Shakespeare uses metaphors to compare Juliet to the sun.",
-   "scene": "compare=i:scale uses→ sun=i:sun ‹Shakespeare uses metaphors to compare Juliet to the sun›",
-   "svg": "30833f8f26f3"
+   "scene": "compare=i:scale + sun=i:sun ‹Shakespeare uses metaphors to compare Juliet to the sun›",
+   "svg": "257115d08c7a"
   },
   "ELA 5": {
    "text": "Always cite your sources using MLA format.",

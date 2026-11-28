@@ -20,6 +20,7 @@ var TEETH = cueSet(SENSES.teeth),
     BRAIN = cueSet(SENSES.brain),
     STORY = cueSet(SENSES.story),
     NUM_WORD = cueSet(SENSES.numWord);
+var MONEY = cueSet(SENSES.money), SOUND_LIKE = cueSet(SENSES.soundLike), DIE_BEFORE = cueSet(SENSES.dieBefore);
 function isNum(t){ return t != null && (/^\d/.test(t) || !!NUM_WORD[normalize(t)]); }
 function contextual(w, i, raw, cues){
   var pv = normalize(raw[i - 1] || ""), nx = normalize(raw[i + 1] || "");
@@ -48,6 +49,12 @@ function contextual(w, i, raw, cues){
     case "peace": return nx === "of" ? null : undefined;                                               // "a peace of paper"
     case "nose": return WHO[pv] || HOMO_NEXT[nx] ? null : undefined;                                  // "jill nose that"
     case "charge": case "charges": case "charged": return normalize(raw[i - 1] || "") === "in" ? null : ic("bolt");
+    // a quarter in a money lesson is a coin, not a quarter of a pizza
+    case "quarter": case "quarters": return hasCue(cues, MONEY) ? ic("coins") : undefined;
+    // "make your writing sound confident", "that sounds like fun": seeming, not a noise
+    case "sound": case "sounds": return SOUND_LIKE[nx] ? null : undefined;
+    // "a standard die has six sides", "roll the die"
+    case "die": return DIE_BEFORE[pv] || /^(has|is|lands|landed|shows|showed|rolls)$/.test(nx) ? em("🎲") : undefined;
     case "hemisphere": case "hemispheres": return hasCue(cues, BRAIN) ? ic("brain") : ic("globe");
   }
   return undefined;
@@ -112,7 +119,10 @@ function senseOf(w, i, norm, cues){
     case "arrow": case "arrows": return W(CUE.chemEq) || W(CUE.mathGraph) ? null : undefined;
     case "conservation": return nx === "of" ? null : undefined;
     case "law": case "laws": return L(CUE.physics) || L(CUE.electric) || /^(newton|ohm|boyle|charles|hooke|kepler|mendel)$/.test(pv) || (nx === "of" && /^(conservation|inertia|gravity|motion|gravitation|thermodynamics|physics|nature|reflection|averages)$/.test(norm[i + 2] || "")) ? null : undefined;
-    case "reaction": case "reactions": return L(CUE.physics) && !L(CUE.chemEq) ? null : undefined;
+    // "every action has an equal and opposite reaction" is physics, even though "reaction" is a chemistry word too
+    case "reaction": case "reactions":
+      var chemOther = norm.some(function(x){ return CUE.chemEq[x] && !/^reactions?$/.test(x); });
+      return (L(CUE.physics) || nx === "force" || pv === "opposite") && !chemOther ? null : undefined;
     // maths: angles are measured in degrees, and a parabola's roots are numbers
     case "degree": case "degrees": return pick(CUE.geometry, CUE.temp) === 1 ? null : undefined;
     case "root": case "roots": return W(CUE.mathGraph) || pv === "square" || pv === "cube" ? null : undefined;

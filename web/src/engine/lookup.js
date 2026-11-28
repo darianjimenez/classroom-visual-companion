@@ -43,7 +43,7 @@ function conceptFor(w, extra){
   return null;
 }
 function labelOf(raw){
-  var t = String(raw).replace(/[^A-Za-z0-9'\-]/g, "").replace(/'s$/i, "");
+  var t = String(raw).replace(/[^A-Za-z0-9'%\-]/g, "").replace(/^'+|'+$/g, "").replace(/'s$/i, "");
   return (/^[A-Z0-9]{2,}$/.test(t)) ? t : t.toLowerCase();
 }
 function uniq(list){

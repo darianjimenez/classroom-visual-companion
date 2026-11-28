@@ -4,7 +4,10 @@
     "cues": "Words with more than one meaning: the rest of the talk decides (the sentence, what came before and, live, what comes next).",
     "nounVerb": "Words that are nouns with a picture but also everyday verbs: right after \"to\", \"can\", \"you\", \"we\"... they're the verb (\"train your dog\", \"likes to bark\", \"let's face it\"), and the noun's picture would only confuse.",
     "dangle": "Does a phrase stop mid-idea? Then live talk joins it to the next one instead of drawing it alone (\"we're learning about American\" … \"football\", \"the power\" … \"plant\", \"put it in the\" … \"fridge\").",
-    "mathOnly": "Fraction pictures (pizza, halves...) only make sense in a maths sentence; \"the whole cycle\" must not show a pizza."
+    "mathOnly": "Fraction pictures (pizza, halves...) only make sense in a maths sentence; \"the whole cycle\" must not show a pizza.",
+    "money": "In a money lesson a quarter is a coin.",
+    "soundLike": "\"Sounds like\", \"sound confident\": seeming, not a noise.",
+    "dieBefore": "\"A die\", \"the standard die\": the dice, not dying."
   },
   "teeth": ["teeth","tooth","toothbrush","toothpaste","floss","dentist"],
   "phys": [
@@ -170,7 +173,7 @@
     "as", "than", "like", "my", "your", "our", "their", "his", "her", "its", "this", "that", "these", "those", "very", "more",
     "most", "some", "any", "every", "each", "another", "other", "no", "not", "is", "are", "was", "were", "be", "being"
   ],
-  "needsDet": ["store","stores","log","logs","beat","beats","mask","masks","switch","switches"],
+  "needsDet": ["store","stores","log","logs","beat","beats","mask","masks","switch","switches","building"],
   "nounDet": [
     "the", "a", "an", "this", "that", "these", "those", "my", "your", "our", "his", "her", "their", "its", "every", "each",
     "some", "any", "no", "one"
@@ -186,5 +189,12 @@
     "halves", "slices"
   ],
   "fractionTalk": ["fraction","fractions","numerator","denominator","pizza","pie","slice","slices","equal","equally","parts"],
-  "computerCues": ["computer","keyboard","screen","click","laptop","cursor","code","internet","monitor","tablet"]
+  "computerCues": ["computer","keyboard","screen","click","laptop","cursor","code","internet","monitor","tablet"],
+  "money": ["cent","cents","penny","pennies","nickel","nickels","dime","dimes","dollar","dollars","coin","coins","money","change","worth","price"],
+  "soundLike": [
+    "like", "confident", "good", "great", "right", "wrong", "fun", "funny", "interesting", "strange", "weird", "familiar", "happy",
+    "sad", "scary", "silly", "nice", "easy", "hard", "true", "smart", "better", "best", "angry", "excited", "sure", "convincing",
+    "persuasive", "professional", "friendly", "boring", "exciting", "delicious", "serious", "polite", "rude"
+  ],
+  "dieBefore": ["a","the","one","each","standard","fair","sided","same","first","second","other","your","my"]
 }

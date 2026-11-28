@@ -42,6 +42,32 @@ const CASES = [
   ["First, underline what the question is asking.", { has: "[First]" }],
   ["How do you know?", { has: "[Question]" }],
   ["Great job, that's exactly right.", { has: "—" }],
+  // found by a third round of new lessons
+  ["Start with a clear claim, like 'Our school should have a longer recess.'", { has: "recess=", not: "recess'" }],
+  ["In fall, the leaves change color and drop from the trees.", { has: "🍁", not: "fall→" }],
+  ["The leaves fall from the trees.", { not: "🍁" }],
+  ["A quarter is worth twenty-five cents.", { has: "i:coins", not: "slice" }],
+  ["A quarter of the pizza is left.", { has: "slice" }],
+  ["In spring, flowers bloom and baby birds hatch.", { has: "🐣", not: "👶" }],
+  ["Factories stopped making cars and started building tanks and airplanes.", { not: "city" }],
+  ["DNA is the molecule that carries the instructions for building every living thing.", { not: "city" }],
+  ["End with a conclusion that sums up your point.", { not: "numbers" }],
+  ["Strong words like 'must' and 'should' make your writing sound confident.", { not: "i:sound" }],
+  ["The bell makes a loud sound.", { has: "i:sound" }],
+  ["Now it's your turn to write a poem about the moon.", { not: "turn→" }],
+  ["Ancient Greece was made up of city-states, like Athens and Sparta.", { has: "made up of→", not: "made→" }],
+  ["Cells make up tissues.", { not: "make-up" }],
+  ["They told myths about gods such as Zeus, who threw lightning bolts.", { not: "told→" }],
+  ["Greek philosophers like Socrates asked big questions about how to live.", { not: "asked→" }],
+  ["A standard die has six sides, so the chance of rolling a three is one in six.", { has: "🎲" }],
+  ["Because so many men were fighting overseas, women took jobs in the factories.", { not: "fighting→" }],
+  ["During World War Two, life changed for families back home in America.", { has: "world war=i:swords", not: "globe" }],
+  ["If you push a shopping cart full of groceries, it is harder to speed up than an empty one.", { has: "🛒", not: "wagon" }],
+  ["The third law says every action has an equal and opposite reaction.", { not: "flask" }],
+  ["People planted victory gardens to grow their own vegetables.", { not: "trophy" }],
+  // speech recognisers write numbers as digits
+  ["The chance of getting heads is 1 out of 2, or 50%.", { has: "i:percent" }],
+  ["An event that is impossible has a probability of 0.", { has: "i:numbers" }],
 ]
 
 test("scenes: meanings, places, collections, word cards", () => {
