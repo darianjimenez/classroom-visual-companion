@@ -43,7 +43,7 @@ function conceptFor(w, extra){
   return null;
 }
 function labelOf(raw){
-  var t = String(raw).replace(/[^A-Za-z0-9'%\-]/g, "").replace(/^'+|'+$/g, "").replace(/'s$/i, "");
+  var t = String(raw).replace(/[^A-Za-z0-9'%-]/g, "").replace(/^'+|'+$/g, "").replace(/'s$/i, "");
   return (/^[A-Z0-9]{2,}$/.test(t)) ? t : t.toLowerCase();
 }
 function uniq(list){
@@ -68,6 +68,8 @@ function autoSetting(items){
   return "plain";
 }
 function joinL(items, sep){ return items.map(function(i){ return i.label; }).join(sep || " & "); }
+/** a phrase without the punctuation around it: "“Metals lose electrons." → "Metals lose electrons" */
+function trimPunct(t){ return String(t).replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014-]+$/, ""); }
 function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 // LOOSE is also read by the picture build (web/tools/pictures)
-export { LOOSE, allItems, autoSetting, cap, conceptFor, extraConcept, forms, joinL, labelOf, looseWord, normalize, uniq };
+export { LOOSE, allItems, autoSetting, cap, trimPunct, conceptFor, extraConcept, forms, joinL, labelOf, looseWord, normalize, uniq };

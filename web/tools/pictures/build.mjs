@@ -6,7 +6,7 @@
 //   public/symbols/, public/diagrams/    the picture files themselves
 //   public/credits.html                every source, author and licence
 // The choices made by hand are in review.js and diagrams.js. After a build, `npm test` shows what changed in class.
-import { readFileSync, writeFileSync, readdirSync, rmSync, mkdirSync, copyFileSync, existsSync, statSync } from "node:fs"
+import { readFileSync, writeFileSync, readdirSync, rmSync, mkdirSync, copyFileSync, existsSync } from "node:fs"
 import { DIAGRAMS } from "./diagrams.js"
 import * as R from "./review.js"
 import { drawStates } from "./states.mjs"

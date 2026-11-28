@@ -75,7 +75,6 @@ export interface SceneEngineApi {
   buildPlanPrompt(sentences: string[], extraWords: string[]): string
   // galleries and counts for the Pictures panel
   iconSVG(key: string): string
-  vocabFor(key: string): string[]
   iconGallery(): { key: string; name: string; words: string[]; svg: string }[]
   diagramGallery(): { key: string; title: string; say: string[]; svg: string }[]
   readonly iconCount: number
@@ -83,13 +82,10 @@ export interface SceneEngineApi {
   readonly wordCount: number
   readonly symbolCount: number
   readonly emojiCount: number
-  ICONS: Record<string, unknown>
   // pictures that arrive after the first screen
   setOpenMoji(bundle: unknown): void
-  hasOpenMoji(): boolean
   setSymbols(table: SymbolTable): void
   setAssetBase(base: string): void
-  symbolArt(name: string): string
   // for the asset tests
   symbolTable(): { words: Record<string, string>; phrases: Record<string, string> }
   imageDiagrams(): { key: string; title: string; file: string }[]
@@ -97,4 +93,3 @@ export interface SceneEngineApi {
 }
 
 export declare const SceneEngine: SceneEngineApi
-export default SceneEngine

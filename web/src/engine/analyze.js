@@ -1,7 +1,7 @@
 // Reading a sentence into a scene: splitting live talk into ideas, finding things and actions, captions, and Claude's plans.
 import { DIAGRAMS, diagramScene } from "./diagrams/registry.js"
 import { I } from "./drawings.js"
-import { allItems, autoSetting, cap, conceptFor, extraConcept, forms, joinL, labelOf, normalize, uniq } from "./lookup.js"
+import { allItems, autoSetting, cap, conceptFor, trimPunct, extraConcept, forms, joinL, labelOf, normalize, uniq } from "./lookup.js"
 import { isName, spokenNames } from "./names.js"
 import { phraseAt } from "./phrases.js"
 import { CHAINABLE, RELATION, RELATIONS, REVERSE_NEXT } from "./relations.js"
@@ -22,10 +22,9 @@ function ruleCaption(sc, raw){
   return c.split(" ").length <= 3 && t && tn <= 20 ? t : c;
 }
 function shortCaption(sc, raw){
-  var clean = function(t){ return t.replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, ""); };
   var n = raw.length;
   if (sc.relation === "cycle" && sc.subjects.length === 1) return "The " + sc.subjects[0].label + " cycle";
-  if (n <= 11) return cap(clean(raw.join(" ")));
+  if (n <= 11) return cap(trimPunct(raw.join(" ")));
   var ats = allItems(sc).map(function(x){ return x.at; });
   if (sc.relation && sc.relation !== "and") ats.push(sc.verbAt);
   if (sc.then) ats.push(sc.then.verbAt);
@@ -35,7 +34,7 @@ function shortCaption(sc, raw){
   while (lo2 > 0 && lo - lo2 < 3 && !/[,;:.!?]$/.test(raw[lo2 - 1])) lo2--;
   if (lo2 === 0 || /[,;:.!?]$/.test(raw[lo2 - 1])){ if (hi - lo2 + 1 <= 14) lo = lo2; }
   while (lo < hi && /^(and|but|which|that|so|then)$/i.test(raw[lo])) lo++;
-  if (hi - lo + 1 <= 14) return cap(clean(raw.slice(lo, hi + 1).join(" ")));
+  if (hi - lo + 1 <= 14) return cap(trimPunct(raw.slice(lo, hi + 1).join(" ")));
   if (!sc.objects.length) return cap(joinL(sc.subjects, ", "));
   if (sc.relation === "contains") return cap(joinL(sc.objects) + " inside the " + joinL(sc.subjects));
   var s = joinL(sc.subjects) + " " + sc.verb + " " + joinL(sc.objects);

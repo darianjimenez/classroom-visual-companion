@@ -6,55 +6,36 @@ import EMOJI from "./words/emoji.json" with { type: "json" }
 import RULES from "./words/rules.json" with { type: "json" }
 
 var VOCAB = DRAWINGS.vocab;
-var VOCAB_MORE = DRAWINGS.more;
-Object.keys(VOCAB_MORE).forEach(function(k){ VOCAB[k] = VOCAB_MORE[k]; });
-
-// pack 2 vocabulary (words already claimed by an earlier drawing keep that drawing)
-var VOCAB_PACK2 = DRAWINGS.pack2;
-(function(){
+Object.keys(DRAWINGS.more).forEach(function(k){ VOCAB[k] = DRAWINGS.more[k]; });
+var WORD_TO_ICON = {};
+function indexWords(){
+  WORD_TO_ICON = {};
+  Object.keys(VOCAB).forEach(function(k){ VOCAB[k].forEach(function(w){ WORD_TO_ICON[w] = k; }); });
+}
+// Later packs of drawings: a word already claimed by an earlier drawing keeps that drawing. Pack 2 brought new drawings, each
+// named after its first word; packs 3 and 5 also add words to existing drawings.
+function addPack(pack, isNew){
   var claimed = {};
   Object.keys(VOCAB).forEach(function(k){ VOCAB[k].forEach(function(w){ claimed[w] = true; }); });
-  VOCAB.shield = VOCAB.shield.filter(function(w){ return w !== "knight"; }); delete claimed.knight;
-  Object.keys(VOCAB_PACK2).forEach(function(k){
-    var ws = VOCAB_PACK2[k].split(" ").filter(function(w){ return !claimed[w]; });
-    if (!ws.length) ws = [k];
+  Object.keys(pack).forEach(function(k){
+    if (!isNew && !I[k]) return;
+    var ws = pack[k].split(" ").filter(function(w){ return !claimed[w]; });
+    if (isNew && !ws.length) ws = [k];
     ws.forEach(function(w){ claimed[w] = true; });
-    VOCAB[k] = ws;
+    VOCAB[k] = isNew ? ws : (VOCAB[k] || []).concat(ws);
   });
-})();
-var WORD_TO_ICON = {};
-Object.keys(VOCAB).forEach(function(k){ VOCAB[k].forEach(function(w){ WORD_TO_ICON[w] = k; }); });
-var VOCAB_PACK3 = DRAWINGS.pack3;
-(function(){
-  var claimed = {};
-  Object.keys(WORD_TO_ICON).forEach(function(w){ claimed[w] = true; });
-  Object.keys(VOCAB_PACK3).forEach(function(k){
-    var ws = VOCAB_PACK3[k].split(" ").filter(function(w){ return !claimed[w]; });
-    ws.forEach(function(w){ claimed[w] = true; });
-    VOCAB[k] = (VOCAB[k] || []).concat(ws);
-  });
-  WORD_TO_ICON = {};
-  Object.keys(VOCAB).forEach(function(k){ VOCAB[k].forEach(function(w){ WORD_TO_ICON[w] = k; }); });
-})();
-// K-12 gaps: new drawings, and more words for existing ones (only words no other picture already claims)
-var VOCAB_PACK5 = DRAWINGS.pack5;
-(function(){
-  var claimed = {};
-  Object.keys(WORD_TO_ICON).forEach(function(w){ claimed[w] = true; });
-  Object.keys(VOCAB_PACK5).forEach(function(k){
-    if (!I[k]) return;
-    var ws = VOCAB_PACK5[k].split(" ").filter(function(w){ return !claimed[w]; });
-    ws.forEach(function(w){ claimed[w] = true; });
-    VOCAB[k] = (VOCAB[k] || []).concat(ws);
-  });
-  WORD_TO_ICON = {};
-  Object.keys(VOCAB).forEach(function(k){ VOCAB[k].forEach(function(w){ WORD_TO_ICON[w] = k; }); });
-})();
+  indexWords();
+}
+// a knight is a person, not the shield that pack 2's knight drawing replaced
+VOCAB.shield = VOCAB.shield.filter(function(w){ return w !== "knight"; });
+addPack(DRAWINGS.pack2, true);
+addPack(DRAWINGS.pack3, false);
+// K-12 gaps
+addPack(DRAWINGS.pack5, false);
 
 // ---------- built-in emoji library (fallback tier under the drawings) ----------
-var EMOJI_LIB_SRC = EMOJI.rows.join("|");
 var EMOJI_LIB = {};
-EMOJI_LIB_SRC.split("|").forEach(function(row){
+EMOJI.rows.join("|").split("|").forEach(function(row){
   var p = row.split(" "), e = p[0];
   for (var i = 1; i < p.length; i++) if (!EMOJI_LIB[p[i]]) EMOJI_LIB[p[i]] = e;
 });
@@ -94,19 +75,14 @@ function symArt(name){ return '<image href="' + ASSET_BASE + 'symbols/' + String
 var WEAK = {};
 RULES.weak.forEach(function(w){ WEAK[w] = 1; });
 
+// the backdrop a drawing brings with it (a rocket: space); when a scene has several, the first in SETTING_ORDER wins
 var ICON_SETTING = {};
-DRAWINGS.settings1.forEach(function(row){
-  row[1].forEach(function(k){ ICON_SETTING[k] = row[0]; });
-});
-DRAWINGS.settings2.forEach(function(row){
+DRAWINGS.settings1.concat(DRAWINGS.settings2, DRAWINGS.settings3).forEach(function(row){
   row[1].forEach(function(k){ ICON_SETTING[k] = row[0]; });
 });
 var SETTING_ORDER = ["space", "bio", "history", "sea", "land", "town", "sky", "math", "class", "lab"];
 var SETTINGS = ["sky", "land", "sea", "space", "bio", "lab", "history", "town", "math", "class", "plain"];
-DRAWINGS.settings3.forEach(function(row){
-  row[1].forEach(function(k){ ICON_SETTING[k] = row[0]; });
-});
 export function setAssetBase(b){ ASSET_BASE = b || ""; }
 
-// NEVER and EMOJI_LIB_SRC are also read by the picture build (web/tools/pictures)
-export { ASSET_BASE, EMOJI_LIB, applySymbols, EMOJI_LIB_SRC, ICON_SETTING, NEVER, SETTINGS, SETTING_ORDER, SYM, SYM_MINOR, SYM_WORDS, VOCAB, WEAK, WORD_TO_ICON, symArt };
+// NEVER is also read by the picture build (web/tools/pictures)
+export { ASSET_BASE, EMOJI_LIB, applySymbols, ICON_SETTING, NEVER, SETTINGS, SETTING_ORDER, SYM, SYM_MINOR, SYM_WORDS, VOCAB, WEAK, WORD_TO_ICON, symArt };

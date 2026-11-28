@@ -38,7 +38,9 @@ function init() {
   fetch(BASE + "symbols/index.json").then((r) => (r.ok ? r.json() : null)).then((o) => { if (o) { E.setSymbols(o); refreshFrames() } }).catch(() => {})
 }
 
-const initial = (): AppData => ({
+function initial(): AppData {
+  const prefs = loadPrefs()
+  return {
   // lessons and the script
   mine: load<Lesson[]>(KEYS.mine, []), extra: load<Extra>(KEYS.extra, { ...EXTRA_DEFAULTS }),
   lessonId: null, filter: "All", query: "", script: "", saveTitle: "",
@@ -51,13 +53,14 @@ const initial = (): AppData => ({
   playing: false, listening: false, talk: false, boardIsTalk: false, lastTalk: [],
   live: { msg: "", miss: false }, talkBig: "Start talking",
   source: { kind: "rule", msg: "" }, wordCount: { words: 0, sentences: 0 }, unsureWords: [],
-  prefs: loadPrefs(),
-  voice: { supported: canListen, status: voiceBlurb(loadPrefs()), interim: "", log: [] },
+  prefs,
+  voice: { supported: canListen, status: voiceBlurb(prefs), interim: "", log: [] },
   ai: { available: false, status: "", planning: false, useAi: true },
   // panels and dialogs
   panel: null, guideOpen: !load(KEYS.help, null), commandOpen: false,
   wordDialog: { open: false, word: "", now: null, overridden: false },
-})
+  }
+}
 
 const actions: Actions = {
   init,

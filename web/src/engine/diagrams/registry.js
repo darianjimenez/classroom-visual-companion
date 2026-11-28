@@ -1,7 +1,7 @@
 // The diagram registry: how diagrams are defined, matched to what a sentence names, highlighted and drawn.
 import { emptyScene } from "../analyze.js"
 import { I, art } from "../drawings.js"
-import { cap } from "../lookup.js"
+import { cap, trimPunct } from "../lookup.js"
 import { INK, circ, f, ln, pth, rct, sub } from "../primitives.js"
 import { arrowHead, el, textLabel } from "../render.js"
 
@@ -92,7 +92,7 @@ function diagramScene(text, key){
   var sc = emptyScene();
   sc.show = true; sc.diagram = d.key; sc.diagramAt = at; sc.highlight = hl; sc.hlAts = hlAts; sc.verbAt = at; sc.setting = d.setting;
   sc.imageDiagram = !!IMAGE_DIAGRAM[d.key];
-  sc.caption = raw.length <= 14 ? cap(raw.join(" ").replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, "")) : d.title;
+  sc.caption = raw.length <= 14 ? cap(trimPunct(raw.join(" "))) : d.title;
   return sc;
 }
 function drawDiagram(sc){

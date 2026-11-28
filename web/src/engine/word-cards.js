@@ -1,7 +1,7 @@
 // Word cards: the key point in words when a sentence has nothing to picture, with a label for what kind of thing was said.
 import { emptyScene } from "./analyze.js"
 import { DIAGRAMS } from "./diagrams/registry.js"
-import { allItems, cap } from "./lookup.js"
+import { allItems, cap, trimPunct } from "./lookup.js"
 import { INK, circ, esc, f, pth, rct } from "./primitives.js"
 import { el } from "./render.js"
 import { cueSet } from "./senses.js"
@@ -213,7 +213,7 @@ function keyPoint(text, opt){
   function toks(r){
     var out = [];
     for (var k3 = r.a; k3 < r.b; k3++){
-      var tx = raw[k3].replace(/^["'(\[“‘]+/, "");
+      var tx = raw[k3].replace(/^["'([“‘]+/, "");
       if (k3 === r.b - 1) tx = tx.replace(/[.!?;:,"')\]”’]+$/, "");
       if (!tx) continue;
       out.push({ t: tx, k: !!w[k3] && !WC_STOP[w[k3]] && !WC_LIGHT[w[k3]], at: k3 });
@@ -244,8 +244,8 @@ function keyPoint(text, opt){
 function plainKeyPoint(kp){ return (kp.main || []).concat(kp.words).map(function(tk){ return tk.t; }).join(" "); }
 function tidySentence(raw){
   var kp = keyPoint(raw.join(" "));
-  if (!kp) return raw.length ? cap(raw.join(" ").replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, "")) : "";
-  var t = raw.slice(kp.lead, kp.e).join(" ").replace(/^[^A-Za-z0-9]+/, "").replace(/[.!?;:,\u2014\-]+$/, "");
+  if (!kp) return raw.length ? cap(trimPunct(raw.join(" "))) : "";
+  var t = trimPunct(raw.slice(kp.lead, kp.e).join(" "));
   return t ? t.charAt(0).toUpperCase() + t.slice(1) : "";
 }
 
@@ -283,7 +283,7 @@ function sceneWords(sc){
   return out;
 }
 
-function wcLine(tokens, size){
+function wcLine(tokens){
   var out = "", cur = null, buf = [];
   function flush(){ if (buf.length) out += (out ? " " : "") + '<tspan font-weight="' + (cur ? 700 : 500) + '" fill="' + (cur ? INK : "#776C5F") + '">' + esc(buf.join(" ")) + '</tspan>'; buf = []; }
   tokens.forEach(function(tk){ if (tk.k !== cur) flush(); cur = tk.k; buf.push(tk.t); });
@@ -302,7 +302,7 @@ function wcWrap(tokens, size, maxW){
 }
 function wcText(lines, size, y0, lh){
   return lines.map(function(ln, i){
-    return el(ln[0].at, '<text x="160" y="' + f(y0 + i * lh) + '" text-anchor="middle" font-size="' + size + '" font-family="Figtree, Arial, sans-serif">' + wcLine(ln, size) + '</text>');
+    return el(ln[0].at, '<text x="160" y="' + f(y0 + i * lh) + '" text-anchor="middle" font-size="' + size + '" font-family="Figtree, Arial, sans-serif">' + wcLine(ln) + '</text>');
   }).join("");
 }
 function wcGlyph(kind, color){
